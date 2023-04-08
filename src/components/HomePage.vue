@@ -1,129 +1,208 @@
 <template>
+
   
   <div class="sidebar" style="margin-bottom:30px;">
+    
     <div class="logo-details">
      
-      <span class="logo_name">PAYHOUSE </span>
+      <span class="logo_name">PAYHOUSE WAN SUPPORT </span>
     </div>
+    
       <ul class="nav-links">
-        <li>
-          <a href="#" class="">
-            <i class='bx bx-grid-alt' ></i>
-            <span class="links_name">Dashboard</span>
-          </a>
-        </li>
+       
+       
+    
         
         <li>
           <a href="#">
             <i class='bx bx-pie-chart-alt-2' ></i>
-            <span class="links_name"><div class="">Incidents</div></span>
+            <span class="links_name"><div class=""><router-link to="/incident" class="text-dark">Incidents</router-link></div>
+
+            </span>
           
           </a>
           
         </li>
-        <li>
-          <a href="#">
-            <i class='bx bx-pie-chart-alt-2' ></i>
-            <span class="links_name">Menu</span>
-          </a>
-        </li>
+     
         <li>
           <a href="#">
             <i class='bx bx-box' ></i>
-            <span class="links_name">Queues</span>
+            <span class="links_name"><router-link to="/queue" class="text-dark">Queues</router-link></span>
           </a>
         </li>
         <li>
           <a href="#">
             <i class='bx bx-list-ul' ></i>
-            <span class="links_name">Service Requests</span>
+            <span class="links_name"><router-link to="/service" class="text-dark">Service Requests</router-link></span>
           </a>
         </li>
   
-        <li>
-          <a href="#">
-            <i class='bx bx-pie-chart-alt-2' ></i>
-            <span class="links_name">Incidents</span>
-          </a>
-        </li>
+    
         
-        <li>
-          <a href="#">
-            <i class='bx bx-pie-chart-alt-2' ></i>
-            <span class="links_name">Incidents</span>
-          </a>
-        </li>
+       
         <li>
           <a href="#">
             <i class='bx bx-coin-stack' ></i>
-            <span class="links_name">Problems</span>
+            <span class="links_name"><router-link to="/problem" class="text-dark">Problems</router-link></span>
           </a>
         </li>
         <li>
           <a href="#">
             <i class='bx bx-book-alt' ></i>
-            <span class="links_name">Changes</span>
+            <span class="links_name"><router-link to="/changes" class="text-dark">Changes</router-link></span>
           </a>
         </li>
         <li>
           <a href="#">
             <i class='bx bx-user' ></i>
-            <span class="links_name">Post Incident</span>
+            <span class="links_name">Post Incident Reviews</span>
+          </a>
+        </li>
+       
+  
+        
+         <span class="links_name"><h1>KNOWLEDGE</h1></span>
+     
+   
+        
+        <li>
+       
+          <a href="#">
+            <i class='bx bx-message' ></i>
+            <span class="links_name">Knowledge Base</span>
           </a>
         </li>
         <li>
           <a href="#">
             <i class='bx bx-message' ></i>
-            <span class="links_name">Messages</span>
+            <span class="links_name">Report</span>
           </a>
+        
+        </li>
+        <span class="links_name"><h1>PEOPLE</h1></span>
+        <li>
+          <a href="#">
+            <i class='bx bx-message' ></i>
+            <span class="links_name">Customers</span>
+          </a>
+        
         </li>
         <li>
           <a href="#">
-            <i class='bx bx-heart' ></i>
-            <span class="links_name">Favrorites</span>
+            <i class='bx bx-message' ></i>
+            <span class="links_name">Teams</span>
           </a>
+        
+        </li>
+        <span class="links_name"><h1>OPERATIONS</h1></span>
+        <li>
+          <a href="#">
+            <i class='bx bx-message' ></i>
+            <span class="links_name">Notifications</span>
+          </a>
+        
         </li>
         <li>
           <a href="#">
-            <i class='bx bx-cog' ></i>
-            <span class="links_name">Setting</span>
+            <i class='bx bx-message' ></i>
+            <span class="links_name">On Call</span>
           </a>
+        
         </li>
-        <li class="log_out">
+
+        <div class="sticky">
+     
+
+      <li>
           <a href="#">
-            <i class='bx bx-log-out'></i>
-            <span class="links_name">Log out</span>
+            <i class='bx bx-message' ></i>
+            <span class="links_name">Project Settings</span>
           </a>
+        
         </li>
+        <li>
+          <a href="#">
+            <i class='bx bx-message' ></i>
+            <span class="links_name">Give Feedback</span>
+          </a>
+        
+        </li>
+        
+     
+      </div>
+       
+      
+      
+        
+       
+    
+     
+    
       </ul>
   </div>
   <section class="home-section">
     <nav>
+      
       <div class="sidebar-button">
         <i class='bx bx-menu sidebarBtn'></i>
         <span class="dashboard">Home</span>
+        <div class="dropdown-content">
+    <a href="#">Create dashboard</a>
+    <a href="#">View dashboard</a>
+   
+  </div>
       </div>
       <div class="sidebar-button">
         <i class='bx bx-menu sidebarBtn'></i>
         <span class="dashboard">Your Work</span>
+        <div class="dropdown-content">
+    <a href="#">Assigned to me</a>
+    <a href="#">Recent</a>
+    <a href="#">Queues</a>
+    
+  </div>
       </div>
       <div class="sidebar-button">
         <i class='bx bx-menu sidebarBtn'></i>
         <span class="dashboard">Projects</span>
+        <div class="dropdown-content">
+    <a href="#">Create projects</a>
+    <a href="#">View all projects</a>
+   
+  </div>
       </div>
       <div class="sidebar-button">
         <i class='bx bx-menu sidebarBtn'></i>
         <span class="dashboard">Filters</span>
       </div>
       <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">Team</span>
+        <div class="dropdown-content">
+    <a href="#">Create Your Team</a>
+    <a href="#">Invite people to Payhouse system</a>
+    
+  </div>
+      </div>
+      <div class="sidebar-button">
        
         <span class="btn btn-danger">Create+</span>
       </div>
-      <div class="profile-details">
+
+      <div class="sidebar-button">
         <!--<img src="images/profile.jpg" alt="">-->
-        <span class="admin_name">Howdy, Cynthia</span>
-        <i class='bx bx-chevron-down' ></i>
+        <span class="admin_name">Monari, Cynthia</span>
+        <div class="dropdown-content">
+    <a href="#">Profile settings</a>
+    <a href="#"><router-link to="/customer" class="text-dark">Go to customer's portal</router-link></a>
+    <a href="#">SignOut</a>
+    
+  </div>
+     
+    
+  
       </div>
+
     </nav>
 
     <div class="home-content">
@@ -141,7 +220,7 @@
         </div>
         <div class="box">
           <div class="right-side">
-            <div class="box-topic">Today's Issues</div>
+            <div class="box-topic">Overdue</div>
             <br/>
             <div class="number">38</div>
             <div class="indicator">
@@ -152,7 +231,7 @@
         </div>
         <div class="box">
           <div class="right-side">
-            <div class="box-topic">Pending Issues</div>
+            <div class="box-topic">Due Today</div>
             <br/>
             <div class="number">12</div>
             <div class="indicator">
@@ -164,7 +243,7 @@
         </div>
         <div class="box">
           <div class="right-side">
-            <div class="box-topic">Completed Issues</div>
+            <div class="box-topic">Open</div>
             <br/>
             <div class="number">11</div>
             <div class="indicator">
@@ -174,6 +253,8 @@
           </div>
         
         </div>
+       
+       
       </div>
 
       <div class="sales-boxes">
@@ -190,35 +271,83 @@
                   <th scope="col">Assignee</th>
                   <th scope="col">Created</th>
                   <th scope="col">Status</th>
+                  <th scope="col">Priority</th>
+                  
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
+                 
+                  <td>Request admin access</td>
+                  <td>Administrator access for workday</td>
+                  <td>Mark,KCB Kenya</td>
+                  <td>Gitau,Payhouse</td>
+                  <td>1/4/23</td>
+                  <td><select name="status" id="status">
+                    <option value="volvo">In progress</option>
+  <option value="saab">Awaiting</option>
+  <option value="mercedes">Escalate</option>
+  <option value="audi">Pending</option>
+  <option value="audi">Resolved</option>
+  <option value="audi">Canceled</option>
+ 
+                  </select></td>
+                  <td><select name="status" id="status">
+                    <option value="volvo">High</option>
+  <option value="saab">Medium</option>
+  <option value="mercedes">Low</option>
+ 
+ 
+                  </select></td>
                 </tr>
                 <tr>
                   <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
+                 
+                  <td>Request a change</td>
+                  <td>Production system upgrade</td>
+                  <td>Felix,KCB Uganda</td>
+                  <td>Solomon,Payhouse</td>
+                  <td>1/4/23</td>
+                  <td><select name="status" id="status">
+                    <option value="volvo">Pending</option>
+  <option value="saab">Awaiting</option>
+  <option value="mercedes">Escalate</option>
+  <option value="audi">In Progress</option>
+  <option value="audi">Resolved</option>
+  <option value="audi">Canceled</option>
+  <option value="audi">Open</option></select></td>
+  <td><select name="status" id="status">
+                    <option value="volvo">Low</option>
+  <option value="saab">Medium</option>
+  <option value="mercedes">High</option>
+ 
+ 
+                  </select></td>
                 </tr>
                 <tr>
                   <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
+                  <td>Report a system problem</td>
+                  <td>404 error returning on customer announcements page</td>
+                  <td>Carol,KCB Rwanda</td>
+                  <td>Claire,Payhouse</td>
+                  <td>2/4/23</td>
+                  <td><select name="status" id="status">
+                    <option value="volvo">Open</option>
+  <option value="saab">Awaiting</option>
+  <option value="mercedes">Escalate</option>
+  <option value="audi">In Progress</option>
+  <option value="audi">Resolved</option>
+  <option value="audi">Canceled</option>
+  <option value="audi">Pending</option></select></td>
+
+  <td><select name="status" id="status">
+                    <option value="volvo">Medium</option>
+  <option value="saab">High</option>
+  <option value="mercedes">Low</option>
+ 
+ 
+                  </select></td>
                 </tr>
               </tbody>
             </table>
@@ -230,64 +359,33 @@
           </div>
         </div>
         <div class="top-sales box">
-          <div class="title">Top Seling Product</div>
+          <div class="title">Top Raised Issues</div>
           <ul class="top-sales-details">
+            
             <li>
             <a href="#">
-              <!--<img src="images/sunglasses.jpg" alt="">-->
-              <span class="product">Vuitton Sunglasses</span>
+             
+              <span class="product" style="list-style-type: disc;">How to jump start a battery when it has completely gone off?</span>
             </a>
-            <span class="price">$1107</span>
+     
           </li>
           <li>
             <a href="#">
-               <!--<img src="images/jeans.jpg" alt="">-->
-              <span class="product">Hourglass Jeans </span>
+       
+              <span class="product" style="list-style-type: disc;">Need of more base chargers </span>
             </a>
-            <span class="price">$1567</span>
+      
           </li>
           <li>
             <a href="#">
-             <!-- <img src="images/nike.jpg" alt="">-->
-              <span class="product">Nike Sport Shoe</span>
+
+              <span class="product">Proposal of Z card with all possible errors and how to solve them</span>
             </a>
-            <span class="price">$1234</span>
-          </li>
-          <li>
-            <a href="#">
-              <!--<img src="images/scarves.jpg" alt="">-->
-              <span class="product">Hermes Silk Scarves.</span>
-            </a>
-            <span class="price">$2312</span>
-          </li>
-          <li>
-            <a href="#">
-              <!--<img src="images/blueBag.jpg" alt="">-->
-              <span class="product">Succi Ladies Bag</span>
-            </a>
-            <span class="price">$1456</span>
-          </li>
-          <li>
-            <a href="#">
-              <!--<img src="images/bag.jpg" alt="">-->
-              <span class="product">Gucci Womens's Bags</span>
-            </a>
-            </li>
-            <span class="price">$2345</span>
-          <li>
-            <a href="#">
-              <!--<img src="images/addidas.jpg" alt="">-->
-              <span class="product">Addidas Running Shoe</span>
-            </a>
-            <span class="price">$2345</span>
-          </li>
-<li>
-            <a href="#">
-             <!--<img src="images/shirt.jpg" alt="">-->
-              <span class="product">Bilack Wear's Shirt</span>
-            </a>
-            <span class="price">$1245</span>
-          </li>
+
+       </li>
+       <div class="button">
+            <a href="#">See All</a>
+          </div>
           </ul>
         </div>
       </div>
@@ -317,36 +415,53 @@ export default {
   position: fixed;
   height: 100%;
   width: 240px;
-  background: #cf061a;
+  background: #e6e3e3;
   transition: all 0.5s ease;
+  z-index: 1000;
+    left: 175px;
+    margin-left: -175px;
+    overflow-y: auto;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+  
+  
 }
 .sidebar.active{
   width: 60px;
 }
 .sidebar .logo-details{
-  height: 80px;
+  height: 75px;
   display: flex;
   align-items: center;
 }
 .sidebar .logo-details i{
   font-size: 28px;
   font-weight: 500;
-  color: #fff;
+  color: #ec1010;
   min-width: 60px;
   text-align: center
 }
 .sidebar .logo-details .logo_name{
-  color: #fff;
+  color: #df0a0a;
   font-size: 24px;
   font-weight: 500;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+
+  background-color: #fff;
+ 
 }
+.sidebar .nav-links li 
 .sidebar .nav-links{
   margin-top: 10px;
+  position: relative;
 }
 .sidebar .nav-links li{
   position: relative;
   list-style: none;
-  height: 50px;
+  height: 40px;
 }
 .sidebar .nav-links li a{
   height: 100%;
@@ -357,10 +472,10 @@ export default {
   transition: all 0.4s ease;
 }
 .sidebar .nav-links li a.active{
-  background: #081D45;
+  background: #6edb08;
 }
 .sidebar .nav-links li a:hover{
-  background: #081D45;
+  background: #d4e213;
 }
 .sidebar .nav-links li i{
   min-width: 60px;
@@ -368,14 +483,27 @@ export default {
   font-size: 18px;
   color: #fff;
 }
+.sidebar .nav-links li  h1{
+  color: #080808;
+  font-size: 13px;
+margin-bottom: 10%;
+  margin-right: 50%;
+
+  
+}
 .sidebar .nav-links li a .links_name{
-  color: #fff;
-  font-size: 15px;
+  color: #080808;
+  font-size: 13px;
   font-weight: 400;
   white-space: nowrap;
+  float: left;
+  display: block;
+  text-align: center;
+  padding: 15px;
+  text-decoration: none;
 }
 .sidebar .nav-links .log_out{
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
 }
@@ -396,7 +524,7 @@ export default {
   justify-content: space-between;
   height: 80px;
   background: #fff;
-  display: flex;
+
   align-items: center;
   position: fixed;
   width: calc(100% - 240px);
@@ -411,11 +539,15 @@ export default {
   width: calc(100% - 60px);
 }
 .home-section nav .sidebar-button{
-  display: flex;
+ 
   align-items: center;
   font-size: 24px;
   font-weight: 500;
+  position: relative;
+  display: inline-block;
 }
+
+
 nav .sidebar-button i{
   font-size: 35px;
   margin-right: 10px;
@@ -457,10 +589,11 @@ nav .search-box .bx-search{
   align-items: center;
   background: #F5F6FA;
   border: 2px solid #EFEEF1;
-  border-radius: 6px;
-  height: 50px;
-  min-width: 190px;
+  border-radius: 4px;
+  height: 30px;
+  min-width: 40px;
   padding: 0 15px 0 2px;
+  
 }
 nav .profile-details img{
   height: 40px;
@@ -468,8 +601,8 @@ nav .profile-details img{
   border-radius: 6px;
   object-fit: cover;
 }
-nav .profile-details .admin_name{
-  font-size: 15px;
+nav  .admin_name{
+  font-size:18px;
   font-weight: 500;
   color: #333;
   margin: 0 10px;
@@ -488,7 +621,7 @@ nav .profile-details i{
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  padding: 0 20px;
+  padding:15px 14px;
   margin-bottom: 26px;
 }
 .overview-boxes .box{
@@ -568,7 +701,7 @@ nav .profile-details i{
 
 /* left box */
 .home-content .sales-boxes .recent-sales{
-  width: 65%;
+  width: 100%;
   background: #fff;
   padding: 20px 30px;
   margin: 0 20px;
@@ -581,8 +714,9 @@ nav .profile-details i{
   justify-content: space-between;
 }
 .sales-boxes .box .title{
-  font-size: 24px;
+  font-size: 30px;
   font-weight: 500;
+  color: #cf061a;
   /* margin-bottom: 10px; */
 }
 .sales-boxes .sales-details li.topic{
@@ -701,11 +835,11 @@ nav .profile-details i{
   nav .sidebar-button .dashboard,
   nav .profile-details .admin_name,
   nav .profile-details i{
-    display: none;
+    display: flex;
   }
   .home-section nav .profile-details{
-    height: 50px;
-    min-width: 40px;
+    height: 20px;
+    min-width: 20px;
   }
   .home-content .sales-boxes .sales-details{
     width: 560px;
@@ -743,5 +877,59 @@ nav .profile-details i{
     left: 60px;
     width: calc(100% - 60px);
   }
+}
+h1{
+  font-size: 15px;
+}
+.card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 0px 0px 0 rgba(0,0,0,0.2);
+  background: #e6e3e3;
+  transition: 0.3s;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(160, 221, 18, 0.2);
+}
+
+/* Add some padding inside the card container */
+.container {
+  padding: 0px 0px;
+
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(100, 221, 64, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 8px 8px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #d4e213;}
+
+.sidebar-button:hover .dropdown-content {display: block;}
+
+
+.dropdown-content a{
+  font-size: 13px;
+}
+.sticky{
+  font-size: 24px;
+  position: -webkit-sticky;
+  position: sticky;
+  top:50%;
+  background-color: #fff;
+ 
+
 }
 </style>

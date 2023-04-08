@@ -7,7 +7,7 @@
                 <div class="col col-xl-10">
                   <div class="card" style="border-radius: 1rem;">
                     <div class="row g-0">
-                      <div class="col-md-6 col-lg-5 d-none d-md-block">
+                      <div class="col-md-6 col-lg-5 d-none d-md-block bg-danger"  >
                         <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
                           alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
                       </div>
@@ -39,7 +39,7 @@
           
                             <a class="small text-muted" href="#!">Forgot password?</a>
                             <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account? <a href="#!"
-                                style="color: #393f81;">Register here</a></p>
+                                style="color: 	#FF0000;"><router-link to="/register" class="text-dark">Register here</router-link></a></p>
                             <a href="#!" class="small text-muted">Terms of use.</a>
                             <a href="#!" class="small text-muted">Privacy policy</a>
                           </form>
