@@ -1,65 +1,71 @@
 <template>
-<section class=" vh-100 bg-danger"
+  <div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(person, index) in people" :key="person.id">
+          <td>{{ person.name }}</td>
+          <td>{{ person.age }}</td>
 
-  style="">
-  <div class="mask d-flex align-items-center h-100 gradient-custom-3">
-    <div class="container h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-12 col-md-9 col-lg-7 col-xl-6">
-          <div class="card" style="border-radius: 15px;">
-            <div class="card-body p-5">
-              <h2 class="text-uppercase text-center mb-5">Create an account</h2>
-
-              <form>
-
-                <div class="form-outline mb-4">
-                  <input type="text" id="form3Example1cg" class="form-control form-control-lg" required/>
-                  <label class="form-label" for="form3Example1cg">Your Name</label>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3cg" class="form-control form-control-lg" required />
-                  <label class="form-label" for="form3Example3cg">Your Email</label>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cg" class="form-control form-control-lg" required />
-                  <label class="form-label" for="form3Example4cg">Password</label>
-                </div>
-
-                <div class="form-outline mb-4">
-                  <input type="password" id="form3Example4cdg" class="form-control form-control-lg" required/>
-                  <label class="form-label" for="form3Example4cdg">Repeat your password</label>
-                </div>
-
-                <div class="form-check d-flex justify-content-center mb-5">
-                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" />
-                  <label class="form-check-label" for="form2Example3g">
-                    I agree all statements in <a href="#!" class="text-body"><u>Terms of service</u></a>
-                  </label>
-                </div>
-
-                <div class="d-flex justify-content-center">
-                  <button type="button"
-                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"><router-link to="/login" class="text-dark">Register</router-link></button>
-                </div>
-
-                <p class="text-center text-muted mt-5 mb-0">Have already an account? <a href="#!"
-                    class="fw-bold text-body"><u><router-link to="/login" class="text-dark">Login here</router-link></u></a></p>
-
-              </form>
-
-            </div>
-          </div>
-        </div>
-      </div>
+          <td>
+            <button @click="editPerson(index)">Edit</button>
+            <button @click="deletePerson(index)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div v-if="editing">
+      <h2>Edit Person</h2>
+      <form>
+        <label>
+          Name:
+          <input v-model="editedPerson.name" type="text" />
+        </label>
+        <label>
+          Age:
+          <input v-model="editedPerson.age" type="number" />
+        </label>
+        <button type="submit" @click.prevent="savePerson">Save</button>
+      </form>
     </div>
   </div>
-</section>
 </template>
+
 <script>
-    export default {
-        name:"registerPage"
-        
+export default {
+  name:'registerPage',
+  data() {
+    return {
+      people: [
+        { id: 1, name: 'John', age: 25 },
+        { id: 2, name: 'Mary', age: 30 },
+        { id: 3, name: 'Bob', age: 35 }
+      ],
+      editing: false,
+      editedPerson: { id: null, name: '', age: null }
+    };
+  },
+  methods: {
+    editPerson(index) {
+      this.editedPerson = { ...this.people[index] };
+      this.editing = true;
+    },
+    savePerson() {
+      const index = this.people.findIndex(p => p.id === this.editedPerson.id);
+      this.people.splice(index, 1, this.editedPerson);
+      this.editing = false;
+      this.editedPerson = { id: null, name: '', age: null };
+    },
+    deletePerson(index) {
+      this.people.splice(index, 1);
     }
+  }
+};
 </script>

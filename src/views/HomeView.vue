@@ -1,7 +1,6 @@
 <template>
- <div class="">
+
     <HomePage/>
-  </div>
 </template>
 <script>
 import HomePage from '../components/HomePage.vue'
