@@ -1,22 +1,70 @@
 <template>
  <h2>Delete User</h2>
 
-<button onclick="document.getElementById('id01').style.display='block'">Open Modal</button>
+ <a href="#" class="" style="font-size: 17px;padding-top:80px">
+          <i class='bx bx-grid-alt' ></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" fill="red"  class="bi bi-box-arrow-left" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0v2z"/>
+  <path fill-rule="evenodd" d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3z"/>
+</svg>
+          <span class="links_name" style="margin-right: 1000px;text-decoration: none;"><router-link to="/viewusers" class="text-dark">Back To Project</router-link></span>
+        </a>
+      
+     
+ <section>
+    <div class="container" style="margin-top: 100px;background-color: red;">
+      
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-8 col-xl-6">
+          <div class="row">
+            <div class="col text-center">
+              <h1>Edit User</h1>
+       
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col mt-4">
+              <input type="text" v-model="userbody.firstName" class="form-control" placeholder="First Name">
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col mt-4">
+              <input v-model="userbody.lastName" type="text" class="form-control" placeholder="Last Name">
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col mt-4">
+              <input v-model="userbody.departmentName" type="text" class="form-control" placeholder="Department">
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col mt-4">
+              <input v-model="userbody.position" type="text" class="form-control" placeholder="Designation">
+            </div>
+          </div>
+          <div class="row align-items-center">
+            <div class="col mt-4">
+              <input v-model="userbody.businessUnit" type="text" class="form-control" placeholder="Business Unit">
+            </div>
+          </div>
+          <div class="row align-items-center mt-4">
+            <div class="col">
+              <input v-model="userbody.email" type="email" class="form-control" placeholder="Email">
+            </div>
+          </div>
+       
+          <div class="row justify-content-start mt-4">
+            <div class="col">
+              
+           
 
-<div id="id01" class="modal">
-  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">×</span>
-  <form class="modal-content" action="/action_page.php">
-    <div class="container">
-      <h1>Delete Account</h1>
-      <p>Are you sure you want to delete this account?</p>
-    
-      <div class="clearfix">
-        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="deletebtn">Delete</button>
+              <button @click=" deletingUser();" class="btn btn-primary mt-4">Delete</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </form>
-</div>
+  </section>
 </template>
 <script>
 import AppMixins from "../../Mixins/shared.js"

@@ -33,6 +33,15 @@ import addClientPage from '../components/clients/clients.vue'
 import resolvePage from '../components/calls/resolve.vue'
 import closePage from '../components/calls/close.vue'
 import serviceIssuePage from '../components/services/serviceIssue.vue'
+import settingsPage from '../components/setup/settings.vue'
+import departmentName from '../components/setup/department.vue'
+import rolesPage from '../components/setup/roles.vue'
+import departmentTable from '../components/setup/departmentTable.vue'
+import rolesTable from '../components/setup/rolesTable.vue'
+import assignRolePage from '../components/setup/assignRole.vue'
+import suspendUser from '../components/users/suspendUser.vue'
+import userProfile from '../components/users/userProfile.vue'
+import ActivateUser from '../components/users/activateUser.vue'
 const routes = [
   {
     path: '/home',
@@ -50,6 +59,30 @@ const routes = [
     name: 'registerPage',
  
     component: registerPage
+  },
+  {
+    path: '/department',
+    name: 'departmentName',
+ 
+    component: departmentName
+  },
+  {
+    path: '/departmenttable',
+    name: 'departmentTable',
+ 
+    component: departmentTable
+  },
+ 
+  {
+    path: '/roles',
+    name: 'rolesPage',
+ 
+    component: rolesPage
+  },
+  {
+    path:'/rolestable',
+    name:'rolesTable',
+    component:rolesTable
   },
   {
     path: '/escalate/:ticketid',
@@ -76,6 +109,13 @@ const routes = [
     component: confirmEmail
   },
   {
+    path: '/activateuser',
+    name: 'ActivateUser',
+ 
+    component: ActivateUser
+  },
+
+  {
     path: '/viewusers',
     name: 'viewUsers',
  
@@ -98,6 +138,11 @@ const routes = [
     name: 'changePassword',
  
     component: changePassword
+  },
+  {
+    path:'/assignRole',
+    name:'assignRolePage',
+    component:assignRolePage
   },
 
 
@@ -168,6 +213,13 @@ const routes = [
   
     },
     {
+      path:'/settings',
+      name:'settingsPage',
+      component:settingsPage
+    
+    
+      },
+    {
       path:'/addusers',
       name:'addUserPage',
       component:addUserPage
@@ -233,6 +285,16 @@ component:customerPage
   path:'/ticket',
   name:'ticketPage',
   component:ticketPage
+},
+{
+  path:'/suspendUser/:userId',
+  name:'suspendUser',
+  component:suspendUser
+},
+{
+  path:'/userProfile',
+  name:'userProfile',
+  component:userProfile
 }
 
 ]

@@ -247,7 +247,7 @@
         <i class="bx bx-menu sidebarBtn"></i>
         <span class="dashboard">Setup</span>
         <div class="dropdown-content">
-          <a href="#">Security setup</a>
+          <a href="#"><router-link to="/settings" class="text-dark ">Office settings</router-link></a>
           <a href="#">Call center setup</a>
           <a href="#">Client setup</a>
           <a href="#">Vendor setup</a>
@@ -259,9 +259,10 @@
 
       <div class="sidebar-button">
         <!--<img src="images/profile.jpg" alt="">-->
-        <span class="admin_name" style="margin-right: 190px;">MonariCynthia</span>
+        <span class="admin_name" style="margin-right: 190px;">Hi, {{userbody.firstName}} {{ userbody.lastName }}</span>
         <div class="dropdown-content" style="text-align: left;padding: 20px;">
-          <a href="#">Profile settings</a>
+          <a href="#"><router-link to="/userProfile" class="text-dark"
+              >Profile settings</router-link></a>
           <a href="#"
             ><router-link to="/customer" class="text-dark"
               >Go to customer's portal</router-link
@@ -488,6 +489,7 @@ export default {
   data() {
     return {
       alltickets: [],
+      userbody:{}
     };
   },
   methods: {
@@ -505,6 +507,11 @@ export default {
         return response.data.message;
       }
     },
+    async GetLoggedInUser() {
+      var response = await this.Gettingloggedinuser();
+      this.userbody = response.body;
+      console.log("Logged in user __________ email:", this.userbody);
+    },
     async ticketsdetaila(ticketsid) {
       this.$router.push({
         path: `/asignticket/${ticketsid}`,
@@ -519,6 +526,7 @@ export default {
   },
   created() {
     this.getalltickets();
+    this.GetLoggedInUser();
   },
 };
 

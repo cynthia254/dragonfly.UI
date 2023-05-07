@@ -1,6 +1,6 @@
 <template>
   <section style="background-color: #eee;">
-  <div class="container py-5"  style="height: 500px;">
+  <div  style="height: 500px;">
     <div class="row">
       <div class="col">
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
@@ -22,6 +22,7 @@
             <h5 class="my-3">{{userbody.firstName}} {{ userbody.lastName }}</h5>
             <p   class="text-muted mb-1" >{{userbody.position}}</p>
             <p class="text-muted mb-4">Payhouse Limited Company</p>
+            <p class="" style="color: green;"><strong>Status: {{userbody.userStatus}}</strong></p>
             <div class="d-flex justify-content-center mb-2">
               <button type="button" class="btn btn-primary" style="font-size:12px;">Edit Profile</button>
               <br>
@@ -167,6 +168,8 @@ export default
       return {
         useremail:"",
         userbody:{},
+        usersListed:{},
+        user:{},
       
       }
     

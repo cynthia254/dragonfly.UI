@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto">
+
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <form id="msform">
@@ -298,7 +298,7 @@
         </form>
       </div>
     </div>
-  </div>
+ 
 </template>
 <!-- /.Horizontal Steppers -->
 <script>

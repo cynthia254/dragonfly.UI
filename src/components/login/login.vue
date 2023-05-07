@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
                   <div class="card-body p-4 p-lg-5 text-black">
-                    <form>
+               
                       <div class="d-flex align-items-center mb-3 pb-1">
                         <span
                           class="h1 fw-bold mb-0 text-center text-danger mx-4.5"
@@ -66,11 +66,12 @@
 
                     </div>
 
-                      <a class="small text-muted" href="#!"><router-link  to="/forgotpassword" class="text-dark">Forgot password?</router-link></a>
+                      <a class="small text-muted" href="#!" style="font-size: 16px;"><router-link  to="/forgotpassword" class="text-dark">Forgot password?</router-link></a>
                       <br>
-                      <a href="#!" class="small text-muted">Terms of use.</a>
-                      <a href="#!" class="small text-muted">Privacy policy</a>
-                    </form>
+                      <a href="#!" class="small text-muted" style="font-size: 16px;text-decoration: none;">Terms of use.</a>
+                      <a href="#!" class="small text-muted" style="font-size: 16px;text-decoration: none;">Privacy policy</a>
+                      <p style="text-align: center;font-size: 16px;">Not a member?  <a href="#!" ><router-link to="/addusers" class="" style="text-decoration: none;"><strong style="color: red;">Register</strong></router-link></a></p>
+                  
                   </div>
                 </div>
               </div>
@@ -110,6 +111,7 @@ export default {
         password: this.formdata.userpassword,
         userName: this.formdata.useremail,
       };
+    
    
       const response = await axios.post("User/Authenticate", loginbody, {
         headers: {

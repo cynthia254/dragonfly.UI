@@ -10,7 +10,7 @@
       
      
  <section>
-    <div class="container" style="margin-top: 100px;background-color: red;">
+    <div class="" style="margin-top: 10px;background-color: red;width: 70%;margin-left:100px">
       
       <div class="row justify-content-center">
         <div class="col-12 col-md-6 col-lg-8 col-xl-6">
@@ -56,7 +56,7 @@
               
            
 
-              <button @click=" EditUserEmail();" class="btn btn-primary mt-4">Edit</button>
+              <button @click=" EditUserEmail();" class="btn btn-primary mt-1" style="margin-left:200px">Edit</button>
             </div>
           </div>
         </div>
@@ -91,7 +91,7 @@ export default{
                 },
                 async EditUserEmail(useremail){
     var response=await this.editinguser(useremail);
-    console.log("deleting user:",response.message);
+    console.log("editing user:",response.message);
    
 
 

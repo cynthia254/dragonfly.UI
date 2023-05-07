@@ -15,6 +15,7 @@ export default {
       this.setAuthHeader();
 
       var response = await axios.post("User/Register_User", body);
+      console.log("registration response :", response);
       console.log("Response on register response:", response.data);
       return response.data;
     },
@@ -62,6 +63,12 @@ export default {
       console.log("passed mail: ", useremail)
       this.setAuthHeader();
       var response=await axios.post(`User/ConfirmUserMail?useremail=${useremail}`)
+      return response.data;
+    },
+    async activateUser(useremail){
+      console.log("passed mail: ", useremail)
+      this.setAuthHeader();
+      var response= await axios.post(`User/ActivateUserAccount?useremail=${useremail}`)
       return response.data;
     },
     async editUser(useremail){
@@ -112,7 +119,72 @@ export default {
       this.setAuthHeader();
       var resp=await axios.post(`User/Edituseremail?newemail=${useremail}`);
       return resp.data;
+    },
+    async addingDepartment(body){
+      this.setAuthHeader();
+      var resp=await axios.post(`User/Add_Department`,body);
+      return resp.data;
+
+    },
+    async GettingAllDepartment() {
+      this.setAuthHeader();
+      var response = await axios.get("User/GetAllDepartment");
+
+      return response.data;
+    },
+    async addingroles(roleName){
+      this.setAuthHeader();
+      var resp=await axios.post(`Roles/CreateRole?Rolename=${roleName}`);
+      return resp.data;
+
+    },
+    async GettingAllRoles() {
+      this.setAuthHeader();
+      var response = await axios.get("Roles/GetAllRoles");
+
+      return response.data;
+    },
+    async GettingDepartmenbyid(id){
+      this.setAuthHeader();
+      var response= await axios.post(`User/Getdepartmentbyid?departmentid=${id}`);
+      return response.data;
+    },
+    async assigningRoles(rolesID){
+      this.setAuthHeader();
+      var response=await axios.get(`Roles/AssignUserToRole?useremail=monaricynthia2%40gmail.com&roleid=${rolesID}`);
+      return response.data;
+
+
+    },
+    async SuspendingUsers(body){
+      console.log("body:",body)
+
+       this.setAuthHeader();
+      var resp = await axios.post('User/Suspend_user', body);
+      return  resp.data;
+
+    },
+    async Gettingloggedinuser(){
+      this.setAuthHeader();
+      var response=await axios.get(`User/LoggedInUser`);
+      return response.data;
+    }, 
+    async changingUserStatus(body){
+      this.setAuthHeader();
+      var response=await axios.post("User/Change_UserStatus",body);
+      return response.data;
+    },
+    async gettingUserById(userid){
+      this.setAuthHeader();
+      var response=await axios.post(`User/getuserbyid?userId=${userid}`)
+      return response.data;
+    },
+    async gettingUserStatusById(){
+      this.setAuthHeader();
+      var response=await axios.get(`User/getuserstatusbyid?userId=`);
+      return response.data;
     }
+
    
 
   

@@ -1,11 +1,11 @@
 <template>
   
  <img src="../../assets/images/pay.jpg" alt="avatar" style="height: 50px;width: 200px;margin-right: 1300px;margin-top: 20px;"> 
-<div class="search" style="margin-left: 800px;margin-top: 20px;display: flex;">
+<!--<div class="search" style="margin-left: 800px;margin-top: 20px;display: flex;">
 <input type="search" id="gsearch" name="gsearch" placeholder="search here" style="width: 450px;" > 
-</div>
+</div>-->
 
-<div style="width: 40%;">
+<div style="width: 40%;margin-left:40%">
   <div class="text-center">
     <button class="btn btn-default pull-right add-row" style="background-color: blue;margin-right: 300px;color: white;"><router-link to="/addusers" class="text-light" style="text-decoration: none;"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square-fill" viewBox="0 0 16 16">
   <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z"/>
@@ -39,6 +39,9 @@
       <th class="th-sm">Date Joined
 
 </th>
+<th class="th-sm">Status</th>
+
+
       <th class="th-sm" style="width: 10%;">Actions
 
 </th>
@@ -53,7 +56,30 @@
     <td>  {{ user.businessUnit }}</td>
     <td>{{user.email}}</td>
     <td>{{formatDateAssigned(user.dateCreated)}}</td>
-      <td style="display:flex;width: 100%;">
+    <td><strong>{{ user.userActiveMessage }}</strong><br>
+      
+     <i style="display: flex;"> {{ user.reasonforStatus }}</i> <br/> 
+      
+    </td>
+    <td><div class="dropdown" style="width: 200%;">
+  <button class="dropbtn"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+  <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+</svg></button>
+  <div class="dropdown-content" style="color: blue;width: 50%;">
+    <a href="#" @click="viewUseremail(user.email)">User Profile</a>
+    <a href="#" @click="viewUseremails(user.email)">Edit User</a>
+    <a href="#" @click.prevent="DeleteUser(user.email)">Delete User</a>
+<a href="/assignRole">Assign Role</a>
+    <a href="#" @click="ChangeUserStatus(user.userId)">Change User Status</a>
+    <a href="/activateuser">Activate User</a>
+    <a href="/confirmemail">Approve User</a>
+  </div>
+</div> </td>
+
+  
+    <!--  <td style="display:flex;width: 100%;">
+    
+    
               <button @click="viewUseremail(user.email)" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="View"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
   <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
   <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
@@ -86,7 +112,7 @@
  
 
 
-            </td>
+            </td>-->
     </tr>
 
 
@@ -107,7 +133,8 @@
 <script>
 
 import AppMixins from "../../Mixins/shared.js"
-
+import swal from "sweetalert2";
+import 'sweetalert2/dist/sweetalert2.min.css';
 export default{
     name:'viewUsers',
     mixins:[AppMixins],
@@ -116,8 +143,10 @@ data(){
   return {
      useremail:"",
         userbody:{},
-
-    allusers:[]
+        userId:"",
+        isactive:false,
+    allusers:[],
+   
   }
 
 },
@@ -125,13 +154,30 @@ data(){
 
 async getallusers(){
   const response= await this.GettingAllUsers();
-   this.allusers=response.body;
-
-   
+   this.allusers=response.body;  
    console.log("allusers: ", this.allusers);
   return response;
 
 },
+async getallusersaccountstatus(){
+  const response= await this.GettingAllUsers();
+
+  response.forEach(user => {
+   
+    if(user.emailConfirmed){
+
+
+     this. userIsActivated=false,
+    this.userIsInactivated=true
+
+    }
+    else{
+      this. userIsActivated=true,
+    this.userIsInactivated=false
+    }
+  });
+},
+
 async DeleteUser(useremail){
     var response=await this.deletingUser(useremail);
     console.log("deleting user:",response.message);
@@ -158,14 +204,50 @@ formatDateAssigned(value) {
         replace: true,
       });
     },
+    // async GetUserActiveStatusByid(){
+    //   var response=await this.gettingUserStatusById(this.userId);
+    //   console.log("response is:",response);
+
+    // },
+  async ChangeUserStatus(userId){
+    console.log("userId is:",userId)
+    this.$router.push({
+      path:`/suspendUser/${userId}`,
+      replace:true,
+    });
+  },
+    },
+    async OnuserActivated(email){
+      console.log("email is____:",email)
+     var resp= await this.confirmEmail(email);
+     console.log("response on email confirmation ______", resp);
+     if(resp.code=="200"){
+          swal.fire({
+            html:`<h4 class=text-success>${resp.message}</h4>`
+           
+          });
+        await   this.getallusersaccountstatus();
+        }
+          else{
+            swal.fire({
+            html:`<h4 class=text-danger>${resp.message}</h4>`
+          });
+
+          }
+    
+
+    },
     
     
-},
+
+
 created(){
 this.getallusers();
 }
-    
+
 }
+    
+
 </script>
 <style>
 button {
@@ -266,4 +348,38 @@ hr {
      width: 100%;
   }
 }
+.dropbtn {
+  background-color: grey;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {background-color: #ddd;}
+
+.dropdown:hover .dropdown-content {display: block;}
+
+.dropdown:hover .dropbtn {background-color: #043d47;}
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="page-wrap d-flex flex-row align-items-center">
-    <div class="container">
+  <div class="page-wrap d-flex flex-row align-items-center" style="margin-left: 200px;">
+   
       <div class="row">
         <div class="col-md-3">
           <img
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-  </div>
+
 </template>
 <script>
 export default {

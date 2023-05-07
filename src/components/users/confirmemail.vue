@@ -1,5 +1,5 @@
 <template>
-<form>
+
   <!-- Email input -->
  
 
@@ -13,8 +13,11 @@
 
 
   <!-- Submit button -->
-  <button type="submit" class="btn btn-primary btn-block" style="width: 400px;margin-left:500px" @click.prevent="this.ConfirmUserAccount();">Confirm</button>
-</form>
+  <div style="display: flex;width: 100%;">
+  <button type="submit" class="btn btn-primary btn-block" style="width: 200px;margin-left: 200px;" @click.prevent="this.ConfirmUserAccount();">Approve</button>
+  <button class="btn btn-danger" style="width:200px;margin-left:400px"><router-link to="/viewusers" class="text-light" style="text-decoration: none;">Reject</router-link></button>
+</div>
+
 </template>
 <script>
 import AppMixins from "../../Mixins/shared.js"
@@ -37,6 +40,7 @@ export default{
     {
      
       var useremails=this.useremail;
+      
 
         
        console.log("useremails :   ", useremails);
@@ -57,6 +61,7 @@ export default{
       });
 
       return promise;
+      
     },
   },
   }

@@ -1,6 +1,6 @@
 <template>
-  <section class="h-100 h-custom gradient-custom-2">
-    <div class="container py-5 h-100">
+  <section class="h-100 h-custom gradient-custom-2" style="width:100%">
+    <div class=" container w-100 h-100 py-5">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12">
           <div
@@ -73,19 +73,23 @@
                     </div>
 
                     <div class="mb-4 pb-2" style="width: 100%">
-                      <select
-                        class="select"
-                        style="
+                      <select class="select" style="
                           width: 100%;
                           height: 50px;
                           background-color: white;
                         "
-                        required
-                        v-model="this.formdata.selecteddepartment"
-                      >
-                        <option value="">Department</option>
-                        <option value="IT Support">IT Support</option>
-                        <option value="IT Manager">IT Manager</option>
+                          v-model="this.departmentid"
+                        >
+                       
+                      
+
+                        <option value="" >Department</option>
+                        <option v-for="department in this.alldepartment " 
+              
+              v-bind:value="department.departnmentid"  :key="department.departnmentid">
+              {{ department.departmentName }}
+            </option>
+                       
                       </select>
                     </div>
 
@@ -164,10 +168,10 @@
                         required
                         v-model="this.formdata.additionalinformation"
                       >
-                        <option value="1">UserType</option>
+                        <option value="UserType">UserType</option>
                         <option value="Admin">Admin</option>
-                        <option value=" System Users">System Users</option>
-                        <option value="client">Client</option>
+                        <option value=" System Users"> Partner</option>
+                        <option value="client">User</option>
                       </select>
                     </div>
 
@@ -306,7 +310,6 @@ export default {
         Addresslocation: "",
         businessunit: "",
         designition: "",
-        selecteddepartment: "",
         lastname: "",
         firstname: "",
         selectedsalutation: "",
@@ -315,17 +318,27 @@ export default {
         phonenumber: "",
         Countrycode: "",
         additionalinformation: "",
+        
       },
+      alldepartment:{},
+      departmentid:"",
+      departmentbody:{}
+     
+       
     };
   },
   methods: {
     async RegisterUser() {
+      var depid= this.departmentid;
+       this.departmentbody= await this.GettingDepartmenbyid(depid);
+       console.log("department body________________==: ", this.departmentbody);
+      console.log("department id: ",this.departmentid);
       var formvalues = {
         site: this.formdata.Addresslocation,
         address:this.formdata.Addresslocation,
         businessUnit: this.formdata.businessunit,
         position: this.formdata.designition,
-        departmentName: this.formdata.selecteddepartment,
+        departmentName: this.departmentbody.body.departmentName,
         lastName: this.formdata.lastname,
         firstName: this.formdata.firstname,
         salutation: this.formdata.selectedsalutation,
@@ -333,6 +346,8 @@ export default {
         email: this.formdata.emailadress,
         phoneNumber: this.formdata.countrycode + this.formdata.phonenumber,
         additionalInformation: this.formdata.additionalinformation,
+
+   
       };
       console.log("the form values :   ", this.formdata);
       var response =await  this.registereduser(formvalues);
@@ -342,6 +357,8 @@ export default {
           swal.fire({
             html: `<h5 class="text-success">${response.message}<h5>`,
           });
+          this.form.reset();
+           this.formdata={};
           return resolve(response.message);
         } else {
           swal.fire({
@@ -353,7 +370,20 @@ export default {
 
       return promise;
     },
+    async getAllDepartment(){
+  const response= await this.GettingAllDepartment();
+   this.alldepartment=response.body;
+
+   
+   console.log("alldepartment: ", this.alldepartment);
+  return response;
+
+},
+
   },
+  created(){
+this.getAllDepartment();
+}
 };
 </script>
 <style>
