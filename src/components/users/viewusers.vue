@@ -67,12 +67,12 @@
 </svg></button>
   <div class="dropdown-content" style="color: blue;width: 50%;">
     <a href="#" @click="viewUseremail(user.email)">User Profile</a>
-    <a href="#" @click="viewUseremails(user.email)">Edit User</a>
+    <a href="#" @click="viewUseremails(user.userId)">Edit User</a>
     <a href="#" @click.prevent="DeleteUser(user.email)">Delete User</a>
-<a href="/assignRole">Assign Role</a>
+<a href="#" @click.prevent="AssigningRole(user.userId)">Assign Role</a>
     <a href="#" @click="ChangeUserStatus(user.userId)">Change User Status</a>
-    <a href="/activateuser">Activate User</a>
-    <a href="/confirmemail">Approve User</a>
+    <a href="#" @click.prevent="ActivatingUsers(user.email)">Activate User</a>
+    <a href="#" @click.prevent="Confirming_emailfn(user.email)">Confirm User</a>
   </div>
 </div> </td>
 
@@ -177,6 +177,52 @@ async getallusersaccountstatus(){
     }
   });
 },
+async Confirming_email(userid){
+  this.$router.push({
+        path: `/confirmemail/${userid}`,
+        replace: true,
+      });
+},
+async ActivatingUser(userid){
+  this.$router.push({
+        path: `/activateuser/${userid}`,
+        replace: true,
+      });
+},
+async AssigningRole(userid){
+  this.$router.push({
+        path: `/assignRole/${userid}`,
+        replace: true,
+      });
+},
+
+async Confirming_emailfn(useremail ) {
+  
+   var response= await this.confirmEmail(useremail);
+ console.log("response on email confirmation: ", response);
+   if(response.code=="200"){
+    swal.fire({html:`<p class="text-success">${response.message}</p>`})
+    this.getallusers();
+   }
+else{
+  swal.fire({html:`<p class="text-danger">${response.message}</p>`})
+}
+
+},
+async ActivatingUsers(useremail ) {
+  
+  var response= await this.activateUser(useremail);
+console.log("response on email confirmation: ", response);
+  if(response.code=="200"){
+   swal.fire({html:`<p class="text-success">${response.message}</p>`})
+   this.getallusers();
+  }
+else{
+ swal.fire({html:`<p class="text-danger">${response.message}</p>`})
+}
+
+},
+
 
 async DeleteUser(useremail){
     var response=await this.deletingUser(useremail);
@@ -197,10 +243,10 @@ formatDateAssigned(value) {
         replace: true,
       });
     },
-    async viewUseremails(useremail){
-      console.log("useremail is:",useremail)
+    async viewUseremails(userId){
+      console.log("useremail is:",userId)
       this.$router.push({
-        path: `/editusers/${useremail}`,
+        path: `/editusers/${userId}`,
         replace: true,
       });
     },

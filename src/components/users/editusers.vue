@@ -56,7 +56,7 @@
               
            
 
-              <button @click=" EditUserEmail();" class="btn btn-primary mt-1" style="margin-left:200px">Edit</button>
+              <button @click=" EditUserDetails();" class="btn btn-primary mt-1" style="margin-left:200px">Update</button>
             </div>
           </div>
         </div>
@@ -65,6 +65,7 @@
   </section>
 </template>
 <script>
+import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared";
 export default{
     name:'editUsers',
@@ -74,28 +75,72 @@ export default{
     data(){
       return {
         useremail:"",
+        userId:"",
         userbody:{},
       
       }
     
     },
   methods:{
+    
 
-          async getuserbyemail()
-              {
-                  var useremails= this.useremail;
-                  var response = await this.gettinguserbyemail(useremails);
-                  this.userbody = response.body;
-                  console.log("getting user by __________ email:",  this.userbody);
-              
-                },
-                async EditUserEmail(useremail){
-    var response=await this.editinguser(useremail);
-    console.log("editing user:",response.message);
-   
+       
+    async EditUserDetails(){
+      var userId=this.userId;
+
+      const formvalues={
+        
+        "email":this.userbody.email,
+        "businessUnit":this.userbody.businessUnit,
+        "firstName":this.userbody.firstName,
+        "lastName":this.userbody.lastName,
+        "departmentName":this.userbody.departmentName,
+        "position":this.userbody.position,
+          "editorId":userId,
+          "address":this.userbody.address,
+          "phoneNumber":this.userbody.phoneNumber,
+          "site":this.userbody.site,
+          "additionalInformation":this.userbody.additionalInformation,
+          "salutation":this.userbody.salutation,
 
 
+
+
+
+
+
+      };
+      if(formvalues.email==""){
+        formvalues.email=="string";
+      }
+      console.log("formvalues",formvalues)
+      var response= await this.editUser(formvalues);
+      this.userbody=response.body;
+      console.log("editing user:",response.message);
+
+      if (response.code == "200") {
+        this.spinner = false;
+        console.log("response on assigning ;   ", response);
+        swal.fire({
+          html: `<h5 class="text-success">${response.message}</h5>`,
+        });
+      } else {
+        this.spinner = false;
+        swal.fire({
+          html: `<h5 class="text-danger">${response.message}</h5>`,
+        });
+      }
     },
+
+      
+
+    
+    async GetLoggedInUser() {
+      var response = await this.Gettingloggedinuser();
+      this.userbody = response.body;
+      console.log("Logged in user __________ userId:", this.userbody);
+    },
+
       
          formatDateAssigned(value) 
             {
@@ -107,9 +152,9 @@ export default{
           },
     created() 
         {
-        this.useremail = this.$route.params.useremail;
-        console.log("useremail :", this.useremail);   
-        this.getuserbyemail();
+        this.userId = this.$route.params.userId;
+        console.log("userId :", this.userId);  
+        this.GetLoggedInUser();
       },
         
 }

@@ -5,9 +5,13 @@
   
     <!-- Password input -->
     <div class="form-outline mb-4" style="margin-top: 100px;width:700px;align-items: center;margin-left: 300px;">
-      <input type="email" id="form1Example2" class="form-control" placeholder="ActivateUserEmail" v-model="this.useremail" />
+      <input type="email"  id="form1Example2" class="form-control" placeholder="ActivateUserEmail" v-model="this.useremail" />
    
     </div>
+    <div class="form-outline mb-4" style="width:700px;align-items: center;margin-left: 300px;">
+    <input type="text" id="form1Example2" class="form-control" placeholder="Reason" v-model="this.reason" />
+ 
+  </div>
   
    
   
@@ -31,6 +35,7 @@
         return{
         
           useremail:"",
+          reason:"",
       
       };
    
@@ -40,11 +45,12 @@
       {
        
         var useremails=this.useremail;
+        var reason=this.reason;
         
   
           
-         console.log("useremails :   ", useremails);
-        var response =await  this.activateUser(useremails);
+         console.log("useremails :   ", useremails,reason);
+        var response =await  this.activateUser(useremails,reason);
   
         let promise = new Promise((resolve, reject) => {
           if (response.code == "200") {

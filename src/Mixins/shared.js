@@ -71,10 +71,10 @@ export default {
       var response= await axios.post(`User/ActivateUserAccount?useremail=${useremail}`)
       return response.data;
     },
-    async editUser(useremail){
-      console.log("passed mail: ", useremail)
+    async editUser(body){
+      //console.log("passed id: ", userId)
       this.setAuthHeader();
-      var response=await axios.post(`User/Edituseremail`)
+      var response=await axios.post("User/EditUser",body)
       return response.data;
     },
     async gettinguserbyemail(useremail){
@@ -126,11 +126,19 @@ export default {
       return resp.data;
 
     },
+  
     async GettingAllDepartment() {
       this.setAuthHeader();
       var response = await axios.get("User/GetAllDepartment");
 
       return response.data;
+    },
+    async gettingUserStatusById(){
+      this.setAuthHeader();
+      var response=await axios.get(`User/GetUserActiveStatusByid`);
+      return response.data;
+
+
     },
     async addingroles(roleName){
       this.setAuthHeader();
@@ -179,11 +187,32 @@ export default {
       var response=await axios.post(`User/getuserbyid?userId=${userid}`)
       return response.data;
     },
-    async gettingUserStatusById(){
+    async addingDesignations(body){
       this.setAuthHeader();
-      var response=await axios.get(`User/getuserstatusbyid?userId=`);
+      var resp=await axios.post(`User/CreateDesignation`,body);
+      return resp.data;
+
+    },
+    async GettingAllDesignation() {
+      this.setAuthHeader();
+      var response = await axios.get("User/Getalldesignation");
+
       return response.data;
-    }
+    },
+    async GettingDesignationById(postionId){
+      this.setAuthHeader();
+      var response= await axios.post(`User/Getdesignationbyid?PositionId=${postionId}`);
+      return response.data;
+    },
+
+    async editingDesignation(body){
+      //console.log("passed id: ", userId)
+      this.setAuthHeader();
+      var response=await axios.post("User/EdutDesignation",body)
+      return response.data;
+    },
+   
+    
 
    
 

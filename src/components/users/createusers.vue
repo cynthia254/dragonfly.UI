@@ -93,23 +93,25 @@
                       </select>
                     </div>
 
-                    <div class="mb-4 pb-2">
-                      <div class="form-floating mb-3">
-                        <input
-                          type="text"
-                          class="form-control"
-                          id=""
-                          placeholder=""
-                          v-model="this.formdata.designition"
-                        />
-                        <label for=""
-                          >Designition<span
-                            class="required"
-                            style="color: red; font-size: 15px; padding: 5px"
-                            >*</span
-                          ></label
+                    <div class="mb-4 pb-2" style="width: 100%">
+                      <select class="select" style="
+                          width: 100%;
+                          height: 50px;
+                          background-color: white;
+                        "
+                          v-model="this.positionid"
                         >
-                      </div>
+                       
+                      
+
+                        <option value="" >Designation</option>
+                        <option v-for="designation in this.alldesignation " 
+              
+              v-bind:value="designation.postionId"  :key="designation.postionId">
+              {{ designation.positionName }}
+            </option>
+                       
+                      </select>
                     </div>
 
                     <div class="row">
@@ -144,8 +146,9 @@
                           type="text"
                           class="form-control"
                           id="floatingInput"
-                          placeholder=""
+                          placeholder="eg.Mukima Drive,Nairobi"
                           v-model="this.formdata.Addresslocation"
+                         
                         />
                         <label for="floatingInput" style="color: black"
                           >Location<span
@@ -158,21 +161,23 @@
                     </div>
 
                     <div class="mb-4 pb-2">
-                      <select
-                        class="select"
-                        style=" 
-                          width: 100%;
-                          height: 50px;
-                          background-color: white;
-                        "
-                        required
-                        v-model="this.formdata.additionalinformation"
-                      >
-                        <option value="UserType">UserType</option>
-                        <option value="Admin">Admin</option>
-                        <option value=" System Users"> Partner</option>
-                        <option value="client">User</option>
-                      </select>
+                   
+                      <div class="form-floating mb-3">
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="floatingInput"
+                          placeholder=""
+                          v-model="this.formdata.additionalinformation"
+                        />
+                        <label for="floatingInput" style="color: black"
+                          >County<span
+                            class="required"
+                            style="color: red; font-size: 15px; padding: 5px"
+                            ></span
+                          ></label
+                        >
+                      </div>
                     </div>
 
                     <div class="row">
@@ -322,7 +327,10 @@ export default {
       },
       alldepartment:{},
       departmentid:"",
-      departmentbody:{}
+      departmentbody:{},
+      alldesignation:{},
+      positionid:"",
+      designationbody:{}
      
        
     };
@@ -333,11 +341,15 @@ export default {
        this.departmentbody= await this.GettingDepartmenbyid(depid);
        console.log("department body________________==: ", this.departmentbody);
       console.log("department id: ",this.departmentid);
+      var desigid=this.positionid;
+      this.designationbody=await this.GettingDesignationById(desigid);
+      console.log("designation body________________==: ", this.designationbody);
+      console.log("designation id:",this.positionid);
       var formvalues = {
         site: this.formdata.Addresslocation,
         address:this.formdata.Addresslocation,
         businessUnit: this.formdata.businessunit,
-        position: this.formdata.designition,
+        position: this.designationbody.body.positionName,
         departmentName: this.departmentbody.body.departmentName,
         lastName: this.formdata.lastname,
         firstName: this.formdata.firstname,
@@ -346,6 +358,7 @@ export default {
         email: this.formdata.emailadress,
         phoneNumber: this.formdata.countrycode + this.formdata.phonenumber,
         additionalInformation: this.formdata.additionalinformation,
+        reasonforStatus:"New"
 
    
       };
@@ -377,14 +390,23 @@ export default {
    
    console.log("alldepartment: ", this.alldepartment);
   return response;
+  
 
+},
+async getallDesignation(){
+  const response= await this.GettingAllDesignation();
+  this.alldesignation=response.body;
+  console.log("all designation:",this.alldesignation);
+  return response;
 },
 
   },
   created(){
 this.getAllDepartment();
+this.getallDesignation();
+
+},
 }
-};
 </script>
 <style>
 @media (min-width: 1025px) {

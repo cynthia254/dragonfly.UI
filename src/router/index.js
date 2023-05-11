@@ -42,6 +42,10 @@ import assignRolePage from '../components/setup/assignRole.vue'
 import suspendUser from '../components/users/suspendUser.vue'
 import userProfile from '../components/users/userProfile.vue'
 import ActivateUser from '../components/users/activateUser.vue'
+import StatusTable from '../components/setup/statusTable.vue'
+import addDesignation from '../components/setup/addDesignation.vue'
+import designationTable from '../components/setup/designationTable.vue'
+import editDesignation from '../components/setup/editdesignation.vue'
 const routes = [
   {
     path: '/home',
@@ -71,6 +75,12 @@ const routes = [
     name: 'departmentTable',
  
     component: departmentTable
+  },
+  {
+    path: '/designationtable',
+    name: 'designationTable',
+ 
+    component: designationTable
   },
  
   {
@@ -103,13 +113,13 @@ const routes = [
     component: incidentPage
   },
   {
-    path: '/confirmemail',
+    path: '/confirmemail/:userId',
     name: 'confirmEmail',
  
     component: confirmEmail
   },
   {
-    path: '/activateuser',
+    path: '/activateuser/:userId',
     name: 'ActivateUser',
  
     component: ActivateUser
@@ -140,7 +150,7 @@ const routes = [
     component: changePassword
   },
   {
-    path:'/assignRole',
+    path:'/assignRole/:userId',
     name:'assignRolePage',
     component:assignRolePage
   },
@@ -157,12 +167,7 @@ const routes = [
     component:assignedTable
 
   },
-  {
-    path:'/confirmemail',
-    name:"confirmEmail",
-    component:confirmEmail
-
-  },
+  
   {
     path:'/serviceIssue',
     name:"serviceIssuePage",
@@ -170,10 +175,16 @@ const routes = [
 
   },
   {
-    path: '/editusers/:useremail',
+    path: '/editusers/:userId',
     name: 'editUsers',
  
     component: editUsers
+  },
+  {
+    path: '/editdesignation/:positionId',
+    name: 'editDesignation',
+ 
+    component: editDesignation
   },
   {
   path:'/bargraphPage',
@@ -181,6 +192,11 @@ const routes = [
   component:BarChart
 
 
+  },
+  {
+    path:'/statusTable/:userId',
+    name:'StatusTable',
+    component:StatusTable,
   },
   {
     path:'/close/:ticketid',
@@ -212,6 +228,13 @@ const routes = [
   
   
     },
+    {
+      path:'/addDesignation',
+      name:'addDesignation',
+      component:addDesignation
+    
+    
+      },
     {
       path:'/settings',
       name:'settingsPage',

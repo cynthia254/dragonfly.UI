@@ -1,6 +1,11 @@
 <template>
-  <div class="" style="margin-top: 50px">
-    <form action="">
+  <div class="" style="margin-top: 50px;">
+    <form action="" style="padding: 20px;max-width:400px;
+  margin: 0 auto;
+  background: #ffffff59;
+  -webkit-box-shadow: 3px 3px 23px -9px rgba(0, 0, 0, 0.86);
+  -moz-box-shadow: 3px 3px 23px -9px rgba(0, 0, 0, 0.86);
+  box-shadow: 3px 3px 23px -9px rgba(0, 0, 0, 0.86);" >
       <div class="">
         <label>Inactivity Description :</label>
         <select class="form-control select" v-model="selectedvalue">
@@ -98,7 +103,6 @@ export default {
       var response = await this.changingUserStatus(formvalues);
       console.log("user status changed:_____", this.userbody);
       this.userbody = response.body;
-
       if (response.code == "200") {
         this.spinner = false;
         console.log("response on assigning ;   ", response);
@@ -132,22 +136,14 @@ export default {
         this.datearea = true;
       } else {
         this.datearea = false;
+      
       }
     },
   },
 };
 </script>
 <style>
-form {
-  min-width: 300px;
-  max-width: 400px;
-  padding: 20px;
-  margin: 0 auto;
-  background: #ffffff59;
-  -webkit-box-shadow: 3px 3px 23px -9px rgba(0, 0, 0, 0.86);
-  -moz-box-shadow: 3px 3px 23px -9px rgba(0, 0, 0, 0.86);
-  box-shadow: 3px 3px 23px -9px rgba(0, 0, 0, 0.86);
-}
+
 
 form input {
   border: 1px solid #eee;

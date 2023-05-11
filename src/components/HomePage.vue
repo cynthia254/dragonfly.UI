@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar  " >
+  <div class="sidebar">
     <div class=" " style="height: 50px;display: flex;text-align: center;color: white;">
      <button class="" style="background-color: blue;width: 250px;height: 50px;">
         PAYHOUSE SUPPORT
@@ -548,7 +548,7 @@ export default {
   width: 240px;
   background: #e6e3e3;
   transition: all 0.5s ease;
-  z-index: 1000;
+
   left: 175px;
   margin-left: -175px;
   overflow-y: auto;

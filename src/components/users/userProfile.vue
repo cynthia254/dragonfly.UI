@@ -31,14 +31,14 @@
               <p class="text-muted mb-1">{{ userbody.position }}</p>
               <p class="text-muted mb-4">Payhouse Limited Company</p>
               <p class="" style="color: green">
-                <strong>Status: {{ userbody.userStatus }}</strong>
+                <strong>Status: {{ userbody.userActiveMessage }} {{ userbody.statusReason }}</strong>
               </p>
               <div class="d-flex justify-content-center mb-2">
                 <button
                   type="button"
                   class="btn btn-primary"
                   style="font-size: 12px"
-                >
+                  @click="viewUseremails(userbody.id)">
                   Edit Profile
                 </button>
                 <br />
@@ -229,10 +229,19 @@ export default {
       userbody: {},
       usersListed: {},
       user: {},
+      id:"",
+      allusers:[],
     };
   },
   methods: 
   {
+    async getallusers(){
+  const response= await this.GettingAllUsers();
+   this.allusers=response.body;  
+   console.log("allusers: ", this.allusers);
+  return response;
+
+},
     async GetLoggedInUser() {
       var response = await this.Gettingloggedinuser();
       this.userbody = response.body;
@@ -244,9 +253,17 @@ export default {
       formattedDate = `${formattedDate.toDateString()} at ${formattedDate.toLocaleTimeString()}`;
       return formattedDate;
     },
+    async viewUseremails(id){
+      console.log("useremail is:",id)
+      this.$router.push({
+        path: `/editusers/${id}`,
+        replace: true,
+      });
+    },
   },
   created() {
     this.GetLoggedInUser();
+    this.getallusers();
   },
 };
 </script>
