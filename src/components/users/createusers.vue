@@ -1,6 +1,6 @@
 <template>
-  <section class="h-100 h-custom gradient-custom-2" style="width:100%">
-    <div class=" container w-100 h-100 py-5">
+  <section class="h-100 h-custom gradient-custom-2" style="width: 100%">
+    <div class="container w-100 h-100 py-5">
       <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-12">
           <div
@@ -18,7 +18,7 @@
                     <div class="mb-4 pb-2">
                       <select
                         class="select"
-                        style=" 
+                        style="
                           width: 100%;
                           height: 50px;
                           background-color: white;
@@ -73,44 +73,44 @@
                     </div>
 
                     <div class="mb-4 pb-2" style="width: 100%">
-                      <select class="select" style="
+                      <select
+                        class="select"
+                        style="
                           width: 100%;
                           height: 50px;
                           background-color: white;
                         "
-                          v-model="this.departmentid"
+                        v-model="this.formdata.departmentnamevalue"
+                      >
+                        <option value="">Department</option>
+                        <option
+                          v-for="department in this.alldepartment"
+                          v-bind:value="department.departmentName"
+                          :key="department.departnmentid"
                         >
-                       
-                      
-
-                        <option value="" >Department</option>
-                        <option v-for="department in this.alldepartment " 
-              
-              v-bind:value="department.departnmentid"  :key="department.departnmentid">
-              {{ department.departmentName }}
-            </option>
-                       
+                          {{ department.departmentName }}
+                        </option>
                       </select>
                     </div>
 
                     <div class="mb-4 pb-2" style="width: 100%">
-                      <select class="select" style="
+                      <select
+                        class="select"
+                        style="
                           width: 100%;
                           height: 50px;
                           background-color: white;
                         "
-                          v-model="this.positionid"
+                        v-model="this.formdata.possitionamevalue"
+                      >
+                        <option value="">Designation</option>
+                        <option
+                          v-for="designation in this.alldesignation"
+                          v-bind:value="designation.positionName"
+                          :key="designation.postionId"
                         >
-                       
-                      
-
-                        <option value="" >Designation</option>
-                        <option v-for="designation in this.alldesignation " 
-              
-              v-bind:value="designation.postionId"  :key="designation.postionId">
-              {{ designation.positionName }}
-            </option>
-                       
+                          {{ designation.positionName }}
+                        </option>
                       </select>
                     </div>
 
@@ -148,7 +148,6 @@
                           id="floatingInput"
                           placeholder="eg.Mukima Drive,Nairobi"
                           v-model="this.formdata.Addresslocation"
-                         
                         />
                         <label for="floatingInput" style="color: black"
                           >Location<span
@@ -161,7 +160,6 @@
                     </div>
 
                     <div class="mb-4 pb-2">
-                   
                       <div class="form-floating mb-3">
                         <input
                           type="text"
@@ -174,9 +172,8 @@
                           >County<span
                             class="required"
                             style="color: red; font-size: 15px; padding: 5px"
-                            ></span
-                          ></label
-                        >
+                          ></span
+                        ></label>
                       </div>
                     </div>
 
@@ -266,20 +263,17 @@
                           value=""
                           id=""
                         />
-                        <label
-                          class="form-check-label text-white"
-                          for=""
-                        >
+                        <label class="form-check-label text-white" for="">
                           I do accept the
                           <a href="#!" class="text-white"
                             ><u>Terms and Conditions</u></a
                           >
                           of your site.
                         </label>
-                        </div>
-                        
+                      </div>
 
-                      <button @click="this.RegisterUser();"
+                      <button
+                        @click="this.RegisterUser()"
                         type="button"
                         class="btn btn-light btn-lg"
                         data-mdb-ripple-color="dark"
@@ -287,10 +281,15 @@
                         Add User
                       </button>
 
-                      
+                      <div v-if="this.showspiner" class="spinner-border text-light mx-3 mt-3" role="status">
+                        <span class="sr-only"></span>
+                      </div>
                     </div>
-                    <a href="#" class="text-white" ><router-link to="/confirmemail" class="text-light">Verify user email for them to log in</router-link></a>
-                     
+                    <a href="#" class="text-white"
+                      ><router-link to="/confirmemail" class="text-light"
+                        >Verify user email for them to log in</router-link
+                      ></a
+                    >
                   </div>
                 </div>
               </div>
@@ -302,7 +301,7 @@
   </section>
 </template>
 <script>
-import AppMixins from "../../Mixins/shared.js"
+import AppMixins from "../../Mixins/shared.js";
 
 import swal from "sweetalert2";
 export default {
@@ -323,34 +322,39 @@ export default {
         phonenumber: "",
         Countrycode: "",
         additionalinformation: "",
-        
+        departmentnamevalue: "",
+        possitionamevalue: "",
       },
-      alldepartment:{},
-      departmentid:"",
-      departmentbody:{},
-      alldesignation:{},
-      positionid:"",
-      designationbody:{}
-     
-       
+      alldepartment: {},
+      departmentid: "",
+      departmentbody: {},
+      alldesignation: {},
+      positionid: "",
+      designationbody: {},
+      showspiner:false
     };
   },
   methods: {
     async RegisterUser() {
-      var depid= this.departmentid;
-       this.departmentbody= await this.GettingDepartmenbyid(depid);
-       console.log("department body________________==: ", this.departmentbody);
-      console.log("department id: ",this.departmentid);
-      var desigid=this.positionid;
-      this.designationbody=await this.GettingDesignationById(desigid);
-      console.log("designation body________________==: ", this.designationbody);
-      console.log("designation id:",this.positionid);
+      this.showspiner=true;
+      console.log("loggin in _____________________|||____", this.formdata);
+      //var depid = this.departmentid;
+      //this.departmentbody = await this.GettingDepartmenbyid(depid);
+      console.log("department body________________==: ", this.departmentbody);
+      console.log("department id-------------: ", this.departmentid);
+      //var desigid = this.positionid;
+      //this.designationbody = await this.GettingDesignationById(desigid);
+      console.log(
+        "designation body________________==:-------------________________|||||",
+        this.designationbody
+      );
+      console.log("designation id-------------|||----------:", this.positionid);
       var formvalues = {
         site: this.formdata.Addresslocation,
-        address:this.formdata.Addresslocation,
+        address: this.formdata.Addresslocation,
         businessUnit: this.formdata.businessunit,
-        position: this.designationbody.body.positionName,
-        departmentName: this.departmentbody.body.departmentName,
+        position: this.formdata.possitionamevalue,
+        departmentName: this.formdata.departmentnamevalue,
         lastName: this.formdata.lastname,
         firstName: this.formdata.firstname,
         salutation: this.formdata.selectedsalutation,
@@ -358,22 +362,26 @@ export default {
         email: this.formdata.emailadress,
         phoneNumber: this.formdata.countrycode + this.formdata.phonenumber,
         additionalInformation: this.formdata.additionalinformation,
-        reasonforStatus:"New"
-
-   
+        reasonforStatus: "New",
       };
-      console.log("the form values :   ", this.formdata);
-      var response =await  this.registereduser(formvalues);
+      console.log(
+        "the form values ___________________}}}}}}________ :   ",
+        formvalues
+      );
+      var response = await this.registereduser(formvalues);
 
       let promise = new Promise((resolve, reject) => {
         if (response.code == "200") {
+          this.showspiner=false;
           swal.fire({
             html: `<h5 class="text-success">${response.message}<h5>`,
           });
-          this.form.reset();
-           this.formdata={};
+
+          this.formdata = {};
           return resolve(response.message);
         } else {
+
+          this.showspiner=false;
           swal.fire({
             html: `<h5 class="text-danger">${response.message}<h5>`,
           });
@@ -383,30 +391,25 @@ export default {
 
       return promise;
     },
-    async getAllDepartment(){
-  const response= await this.GettingAllDepartment();
-   this.alldepartment=response.body;
+    async getAllDepartment() {
+      const response = await this.GettingAllDepartment();
+      this.alldepartment = response.body;
 
-   
-   console.log("alldepartment: ", this.alldepartment);
-  return response;
-  
-
-},
-async getallDesignation(){
-  const response= await this.GettingAllDesignation();
-  this.alldesignation=response.body;
-  console.log("all designation:",this.alldesignation);
-  return response;
-},
-
+      console.log("alldepartment: ", this.alldepartment);
+      return response;
+    },
+    async getallDesignation() {
+      const response = await this.GettingAllDesignation();
+      this.alldesignation = response.body;
+      console.log("all designation:", this.alldesignation);
+      return response;
+    },
   },
-  created(){
-this.getAllDepartment();
-this.getallDesignation();
-
-},
-}
+  created() {
+    this.getAllDepartment();
+    this.getallDesignation();
+  },
+};
 </script>
 <style>
 @media (min-width: 1025px) {

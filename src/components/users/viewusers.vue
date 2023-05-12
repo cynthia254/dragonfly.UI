@@ -212,7 +212,7 @@ else{
 async ActivatingUsers(useremail ) {
   
   var response= await this.activateUser(useremail);
-console.log("response on email confirmation: ", response);
+console.log("response on email activation: ", response);
   if(response.code=="200"){
    swal.fire({html:`<p class="text-success">${response.message}</p>`})
    this.getallusers();

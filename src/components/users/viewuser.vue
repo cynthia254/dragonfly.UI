@@ -22,7 +22,7 @@
             <h5 class="my-3">{{userbody.firstName}} {{ userbody.lastName }}</h5>
             <p   class="text-muted mb-1" >{{userbody.position}}</p>
             <p class="text-muted mb-4">Payhouse Limited Company</p>
-            <p class="" style="color: green;"><strong>Status: {{user.usertActive}}</strong></p>
+            <p class="" style="color: green;"><strong>Status: {{ userbody.userActiveMessage }} {{ userbody.reason }}</strong></p>
             <div class="d-flex justify-content-center mb-2">
               <button type="button" class="btn btn-primary" style="font-size:12px;">Edit Profile</button>
               <br>
@@ -191,6 +191,7 @@ export default
               formattedDate = `${formattedDate.toDateString()} at ${formattedDate.toLocaleTimeString()}`;
               return formattedDate;
             },
+            
         
           },
     created() 

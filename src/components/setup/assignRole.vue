@@ -8,110 +8,41 @@
         <h3 class="mb-0">Assign Role To User</h3>
       </div>
       <div class="card-body">
-
-          <fieldset>
-            <label class="mb-0">Email</label>
-            <div class="row mb-1">
-              <div class="col-lg-12">
-                <input class="form-control" v-model="this.formdata.userEmail" type="text" />
-              </div>
+        <fieldset>
+          <label class="mb-0">Email</label>
+          <div class="row mb-1">
+            <div class="col-lg-12">
+              <input class="form-control" type="text text-dark" v-model="this.usermail" />
             </div>
-            <label class="mb-0">Roles</label>
-            
-            <div class="mb-4 pb-2" style="width: 100%">
-                      <select class="select" style="
-                          width: 100%;
-                          height: 50px;
-                          background-color: white;
-                        "
-                          v-model="this.formdata.RolesID"
-                         >
-                       
-                      
+          </div>
+          <label class="mb-0">Roles</label>
 
-                        <option value="" >SuperAdmin</option>
-                        <option value="" >Admin</option>
-                        <option value="" >Partner</option>
-                        <option value="" >User</option>
-               
-                       
-                      </select>
-                    </div>
-    
-<!-- Table  -->
-<table class="table table-bordered">
-  <!-- Table head -->
-  <thead>
-    <tr>
-      <th>
-        <!-- Default unchecked -->
-      
-      </th>
-      <th>Responsibilities Id</th>
-      <th>Responsibilities</th>
-      <th>Grant Permission</th>
-      
-    </tr>
-  </thead>
-  <!-- Table head -->
+          <div class="mb-4 pb-2" style="width: 100%">
+            <select
+              class="checkbox"
+              style="width: 100%; height: 50px; background-color: white"
+              v-model="this.rolesID"
+            >
+              <option
+                v-for="roles in this.allroles"
+                v-bind:value="roles.rolesID"
+                :key="roles.rolesID"
+              >
+                {{ roles.roleName }}
+              </option>
+            </select>
+          </div>
 
-  <!-- Table body -->
-  <tbody>
-    <tr>
-      <th scope="row">
-        <!-- Default unchecked -->
-       
-      </th>
-      <td>1</td>
-      <td> Create User</td>
-      <td>
-        <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1">
-       
-        </div>
-      </td>
-      
-    </tr>
-    <tr>
-      <th scope="row">
-        <!-- Default unchecked -->
-       
-      </th>
-      <td>2</td>
-      <td>Department</td>
-      <td>
-        <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1">
-       
-        </div>
-      </td>
-     
-    </tr>
-    <tr>
-      <th scope="row">
-        <!-- Default unchecked -->
-       
-      </th>
-      <td>3</td>
-      <td>Roles</td>
-      <td>
-        <div class="custom-control custom-checkbox">
-          <input type="checkbox" class="custom-control-input" id="tableDefaultCheck1">
-       
-        </div>
-      </td>
-    
-    </tr>
-    
-  </tbody>
-  <!-- Table body -->
-</table>
-<!-- Table  -->    
-            <button class="btn btn-danger btn-lg float-center" style="margin-left:20%;margin-top:2%" type="submit" @click.prevent="AssignUserToRole(id);">
-              ASSIGN ROLE
-            </button>
-          </fieldset>
-    
+          <!-- Table  -->
+          <button
+            class="btn btn-danger btn-lg float-center"
+            style="margin-left: 20%; margin-top: 2%"
+            type="submit"
+            @click.prevent="AssignUserToRole(id)"
+          >
+            ASSIGN ROLE
+          </button>
+        </fieldset>
       </div>
     </div>
     <!-- /form contact -->
@@ -120,49 +51,83 @@
   <!--/col-->
 </template>
 <script>
-
 import swal from "sweetalert2";
-import AppMixins from "../../Mixins/shared"
+import AppMixins from "../../Mixins/shared";
 export default {
   name: "assignRolePage",
   mixins: [AppMixins],
-    data() {
+  data() {
     return {
       
-      formdata: {
-        userEmail:"",
-        rolesID:"",
-        useremail:"",
-        userbody:{},
-    
-      },
+      userbody: {},
+      rolebody: {},
+      allroles: {},
+      allresponsibility: {},
+      allusers: {},
+      rolesID: "",
+      usermail:""
     };
   },
   methods: {
     async AssignUserToRole() {
-  
-  var userEmail =this.formdata.userEmail;
-  var rolesID=this.formdata.rolesID;
+      
+      var roleided= this.rolesID;
 
-  
+      console.log(" the role id :  _________", roleided);
+      var usermailer=this.usermail;
+      var response = await this.assigningRoles(roleided,usermailer) ;
 
- console.log("Roles new: ", userEmail,rolesID);
-var response = await this.assigningRoles(rolesID);
-if (response.code == "200") {
-  swal.fire({
-    html: `<h5 class="text-success">${response.message}</h5>`,
-  });
-} else {
-  swal.fire({
-    html: `<h5 class="text-danger">${response.message}</h5>`,
-  });
-}
-},
-   },
-  }
+      console.log(" whta is response _______", response)
+      if (response.isTrue==true) {
+        swal.fire({
+          html: `<h5 class="text-success">${response.message}</h5>`,
+        });
+      } else {
+        swal.fire({
+          html: `<h5 class="text-danger">${response.message}</h5>`,
+        });
+      }
+    },
+    async GetAllRoles() {
+      const response = await this.GettingAllRoles();
+      this.allroles = response.body;
 
+      console.log("allroles: ", this.allroles);
+      return response;
+    },
+    async getallusers() {
+      const response = await this.GettingAllUsers();
+      this.userbody = response.body;
 
+      //this.usermail=response.body.email;
+      console.log("allusers: ", this.userbody);
+      return response;
+    },
+    async GetAllRolecLaims() {
+      const response = await this.GettingAllResponsibility();
+      this.allresponsibility = response.body;
+
+      console.log("allresponsibility: ", this.allresponsibility);
+      return response;
+    },
+
+    async  getuserbyid(){
+       var idofuser=  this.userId;
+      const resp=await this.gettinguserbyid(idofuser);
+      this.userbody=resp.body; 
+      
+      this.usermail=resp.body.email
+      console.log("user:",this.userbody);
+    
+    },
+  },
+  created() {
+    this.GetAllRoles();
+    this.userId = this.$route.params.userId;
+    console.log("user id :", this.userId);
+    this.getuserbyid();
+
+  },
+};
 </script>
-<style>
-
-</style>
+<style></style>

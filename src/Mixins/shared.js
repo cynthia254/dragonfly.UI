@@ -11,7 +11,7 @@ export default {
     },
 
     async registereduser(body) {
-      console.log("sent body of registered user: ", body);
+      console.log("__________________________sent body of registered user: ", body);
       this.setAuthHeader();
 
       var response = await axios.post("User/Register_User", body);
@@ -157,9 +157,9 @@ export default {
       var response= await axios.post(`User/Getdepartmentbyid?departmentid=${id}`);
       return response.data;
     },
-    async assigningRoles(rolesID){
+    async assigningRoles(rolesID,usermail){
       this.setAuthHeader();
-      var response=await axios.get(`Roles/AssignUserToRole?useremail=monaricynthia2%40gmail.com&roleid=${rolesID}`);
+      var response=await axios.get(`Roles/AssignUserToRole?useremail=${usermail}&roleid=${rolesID}`);
       return response.data;
 
 
@@ -211,9 +211,36 @@ export default {
       var response=await axios.post("User/EdutDesignation",body)
       return response.data;
     },
-   
+    async GettingAllResponsibility(){
+      this.setAuthHeader();
+      var response=await axios.get("Roles/AllClaims");
+      return response.data;
+    },
+    async addRoleClaim(roleclaimname){
+      this.setAuthHeader();
+      var response=await axios.post(`Roles/AddRoleClaim?roleclaimname=${roleclaimname}`);
+      return response.data;
+    },
+   async gettingRolesById(rolesID){
+    this.setAuthHeader();
+    var response =await axios.post(`Roles/Getrolebyid?Roleid=${rolesID}`);
+    return response.data;
+   },
     
+   async addingclaimstoRoles(claimid, roleid){
+     this.setAuthHeader();
 
+     var resp=  await axios.post(`Roles/AddClaimstoRoles?roleid=${roleid}&claimid=${claimid}`);
+
+     return resp.data;
+
+   },
+   async gettingallroleClaims(roleided){
+
+    var resp= await axios.post(`Roles/GetAllroleClaims?roleid=${roleided}`);
+    return  resp.data;
+   }
+   
    
 
   

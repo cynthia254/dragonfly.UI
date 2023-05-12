@@ -46,6 +46,10 @@ import StatusTable from '../components/setup/statusTable.vue'
 import addDesignation from '../components/setup/addDesignation.vue'
 import designationTable from '../components/setup/designationTable.vue'
 import editDesignation from '../components/setup/editdesignation.vue'
+import responsibilityTable from '../components/setup/ResponsibilityTable.vue'
+import AddRoleClaims from '../components/setup/addRoleClaim.vue'
+import AddClaimToRoles from '../components/setup/AddClaimToRole.vue'
+import roleClaims  from "../components/users/allclaimroles.vue"
 const routes = [
   {
     path: '/home',
@@ -63,6 +67,11 @@ const routes = [
     name: 'registerPage',
  
     component: registerPage
+  },
+  {
+    path: '/allroleclaims',
+    name: 'roleClaims',
+    component: roleClaims
   },
   {
     path: '/department',
@@ -90,9 +99,20 @@ const routes = [
     component: rolesPage
   },
   {
+    path: '/responsibility',
+    name: 'AddRoleClaims',
+ 
+    component: AddRoleClaims
+  },
+  {
     path:'/rolestable',
     name:'rolesTable',
     component:rolesTable
+  },
+  {
+    path:'/addclaimtorole',
+    name:'AddClaimToRoles',
+    component:AddClaimToRoles
   },
   {
     path: '/escalate/:ticketid',
@@ -185,6 +205,12 @@ const routes = [
     name: 'editDesignation',
  
     component: editDesignation
+  },
+  {
+    path: '/ResponsibilityTable',
+    name: 'responsibilityTable',
+ 
+    component: responsibilityTable
   },
   {
   path:'/bargraphPage',
