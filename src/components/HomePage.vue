@@ -237,17 +237,16 @@
         <i class="bx bx-menu sidebarBtn"></i>
         <span class="dashboard">Team</span>
         <div class="dropdown-content" style="width: 400%;padding:20px;padding-top: 10px;">
-          <a href="#"><router-link to="/addusers" class="text-dark ">Create Your Team</router-link></a>
-          <a href="#"><router-link to="/viewusers" class="text-dark ">System Users</router-link></a>
-          <a href="#" class="text-white" ><router-link to="/confirmemail" class="text-dark">Verify user email </router-link></a>
-                     
+          <a href="/addusers">Create Your Team</a>
+          <a href="/viewusers">Manage Users</a>
+            
         </div>
       </div>
       <div class="sidebar-button" style="font-size: 20px;">
         <i class="bx bx-menu sidebarBtn"></i>
         <span class="dashboard">Setup</span>
         <div class="dropdown-content">
-          <a href="#"><router-link to="/settings" class="text-dark ">Office settings</router-link></a>
+          <a href="/settings">Office settings</a>
           <a href="#">Call center setup</a>
           <a href="#">Client setup</a>
           <a href="#">Vendor setup</a>
@@ -261,12 +260,9 @@
         <!--<img src="images/profile.jpg" alt="">-->
         <span class="admin_name" style="margin-right: 190px;">Hi, {{userbody.firstName}} {{ userbody.lastName }}</span>
         <div class="dropdown-content" style="text-align: left;padding: 20px;">
-          <a href="#"><router-link to="/userProfile" class="text-dark"
-              >Profile settings</router-link></a>
-          <a href="#"
-            ><router-link to="/customer" class="text-dark"
-              >Go to customer's portal</router-link
-            ></a
+          <a href="/userProfile">Profile settings</a>
+          <a href="/customer"
+            >Go to customer's portal</a
           >
           <a href="#">Inbox</a>
     <a href="#">My change request</a>
@@ -274,7 +270,7 @@
     <a href="#">Reminder</a>
     <a href="#">Day Manager</a>
     <a href="#">My FAQs</a>
-    <a href="#"><router-link to="/changePassword" class="text-dark" style="text-decoration: none;">Change Password</router-link></a>
+    <a href="/changePassword">Change Password</a>
     
           <a href="#">SignOut</a>
         </div>
@@ -380,7 +376,7 @@
         </div>
       </div>-->
 
-      <div class="mx-1"  >
+      <div class="mx-1"  v-if="showtickets">
     <table class="table table-bordered " style="">
       <thead class="thead-dark">
         <tr>
@@ -470,6 +466,23 @@
           </ul>
         </div>-->
      </div>
+     <div id="app" v-if="this.acessdenied" style=" padding: 1rem;
+   background: black;
+   display: flex;
+   height: 700px;
+   justify-content: center; 
+   align-items: center;
+   color: #54FE55;
+   text-shadow: 0px 0px 10px ;
+   font-size: 6rem;
+   flex-direction: column;
+   width: 1200px;
+   ">
+   <div>403</div>
+   <div class="txt">
+      Forbidden<span class="blink">_</span>
+   </div>
+</div>
    
     
     
@@ -489,7 +502,9 @@ export default {
   data() {
     return {
       alltickets: [],
-      userbody:{}
+      userbody:{},
+      showtickets:false,
+      acessdenied:false
     };
   },
   methods: {
@@ -497,14 +512,18 @@ export default {
       var response = await this.getAllTickets();
       console.log("Get all tickets:", response);
       if (response.code == "200") {
+        this.acessdenied=false;
+        this.showtickets=true;
         this.alltickets = response.body;
         console.log("All tickets:", this.alltickets);
-        return response.data;
+        return response;
       } else {
+        this.acessdenied=true;
+        this.showtickets=false;
         swal.fire({
           html: `<h5 class="text-danger">${response.message}</h5>`,
         });
-        return response.data.message;
+        return response.message;
       }
     },
     async GetLoggedInUser() {
@@ -1074,5 +1093,20 @@ th, td {
   padding: 8px;
   text-align: left;
   border-bottom: 1px solid #ddd;
+}
+
+@keyframes blink {
+    0%   {opacity: 0}
+    49%  {opacity: 0}
+    50%  {opacity: 1}
+    100% {opacity: 1}
+}
+
+.blink {
+   animation-name: blink;
+    animation-duration: 1s;
+   animation-iteration-count: infinite;
+   animation-timing-function: linear;
+  
 }
 </style>

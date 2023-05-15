@@ -22,7 +22,7 @@
                     </a>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <a href="">
+                    <a href="/designationtable">
                         <div class="card-flyer">
                             <div class="text-box">
                                 <div class="text-container">                                    
@@ -37,7 +37,7 @@
                     </a>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <a href="">
+                    <a href="/addclaimtorole">
                         <div class="card-flyer">
                             <div class="text-box">
 
@@ -54,7 +54,7 @@
                     </a>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">
-                    <a href=""><router-link to="/departmenttable" class="text-dark" style="text-decoration: none;">
+                    <a href="/departmenttable">
                         <div class="card-flyer">
                             <div class="text-box">
                                 <div class="text-container">
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                         </div>
-                      </router-link>
+                   
                     </a>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3">

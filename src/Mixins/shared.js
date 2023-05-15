@@ -239,6 +239,18 @@ export default {
 
     var resp= await axios.post(`Roles/GetAllroleClaims?roleid=${roleided}`);
     return  resp.data;
+   },
+   async SendingUserMail(usermail){
+    this.setAuthHeader();
+       console.log("logger areas _________", usermail)
+    var resp= await axios.post(`User/Send_Forget_Password_Link?useremail=${usermail}`);
+    return resp.data;
+   },
+   async ResetingPassword(body){
+    this.setAuthHeader();
+    var response=await axios.post("User/Reset_user_Password", body);
+    return response.data;
+
    }
    
    

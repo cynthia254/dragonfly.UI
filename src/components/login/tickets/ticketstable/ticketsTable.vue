@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-4" >
+  <div class="mx-4"   v-if="this.showtickets">
     <table class="table table-bordered">
       <thead class="thead-dark">
         <tr>
@@ -61,7 +61,25 @@
         </tr>
       </tbody>
     </table>
+ 
   </div>
+  <div id="app" v-if="this.acessdenied" style=" padding: 1rem;
+   background: black;
+   display: flex;
+   height: 700px;
+   justify-content: center; 
+   align-items: center;
+   color: #54FE55;
+   text-shadow: 0px 0px 10px ;
+   font-size: 6rem;
+   flex-direction: column;
+   width: 1200px;
+   ">
+   <div>403</div>
+   <div class="txt">
+      Forbidden<span class="blink">_</span>
+   </div>
+</div>
 </template>
 
 <script>
@@ -73,6 +91,8 @@ export default {
   data() {
     return {
       alltickets: [],
+      showtickets:false,
+      acessdenied:false,
     };
   },
   methods: {
@@ -80,14 +100,19 @@ export default {
       var response = await this.getAllTickets();
       console.log("Get all tickets:", response);
       if (response.code == "200") {
+        this.acessdenied=false;
+        this.showtickets=true;
         this.alltickets = response.body;
         console.log("All tickets:", this.alltickets);
-        return response.data;
-      } else {
+      
+      } 
+      else {
+        this.acessdenied=true;
+        this.showtickets=false;
         swal.fire({
           html: `<h5 class="text-danger">${response.message}</h5>`,
         });
-        return response.data.message;
+         
       }
     },
     async ticketsdetaila(ticketsid) {
@@ -134,4 +159,24 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+
+@keyframes blink {
+    0%   {opacity: 0}
+    49%  {opacity: 0}
+    50%  {opacity: 1}
+    100% {opacity: 1}
+}
+
+.blink {
+   animation-name: blink;
+    animation-duration: 1s;
+   animation-iteration-count: infinite;
+   animation-timing-function: linear;
+  
+}
+
+
+
+
+</style>

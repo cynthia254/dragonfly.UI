@@ -66,7 +66,7 @@
 
                     </div>
 
-                      <a class="small text-muted" href="#!" style="font-size: 16px;"><router-link  to="/forgotpassword" class="text-dark">Forgot password?</router-link></a>
+                      <a class="small text-muted" href="#!" style="font-size: 16px;"><router-link  to="/password_reset_email" class="text-dark">Forgot password?</router-link></a>
                       <br>
                       <a href="#!" class="small text-muted" style="font-size: 16px;text-decoration: none;">Terms of use.</a>
                       <a href="#!" class="small text-muted" style="font-size: 16px;text-decoration: none;">Privacy policy</a>

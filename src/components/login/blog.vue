@@ -14,7 +14,7 @@
 
   <!--Main layout-->
   <main class="my-5">
-    <div class="container">
+    <div class="">
       <!--Section: Content-->
       <section class="text-center">
         <h4 class="mb-5"><strong>Latest posts</strong></h4>

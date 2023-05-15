@@ -1,4 +1,4 @@
-<template>
+<template  >
   
  <img src="../../assets/images/pay.jpg" alt="avatar" style="height: 50px;width: 200px;margin-right: 1300px;margin-top: 20px;"> 
 <!--<div class="search" style="margin-left: 800px;margin-top: 20px;display: flex;">
@@ -147,10 +147,12 @@ data(){
         isactive:false,
     allusers:[],
    
+   
   }
 
 },
     methods:{
+    
 
 async getallusers(){
   const response= await this.GettingAllUsers();
@@ -201,10 +203,12 @@ async Confirming_emailfn(useremail ) {
    var response= await this.confirmEmail(useremail);
  console.log("response on email confirmation: ", response);
    if(response.code=="200"){
+   
     swal.fire({html:`<p class="text-success">${response.message}</p>`})
     this.getallusers();
    }
 else{
+ 
   swal.fire({html:`<p class="text-danger">${response.message}</p>`})
 }
 
@@ -290,6 +294,7 @@ formatDateAssigned(value) {
 created(){
 this.getallusers();
 }
+
 
 }
     

@@ -50,6 +50,8 @@ import responsibilityTable from '../components/setup/ResponsibilityTable.vue'
 import AddRoleClaims from '../components/setup/addRoleClaim.vue'
 import AddClaimToRoles from '../components/setup/AddClaimToRole.vue'
 import roleClaims  from "../components/users/allclaimroles.vue"
+import  resetEmail  from "../components/login/passwordReset.vue"
+import passwordReset  from "../components/login/actualPasswordReset.vue"
 const routes = [
   {
     path: '/home',
@@ -62,6 +64,21 @@ const routes = [
  
     component: loginPage
   },
+
+  {
+    path: '/password_reset_email',
+    name: 'resetEmail',
+ 
+    component: resetEmail
+
+  },
+  {
+    path: '/resetpassword/:resetpasswordtoken',
+    name: 'passwordReset',
+ 
+    component: passwordReset
+  },
+
   {
     path: '/register',
     name: 'registerPage',
