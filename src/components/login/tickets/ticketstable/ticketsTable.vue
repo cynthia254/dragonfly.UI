@@ -63,23 +63,7 @@
     </table>
  
   </div>
-  <div id="app" v-if="this.acessdenied" style=" padding: 1rem;
-   background: black;
-   display: flex;
-   height: 700px;
-   justify-content: center; 
-   align-items: center;
-   color: #54FE55;
-   text-shadow: 0px 0px 10px ;
-   font-size: 6rem;
-   flex-direction: column;
-   width: 1200px;
-   ">
-   <div>403</div>
-   <div class="txt">
-      Forbidden<span class="blink">_</span>
-   </div>
-</div>
+ 
 </template>
 
 <script>
@@ -161,20 +145,7 @@ export default {
 
 <style>
 
-@keyframes blink {
-    0%   {opacity: 0}
-    49%  {opacity: 0}
-    50%  {opacity: 1}
-    100% {opacity: 1}
-}
 
-.blink {
-   animation-name: blink;
-    animation-duration: 1s;
-   animation-iteration-count: infinite;
-   animation-timing-function: linear;
-  
-}
 
 
 

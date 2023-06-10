@@ -10,11 +10,15 @@
       
      
  <section>
-    <div class="" style="margin-top: 10px;background-color: red;width: 70%;margin-left:100px">
-      
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-6 col-lg-8 col-xl-6">
-          <div class="row">
+  <div class="" style="width:70%;margin-left: 100px;margin-top: 60px;">		
+    
+   
+    <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-default rounded-0 shadow">
+                    <div class="card-header">
+                        <div class="row">
+                        
             <div class="col text-center">
               <h1>Edit User</h1>
        
@@ -60,8 +64,11 @@
             </div>
           </div>
         </div>
-      </div>
-    </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    
   </section>
 </template>
 <script>

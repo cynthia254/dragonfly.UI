@@ -285,9 +285,9 @@
                         <span class="sr-only"></span>
                       </div>
                     </div>
-                    <a href="#" class="text-white"
-                      ><router-link to="/confirmemail" class="text-light"
-                        >Verify user email for them to log in</router-link
+                    <a href="#" class="text-black"
+                      ><router-link to="/" class="text-light"
+                        >LOGIN</router-link
                       ></a
                     >
                   </div>
@@ -360,7 +360,7 @@ export default {
         salutation: this.formdata.selectedsalutation,
         password: this.formdata.password,
         email: this.formdata.emailadress,
-        phoneNumber: this.formdata.countrycode + this.formdata.phonenumber,
+        phoneNumber: this.formdata.Countrycode + this.formdata.phonenumber,
         additionalInformation: this.formdata.additionalinformation,
         reasonforStatus: "New",
       };

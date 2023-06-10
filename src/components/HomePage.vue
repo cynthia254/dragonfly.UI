@@ -1,5 +1,6 @@
 <template>
-  <div class="sidebar">
+  
+  <!-- <div class="sidebar">
     <div class=" " style="height: 50px;display: flex;text-align: center;color: white;">
      <button class="" style="background-color: blue;width: 250px;height: 50px;">
         PAYHOUSE SUPPORT
@@ -198,84 +199,107 @@
 
        </ul>
    
-  </div>
+  </div>-->
  
-
-  <section class="home-section">
-    <nav>
-      <div class="sidebar-button" style="font-size: 20px;">
-        <i class="bx bx-menu sidebarBtn" ></i>
-        <span class="dashboard">Home</span>
-        <div class="dropdown-content" style="width: 400%;">
-          <a href="#">Create dashboard</a>
-          <a href="#">View dashboard</a>
-        </div>
-      </div>
+<section>
+  <header class="top">
     
-      <div class="sidebar-button">
-        <i class="bx bx-menu sidebarBtn"></i>
-        <span class="dashboard">Your Work</span>
-        <div class="dropdown-content" >
-          <a href="#">Assigned to me</a>
-          <a href="#">Recent</a>
-          <a href="#">Queues</a>
-        </div>
-      </div>
-      <div class="sidebar-button">
-        <i class="bx bx-menu sidebarBtn"></i>
-        <span class="dashboard">Projects</span>
-        <div class="dropdown-content">
-          <a href="#">Create projects</a>
-          <a href="#">View all projects</a>
-        </div>
-      </div>
-      <div class="sidebar-button">
-        <i class="bx bx-menu sidebarBtn"></i>
-        <span class="dashboard">Filters</span>
-      </div>
-      <div class="sidebar-button">
-        <i class="bx bx-menu sidebarBtn"></i>
-        <span class="dashboard">Team</span>
-        <div class="dropdown-content" style="width: 400%;padding:20px;padding-top: 10px;">
-          <a href="/addusers">Create Your Team</a>
-          <a href="/viewusers">Manage Users</a>
+        <h1>PAYHOUSE</h1>
+        <nav>
+            <ul>
+                <li>
+                    <router-link to="/home" >Home</router-link>
+                </li>
+                <li class="dropDown-menu">
+                    <a href="" target="_blank">Access Management</a>
+                    <ul>
+                        <li class="dropDown-menu">
+                            <a href="" target="_blank">Manage Roles</a>
+                            <ul>
+                              
+                                <li><router-link to="/rolestable" >View Roles</router-link></li>
+                                <li><router-link to="/userWithRole">ViewUserWithRole</router-link></li>
+                                <li><router-link to="/roles">Add Roles</router-link></li>
+                              
+                            </ul>                        
+                        </li>
+                        <li class="dropDown-menu fixed-top">
+                            <a href="" target="_blank">Responsibilites</a>
+                            <ul>
+                                
+                                <li><router-link to="/responsibilityTable" class="" style="text-decoration: none;">View Responsibility</router-link></li>
+                                <li> <router-link to="/addclaimtorole" class="" style="text-decoration: none;">Grant Permission</router-link></li>
+                                <li> <router-link to="/allroleclaims" class="" style="text-decoration: none;">View Responsibility assigned to role</router-link></li>
+                                <li><router-link to="/responsibility" class="" style="text-decoration: none;">Add responsibility</router-link></li>
+                              
+                            </ul>                        
+                        </li>
+                    </ul>
+                </li>
             
-        </div>
-      </div>
-      <div class="sidebar-button" style="font-size: 20px;">
-        <i class="bx bx-menu sidebarBtn"></i>
-        <span class="dashboard">Setup</span>
-        <div class="dropdown-content">
-          <a href="/settings">Office settings</a>
-          <a href="#">Call center setup</a>
-          <a href="#">Client setup</a>
-          <a href="#">Vendor setup</a>
-        </div>
-      </div>
-      <div class="sidebar-button">
-        <span class="btn btn-danger">Create+</span>
-      </div>
-
-      <div class="sidebar-button">
-        <!--<img src="images/profile.jpg" alt="">-->
-        <span class="admin_name" style="margin-right: 190px;">Hi, {{userbody.firstName}} {{ userbody.lastName }}</span>
-        <div class="dropdown-content" style="text-align: left;padding: 20px;">
-          <a href="/userProfile">Profile settings</a>
-          <a href="/customer"
-            >Go to customer's portal</a
-          >
-          <a href="#">Inbox</a>
-    <a href="#">My change request</a>
-    <a href="#">My change approvals</a>
-    <a href="#">Reminder</a>
-    <a href="#">Day Manager</a>
-    <a href="#">My FAQs</a>
-    <a href="/changePassword">Change Password</a>
-    
-          <a href="#">SignOut</a>
-        </div>
-      </div>
-    </nav>
+               
+                <li class="dropDown-menu">
+                    <a href="" target="_blank">Team</a>
+                    <ul>
+                        <li >
+                          <router-link to="/addusers" class="" style="text-decoration: none;">Add Users</router-link>                      
+                        </li>
+                        <li><router-link to="/viewusers" class="" style="text-decoration: none;">Manage Users</router-link></li>
+          
+                    </ul>
+                </li>
+                <li>
+                    <router-link to="/stock" >Stock Management</router-link>
+                </li>
+                <li class="dropDown-menu fixed-top">
+                    <a href="" >Setup</a>
+                    <ul>
+                        <li >
+                            <router-link to="/settings" >Office Settings</router-link>                       
+                        </li>
+                        <li><a href="" target="_blank">Vendor Setup</a></li>
+                        <li >
+                            <a href="" target="_blank">Client Setup</a>                       
+                        </li>
+          
+          
+                    </ul>
+                </li>
+              
+                <li class="dropDown-menu">
+                    <a href="" target="_blank">Service Desk</a>
+                    <ul>
+                        <li >
+                            <router-link to="/tickets" >Manage Tickets</router-link>                       
+                        </li>
+                        <li><router-link to="/newticket" >Create Ticket</router-link></li>
+                        <li >
+                            <router-link to="/viewclients" >Manage Clients</router-link>                       
+                        </li>
+                       
+          
+          
+                    </ul>
+                </li>
+                <li class="dropDown-menu">
+                  <a href="" target="_blank" style="color: black;">Hi, {{userbody.firstName}} {{ userbody.lastName }}</a>
+                  <ul>
+                        <li >
+                            <router-link to="/userProfile">Profile Settings</router-link>                       
+                        </li>
+                        <li><router-link to="/customer">Customer Portal</router-link></li>
+                        <li >
+                            <router-link to="/changePassword" >Change Password</router-link>                       
+                        </li>
+                        <li><router-link to="/" >SignOut</router-link></li>
+          
+          
+                    </ul>
+                </li>
+                
+            </ul>
+        </nav>
+    </header>
 <div class="home-content">
      <div class="overview-boxes">
        <!--  <div class="box">
@@ -435,9 +459,10 @@
       </tbody>
     </table>
   </div>
+         <!-- <div class="top-sales box">
           <button class="button "   style="width:70px;text-decoration: none;background-color: blue;margin-left: 1000px;margin-top: 20px;">
             <a href="#" style="text-decoration: none;color: white;">See All</a>
-          </button>
+          </button>-->
        </div>
          <!-- <div class="top-sales box">
           <div class="title">Top Raised Incidents</div>
@@ -466,7 +491,8 @@
           </ul>
         </div>-->
      </div>
-     <div id="app" v-if="this.acessdenied" style=" padding: 1rem;
+              <!-- <div class="top-sales box">
+<div id="app" v-if="this.acessdenied" style=" padding: 1rem;
    background: black;
    display: flex;
    height: 700px;
@@ -482,7 +508,7 @@
    <div class="txt">
       Forbidden<span class="blink">_</span>
    </div>
-</div>
+</div>-->
    
     
     
@@ -568,8 +594,8 @@ export default {
   background: #e6e3e3;
   transition: all 0.5s ease;
 
-  left: 175px;
-  margin-left: -175px;
+  left: 300px;
+  margin-left: -300px;
   overflow-y: auto;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -673,10 +699,7 @@ export default {
   left: 240px;
   transition: all 0.5s ease;
 }
-.sidebar.active ~ .home-section {
-  width: calc(100% - 60px);
-  left: 60px;
-}
+
 .home-section nav {
   display: flex;
   justify-content: space-between;
@@ -957,14 +980,7 @@ nav .profile-details i {
     overflow: hidden;
     left: 220px;
   }
-  .home-section nav {
-    width: calc(100% - 60px);
-    left: 60px;
-  }
-  .sidebar.active ~ .home-section nav {
-    width: calc(100% - 220px);
-    left: 220px;
-  }
+ 
 }
 @media (max-width: 1150px) {
   .home-content .sales-boxes {
@@ -1032,9 +1048,7 @@ nav .profile-details i {
     width: calc(100% - 60px);
   }
 }
-h1 {
-  font-size: 15px;
-}
+
 .card {
   /* Add shadows to create the "card" effect */
   box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2);
@@ -1108,5 +1122,100 @@ th, td {
    animation-iteration-count: infinite;
    animation-timing-function: linear;
   
+}
+header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
+    padding: 0px 15px;
+}
+header h1 {
+    margin: 0px;
+    color: red;
+}
+nav > ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+}
+nav > ul > li {
+    position: relative;
+    padding: 25px 15px;
+}
+nav ul li a {
+    text-decoration: none;
+    color: black;
+}
+nav ul li a:active {
+    color: red;
+}
+nav ul li a:visited {
+    color: red;
+}
+nav ul li a:hover {
+    color: green;
+}
+.dropDown-menu {
+    position: relative;
+}
+nav > ul > .dropDown-menu:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #666 transparent transparent transparent;
+    position: absolute;
+    top: 30px;
+    right: 0px;
+}
+nav > ul > .dropDown-menu:hover:after {
+    border-width: 0px 5px 5px 5px;
+    border-color: transparent transparent green transparent;
+}
+nav > ul > .dropDown-menu .dropDown-menu:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-color: transparent transparent transparent #666;
+    position: absolute;
+    top: 16px;
+    right: 10px;
+    overflow: hidden;
+}
+nav > ul > .dropDown-menu .dropDown-menu:hover:after {
+    border-width: 5px 5px 5px 0px;
+    border-color: transparent #666 transparent transparent;
+}
+nav .dropDown-menu > ul {
+    list-style: none;
+    margin: 24px 0px 0px;
+    padding: 12px 0px;
+    position: absolute;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0px 6px 6px 0px rgba(0, 0, 0, 0.3);
+    display: none;
+}
+nav .dropDown-menu .dropDown-menu > ul {
+    margin: 0px 0px 0px;
+    left: 100%;
+    top: 0px;
+}
+nav .dropDown-menu .dropDown-menu.left > ul {
+    left: auto;
+    right: 100%;
+}
+nav .dropDown-menu:hover > ul {
+    display: block;
+}
+nav .dropDown-menu li a {
+    display: block;
+    padding: 12px 12px;
 }
 </style>

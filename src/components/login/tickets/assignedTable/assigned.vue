@@ -1,5 +1,5 @@
 <template>
-    <div class="container mx-auto" >
+    <div class=" mx-auto" >
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <form id="msform">

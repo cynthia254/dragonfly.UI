@@ -4,7 +4,7 @@
     <div class="card-body px-5">
       <div class="form-outline">
         <input
-          type="text"
+          type="password"
           placeholder="Enter  New Password"
           class="form-control my-3"
           v-model="this.formdata.newpassword"
@@ -12,7 +12,7 @@
       </div>
       <div class="form-outline">
         <input
-          type="text"
+          type="password"
           placeholder="Re-Enter new password"
           class="form-control my-3"
           v-model="this.formdata.re_enter_new_passord"
@@ -27,8 +27,8 @@
         </div>
       </div>
       <div class="d-flex justify-content-between mt-4">
-        <a class="" href="#">Login</a>
-        <a class="" href="#">Register</a>
+        <a class="" href="/">Login</a>
+        <router-link to="/addusers" class="" style="text-decoration: none;"><a class="" href="/addusers">Register</a></router-link>
       </div>
     </div>
   </div>

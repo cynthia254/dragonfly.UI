@@ -1,4 +1,5 @@
 <template>
+  
   <a href="#" class="" style="font-size: 17px; padding-top: 80px">
     <i class="bx bx-grid-alt"></i>
     <svg
@@ -19,25 +20,25 @@
       />
     </svg>
     <span class="links_name" style="margin-right: 1000px; text-decoration: none"
-      ><router-link to="/viewusers" class="text-dark"
+      ><router-link to="/designationtable" class="text-dark"
         >Back To Project</router-link
       ></span
     >
   </a>
 
   <section>
-    <div
-      class=""
-      style="
-        margin-top: 10px;
-        background-color: red;
-        width: 60%;
-        margin-left: 100px;
-      "
-    >
+    <div class="" style="width:70%;margin-left: 100px;margin-top: 60px;">		
+    
+   
+    <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-default rounded-0 shadow">
+                    <div class="card-header">
+                        <div class="row">
+                            
       <div class="row justify-content-center">
         <div class="col-12 col-md-6 col-lg-8 col-xl-6">
-          <div class="row">
+          
             <div class="col text-center">
               <h1>Edit Designation</h1>
             </div>
@@ -72,11 +73,16 @@
               >
                 Update
               </button>
+              </div>
+              </div>
+              </div>
+              </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+   
   </section>
 </template>
 <script>
@@ -95,6 +101,7 @@ export default {
   methods: {
     async EditDesignation() {
       const formvalues = {
+        positionId:this.desginationid,
         positionName: this.designationbody.positionName,
         positionDescription: this.designationbody.positionDescription,
       };

@@ -1,5 +1,102 @@
 <template>
-  <div class="col-md-10" style="margin-left: 10%">
+  <section class="homesection"></section>
+  <header class="fixed-top">
+    
+      
+      <h1>PAYHOUSE</h1>
+      <nav>
+            <ul>
+                <li>
+                    <a href="/viewusers" >Home</a>
+                </li>
+                <li class="dropDown-menu">
+                    <a href="" >Access Management</a>
+                    <ul>
+                        <li class="dropDown-menu">
+                            <a href="" >Role Management</a>
+                            <ul>
+                               
+                                <li><a href="/rolestable" >View Roles</a></li>
+                                <li><a href="/roles" >Add Roles</a></li>
+                              
+                            </ul>                        
+                        </li>
+                        <li class="dropDown-menu">
+                            <a href="" >Responsibilites</a>
+                            <ul>
+                              
+                                <li><a href="/responsibilityTable" >View Responsibility</a></li>
+                                <li><a href="/responsibility" >Add responsibility</a></li>
+                                <li><a href="/addclaimtorole" >Grant Permission</a></li>
+                                <li><a href="/allroleclaims" >View Responsibility assigned to role</a></li>
+                              
+                            </ul>                        
+                        </li>
+                    </ul>
+                </li>
+            
+               
+                <li class="dropDown-menu">
+                    <a href="" >Team</a>
+                    <ul>
+                        <li >
+                            <a href="/addusers" >Add Users</a>                       
+                        </li>
+                        <li><a href="/viewusers" >Manage Users</a></li>
+          
+                    </ul>
+                </li>
+                <li class="dropDown-menu">
+                    <a href="" target="">Setup</a>
+                    <ul>
+                        <li >
+                            <a href="/settings">Office Settings</a>                       
+                        </li>
+                        <li><a href="" >Vendor Setup</a></li>
+                        <li >
+                            <a href="" >Client Setup</a>                       
+                        </li>
+                        <li><a href="" >Call Center setup</a></li>
+          
+          
+                    </ul>
+                </li>
+              
+                <li class="dropDown-menu">
+                    <a href="" >Service Desk</a>
+                    <ul>
+                        <li >
+                            <router-link to="/tickets" >Manage Tickets</router-link>                       
+                        </li>
+                        <li><router-link to="/newticket"> Create Ticket</router-link></li>
+                        <li >
+                            <router-link to="/viewclients" >Manage Clients</router-link>                       
+                        </li>
+                       
+          
+          
+                    </ul>
+                </li>
+                <li class="dropDown-menu fixed-top">
+                  <a class="admin_name" style="">Hi, {{logbody.firstName}} {{ logbody.lastName }}</a>
+                  <ul>
+                        <li >
+                            <router-link to="/userProfile" >Profile Settings</router-link>                       
+                        </li>
+                        <li><router-link to="/customer" >Customer Portal</router-link></li>
+                        <li >
+                            <router-link to="/changePassword" >Change Password</router-link>                       
+                        </li>
+                        <li><router-link to="/" >SignOut</router-link></li>
+          
+          
+                    </ul>
+                </li>
+                
+            </ul>
+        </nav>
+  </header>
+  <div class="col-md-10" style="margin-left: 10%;margin-top:110px">
     <span class="anchor" id="formContact"></span>
     <hr class="my-5" />
     <!-- form contact -->
@@ -18,8 +115,8 @@
           <label class="mb-0">Roles</label>
 
           <div class="mb-4 pb-2" style="width: 100%">
-            <select
-              class="checkbox"
+            <select 
+              class="selectpicker" 
               style="width: 100%; height: 50px; background-color: white"
               v-model="this.rolesID"
             >
@@ -31,7 +128,10 @@
                 {{ roles.roleName }}
               </option>
             </select>
+         
           </div>
+           
+          
 
           <!-- Table  -->
           <button
@@ -51,12 +151,15 @@
   <!--/col-->
 </template>
 <script>
+import Multiselect from 'vue-multiselect'
 import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared";
 export default {
   name: "assignRolePage",
   mixins: [AppMixins],
+  components: [Multiselect] ,
   data() {
+ 
     return {
       
       userbody: {},
@@ -65,10 +168,13 @@ export default {
       allresponsibility: {},
       allusers: {},
       rolesID: "",
-      usermail:""
+      usermail:"",
+      logbody:{},
+      
     };
   },
   methods: {
+    
     async AssignUserToRole() {
       
       var roleided= this.rolesID;
@@ -120,14 +226,119 @@ export default {
       console.log("user:",this.userbody);
     
     },
+    async GetLoggedInUser() {
+      var response = await this.Gettingloggedinuser();
+      this.logbody = response.body;
+      console.log("Logged in user __________ email:", this.logbody);
+    },
   },
   created() {
     this.GetAllRoles();
     this.userId = this.$route.params.userId;
     console.log("user id :", this.userId);
     this.getuserbyid();
+    this.GetLoggedInUser();
 
   },
 };
 </script>
-<style></style>
+<style>
+header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
+    padding: 0px 15px;
+}
+header h1 {
+    margin: 0px;
+    color: red;
+}
+nav > ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+}
+nav > ul > li {
+    position: relative;
+    padding: 25px 15px;
+}
+nav ul li a {
+    text-decoration: none;
+    color: black;
+}
+nav ul li a:active {
+    color: red;
+}
+nav ul li a:visited {
+    color: red;
+}
+nav ul li a:hover {
+    color: green;
+}
+.dropDown-menu {
+    position: relative;
+}
+nav > ul > .dropDown-menu:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #666 transparent transparent transparent;
+    position: absolute;
+    top: 30px;
+    right: 0px;
+    overflow: hidden;
+}
+nav > ul > .dropDown-menu:hover:after {
+    border-width: 0px 5px 5px 5px;
+    border-color: transparent transparent green transparent;
+}
+nav > ul > .dropDown-menu .dropDown-menu:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-color: transparent transparent transparent #666;
+    position: absolute;
+    top: 16px;
+    right: 10px;
+    overflow: hidden;
+}
+nav > ul > .dropDown-menu .dropDown-menu:hover:after {
+    border-width: 5px 5px 5px 0px;
+    border-color: transparent #666 transparent transparent;
+}
+nav .dropDown-menu > ul {
+    list-style: none;
+    margin: 24px 0px 0px;
+    padding: 12px 0px;
+    position: absolute;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0px 6px 6px 0px rgba(0, 0, 0, 0.3);
+    display: none;
+}
+nav .dropDown-menu .dropDown-menu > ul {
+    margin: 0px 0px 0px;
+    left: 100%;
+    top: 0px;
+}
+nav .dropDown-menu .dropDown-menu.left > ul {
+    left: auto;
+    right: 100%;
+}
+nav .dropDown-menu:hover > ul {
+    display: block;
+}
+nav .dropDown-menu li a {
+    display: block;
+    padding: 12px 12px;
+}
+
+
+</style>

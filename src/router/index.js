@@ -52,6 +52,26 @@ import AddClaimToRoles from '../components/setup/AddClaimToRole.vue'
 import roleClaims  from "../components/users/allclaimroles.vue"
 import  resetEmail  from "../components/login/passwordReset.vue"
 import passwordReset  from "../components/login/actualPasswordReset.vue"
+import AddItem from "../components/stock/addItem.vue"
+import AddStock from "../components/stock/addStock.vue"
+import otherRoles from "../components/users/otherroles/assignotherroles.vue"
+import stockManage from "../components/stock/stockManage.vue"
+import purchasePage from "../components/stock/purchaseTable.vue"
+import salesPage from "../components/stock/salesTable.vue"
+import brandPage from "../components/stock/manageBrand.vue"
+import modelPage from "../components/stock/manageModel.vue"
+import EditDepartment from "../components/setup/editDeparmtnet.vue"
+import UserRoles from "../components/users/userRoles.vue"
+import clientPage from "../components/stock/customer.vue"
+import supplierPage from "../components/stock/addSupplier.vue"
+import inventoryAdjustment from "../components/stock/adjustmentTable.vue"
+import DughnutChart from "../components/bargraph/doughnut.vue"
+import UpdateStock from "../components/stock/updatestock.vue"
+import editPurchase from "../components/stock/editPurchase.vue"
+import editSales from "../components/stock/editSales.vue"
+import returnedStatus from "../components/stock/returnedStatus.vue"
+import returnedStock from "../components/stock/returnedStock.vue"
+
 const routes = [
   {
     path: '/home',
@@ -86,6 +106,19 @@ const routes = [
     component: registerPage
   },
   {
+    path: '/doughnut',
+    name: 'DughnutChart',
+ 
+    component: DughnutChart
+  },
+  {
+    path: '/updatestock/:stockId',
+    name: 'UpdateStock',
+ 
+    component: UpdateStock
+  },
+
+  {
     path: '/allroleclaims',
     name: 'roleClaims',
     component: roleClaims
@@ -97,10 +130,27 @@ const routes = [
     component: departmentName
   },
   {
+    path: '/editpurchase/:purchaseId',
+    name: 'editPurchase',
+ 
+    component: editPurchase
+  },
+  {
+    path: '/editsales/:salesId',
+    name: 'editSales',
+ 
+    component: editSales
+  },
+  {
     path: '/departmenttable',
     name: 'departmentTable',
  
     component: departmentTable
+  },
+  {
+    path:'/otherroles',
+    name:'otherRoles',
+    component: otherRoles
   },
   {
     path: '/designationtable',
@@ -108,12 +158,30 @@ const routes = [
  
     component: designationTable
   },
+  {
+    path: '/editdepartment/:departnmentid',
+    name: 'EditDepartment',
+ 
+    component: EditDepartment
+  },
  
   {
     path: '/roles',
     name: 'rolesPage',
  
     component: rolesPage
+  },
+  {
+    path: '/returnedStatus',
+    name: 'returnedStatus',
+ 
+    component: returnedStatus
+  },
+  {
+    path: '/returnedStock',
+    name: 'returnedStock',
+ 
+    component: returnedStock
   },
   {
     path: '/responsibility',
@@ -141,6 +209,24 @@ const routes = [
     path: '/resolve/:ticketid',
     name: 'resolvePage',
     component: resolvePage
+  },
+  {
+    path: '/userWithRole',
+    name: 'UserRoles',
+ 
+    component: UserRoles
+  },
+  {
+    path: '/customer',
+    name: 'clientPage',
+ 
+    component: clientPage
+  },
+  {
+    path: '/supplier',
+    name: 'supplierPage',
+ 
+    component: supplierPage
   },
  
   {
@@ -185,6 +271,13 @@ const routes = [
     name: 'changePassword',
  
     component: changePassword
+  },
+  
+  {
+    path: '/adjustment',
+    name: 'inventoryAdjustment',
+ 
+    component: inventoryAdjustment
   },
   {
     path:'/assignRole/:userId',
@@ -361,7 +454,45 @@ component:customerPage
   path:'/userProfile',
   name:'userProfile',
   component:userProfile
-}
+},
+{
+  path:'/additem',
+  name:'AddItem',
+  component:AddItem
+},
+{
+  path:'/addStock',
+  name:'AddStock',
+  component:AddStock
+},
+{
+  path:'/stock',
+  name:'stockManage',
+  component:stockManage
+},
+{
+  path:'/purchase',
+  name:'purchasePage',
+  component:purchasePage
+},
+
+{
+  path:'/sales',
+  name:'salesPage',
+  component:salesPage
+},
+{
+  path:'/brand',
+  name:'brandPage',
+  component:brandPage
+},
+{
+  path:'/model',
+  name:'modelPage',
+  component:modelPage
+},
+
+
 
 ]
 

@@ -15,8 +15,8 @@
       </div>
       <button class="btn btn-primary" @click="senduserEmail()">Get Mail</button>
       <div class="d-flex justify-content-between mt-4">
-        <a class="" href="#">Login</a>
-        <a class="" href="#">Register</a>
+        <a class="" href="/">Login</a>
+        <a class="" href="/addusers">Register</a>
       </div>
 
       <div class="">

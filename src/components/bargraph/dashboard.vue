@@ -1,6 +1,6 @@
 <template>
   
-  <div class="container" style="margin-top: 50px;">
+  <div class="" style="margin-top: 50px;height:70%;width:60%;">
   <Bar
     
     :options="chartOptions"
@@ -22,8 +22,16 @@ export default {
   data() {
     return {
       chartData: {
-        labels: [ 'Total Tickets', 'Escalated', 'Due Today','Overdue','Open','Completed Tickets','On Hold','Pending' ],
-        datasets: [ { data: [60,40, 5, 30, 12,45,4,3, ] ,backgroundColor: ['lightblue', 'grey', 'yellow', 'red','blue','green','black','orange']} ],
+        labels: ["Jan", "Feb", "March", "April", "May", "June", "July","Aug","Sept","Oct","Nov","Dec"],
+    datasets: [{
+      label: 'Sales',
+      data: [12, 19, 3, 17, 28, 24, 7,12,6,40,23,12],
+      backgroundColor: "rgba(255,0,0,1)"
+    }, {
+      label: 'Purchases',
+      data: [30, 29, 5, 5, 20, 3, 10,3,45,65,6,12],
+      backgroundColor: "orange"
+    }]
       },
       chartOptions: {
         responsive: true

@@ -1,4 +1,99 @@
 <template>
+   <header>
+        <h1>PAYHOUSE</h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/home" >Home</a>
+                </li>
+                <li class="dropDown-menu">
+                    <a href="" >Access Management</a>
+                    <ul>
+                        <li class="dropDown-menu">
+                            <a href="" >Role Management</a>
+                            <ul>
+                               
+                                <li><a href="/rolestable" >View Roles</a></li>
+                                <li><a href="/roles" >Add Roles</a></li>
+                              
+                            </ul>                        
+                        </li>
+                        <li class="dropDown-menu">
+                            <a href="" >Responsibilites</a>
+                            <ul>
+                              
+                                <li><a href="/responsibilityTable" >View Responsibility</a></li>
+                                <li><a href="/responsibility" >Add responsibility</a></li>
+                                <li><a href="/addclaimtorole" >Grant Permission</a></li>
+                                <li><a href="/allroleclaims" >View Responsibility assigned to role</a></li>
+                              
+                            </ul>                        
+                        </li>
+                    </ul>
+                </li>
+            
+               
+                <li class="dropDown-menu">
+                    <a href="" >Team</a>
+                    <ul>
+                        <li >
+                            <a href="/addusers" >Add Users</a>                       
+                        </li>
+                        <li><a href="/viewusers" >Manage Users</a></li>
+          
+                    </ul>
+                </li>
+                <li class="dropDown-menu">
+                    <a href="" target="">Setup</a>
+                    <ul>
+                        <li >
+                            <a href="/settings">Office Settings</a>                       
+                        </li>
+                        <li><a href="" >Vendor Setup</a></li>
+                        <li >
+                            <a href="" >Client Setup</a>                       
+                        </li>
+                        <li><a href="" >Call Center setup</a></li>
+          
+          
+                    </ul>
+                </li>
+              
+                <li class="dropDown-menu">
+                    <a href="" >Service Desk</a>
+                    <ul>
+                        <li >
+                            <router-link to="/tickets" >Manage Tickets</router-link>                       
+                        </li>
+                        <li><router-link to="/newticket"> Create Ticket</router-link></li>
+                        <li >
+                            <router-link to="/viewclients" >Manage Clients</router-link>                       
+                        </li>
+                       
+          
+          
+                    </ul>
+                </li>
+                <li class="dropDown-menu fixed-top">
+                  <a class="admin_name" style="">Hi, {{userbody.firstName}} {{ userbody.lastName }}</a>
+                  <ul>
+                        <li >
+                            <router-link to="/userProfile" >Profile Settings</router-link>                       
+                        </li>
+                        <li><router-link to="/customer" >Customer Portal</router-link></li>
+                        <li >
+                            <router-link to="/changePassword" >Change Password</router-link>                       
+                        </li>
+                        <li><router-link to="/" >SignOut</router-link></li>
+          
+          
+                    </ul>
+                </li>
+                
+            </ul>
+        </nav>
+    </header>
+   
   <div class="">
     <div class="row">
       <div class="col-sm-8 col-sm-offset-2">
@@ -9,7 +104,7 @@
           <div class="form-group">
             <label for="">Select Roles</label>
             <div class="mb-4 pb-2" style="width: 100%">
-              <select
+              <select 
                 class="checkbox"
                 style="width: 100%; height: 50px; background-color: white"
                 v-model="this.roleIdPassed"
@@ -24,16 +119,19 @@
               </select>
             </div>
           </div>
-          <div class="" v-if="this.notaddedtorole">
-            <small class="text-danger" style="font-style: italic">
-              {{ this.message }}
-            </small>
-          </div>
-          <div class="text-success text-center" v-if="this.successfullycreated">
-            <small class="" style="font-style: italic">
-              {{ this.message }}
-            </small>
-          </div>
+          <div class="bg-danger"  v-if="this.notaddedtorole" >
+   
+   <small class="" style="font-style: bold;font-size: 20px;color: white;padding: 5px;margin-top: 50px;transition-duration:3s;">
+     {{ this.message }}
+   </small>
+ </div>
+ <div class="bg-success text-center" v-if="this.successfullycreated">
+   <small class="" style="font-style: bold;color: white;font-size: 20px;transition-duration:3s;">
+     {{ this.message }}
+   </small>
+ </div>
+        
+      
 
           <div class="form-group">
             <!-- Table  -->
@@ -118,7 +216,7 @@
 
 <script>
 //import swal from "sweetalert2";
-import swal from "sweetalert2";
+
 import AppMixins from "../../Mixins/shared";
 export default {
   name: "AddClaimToRoles",
@@ -158,6 +256,7 @@ export default {
       const response = await this.GettingAllUsers();
       this.userbody = response.body;
       console.log("allusers: ", this.userbody);
+      
     },
     async GetAllRolecLaims() {
       const response = await this.GettingAllResponsibility();
@@ -165,6 +264,11 @@ export default {
       this.nameofclaim = this.allresponsibility.claimName;
       console.log("name of claim:", this.nameofclaim);
       console.log("all claims:   : ", this.allresponsibility);
+    },
+    async GetLoggedInUser() {
+      var response = await this.Gettingloggedinuser();
+      this.userbody = response.body;
+      console.log("Logged in user __________ email:", this.userbody);
     },
 
     async AddRoleClaim(claimid) {
@@ -181,13 +285,20 @@ export default {
       var response = await this.addingclaimstoRoles(claimid, this.roleIdPassed);
       console.log("the RESPONSE is here _________", response);
       if (response.isTrue === true) {
-        swal.fire({
-          html: `<h5 class="text-success">${response.message}</h5>`,
-        });
+        // swal.fire({
+        //  html: `<h5 class="text-success">${response.message}</h5>`,
+        // });
+        
+        this.notaddedtorole=false;
+        this.successfullycreated=true;
+        this.message=response.message;
       } else {
-        swal.fire({
-          html: `<h5 class="text-danger">${response.message}</h5>`,
-        });
+        // swal.fire({
+         //  html: `<h5 class="text-danger">${response.message}</h5>`,
+        // });
+        this.successfullycreated=false;
+      this.notaddedtorole = true;
+      this.message=response.message
       }
     
     },
@@ -202,6 +313,7 @@ export default {
   },
   created() {
     this.GetAllRoles();
+    this.GetLoggedInUser();
 
     this.GetAllRolecLaims();
   },
@@ -224,5 +336,100 @@ export default {
 .tablerowclass:hover {
   background-color: black;
   color: white;
+}
+header {
+    background-color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
+    padding: 0px 15px;
+}
+header h1 {
+    margin: 0px;
+    color: red;
+}
+nav > ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+}
+nav > ul > li {
+    position: relative;
+    padding: 25px 15px;
+}
+nav ul li a {
+    text-decoration: none;
+    color: black;
+}
+nav ul li a:active {
+    color: red;
+}
+nav ul li a:visited {
+    color: red;
+}
+nav ul li a:hover {
+    color: green;
+}
+.dropDown-menu {
+    position: relative;
+}
+nav > ul > .dropDown-menu:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 5px 0 5px;
+    border-color: #666 transparent transparent transparent;
+    position: absolute;
+    top: 30px;
+    right: 0px;
+}
+nav > ul > .dropDown-menu:hover:after {
+    border-width: 0px 5px 5px 5px;
+    border-color: transparent transparent green transparent;
+}
+nav > ul > .dropDown-menu .dropDown-menu:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-color: transparent transparent transparent #666;
+    position: absolute;
+    top: 16px;
+    right: 10px;
+    overflow: hidden;
+}
+nav > ul > .dropDown-menu .dropDown-menu:hover:after {
+    border-width: 5px 5px 5px 0px;
+    border-color: transparent #666 transparent transparent;
+}
+nav .dropDown-menu > ul {
+    list-style: none;
+    margin: 24px 0px 0px;
+    padding: 12px 0px;
+    position: absolute;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0px 6px 6px 0px rgba(0, 0, 0, 0.3);
+    display: none;
+}
+nav .dropDown-menu .dropDown-menu > ul {
+    margin: 0px 0px 0px;
+    left: 100%;
+    top: 0px;
+}
+nav .dropDown-menu .dropDown-menu.left > ul {
+    left: auto;
+    right: 100%;
+}
+nav .dropDown-menu:hover > ul {
+    display: block;
+}
+nav .dropDown-menu li a {
+    display: block;
+    padding: 12px 12px;
 }
 </style>
