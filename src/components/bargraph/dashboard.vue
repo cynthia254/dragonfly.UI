@@ -24,11 +24,11 @@ export default {
       chartData: {
         labels: ["Jan", "Feb", "March", "April", "May", "June", "July","Aug","Sept","Oct","Nov","Dec"],
     datasets: [{
-      label: 'Sales',
+      label: 'Stock In',
       data: [12, 19, 3, 17, 28, 24, 7,12,6,40,23,12],
       backgroundColor: "rgba(255,0,0,1)"
     }, {
-      label: 'Purchases',
+      label: 'Stock Out',
       data: [30, 29, 5, 5, 20, 3, 10,3,45,65,6,12],
       backgroundColor: "orange"
     }]

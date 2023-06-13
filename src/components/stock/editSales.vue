@@ -12,7 +12,7 @@
       <nav style="margin-right: 90px">
         <ul>
           <li>
-            <a href="/stock" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
+            <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
           </li>
           <li class="dropDown-menu fixed-top">
             <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
@@ -45,15 +45,7 @@
               <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
             </ul>
           </li>
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Orders</a>
-            <ul>
-              <li>
-                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Sales Orders</a>
-              </li>
-              <li><a href="/purchase" style="font-size: 16px;font-family:inter;font-weight:medium">Purchase Orders</a></li>
-            </ul>
-          </li>
+        
 
           <li class="dropDown-menu fixed-top">
             <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Reports</a>
@@ -79,7 +71,7 @@
       box-sizing: border-box;
       position: relative;
       border-bottom: 5px solid #ccc;">
-      <h2 style="display: flex;font-size: 16px;">Update Sales Status</h2>
+      <h2 style="display: flex;font-size: 16px;">Update Stock Out</h2>
       <div class="form-group">
         <label for="email">Brand Name:</label>
         <div class="relative">
@@ -87,85 +79,78 @@
             class="form-control"
             id="name"
             type="text"
-            pattern="[a-zA-Z\s]+"
-            title="Username should only contain letters. e.g. Piyush Gupta"
-            autocomplete=""
             v-model="salesBody.brandName"
-            disabled
+           
           
           />
           <i class="fa fa-user"></i>
         </div>
       </div>
       <div class="form-group">
-        <label for="email">Brand Name:</label>
+        <label for="email">Item Name:</label>
         <div class="relative">
           <input
             class="form-control"
             id="name"
             type="text"
-            pattern="[a-zA-Z\s]+"
-            title="Username should only contain letters. e.g. Piyush Gupta"
-            autocomplete=""
             v-model="salesBody.itemName"
-            disabled
+          
+          
+          />
+          <i class="fa fa-user"></i>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Recipient:</label>
+        <div class="relative">
+          <input
+            class="form-control"
+            id="name"
+            type="text"
+            v-model="salesBody.customerName"
+          
+          
+          />
+          <i class="fa fa-user"></i>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Comments:</label>
+        <div class="relative">
+          <input
+            class="form-control"
+            id="name"
+            type="text"
+            v-model="salesBody.comments"
+          
+          
+          />
+          <i class="fa fa-user"></i>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Department:</label>
+        <div class="relative">
+          <input
+            class="form-control"
+            id="name"
+            type="text"
+            v-model="salesBody.department"
+          
           
           />
           <i class="fa fa-user"></i>
         </div>
       </div>
      
-      <div class="form-group">
-        <label for="email">Status:</label>
-        <div class="relative">
-          <select
-                                              name="product"
-                                              id="product"
-                                              class="form-select rounded-0"
-                                              required
-                                              v-model="this.selectedoption"
-                                            >
-                                              <option value="">
-                                                Select Status
-                                              </option>
-                                              <option value="In Transit">In Transit</option>
-                                              <option value="Delivered">Delivered</option>
-                                              <option value="Overdue">Overdue</option>
-                                              
-                                           
-                                            
-                                            </select>
-         
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="email">Comment:</label>
-        <div class="relative">
-          <input
-            class="form-control"
-            type="text"
-            v-model="this.reason"
-          
-           
-  
-  
-         
-       
-          />
-          <i class="fa fa-phone"></i>
-        </div>
-      </div>
+      
   
       <div class="tright d-flex mx-5" >
-        <a href=""
-          ><button class="movebtn movebtnre">
-            Cancel
-          </button></a
-        >
-        <a href=""
-          ><button class="movebtn movebtnsu" style="margin-left: 160%;" @click.prevent="changepurchasestatus()" >
+      
+      
+          <button class="movebtn movebtnsu btn-success" style="margin-left: 50%;" @click.prevent="changepurchasestatus()" >
             Submit</button
-        ></a>
+        >
       </div>
     </form>
   
@@ -181,8 +166,6 @@
       return{
           salesId:"",
           salesBody:{},
-          reason:"",
-          selectedoption:"",
   
       }
   
@@ -206,12 +189,19 @@
       async changepurchasestatus(){
         var body = {
           salesid: this.salesId,
-          salesStatus: this.selectedoption,
-          reasonForSalesStatus:this.reason,
+          itemName:this.salesBody.itemName,
+          brandName:this.salesBody.brandName,
+          department:this.salesBody.department,
+          comments:this.salesBody.comments,
+          customerName:this.salesBody.customerName,
+
+
+
+       
           
         };
         console.log("user id: ", body)
-             var resp= await this.changeSalesStatus(body);
+             var resp= await this.edititngStockOut(body);
              if(resp.isTrue == true){
             
              console.log("response on assigning ;   ", resp);
@@ -227,6 +217,7 @@
   
   
              }
+             this.gettingAllSales();
   
   
       }

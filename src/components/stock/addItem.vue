@@ -276,6 +276,8 @@
                                   fill="green"
                                   class="bi bi-pencil-square"
                                   viewBox="0 0 16 16"
+                                  @click="editItem(items.itemID)"
+                                  style="margin-left:20px"
                                
                                 
                                 >
@@ -372,6 +374,13 @@ if (response.isTrue==true) {
 
       }
       this.GetAllItems();
+    },
+    async editItem(itemID) {
+      console.log("item id is:", itemID);
+      this.$router.push({
+        path: `/edititem/${itemID}`,
+        replace: true,
+      });
     },
   },
   created(){

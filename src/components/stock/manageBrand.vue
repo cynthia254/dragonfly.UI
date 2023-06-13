@@ -269,6 +269,7 @@
                                   fill="green"
                                   class="bi bi-pencil-square"
                                   viewBox="0 0 16 16"
+                                  @click.prevent="editBrand(brands.brandId)"
                                
                                 
                                 >
@@ -341,6 +342,13 @@ console.log("allbrands: ", this.allbrands);
 return response;
 
 },
+async editBrand(brandId) {
+      console.log("brand id is:", brandId);
+      this.$router.push({
+        path: `/editbrand/${brandId}`,
+        replace: true,
+      });
+    },
     async CreateBrand() {
   
         var body={

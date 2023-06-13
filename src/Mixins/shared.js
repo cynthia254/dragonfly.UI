@@ -175,6 +175,33 @@ export default {
       console.log("response",response);
       return response.data;
     },
+    async gettingItemById(itemid){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetItemById?ItemId=${itemid}`)
+      console.log("response",response);
+      return response.data;
+    },
+    async gettingBrandById(brandid){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetBrandById?BrandId=${brandid}`)
+      console.log("response",response);
+      return response.data;
+    },
+
+    
+    
+    async gettingCustomerbyid(customerid){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetCustomerByID?customerId=${customerid}`)
+      console.log("response",response);
+      return response.data;
+    },
+    async gwttingsupplierbyid(supplierid){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetSupplierbyId?supplierId=${supplierid}`)
+      console.log("response",response);
+      return response.data;
+    },
     async addingroles(roleName){
       this.setAuthHeader();
       var resp=await axios.post(`Roles/CreateRole?Rolename=${roleName}`);
@@ -331,6 +358,37 @@ export default {
       var response=await axios.post("User/Change_UserStatus",body);
       return response.data;
     },
+    async edititngStockOut(body){
+      this.setAuthHeader();
+      var response=await axios.post("Stock/EditStockOut",body);
+      return response.data;
+    },
+    async edititngBrand(body){
+      this.setAuthHeader();
+      var response=await axios.post("Stock/EditBrand",body);
+      return response.data;
+    },
+    async edititngStockIn(body){
+      this.setAuthHeader();
+      var response=await axios.post("Stock/EditStockIn",body);
+      return response.data;
+    },
+    async edititngSupplier(body){
+      this.setAuthHeader();
+      var response=await axios.post("Stock/EditSupplier",body);
+      return response.data;
+    },
+    async edititngItem(body){
+      this.setAuthHeader();
+      var response=await axios.post("Stock/EditItem",body);
+      return response.data;
+    },
+    
+    async edititngcustomer(body){
+      this.setAuthHeader();
+      var response=await axios.post("Stock/EditCustomer",body);
+      return response.data;
+    },
     async gettingUserById(userid){
       this.setAuthHeader();
       var response=await axios.post(`User/getuserbyid?userId=${userid}`)
@@ -475,6 +533,26 @@ export default {
           async SearchingStock(searchword){
             this.setAuthHeader();
             var response=await axios.post(`Stock/SearchStock?search_query=${searchword}`);
+            return response.data;
+          },
+          async SearchingStockIn(searchword){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/SearchStockIn?search_query=${searchword}`);
+            return response.data;
+          },
+          async SearchingStockOut(searchword){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/SearchStockOut?search_query=${searchword}`);
+            return response.data;
+          },
+          async SearchingCustomers(searchword){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/SearchCustomer?search_query=${searchword}`);
+            return response.data;
+          },
+          async SearchingSuppliers(searchword){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/SearchSupplier?search_query=${searchword}`);
             return response.data;
           },
           async GetUsersWithRole(roleId){

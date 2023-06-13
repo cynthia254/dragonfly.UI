@@ -79,7 +79,7 @@
     box-sizing: border-box;
     position: relative;
     border-bottom: 5px solid #ccc;">
-    <h2 style="display: flex;font-size: 16px;">Update Purchase Status</h2>
+    <h2 style="display: flex;font-size: 16px;">Update Purchase Details</h2>
     <div class="form-group">
       <label for="email">Brand Name:</label>
       <div class="relative">
@@ -87,9 +87,6 @@
           class="form-control"
           id="name"
           type="text"
-          pattern="[a-zA-Z\s]+"
-          title="Username should only contain letters. e.g. Piyush Gupta"
-          autocomplete=""
           v-model="purchaseBody.brandName"
           disabled
         
@@ -98,17 +95,14 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="email">Brand Name:</label>
+      <label for="email">Item Name:</label>
       <div class="relative">
         <input
           class="form-control"
           id="name"
           type="text"
-          pattern="[a-zA-Z\s]+"
-          title="Username should only contain letters. e.g. Piyush Gupta"
-          autocomplete=""
           v-model="purchaseBody.itemName"
-          disabled
+         
         
         />
         <i class="fa fa-user"></i>
@@ -116,54 +110,26 @@
     </div>
    
     <div class="form-group">
-      <label for="email">Status:</label>
-      <div class="relative">
-        <select
-                                            name="product"
-                                            id="product"
-                                            class="form-select rounded-0"
-                                            required
-                                            v-model="this.selectedoption"
-                                          >
-                                            <option value="">
-                                              Select Status
-                                            </option>
-                                            <option value="In Transit">In Transit</option>
-                                            <option value="Delivered">Delivered</option>
-                                            <option value="Overdue">Overdue</option>
-                                            
-                                         
-                                          
-                                          </select>
-       
-      </div>
-    </div>
-    <div class="form-group">
-      <label for="email">Comment:</label>
+      <label for="email">Supplier Name</label>
       <div class="relative">
         <input
           class="form-control"
+          id="name"
           type="text"
-          v-model="this.reason"
-        
+          
+          v-model="purchaseBody.supplierName"
          
-
-
-       
-     
+        
         />
-        <i class="fa fa-phone"></i>
+        <i class="fa fa-user"></i>
+     
+       
       </div>
     </div>
-
     <div class="tright d-flex mx-5" >
+    
       <a href=""
-        ><button class="movebtn movebtnre">
-          Cancel
-        </button></a
-      >
-      <a href=""
-        ><button class="movebtn movebtnsu" style="margin-left: 160%;" @click.prevent="changepurchasestatus()" >
+        ><button class="movebtn movebtnsu" style="margin-left: 110%;" @click.prevent="changepurchasestatus()" >
           Submit</button
       ></a>
     </div>
@@ -181,8 +147,6 @@ export default {
     return{
         purchaseId:"",
         purchaseBody:{},
-        reason:"",
-        selectedoption:"",
 
     }
 
@@ -205,28 +169,32 @@ formatDateAssigned(value) {
     },
     async changepurchasestatus(){
       var body = {
-        purchaseId: this.purchaseId,
-        purchaseStatus: this.selectedoption,
-        reasonforStatus:this.reason,
-        
-      };
-      console.log("user id: ", body)
-           var resp= await this.changeUserStatus(body);
-           if(resp.isTrue == true){
+          purchaseid: this.purchaseId,
+          itemName:this.purchaseBody.itemName,
+          brandName:this.purchaseBody.brandName,
+          supplierName:this.purchaseBody.supplierName,
+
+       
           
-           console.log("response on assigning ;   ", resp);
-           swal.fire({
-          html: `<h5 class="text-success">${resp.message}</h5>`,
-        });
-           }
-           else{
-            this.spinner=false;
-            swal.fire({
-          html: `<h5 class="text-danger">${resp.message}</h5>`,
-        });
-
-
-           }
+        };
+        console.log("user id: ", body)
+             var resp= await this.edititngStockIn(body);
+             if(resp.isTrue == true){
+            
+             console.log("response on assigning ;   ", resp);
+             swal.fire({
+            html: `<h5 class="text-success">${resp.message}</h5>`,
+          });
+             }
+             else{
+              this.spinner=false;
+              swal.fire({
+            html: `<h5 class="text-danger">${resp.message}</h5>`,
+          });
+  
+  
+             }
+           this.gettingAllPurchases();
 
 
     }
@@ -248,16 +216,7 @@ form:before {
     left: 0;
     right: 0;
     height: 8px;
-    background: #c4e17f;
-    border-radius: 5px 5px 0 0  ;
-    background: rgba(196,225,127,1);
-    background: -moz-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-    background: -webkit-gradient(left top, right top, color-stop(0%, rgba(196,225,127,1)), color-stop(20%, rgba(196,225,127,1)), color-stop(20%, rgba(247,253,202,1)), color-stop(40%, rgba(247,253,202,1)), color-stop(40%, rgba(254,207,113,1)), color-stop(60%, rgba(254,207,113,1)), color-stop(60%, rgba(240,119,108,1)), color-stop(80%, rgba(240,119,108,1)), color-stop(80%, rgba(219,157,190,1)), color-stop(100%, rgba(219,157,190,1)));
-    background: -webkit-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-    background: -o-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-    background: -ms-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-    background: linear-gradient(to right, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4e17f', endColorstr='#db9dbe', GradientType=1 );
+   
 }
 .form h2 {
     margin: 18px 0;

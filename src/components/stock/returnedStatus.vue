@@ -235,12 +235,12 @@
                 </div>
               </transition>
               <div class="row mx-5">
-                <button style="margin-right: 2px;width: 10%;margin-top: 7px;display: flex;height: fit-content;border-radius: 6px;"><a href="/returnedStock" style="color: white;text-decoration: none;">Returned Stock</a></button>
-              
+                <button class="custom-btn btn-5" style="margin-top:10px;width: 20%;"><span><a href="/returnedStock" style="text-decoration: none;">RETURNED STOCK</a></span></button>
+
                   <div class="col-sm-6 d-flex mt-2">
                     <div
     class="search"
-    style="margin-left: 800px; margin-top: 5px; display: flex"
+    style="margin-left: 600px; margin-top: 5px; display: flex"
   >
   <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>

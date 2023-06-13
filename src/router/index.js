@@ -71,6 +71,10 @@ import editPurchase from "../components/stock/editPurchase.vue"
 import editSales from "../components/stock/editSales.vue"
 import returnedStatus from "../components/stock/returnedStatus.vue"
 import returnedStock from "../components/stock/returnedStock.vue"
+import editCustomer from "../components/stock/editCustomer.vue"
+import editSupplier from "../components/stock/editSupplier.vue"
+import editItem from "../components/stock/editItem.vue"
+import editBrand from "../components/stock/editBrand.vue"
 
 const routes = [
   {
@@ -140,6 +144,30 @@ const routes = [
     name: 'editSales',
  
     component: editSales
+  },
+  {
+    path: '/editbrand/:brandId',
+    name: 'editBrand',
+ 
+    component: editBrand
+  },
+  {
+    path: '/edititem/:itemId',
+    name: 'editItem',
+ 
+    component: editItem
+  },
+  {
+    path: '/editcustomer/:customerId',
+    name: 'editCustomer',
+ 
+    component: editCustomer
+  },
+  {
+    path: '/editsupplier/:supplierId',
+    name: 'editSupplier',
+ 
+    component: editSupplier
   },
   {
     path: '/departmenttable',

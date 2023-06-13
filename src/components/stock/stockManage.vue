@@ -1,6 +1,6 @@
 <template >
      <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
-              <section>
+     <section>
             <header class="top">
       <div class="frame-24" style="width: 40px">
       <img
@@ -18,9 +18,9 @@
             <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
             <ul>
               <li class="dropDown-menu fixed-top">
-                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Customers</a>
+                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Recipient</a>
                 <ul>
-                  <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Customers</a></li>
+                  <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Recipient</a></li>
                 </ul>
               </li>
               <li class="dropDown-menu fixed-top">
@@ -46,16 +46,6 @@
             </ul>
           </li>
           <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Orders</a>
-            <ul>
-              <li>
-                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Sales Orders</a>
-              </li>
-              <li><a href="/purchase" style="font-size: 16px;font-family:inter;font-weight:medium">Purchase Orders</a></li>
-            </ul>
-          </li>
-
-          <li class="dropDown-menu fixed-top">
             <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Reports</a>
             <ul>
               <li>
@@ -74,7 +64,7 @@
       <div class="box" style="background-color: #F6F7F9
       ">
         <div class="right-side">
-          <div class="box-topic">Orders Supplied</div>
+          <div class="box-topic">Stock Out</div>
           <br />
           <small>QTY </small>
           <div class="number">400</div>
@@ -83,7 +73,7 @@
       </div>
       <div class="box" style="background-color:  #F6F7F9">
         <div class="right-side">
-          <div class="box-topic">Orders Purchased</div>
+          <div class="box-topic">Stock In</div>
           <br />
           <small>QTY </small>
           <div class="number">500</div>
@@ -92,28 +82,20 @@
       </div>
       <div class="box" style="background-color:  #F6F7F9">
         <div class="right-side">
-          <div class="box-topic">Orders Returned</div>
+          <div class="box-topic">Stock Returned</div>
           <br />
           <small>QTY </small>
           <div class="number">12</div>
           <div class="indicator"></div>
         </div>
       </div>
-      <div class="box" style="background-color: #F6F7F9">
-        <div class="right-side">
-          <div class="box-topic">Orders Cancelled</div>
-          <br />
-          <small>QTY </small>
-          <div class="number">110</div>
-          <div class="indicator"></div>
-        </div>
-      </div>
+    
     </div>
   </div>
 
   <div class="row" style="background: #F6F7F9">
     <div class=" text-center mt-3">
-      <h4><b>Sales vs Purchases</b></h4>
+      <h4><b>Stock In vs Stock Out</b></h4>
     </div>
     <BarChart class="w-75" style="margin-left: 70px;" />
 

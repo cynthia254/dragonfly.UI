@@ -18,9 +18,9 @@
             <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
             <ul>
               <li class="dropDown-menu fixed-top">
-                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Customers</a>
+                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Recipient</a>
                 <ul>
-                  <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Customers</a></li>
+                  <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Recipient</a></li>
                 </ul>
               </li>
               <li class="dropDown-menu fixed-top">
@@ -43,19 +43,8 @@
               </li>
 
               <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
-              <li><a href="/returnedStock" style="font-size: 16px;font-family:inter;font-weight:medium">Returned Stock</a></li>
             </ul>
           </li>
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Orders</a>
-            <ul>
-              <li>
-                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Sales Orders</a>
-              </li>
-              <li><a href="/purchase" style="font-size: 16px;font-family:inter;font-weight:medium">Purchase Orders</a></li>
-            </ul>
-          </li>
-
           <li class="dropDown-menu fixed-top">
             <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Reports</a>
             <ul>
@@ -511,7 +500,7 @@
                         <svg style="margin-left:2px;color: white;font-weight: bold;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-plus-lg" viewBox="0 0 16 16">
   <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
 </svg>
-                          Add Product
+                          New Stock
                         </button>
                         
                       </div>
@@ -529,51 +518,44 @@
                             margin-top: 0px;
                             align-content: center;
                             align-items: center;
+                            border-radius: 18px;
                           "
                         >
                           <div
                             class="modal-wrapper"
-                            style="vertical-align: middle; display: table-cell"
+                            style="vertical-align: middle; display: table-cell;  "
                           >
                             <div
                               class="modal-dialog modal-dialog-centered"
                               style="
                                 align-content: center;
-                                margin-top: 40px;
+                                margin-top: 45px;
                                 margin-left: 300px;
+                                border-radius: 18px;
                               "
                             >
                               <div
                                 class="modal-content"
                                 style="
-                                  width: 60%;
+                                  width: 50%;
                                   margin-left: 50px;
-                                  margin-top: 70px;
+                                  margin-top: 200px;
+                                  background: #f5f5f5;
+                                  border-radius: 18px;
+                                  height:100%;
                                 "
                               >
                                 <div class="modal-header">
-                                  <h4 class="modal-title">
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="16"
-                                      fill="currentColor"
-                                      class="bi bi-plus-lg"
-                                      viewBox="0 0 16 16"
-                                    >
-                                      <path
-                                        fill-rule="evenodd"
-                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                                      />
-                                    </svg>
-                                    Add Product
+                                  <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px;">
+                                    
+                                    New Stock
                                   </h4>
                                   <button
                                     @click="showModal = false"
                                     type="button"
                                     class="btn-close"
                                     data-bs-dismiss="modal"
-                                    style="margin-right: 10px"
+                                    style="margin-right: 10px;margin-right:50px"
                                   ></button>
                                 </div>
                                 <div
@@ -598,7 +580,7 @@
                                     />
                                     <div class="row">
                                       <div class="col-md-6">
-                                        <div class="form-group" style="">
+                                        <div class="form-group" style="background:#f5f5f5">
                                           <label>Brand Name</label>
                                           <select
                                             name="product"
@@ -608,6 +590,7 @@
                                             v-model="
                                               this.formdata.BrandNameSelected
                                             "
+                                             style="background-color: #f5f5f5;"
                                           >
                                             <option value="">
                                               Select Brand
@@ -635,9 +618,10 @@
                                             v-model="
                                               this.formdata.ItemNameSelected
                                             "
+                                             style="background-color: #f5f5f5;"
                                           >
                                             <option value="">
-                                              Select Product
+                                              Select Item
                                             </option>
                                             <option
                                               v-for="items in this.allitems"
@@ -662,6 +646,7 @@
                                           required
                                           pattern="[+-]?([0-9]*[.])?[0-9]+"
                                           v-model="this.formdata.reOrderLevel"
+                                          style="background-color: #f5f5f5;"
                                         />
                                       </div>
                                     </div>
@@ -677,7 +662,7 @@
                                           >
                                             <select
                                               class="form-control input-sm w-5"
-                                              style="width: 60px"
+                                              style="width: 60px;background-color:#f5f5f5"
                                               v-model="this.formdata.currency"
                                             >
                                               <option value="--" selected>
@@ -695,6 +680,7 @@
                                               v-model="
                                                 this.formdata.buyingPrice
                                               "
+                                               style="background-color: #f5f5f5;"
                                             />
                                           </div>
                                         </div>
@@ -713,12 +699,13 @@
                                               v-model="
                                                 this.formdata.quantity
                                               "
+                                               style="background-color: #f5f5f5;"
                                             />
                                          
                                         </div>
                                       </div>
                                     </div>
-                                    <div
+                                    <!--<div
                                       class="custom-control custom-checkbox custom-control-inline"
                                     >
                                       <input
@@ -736,7 +723,7 @@
                                         >Notify When Re-order Level is
                                         Reached</label
                                       >
-                                    </div>
+                                    </div>-->
 
                                     <div class="form-group">
                                       <input
@@ -744,20 +731,13 @@
                                         type="submit"
                                         name="action"
                                         id="action"
-                                        class="btn btn-primary btn-sm"
-                                        value="Add"
+                                        class="btn btn-success btn-sm"
+                                        value="Update"
                                         form="purchaseForm"
-                                        style="margin-top: 20px"
+                                        style="margin-bottom: 10px;margin-left: 60px;width: 60%;"
+                                    
                                       />
-                                      <button
-                                        @click="showModal = false"
-                                        type="button"
-                                        class="btn btn-default border btn-sm"
-                                        data-bs-dismiss="modal"
-                                        style="margin-left: 75px"
-                                      >
-                                        Close
-                                      </button>
+                                     
                                     </div>
                                   </form>
                                 </div>
@@ -771,10 +751,17 @@
                 </div>
 
                 <div class="row mx-5">
-                  <div class="col-sm-6 d-flex mt-2">
+                  <link href='https://fonts.googleapis.com/css?family=Lato:400,900' rel='stylesheet' type='text/css'>
+                 
+ 
+  <button class="custom-btn btn-7" style="margin-top:20px;"><span><a href="/purchase" style="text-decoration: none;">STOCK IN</a></span></button>
+
+  <button class="custom-btn btn-7" style="margin-top:20px"><span><a href="/sales" style="text-decoration: none;">STOCK OUT</a></span></button>
+  <button class="custom-btn btn-7" style="margin-top:20px"><span ><a href="/returnedStock" style="text-decoration: none;">RETURN STOCK</a></span></button>
+  <div class="col-sm-6 d-flex ">
                     <div
     class="search"
-    style="margin-left: 940px; margin-top: 20px; display: flex"
+    style="margin-left: 300px; margin-top: 20px; display: flex"
   >
     <!-- <label style="display: flex">SEARCH </label> -->
     <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -797,20 +784,26 @@
                </div>
                 </div>
 
-                <div class="table-wrapper" v-if="showallstock">
+         
+
+                <div class="table-wrapper">
                   <div class="table-title">
                     <div class="">
-                      <div class="col-sm table-responsive">
-                        <table id="purchaseList" class="table table-hover table-bordered">
-                          <thead style="background-color: rgb(214, 211, 211);font-family: inter;font-weight: bold;font-size: 15px;">
+                      <div class="">
+                        <table  class="table table-hover table-bordered "  v-if="showallstock">
+
+                          <thead style="background-color: rgb(214, 211, 211);font-family: inter;font-weight: bold;font-size: 13px;">
                             <tr>
                               <th>Product ID</th>
                               <th>Product Name</th>
-                              <th>Quantity</th>
-                              <th>Buying Price</th>
                               <th>Opening Stock</th>
-                              <th>Re-order Level</th>
+                              <th>Stock In</th>
+                              <th>StockOut</th>
+                              <th>Returned Stock</th>
                               <th>Available Stock</th>
+                              <th> Total Buying Price</th>
+                              <th>Re-order Level</th>
+                              <th style="display: flex;">ReOrder Required</th>
                         
                               <th>Date Added</th>
                               <th>Status</th>
@@ -818,15 +811,18 @@
                             </tr>
                           </thead>
                           <tbody v-for="stock in this.allstock" v-bind:key="stock.id">
-                            <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
+                            <tr style="font-family: inter;font-size: 13px;font-weight: medium;color: gray;">
                               <th scope="row">{{stock.stockId}}</th>
                               <td>{{stock.brandName}}  {{ stock.itemName }}</td>
-                              <td>{{stock.quantity}}</td>
-                              <td>{{stock.currency}}  {{ stock.buyingPrice }}</td>
                               <td>{{stock.openingStock}}</td>
+                              <td>{{ stock.stockIn }}</td>
+                              <td>{{ stock.stockOut }}</td>
+                             <td>{{ stock.totalReturnedStock }}</td>
+                             <td>{{stock.availableStock}}</td>
+                             <td style="width:150px">{{stock.currency}}  {{formatPrice(stock.totalBuyingPrice) }}</td>
                               <td>{{stock.reOrderLevel}}</td>
-                              <td>{{stock.availableStock}}</td>
-                           
+                              
+                              <td>{{ stock.reorderRequired }}</td>
                               <td>{{ formatDateAssigned(stock.dateAdded) }}</td>
                               <td>
                                 <button
@@ -847,37 +843,11 @@
                               </td>
 
                               <td >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  fill="green"
-                                  class="bi bi-pencil-square"
-                                  viewBox="0 0 16 16"
-                                  @click="editStock(stock.stockId);"
-                                
-                                >
-                                  <path
-                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                                  />
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                                  />
-                                </svg>
-
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  fill="red"
-                                  class="bi bi-trash3 mx-2"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
-                                  />
-                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-info-circle" viewBox="0 0 16 16"  @click="editStock(stock.stockId);" style="margin-left: 20px;margin-top: 25px;">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+</svg>
+                       
                               </td>
                             </tr>
                            
@@ -887,21 +857,24 @@
                     </div>
                   </div>
                 </div>
-              </div>
+             </div>
               <div class="table-wrapper" v-if="showallstocksearch">
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
                         <table id="purchaseList" class="table table-hover table-bordered">
-                          <thead style="background-color: rgb(214, 211, 211);font-family: inter;font-weight: bold;font-size: 15px;">
+                          <thead style="background-color: rgb(214, 211, 211);font-family: inter;font-weight: bold;font-size: 13px;">
                             <tr>
                               <th>Product ID</th>
                               <th>Product Name</th>
-                              <th>Quantity</th>
-                              <th>Buying Price</th>
                               <th>Opening Stock</th>
-                              <th>Re-order Level</th>
+                              <th>Stock In</th>
+                              <th>StockOut</th>
+                              <th>Returned Stock</th>
                               <th>Available Stock</th>
+                              <th> Total Buying Price</th>
+                              <th>Re-order Level</th>
+                              <th style="display: flex;">ReOrder Required</th>
                         
                               <th>Date Added</th>
                               <th>Status</th>
@@ -909,15 +882,18 @@
                             </tr>
                           </thead>
                           <tbody v-for="stock in this.allstock" v-bind:key="stock.id">
-                            <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
+                            <tr style="font-family: inter;font-size: 13px;font-weight: medium;color: gray;">
                               <th scope="row">{{stock.stockId}}</th>
                               <td>{{stock.brandName}}  {{ stock.itemName }}</td>
-                              <td>{{stock.quantity}}</td>
-                              <td>{{stock.currency}}  {{ stock.buyingPrice }}</td>
                               <td>{{stock.openingStock}}</td>
+                              <td>{{ stock.stockIn }}</td>
+                              <td>{{ stock.stockOut }}</td>
+                             <td>{{ stock.totalReturnedStock }}</td>
+                             <td>{{stock.availableStock}}</td>
+                             <td style="width:150px">{{stock.currency}}  {{formatPrice(stock.totalBuyingPrice) }}</td>
                               <td>{{stock.reOrderLevel}}</td>
-                              <td>{{stock.availableStock}}</td>
-                           
+                              
+                              <td>{{ stock.reorderRequired }}</td>
                               <td>{{ formatDateAssigned(stock.dateAdded) }}</td>
                               <td>
                                 <button
@@ -938,37 +914,11 @@
                               </td>
 
                               <td >
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  fill="green"
-                                  class="bi bi-pencil-square"
-                                  viewBox="0 0 16 16"
-                                  @click="editStock(stock.stockId);"
-                                
-                                >
-                                  <path
-                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                                  />
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                                  />
-                                </svg>
-
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  fill="red"
-                                  class="bi bi-trash3 mx-2"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
-                                  />
-                                </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-info-circle" viewBox="0 0 16 16"  @click="editStock(stock.stockId);" style="margin-left: 20px;margin-top: 25px;">
+  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+  <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+</svg>
+                       
                               </td>
                             </tr>
                            
@@ -986,6 +936,7 @@
   </div>
 </template>
 <script>
+
 import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared";
 export default {
@@ -1035,6 +986,10 @@ console.log("allstock: ", this.allstock);
 return response;
 
 },
+formatPrice(value) {
+        let val = (value/1).toFixed(2).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    },
 formatDateAssigned(value) {
       let formattedDate = new Date(value);
       formattedDate = `${formattedDate.toDateString()} at ${formattedDate.toLocaleTimeString()}`;
@@ -1148,6 +1103,922 @@ formatDateAssigned(value) {
     text-align: center;
     pointer-events: none;
     color: #aaa;
+}
+.navmenu{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font: bold 10px 'Lato', sans-serif; /* use google custom font "Lato" */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      margin-top: 10px;
+}
+
+.navmenu li{
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  min-width: 100px;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-bottom: 5px;
+}
+
+.navmenu li a{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 50px; /* height of links */  
+  padding: 0 10px;
+  position: relative;
+  overflow: hidden;
+  color: black;
+  outline: none;
+  border: 1px solid rgba(0,0,0,.1);
+  border-bottom: 8px solid rgba(0,0,0,.1);
+  opacity: 1;
+  text-transform: uppercase;
+  font-size: 1.8em;
+  /* 18 * 0.0555 = 1px */
+  letter-spacing: 0.0555em;
+  background: #ff7473; /* default background color */
+  text-decoration: none;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center; /* center text horizontally */
+  text-align: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center; /* center text vertically */
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+/* Create shimmering effect */
+.navmenu li a:after{
+  content: '';
+  position: absolute;
+  width: 35%;
+  height: 100%;
+  background: white;
+  opacity: .5;
+  top: 0;
+  left: -50%;
+  -webkit-transform: skew(-20deg);
+          transform: skew(-20deg);
+  -webkit-transition: all .2s;
+  transition: all .2s;
+}
+
+
+.navmenu li:nth-of-type(2) a{
+  background: #ffc952;
+}
+
+.navmenu li:nth-of-type(3) a{
+  background: #47b8e0;
+}
+
+.navmenu li:nth-of-type(4) a{
+	color: white;
+  background: #34314c;
+}
+
+.navmenu li:nth-of-type(5) a{
+  background: #fdc23e;
+}
+
+.navmenu li a:hover{
+  opacity: .7;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+
+.navmenu li a:hover:after{
+  left: 150%;
+  -webkit-transition: all .4s;
+  transition: all .4s;
+}
+
+.navmenu li a:active{
+  box-shadow: 0 -30px 10px rgba(255,255,255,.2) inset;
+  border-bottom-width: 0;
+  box-shadow: none;
+  border-top: 8px solid rgba(0,0,0,.1);
+  -webkit-transition: none;
+  transition: none;
+}
+
+@media screen and (max-width:760px){
+  .navmenu li a{
+    font-size: 1.5em;
+  }
+  
+}
+.frame {
+  width: 90%;
+  margin: 40px auto;
+  text-align: center;
+}
+button {
+  margin: 20px;
+}
+.custom-btn {
+  width: 130px;
+  height: 40px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 10px 25px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-block;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  outline: none;
+}
+
+/* 1 */
+.btn-1 {
+  background: rgb(6,14,131);
+  background: linear-gradient(0deg, rgba(6,14,131,1) 0%, rgba(12,25,180,1) 100%);
+  border: none;
+}
+.btn-1:hover {
+   background: rgb(0,3,255);
+background: linear-gradient(0deg, rgba(0,3,255,1) 0%, rgba(2,126,251,1) 100%);
+}
+
+/* 2 */
+.btn-2 {
+  background: rgb(96,9,240);
+  background: linear-gradient(0deg, rgba(96,9,240,1) 0%, rgba(129,5,240,1) 100%);
+  border: none;
+  
+}
+.btn-2:before {
+  height: 0%;
+  width: 2px;
+}
+.btn-2:hover {
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .5), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, .4);
+}
+
+
+/* 3 */
+.btn-3 {
+  background: rgb(0,172,238);
+background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+  
+}
+.btn-3 span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.btn-3:before,
+.btn-3:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  top: 0;
+   background: rgba(2,126,251,1);
+  transition: all 0.3s ease;
+}
+.btn-3:before {
+  height: 0%;
+  width: 2px;
+}
+.btn-3:after {
+  width: 0%;
+  height: 2px;
+}
+.btn-3:hover{
+   background: transparent;
+  box-shadow: none;
+}
+.btn-3:hover:before {
+  height: 100%;
+}
+.btn-3:hover:after {
+  width: 100%;
+}
+.btn-3 span:hover{
+   color: rgba(2,126,251,1);
+}
+.btn-3 span:before,
+.btn-3 span:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: 0;
+   background: rgba(2,126,251,1);
+  transition: all 0.3s ease;
+}
+.btn-3 span:before {
+  width: 2px;
+  height: 0%;
+}
+.btn-3 span:after {
+  width: 0%;
+  height: 2px;
+}
+.btn-3 span:hover:before {
+  height: 100%;
+}
+.btn-3 span:hover:after {
+  width: 100%;
+}
+
+/* 4 */
+.btn-4 {
+  background-color: #4dccc6;
+background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+  line-height: 42px;
+  padding: 0;
+  border: none;
+}
+.btn-4:hover{
+  background-color: #89d8d3;
+background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+}
+.btn-4 span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.btn-4:before,
+.btn-4:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  top: 0;
+   box-shadow:  4px 4px 6px 0 rgba(255,255,255,.9),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.9),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+  transition: all 0.3s ease;
+}
+.btn-4:before {
+  height: 0%;
+  width: .1px;
+}
+.btn-4:after {
+  width: 0%;
+  height: .1px;
+}
+.btn-4:hover:before {
+  height: 100%;
+}
+.btn-4:hover:after {
+  width: 100%;
+}
+.btn-4 span:before,
+.btn-4 span:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: 0;
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.9),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.9),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+  transition: all 0.3s ease;
+}
+.btn-4 span:before {
+  width: .1px;
+  height: 0%;
+}
+.btn-4 span:after {
+  width: 0%;
+  height: .1px;
+}
+.btn-4 span:hover:before {
+  height: 100%;
+}
+.btn-4 span:hover:after {
+  width: 100%;
+}
+
+/* 5 */
+.btn-5 {
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+background: green;
+}
+.btn-5 span a{
+  color: white;
+}
+.btn-5 span a:hover{
+  color: red;
+}
+.btn-5:hover {
+  color: #f0094a;
+  background: transparent;
+   box-shadow:none;
+}
+.btn-5:before,
+.btn-5:after{
+  content:'';
+  position:absolute;
+  top:0;
+  right:0;
+  height:2px;
+  width:0;
+  background: #f0094a;
+  box-shadow:
+   -1px -1px 5px 0px #fff,
+   7px 7px 20px 0px #0003,
+   4px 4px 5px 0px #0002;
+  transition:400ms ease all;
+}
+.btn-5:after{
+  right:inherit;
+  top:inherit;
+  left:0;
+  bottom:0;
+}
+.btn-5:hover:before,
+.btn-5:hover:after{
+  width:100%;
+  transition:800ms ease all;
+}
+
+
+/* 6 */
+.btn-6 {
+  background: rgb(247,150,192);
+background: radial-gradient(circle, rgba(247,150,192,1) 0%, rgba(118,174,241,1) 100%);
+  line-height: 42px;
+  padding: 0;
+  border: none;
+}
+.btn-6 span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.btn-6:before,
+.btn-6:after {
+  position: absolute;
+  content: "";
+  height: 0%;
+  width: 1px;
+ box-shadow:
+   -1px -1px 20px 0px rgba(255,255,255,1),
+   -4px -4px 5px 0px rgba(255,255,255,1),
+   7px 7px 20px 0px rgba(0,0,0,.4),
+   4px 4px 5px 0px rgba(0,0,0,.3);
+}
+.btn-6:before {
+  right: 0;
+  top: 0;
+  transition: all 500ms ease;
+}
+.btn-6:after {
+  left: 0;
+  bottom: 0;
+  transition: all 500ms ease;
+}
+.btn-6:hover{
+  background: transparent;
+  color: #76aef1;
+  box-shadow: none;
+}
+.btn-6:hover:before {
+  transition: all 500ms ease;
+  height: 100%;
+}
+.btn-6:hover:after {
+  transition: all 500ms ease;
+  height: 100%;
+}
+.btn-6 span:before,
+.btn-6 span:after {
+  position: absolute;
+  content: "";
+  box-shadow:
+   -1px -1px 20px 0px rgba(255,255,255,1),
+   -4px -4px 5px 0px rgba(255,255,255,1),
+   7px 7px 20px 0px rgba(0,0,0,.4),
+   4px 4px 5px 0px rgba(0,0,0,.3);
+}
+.btn-6 span:before {
+  left: 0;
+  top: 0;
+  width: 0%;
+  height: .5px;
+  transition: all 500ms ease;
+}
+.btn-6 span:after {
+  right: 0;
+  bottom: 0;
+  width: 0%;
+  height: .5px;
+  transition: all 500ms ease;
+}
+.btn-6 span:hover:before {
+  width: 100%;
+}
+.btn-6 span:hover:after {
+  width: 100%;
+}
+
+/* 7 */
+.btn-7 {
+background: green;
+  line-height: 42px;
+  padding: 0;
+  border: none;
+}
+.btn-7 span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.btn-7 span a{
+  color:white;
+}
+.btn-7 span a:hover{
+  color:red;
+  background: transparent;
+}
+.btn-7:before,
+.btn-7:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  bottom: 0;
+  background: rgba(251,75,2,1);
+
+  transition: all 0.3s ease;
+}
+.btn-7:before{
+   height: 0%;
+   width: 2px;
+}
+.btn-7:after {
+  width: 0%;
+  height: 2px;
+}
+.btn-7:hover {
+  color: rgba(251,75,2,1);
+  background: transparent;
+  color:red;
+}
+.btn-7:hover:before {
+  height: 100%;
+}
+.btn-7:hover:after {
+  width: 100%;
+}
+.btn-7 span:before,
+.btn-7 span:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  background: rgba(251,75,2,1);
+
+  transition: all 0.3s ease;
+}
+.btn-7 span:before {
+  width: 2px;
+  height: 0%;
+}
+.btn-7 span:after {
+  height: 2px;
+  width: 0%;
+}
+.btn-7 span:hover:before {
+  height: 100%;
+}
+.btn-7 span:hover:after {
+  width: 100%;
+}
+
+/* 8 */
+.btn-8 {
+  background-color: green;
+background-image: (315deg,green);
+  line-height: 42px;
+  padding: 0;
+  border: none;
+}
+.btn-8 span {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.btn-8:before,
+.btn-8:after {
+  position: absolute;
+  content: "";
+  right: 0;
+  bottom: 0;
+  background: #c797eb;
+  color:green;
+  /*box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);*/
+  transition: all 0.3s ease;
+}
+.btn-8:before{
+   height: 0%;
+   width: 2px;
+}
+.btn-8:after {
+  width: 0%;
+  height: 2px;
+}
+.btn-8:hover:before {
+  height: 100%;
+}
+.btn-8:hover:after {
+  width: 100%;
+}
+.btn-8:hover{
+  background: transparent;
+  color:green;
+}
+.btn-8 span:hover{
+  color: #c797eb;
+  color:green;
+}
+.btn-8 span:before,
+.btn-8 span:after {
+  position: absolute;
+  content: "";
+  left: 0;
+  top: 0;
+  background: #c797eb;
+  /*box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);*/
+  transition: all 0.3s ease;
+}
+.btn-8 span:before {
+  width: 2px;
+  height: 0%;
+  color:green;
+}
+.btn-8 span:after {
+  height: 2px;
+  width: 0%;
+  color:green;
+}
+.btn-8 span:hover:before {
+  height: 100%;
+  color:green;
+}
+.btn-8 span:hover:after {
+  width: 100%;
+  color:green;
+}
+  
+
+/* 9 */
+.btn-9 {
+  border: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.btn-9:after {
+  position: absolute;
+  content: " ";
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+   background-color: #1fd1f9;
+background-image: linear-gradient(315deg, #1fd1f9 0%, #b621fe 74%);
+  transition: all 0.3s ease;
+}
+.btn-9:hover {
+  background: transparent;
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+  color: #fff;
+}
+.btn-9:hover:after {
+  -webkit-transform: scale(2) rotate(180deg);
+  transform: scale(2) rotate(180deg);
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.5),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.5),
+    inset 4px 4px 6px 0 rgba(116, 125, 136, .3);
+}
+
+/* 10 */
+.btn-10 {
+  background: rgb(22,9,240);
+background: linear-gradient(0deg, rgba(22,9,240,1) 0%, rgba(49,110,244,1) 100%);
+  color: #fff;
+  border: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+.btn-10:after {
+  position: absolute;
+  content: " ";
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+  -webkit-transform: scale(.1);
+  transform: scale(.1);
+}
+.btn-10:hover {
+  color: #fff;
+  border: none;
+  background: transparent;
+}
+.btn-10:hover:after {
+  background: rgb(0,3,255);
+background: linear-gradient(0deg, rgba(2,126,251,1) 0%,  rgba(0,3,255,1)100%);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+}
+
+/* 11 */
+.btn-11 {
+  border: none;
+  background: rgb(251,33,117);
+    background: linear-gradient(0deg, rgba(251,33,117,1) 0%, rgba(234,76,137,1) 100%);
+    color: #fff;
+    overflow: hidden;
+}
+.btn-11:hover {
+    text-decoration: none;
+    color: #fff;
+}
+.btn-11:before {
+    position: absolute;
+    content: '';
+    display: inline-block;
+    top: -180px;
+    left: 0;
+    width: 30px;
+    height: 100%;
+    background-color: #fff;
+    animation: shiny-btn1 3s ease-in-out infinite;
+}
+.btn-11:hover{
+  opacity: .7;
+}
+.btn-11:active{
+  box-shadow:  4px 4px 6px 0 rgba(255,255,255,.3),
+              -4px -4px 6px 0 rgba(116, 125, 136, .2), 
+    inset -4px -4px 6px 0 rgba(255,255,255,.2),
+    inset 4px 4px 6px 0 rgba(0, 0, 0, .2);
+}
+
+
+@-webkit-keyframes shiny-btn1 {
+    0% { -webkit-transform: scale(0) rotate(45deg); opacity: 0; }
+    80% { -webkit-transform: scale(0) rotate(45deg); opacity: 0.5; }
+    81% { -webkit-transform: scale(4) rotate(45deg); opacity: 1; }
+    100% { -webkit-transform: scale(50) rotate(45deg); opacity: 0; }
+}
+
+
+/* 12 */
+.btn-12{
+  position: relative;
+  right: 20px;
+  bottom: 20px;
+  border:none;
+  box-shadow: none;
+  width: 130px;
+  height: 40px;
+  line-height: 42px;
+  -webkit-perspective: 230px;
+  perspective: 230px;
+}
+.btn-12 span {
+  background: rgb(0,172,238);
+background: linear-gradient(0deg, rgba(0,172,238,1) 0%, rgba(2,126,251,1) 100%);
+  display: block;
+  position: absolute;
+  width: 130px;
+  height: 40px;
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  border-radius: 5px;
+  margin:0;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all .3s;
+  transition: all .3s;
+}
+.btn-12 span:nth-child(1) {
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  -webkit-transform: rotateX(90deg);
+  -moz-transform: rotateX(90deg);
+  transform: rotateX(90deg);
+  -webkit-transform-origin: 50% 50% -20px;
+  -moz-transform-origin: 50% 50% -20px;
+  transform-origin: 50% 50% -20px;
+}
+.btn-12 span:nth-child(2) {
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+  -webkit-transform-origin: 50% 50% -20px;
+  -moz-transform-origin: 50% 50% -20px;
+  transform-origin: 50% 50% -20px;
+}
+.btn-12:hover span:nth-child(1) {
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  -webkit-transform: rotateX(0deg);
+  -moz-transform: rotateX(0deg);
+  transform: rotateX(0deg);
+}
+.btn-12:hover span:nth-child(2) {
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+ color: transparent;
+  -webkit-transform: rotateX(-90deg);
+  -moz-transform: rotateX(-90deg);
+  transform: rotateX(-90deg);
+}
+
+
+/* 13 */
+.btn-13 {
+  background-color: #89d8d3;
+background-image: linear-gradient(315deg, #89d8d3 0%, #03c8a8 74%);
+  border: none;
+  z-index: 1;
+}
+.btn-13:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 5px;
+   background-color: #4dccc6;
+background-image: linear-gradient(315deg, #4dccc6 0%, #96e4df 74%);
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+}
+.btn-13:hover {
+  color: #fff;
+}
+.btn-13:hover:after {
+  top: 0;
+  height: 100%;
+}
+.btn-13:active {
+  top: 2px;
+}
+
+
+/* 14 */
+.btn-14 {
+  background: rgb(255,151,0);
+  border: none;
+  z-index: 1;
+}
+.btn-14:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 0;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  border-radius: 5px;
+  background-color: #eaf818;
+  background-image: linear-gradient(315deg, #eaf818 0%, #f6fc9c 74%);
+  box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  transition: all 0.3s ease;
+}
+.btn-14:hover {
+  color: #000;
+}
+.btn-14:hover:after {
+  top: auto;
+  bottom: 0;
+  height: 100%;
+}
+.btn-14:active {
+  top: 2px;
+}
+
+/* 15 */
+.btn-15 {
+  background: #b621fe;
+  border: none;
+  z-index: 1;
+}
+.btn-15:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  top: 0;
+  right: 0;
+  z-index: -1;
+  background-color: #663dff;
+  border-radius: 5px;
+   box-shadow:inset 2px 2px 2px 0px rgba(255,255,255,.5),
+   7px 7px 20px 0px rgba(0,0,0,.1),
+   4px 4px 5px 0px rgba(0,0,0,.1);
+  transition: all 0.3s ease;
+}
+.btn-15:hover {
+  color: #fff;
+}
+.btn-15:hover:after {
+  left: 0;
+  width: 100%;
+}
+.btn-15:active {
+  top: 2px;
+}
+
+
+/* 16 */
+.btn-16 {
+  border: none;
+  color: #000;
+}
+.btn-16:after {
+  position: absolute;
+  content: "";
+  width: 0;
+  height: 100%;
+  top: 0;
+  left: 0;
+  direction: rtl;
+  z-index: -1;
+  box-shadow:
+   -7px -7px 20px 0px #fff9,
+   -4px -4px 5px 0px #fff9,
+   7px 7px 20px 0px #0002,
+   4px 4px 5px 0px #0001;
+  transition: all 0.3s ease;
+}
+.btn-16:hover {
+  color: #000;
+}
+.btn-16:hover:after {
+  left: auto;
+  right: 0;
+  width: 100%;
+}
+.btn-16:active {
+  top: 2px;
 }
 
 </style>
