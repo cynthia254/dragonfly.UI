@@ -124,15 +124,15 @@
                       >
                         <div
                           class="modal-content"
-                          style="width: 50%;
-                                  margin-left: 100px;
-                                  margin-top: 100px;
+                          style=" width: 50%;
+                                  margin-left:80px;
+                                  margin-top: 95px;
                                   background: #f5f5f5;
                                   border-radius: 18px;
                                   height:100%;"
                         >
                           <div class="modal-header">
-                            <h4 class="modal-title" style="margin-top:20px;margin-left:40px">
+                            <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px; font-family: inter;font-size: 22px;">
                             
                               Add Supplier
                             </h4>
@@ -166,7 +166,7 @@
                               />
   
                               <div class="form-group">
-                                <label>Supplier Name</label>
+                                <label style="font-family: inter;font-size: 16px;">Supplier Name</label>
                                 <div class="input-group">
                                   <input
                                     type="text"
@@ -176,12 +176,12 @@
                                     required
                                    
                                     v-model="this.formdata.supplierName"
-                                    style="background-color: #f5f5f5;"
+                                    style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
                                   />
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label>Company</label>
+                                <label style="font-family: inter;font-size: 16px;">Company</label>
                                 <div class="input-group">
                                   <input
                                     type="text"
@@ -190,12 +190,12 @@
                                     class="form-control rounded-0"
                                     required
                                     v-model="this.formdata.companyName"
-                                    style="background-color: #f5f5f5;"
+                                    style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
                                   />
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label>Email Adress</label>
+                                <label style="font-family: inter;font-size: 16px;">Email Adress</label>
                                 <div class="input-group">
                                   <input
                                     type="email"
@@ -204,12 +204,12 @@
                                     class="form-control rounded-0"
                                     required
                                     v-model="this.formdata.email"
-                                    style="background-color: #f5f5f5;"
+                                    style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
                                   />
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label>Phone Number</label>
+                                <label style="font-family: inter;font-size: 16px;">Phone Number</label>
                                 <div class="input-group">
                                   <input
                                     type="text"
@@ -218,12 +218,12 @@
                                     class="form-control rounded-0"
                                     required
                                     v-model="this.formdata.phoneNumber"
-                                    style="background-color: #f5f5f5;"
+                                    style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
                                   />
                                 </div>
                               </div>
   
-                              <div class="form-group">
+                              <div class="form-group" style="margin-top:10px">
                                 <input
                                 @click.prevent="AddingSupplier();"
                                   type="submit"
@@ -232,7 +232,7 @@
                                   class="btn btn-success btn-sm"
                                   value="Add"
                                   form="purchaseForm"
-                                  style="margin-bottom: 10px;margin-left: 60px;width: 60%;"
+                                  style="margin-bottom: 20px;margin-left: 70px;width: 60%;font-family: inter;font-size: 13px;"
                                 />
                                
                               </div>

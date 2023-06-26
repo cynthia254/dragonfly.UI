@@ -68,7 +68,7 @@
      </nav>
    </header>
    </section>
-   <form class="form" style=" max-width: calc(100vw - 40px);
+   <form class="form" ref="myForm" style=" max-width: calc(100vw - 40px);
      width: 500px;
      height: auto;
      background: rgba(255, 255, 255, 1);
@@ -79,9 +79,24 @@
      box-sizing: border-box;
      position: relative;
      border-bottom: 5px solid #ccc;">
-     <h2 style="display: flex;font-size: 16px;">Update Item Details</h2>
+     <h2 style="display: flex;font-size: 18px;font-family: inter;">Update Item Details</h2>
      <div class="form-group">
-       <label for="email">Item Name:</label>
+       <label style="font-family: inter;font-size: 16px;">Brand Name:</label>
+       <div class="relative">
+         <input
+           class="form-control"
+           id="name"
+           type="text"
+           autocomplete=""
+           v-model="itemBody.brandName"
+           style="font-family: inter;font-size: 13px;color: gray;"
+         
+         />
+         <i class="fa fa-user"></i>
+       </div>
+     </div>
+     <div class="form-group">
+       <label style="font-family: inter;font-size: 16px;">Item Name:</label>
        <div class="relative">
          <input
            class="form-control"
@@ -89,16 +104,91 @@
            type="text"
            autocomplete=""
            v-model="itemBody.itemName"
-          
+           style="font-family: inter;font-size: 13px;color: gray;"
          
          />
+         <i class="fa fa-user"></i>
+       </div>
+     </div>
+     <div class="form-group">
+       <label style="font-family: inter;font-size: 16px;">ReOrderLevel:</label>
+       <div class="relative">
+         <input
+           class="form-control"
+           id="name"
+           type="text"
+           autocomplete=""
+           v-model="itemBody.reOrderLevel"
+           style="font-family: inter;font-size: 13px;color: gray;"
+         
+         />
+         <i class="fa fa-user"></i>
+       </div>
+     </div>
+     <div class="form-group">
+       <label style="font-family: inter;font-size: 16px;">Category Name:</label>
+       <div class="relative">
+         <input
+           class="form-control"
+           id="name"
+           type="text"
+           autocomplete=""
+           v-model="itemBody.category"
+           style="font-family: inter;font-size: 13px;color: gray;"
+         
+         />
+         <i class="fa fa-user"></i>
+       </div>
+     </div>
+     <div class="form-group">
+       <label style="font-family: inter;font-size: 16px;">Currency:</label>
+       <div class="relative">
+         <input
+           class="form-control"
+           id="name"
+           type="text"
+           autocomplete=""
+           v-model="itemBody.currency"
+           style="font-family: inter;font-size: 13px;color: gray;"
+         
+         />
+         <i class="fa fa-user"></i>
+       </div>
+     </div>
+     <div class="form-group">
+       <label style="font-family: inter;font-size: 16px;">Indicative Price:</label>
+       <div class="relative">
+         <input
+           class="form-control"
+           id="name"
+           type="text"
+           autocomplete=""
+           v-model="itemBody.indicativePrice"
+           style="font-family: inter;font-size: 13px;color: gray;"
+         
+         />
+         <i class="fa fa-user"></i>
+       </div>
+     </div>
+     <div class="form-group">
+       <label style="font-family: inter;font-size: 16px;">Description:</label>
+       <div class="relative">
+         <textarea
+           class="form-control"
+           id="name"
+           type="text"
+           autocomplete=""
+           v-model="itemBody.itemDescription"
+           style="font-family: inter;font-size: 13px;color: gray;"
+         
+         ></textarea>
          <i class="fa fa-user"></i>
        </div>
      </div>
       <div class="tright d-flex " >
     
        
-         <button class="movebtn movebtnsu" style="margin-left: 70%;text-decoration: none;" @click.prevent="changepurchasestatus()" >
+         <button class="movebtn movebtnsu"  style="width: 20%;font-family: inter;font-size: 13px;text-decoration:none;margin-left: 200px;" @click.prevent="changepurchasestatus()" >
            Submit</button
        >
      </div>
@@ -141,6 +231,12 @@
        var body = {
          itemid: this.itemId,
          itemName:this.itemBody.itemName,
+         brandName:this.itemBody.brandName,
+         reOrderLevel:this.itemBody.reOrderLevel,
+         currency:this.itemBody.currency,
+         indicativePrice:this.itemBody.indicativePrice,
+         itemDescription:this.itemBody.itemDescription,
+         category:this.itemBody.category,
        
         
 
@@ -157,12 +253,14 @@
             swal.fire({
            html: `<h5 class="text-success">${resp.message}</h5>`,
          });
+         this.$refs.myForm.reset();
             }
             else{
              this.spinner=false;
              swal.fire({
            html: `<h5 class="text-danger">${resp.message}</h5>`,
          });
+         this.$refs.myForm.reset();
  
  
             }
@@ -181,24 +279,7 @@
  };
  </script>
  <style>
- form:before {
-     content: '';
-     position: absolute;
-     top: 0;
-     left: 0;
-     right: 0;
-     height: 8px;
-     background: #c4e17f;
-     border-radius: 5px 5px 0 0  ;
-     background: rgba(196,225,127,1);
-     background: -moz-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-     background: -webkit-gradient(left top, right top, color-stop(0%, rgba(196,225,127,1)), color-stop(20%, rgba(196,225,127,1)), color-stop(20%, rgba(247,253,202,1)), color-stop(40%, rgba(247,253,202,1)), color-stop(40%, rgba(254,207,113,1)), color-stop(60%, rgba(254,207,113,1)), color-stop(60%, rgba(240,119,108,1)), color-stop(80%, rgba(240,119,108,1)), color-stop(80%, rgba(219,157,190,1)), color-stop(100%, rgba(219,157,190,1)));
-     background: -webkit-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-     background: -o-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-     background: -ms-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-     background: linear-gradient(to right, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4e17f', endColorstr='#db9dbe', GradientType=1 );
- }
+ 
  .form h2 {
      margin: 18px 0;
      padding-bottom: 10px;

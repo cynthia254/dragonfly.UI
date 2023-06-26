@@ -12,7 +12,7 @@
       <nav style="margin-right: 90px">
         <ul>
           <li>
-            <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
+            <a href="/stock" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
           </li>
           <li class="dropDown-menu fixed-top">
             <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
@@ -77,7 +77,7 @@
                     <div class="row">
                       <div class="col-sm-6">
                         <h2 style="font-size: 1.50rem; color: white; width: 5.19rem; height: 1.81rem; border-width: 0.06rem; left: 1.19rem; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;font-weight:500;">
-                          BRANDS
+                          CATEGORY
                         </h2>
                       </div>
                   
@@ -88,8 +88,8 @@
                   name="addPurchase"
                   id="addPurchase"
                   class="btn btn-success btn-sm rounded-0"
-                  style="width: 130px;
-                            margin-left: 240%;
+                  style="width: 200px;
+                            margin-left: 200%;
                             margin-top: 10px;
                             border-radius: 4px;
                             font-family: inter;
@@ -109,7 +109,7 @@
                                         fill-rule="evenodd"
                                         d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
                                       />
-                                    </svg>Add Brand
+                                    </svg>Add Category
                 </button>
               </div>
               <transition name="modal">
@@ -150,7 +150,7 @@
                         <div class="modal-header">
                           <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px; font-family: inter;font-size: 22px;">
                            
-                            Add Brand
+                            Add Category
                           </h4>
                           <button
                             @click="showModal = false"
@@ -173,11 +173,25 @@
                           
 
                             <div class="form-group">
-                              <label style="font-family: inter;font-size: 16px;">Brand Name</label>
+                              <label style="font-family: inter;font-size: 16px;">Category Name</label>
                               <div class="input-group">
                                 <input 
                                   type="text"
-                                  v-model="this.formdata.brandName"
+                                  v-model="this.formdata.categoryName"
+
+                                  class="form-control rounded-0"
+                                  required
+                                  style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5"
+                                 
+                                />
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-family: inter;font-size: 16px;">Category Description</label>
+                              <div class="input-group">
+                                <input 
+                                  type="text"
+                                  v-model="this.formdata.categoryDescription"
 
                                   class="form-control rounded-0"
                                   required
@@ -187,12 +201,12 @@
                               </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: 10px;">
                               <input @click.prevent="CreateBrand()"
                                 type="submit"
                                
                                 class="btn btn-success btn-sm"
-                                value="Add"
+                                value="Save"
                                 form="purchaseForm"
                                 style="margin-bottom: 30px;margin-left: 70px;width: 60%;font-family: inter;font-size: 13px;"
                               />
@@ -236,16 +250,19 @@
                         <table id="purchaseList" class="table table-hover ">
                       <thead style="background-color: rgb(214, 211, 211);font-family: inter;font-weight: bold;font-size: 16px;">
                         <tr >
-                          <th>Brand ID</th>
-                          <th>Brand Name</th>
+                          <th>Category ID</th>
+                          <th>Category Name</th>
+                          <th>Category Description</th>
 
                           <th style="width: 120px">Action</th>
                         </tr>
                       </thead>
                       <tbody v-for="brands in this.allbrands" v-bind:key="brands.id">
                         <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
-                          <th scope="row">{{brands.brandId }}</th>
-                          <td>{{brands.brandName}}</td>
+                          <th scope="row">{{brands.categoryID }}</th>
+                          <td>{{brands.categoryName}}</td>
+                          <td>{{brands.categoryDesc}}</td>
+
 
                           <td>
                             <svg
@@ -300,14 +317,15 @@
 import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared"
 export default {
-  name: "brandPage",
+  name: "categoryPage",
   mixins: [AppMixins],
   data() {
     return {
       showModal: false,
       allbrands:[],
       formdata: {
-        brandName:"",
+        categoryDescription:"",
+        categoryName:"",
         
 
     
@@ -317,7 +335,7 @@ export default {
   methods: {
     async GetAllBrands(){
 
-const response= await this.gettingAllBrands();
+const response= await this.gettingCategory();
 this.allbrands=response.body;
 
 console.log("Brands response: ", response);
@@ -338,13 +356,14 @@ async editBrand(brandId) {
     async CreateBrand() {
   
         var body={
-          brandName:this.formdata.brandName
+            categoryName:this.formdata.categoryName,
+            categoryDesc:this.formdata.categoryDescription,
         }
     
         
     
        console.log("Brand new: ", body);
-      var response = await this.creatingBrand(body);
+      var response = await this.creatingCategory(body);
       if (response.isTrue==true) {
         swal.fire({
           html: `<h5 class="text-success">${response.message}</h5>`,

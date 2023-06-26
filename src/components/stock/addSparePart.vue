@@ -12,7 +12,7 @@
       <nav style="margin-right: 90px">
         <ul>
           <li>
-            <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
+            <a href="/stock" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
           </li>
           <li class="dropDown-menu fixed-top">
             <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
@@ -42,6 +42,7 @@
                 <a href="/addItem" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Item</a>
               </li>
 
+              <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
               <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
             </ul>
           </li>
@@ -76,8 +77,8 @@
                   >
                     <div class="row">
                       <div class="col-sm-6">
-                        <h2 style="font-size: 1.50rem; color: white; width: 5.19rem; height: 1.81rem; border-width: 0.06rem; left: 1.19rem; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;font-weight:500;">
-                          BRANDS
+                        <h2 style="font-size: 1.50rem; color: white; width: 5.19rem; height: 1.81rem; border-width: 0.06rem; left: 1.19rem; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;font-weight:500;white-space: nowrap;">
+                          Device Details
                         </h2>
                       </div>
                   
@@ -109,7 +110,7 @@
                                         fill-rule="evenodd"
                                         d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
                                       />
-                                    </svg>Add Brand
+                                    </svg>Add Device
                 </button>
               </div>
               <transition name="modal">
@@ -150,7 +151,7 @@
                         <div class="modal-header">
                           <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px; font-family: inter;font-size: 22px;">
                            
-                            Add Brand
+                            Add Device
                           </h4>
                           <button
                             @click="showModal = false"
@@ -169,18 +170,34 @@
                             align-content: center;
                           "
                         >
-                          <form  id="purchaseForm">
+                          <form  id="purchaseForm" ref="myForm">
                           
 
                             <div class="form-group">
-                              <label style="font-family: inter;font-size: 16px;">Brand Name</label>
+                              <label style="font-family: inter;font-size: 16px;">Device Name</label>
                               <div class="input-group">
                                 <input 
                                   type="text"
-                                  v-model="this.formdata.brandName"
+                                  v-model="this.formdata.partName"
 
                                   class="form-control rounded-0"
                                   required
+                                  placeholder="eg.Batteries,F20"
+                                  style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5"
+                                 
+                                />
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-family: inter;font-size: 16px;">Device Description</label>
+                              <div class="input-group">
+                                <input 
+                                  type="text"
+                                  v-model="this.formdata.partDescription"
+
+                                  class="form-control rounded-0"
+                                  required
+                                  placeholder="Specifications"
                                   style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5"
                                  
                                 />
@@ -236,16 +253,18 @@
                         <table id="purchaseList" class="table table-hover ">
                       <thead style="background-color: rgb(214, 211, 211);font-family: inter;font-weight: bold;font-size: 16px;">
                         <tr >
-                          <th>Brand ID</th>
-                          <th>Brand Name</th>
+                          <th>Device ID</th>
+                          <th>Device Name</th>
+                          <th>Device Description</th>
 
                           <th style="width: 120px">Action</th>
                         </tr>
                       </thead>
                       <tbody v-for="brands in this.allbrands" v-bind:key="brands.id">
                         <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
-                          <th scope="row">{{brands.brandId }}</th>
-                          <td>{{brands.brandName}}</td>
+                          <th scope="row">{{brands.partID }}</th>
+                          <td>{{brands.partName}}</td>
+                          <td>{{brands.partDescription}}</td>
 
                           <td>
                             <svg
@@ -300,14 +319,15 @@
 import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared"
 export default {
-  name: "brandPage",
+  name: "devicePage",
   mixins: [AppMixins],
   data() {
     return {
       showModal: false,
       allbrands:[],
       formdata: {
-        brandName:"",
+        partDescription:"",
+        partName:"",
         
 
     
@@ -317,7 +337,7 @@ export default {
   methods: {
     async GetAllBrands(){
 
-const response= await this.gettingAllBrands();
+const response= await this.getitngDevices();
 this.allbrands=response.body;
 
 console.log("Brands response: ", response);
@@ -338,21 +358,24 @@ async editBrand(brandId) {
     async CreateBrand() {
   
         var body={
-          brandName:this.formdata.brandName
+            partName:this.formdata.partName,
+            partDescription:this.formdata.partDescription,
         }
     
         
     
        console.log("Brand new: ", body);
-      var response = await this.creatingBrand(body);
+      var response = await this.addingParts(body);
       if (response.isTrue==true) {
         swal.fire({
           html: `<h5 class="text-success">${response.message}</h5>`,
         });
+        this.$refs.myForm.reset();
       } else {
         swal.fire({
           html: `<h5 class="text-danger">${response.message}</h5>`,
         });
+        this.$refs.myForm.reset();
       }
       this.GetAllBrands();
     },

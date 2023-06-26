@@ -140,23 +140,16 @@
                     >
                       <div
                         class="modal-content"
-                        style="width: 40%; margin-left: 50px; margin-top: 70px"
+                        style=" width: 50%;
+                                  margin-left: 120px;
+                                  margin-top: 95px;
+                                  background: #f5f5f5;
+                                  border-radius: 18px;
+                                  height:100%;"
                       >
                         <div class="modal-header">
-                          <h4 class="modal-title">
-                            <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="16"
-                                      fill="currentColor"
-                                      class="bi bi-plus-lg"
-                                      viewBox="0 0 16 16"
-                                    >
-                                      <path
-                                        fill-rule="evenodd"
-                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                                      />
-                                    </svg>
+                          <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px; font-family: inter;font-size: 22px;">
+                           
                             Add Returned Status
                           </h4>
                           <button
@@ -164,7 +157,7 @@
                             type="button"
                             class="btn-close"
                             data-bs-dismiss="modal"
-                            style="margin-right: 10px"
+                            style="margin-right: 30px"
                           ></button>
                         </div>
                         <div
@@ -179,53 +172,48 @@
                           <form  id="purchaseForm">
                           
 
-                            <div class="form-group">
-                              <label>Returned Status</label>
-                              <div class="input-group">
+                            <div class="form-group"  style="background:#f5f5f5">
+                              <label style="font-family: inter;font-size: 16px;">Returned Status</label>
+                              <div class="input-group"  style="background:#f5f5f5">
                                 <input 
                                   type="text"
                                   v-model="this.formdata.returnedStatus"
 
                                   class="form-control rounded-0"
                                   required
+                                  style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5"
                                  
                                 />
                               </div>
                             </div>
                             
-                            <div class="form-group">
-                              <label>Returned Description</label>
-                              <div class="input-group">
+                            <div class="form-group"  style="background:#f5f5f5">
+                              <label style="font-family: inter;font-size: 16px;">Returned Description</label>
+                              <div class="input-group"  style="background:#f5f5f5">
                                 <input 
                                   type="text"
                                   v-model="this.formdata.returnedDescription"
 
                                   class="form-control rounded-0"
                                   required
+                                  style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5"
                                  
                                 />
                               </div>
                             </div>
 
 
-                            <div class="form-group">
+                            <div class="form-group" style="margin-top: 10px;">
                               <input @click.prevent="CreateBrand()"
-                                type="submit"
+                              type="submit"
+                                  name="action"
+                                  id="action"
+                                  class="btn btn-success btn-sm"
+                                  value="Add"
+                                  form="purchaseForm"
+                                  style="margin-bottom: 20px;margin-left: 70px;width: 60%;font-family: inter;font-size: 13px;"
                                
-                                class="btn btn-primary btn-sm"
-                                value="Add"
-                                form="purchaseForm"
-                                style="margin-top: 20px"
                               />
-                              <button
-                                @click="showModal = false"
-                                type="button"
-                                class="btn btn-default border btn-sm"
-                                data-bs-dismiss="modal"
-                                style="margin-left: 75px"
-                              >
-                                Close
-                              </button>
                             </div>
                           </form>
                         </div>

@@ -187,9 +187,39 @@ export default {
       console.log("response",response);
       return response.data;
     },
-
+    async gettinginvoicenumber(invoiceNumber){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetInvoiceLinesByInvoiceNumber?invoiceNumber=${invoiceNumber}`)
+      console.log("response",response);
+      return response.data;
+    },
+    async gettinginvoicebynumber(invoicenumber){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetInvoiceByNumber?InvoiceNumber=${invoicenumber}`)
+      console.log("response",response);
+      return response.data;
+    },
+    async gettingproductbyId(batchID){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetProductDetailsbyid?itemID=${batchID}`)
+      console.log("response",response);
+      return response.data;
+    },
+    async gettingreferenceNumber(reference_Number){
+      console.log("reference number",reference_Number);
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetProductNumbering?reference=${reference_Number}`)
+      console.log("response",response);
+  
+      return response.data;
+    },
     
-    
+    async gettingproductlinebyid(invoiceLineId){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetProductlinebyid?product_line_id=${invoiceLineId}`)
+      console.log("response",response);
+      return response.data;
+    },
     async gettingCustomerbyid(customerid){
       this.setAuthHeader();
       var response=await axios.post(`Stock/GetCustomerByID?customerId=${customerid}`)
@@ -211,6 +241,18 @@ export default {
     async creatingBrand(body){
       this.setAuthHeader();
       var resp=await axios.post("Stock/AddBrand",body);
+      return resp.data;
+
+    },
+    async creatinginvoice(body){
+      this.setAuthHeader();
+      var resp=await axios.post("Stock/AddInvoiceDetails",body);
+      return resp.data;
+
+    },
+    async creatingCategory(body){
+      this.setAuthHeader();
+      var resp=await axios.post("Stock/AddCategory",body);
       return resp.data;
 
     },
@@ -251,9 +293,22 @@ export default {
       return resp.data;
 
     },
+    async addingInvoiceItems(body){
+      this.setAuthHeader();
+      var resp=await axios.post("Stock/AddProductDetails",body);
+      return resp.data;
+
+    },
     async addingPurchases(body){
       this.setAuthHeader();
       var resp=await axios.post("Stock/AddPurchases",body);
+      return resp.data;
+
+    },
+    
+    async addingParts(body){
+      this.setAuthHeader();
+      var resp=await axios.post("Stock/AddSpareParts",body);
       return resp.data;
 
     },
@@ -263,15 +318,51 @@ export default {
       return resp.data;
 
     },
+    async addingInvoiceLines(body){
+      this.setAuthHeader();
+      var resp=await axios.post("Stock/AddBatchDetails",body);
+      return resp.data;
+
+    },
     async gettingAllReturnedStock() {
       this.setAuthHeader();
       var response = await axios.get("Stock/GetAllReturnedStock");
 
       return response.data;
     },
+    async getitngAllBatch() {
+      this.setAuthHeader();
+      var response = await axios.get("Stock/GetInvoiceLines");
+
+      return response.data;
+    },
     async gettingAllSales() {
       this.setAuthHeader();
       var response = await axios.get("Stock/GetAllSales");
+
+      return response.data;
+    },
+    async gettingAllinvoiceitems() {
+      this.setAuthHeader();
+      var response = await axios.get("Stock/GetProductDetails");
+
+      return response.data;
+    },
+    async gettingCategory() {
+      this.setAuthHeader();
+      var response = await axios.get("Stock/GetAllCategory");
+
+      return response.data;
+    },
+    async gettingInvoice() {
+      this.setAuthHeader();
+      var response = await axios.get("Stock/GetInvoiceDetails");
+
+      return response.data;
+    },
+    async getitngDevices() {
+      this.setAuthHeader();
+      var response = await axios.get("Stock/GetAllSpareParts");
 
       return response.data;
     },

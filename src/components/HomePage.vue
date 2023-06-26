@@ -249,7 +249,7 @@
                     </ul>
                 </li>
                 <li>
-                    <router-link to="/stock" >Stock Management</router-link>
+                    <router-link to="/stockdashboard" >Stock Management</router-link>
                 </li>
                 <li class="dropDown-menu fixed-top">
                     <a href="" >Setup</a>

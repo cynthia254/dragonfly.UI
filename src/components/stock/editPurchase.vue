@@ -79,29 +79,30 @@
     box-sizing: border-box;
     position: relative;
     border-bottom: 5px solid #ccc;">
-    <h2 style="display: flex;font-size: 16px;">Update Purchase Details</h2>
+    <h2 style="display: flex;font-size: 16px;font-family: inter;">Update Purchase Details</h2>
     <div class="form-group">
-      <label for="email">Brand Name:</label>
+      <label style="font-family: inter;font-size: 16px;">Brand Name:</label>
       <div class="relative">
         <input
           class="form-control"
           id="name"
           type="text"
           v-model="purchaseBody.brandName"
-          disabled
+          style="font-family: inter;font-size: 13px;color: gray;"
         
         />
         <i class="fa fa-user"></i>
       </div>
     </div>
     <div class="form-group">
-      <label for="email">Item Name:</label>
+      <label style="font-family: inter;font-size: 16px;">Item Name:</label>
       <div class="relative">
         <input
           class="form-control"
           id="name"
           type="text"
           v-model="purchaseBody.itemName"
+          style="font-family: inter;font-size: 13px;color: gray;"
          
         
         />
@@ -110,7 +111,7 @@
     </div>
    
     <div class="form-group">
-      <label for="email">Supplier Name</label>
+      <label style="font-family: inter;font-size: 16px;">Supplier Name</label>
       <div class="relative">
         <input
           class="form-control"
@@ -118,6 +119,7 @@
           type="text"
           
           v-model="purchaseBody.supplierName"
+          style="font-family: inter;font-size: 13px;color: gray;"
          
         
         />
@@ -128,10 +130,10 @@
     </div>
     <div class="tright d-flex mx-5" >
     
-      <a href=""
-        ><button class="movebtn movebtnsu" style="margin-left: 110%;" @click.prevent="changepurchasestatus()" >
+      
+        <button class="movebtn movebtnsu"  style="margin-bottom: 30px;margin-left: 70px;width: 25%;font-family: inter;font-size: 13px;" @click.prevent="changepurchasestatus()" >
           Submit</button
-      ></a>
+      >
     </div>
   </form>
 
@@ -209,15 +211,7 @@ formatDateAssigned(value) {
 };
 </script>
 <style>
-form:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 8px;
-   
-}
+
 .form h2 {
     margin: 18px 0;
     padding-bottom: 10px;

@@ -9,10 +9,10 @@
         src="https://static.overlay-tech.com/assets/fef105cb-ec3b-4485-a2d5-9b3c5fb2d9f2.png"
       />
     </div>
-      <nav style="margin-right: 90px">
+      <nav style="margin-right: 90px;white-space: nowrap;">
         <ul>
           <li>
-            <a href="/stock" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
+            <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
           </li>
           <li class="dropDown-menu fixed-top">
             <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
@@ -134,23 +134,16 @@
                     >
                       <div
                         class="modal-content"
-                        style="width: 40%; margin-left: 50px; margin-top: 70px"
+                        style=" width: 50%;
+                                  margin-left: 120px;
+                                  margin-top: 60px;
+                                  background: #f5f5f5;
+                                  border-radius: 18px;
+                                  height:100%;"
                       >
                         <div class="modal-header">
-                          <h4 class="modal-title">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="20"
-                              height="16"
-                              fill="currentColor"
-                              class="bi bi-plus-lg"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                              />
-                            </svg>
+                          <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px; font-family: inter;font-size: 22px;">
+                           
                             Add Item
                           </h4>
                           <button
@@ -158,7 +151,7 @@
                             type="button"
                             class="btn-close"
                             data-bs-dismiss="modal"
-                            style="margin-right: 10px"
+                            style="margin-right: 30px"
                           ></button>
                         </div>
                         <div
@@ -170,7 +163,7 @@
                             align-content: center;
                           "
                         >
-                          <form method="post" id="purchaseForm">
+                          <form method="post" id="purchaseForm" ref="myForm">
                             <input
                               type="hidden"
                               name="purchase_id"
@@ -182,39 +175,175 @@
                               id="btn_action"
                             />
 
-                            <div class="form-group">
-                              <label>Item Name</label>
-                              <div class="input-group">
-                                <input
-                                  type="text"
-                                  class="form-control rounded-0"
-                                  v-model="this.formdata.itemName"
-                                  required
-                                />
-                              </div>
-                            </div>
+                            <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group" style="background:#f5f5f5">
+                                          <label style="font-family: inter;font-size: 16px;">Brand Name</label>
+                                          <select
+                                            name="product"
+                                            id="product"
+                                            class="form-select rounded-0"
+                                            required
+                                            v-model="
+                                              this.formdata.BrandNameSelected
+                                            "
+                                             style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
+                                          >
+                                            <option value=""  >
+                                              Select Brand
+                                            </option>
+                                            <option
+                                              v-for="brands in this.allbrands"
+                                              v-bind:value="brands.brandName"
+                                              :key="brands.brandId"
+                                            >
+                                              {{ brands.brandName }}
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label id="name-label" for="name"
+                                          style="font-family: inter;font-size: 16px;">Device Name</label
+                                          >
+                                          <select
+                                            name="product"
+                                            id="product"
+                                            class="form-select rounded-0"
+                                            required
+                                            v-model="
+                                              this.formdata.itemName
+                                            "
+                                             style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
+                                          >
+                                            <option value="" selected disabled >
+                                              Device Name
+                                            </option>
+                                            <option
+                                              v-for="device in this.alldevices"
+                                              v-bind:value="device.partName"
+                                              :key="device.partID"
+                                            >
+                                              {{ device.partName }}
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group" style="margin-top: 10px;">
+                                          <label id="name-label" for="name"
+                                          style="font-family: inter;font-size: 16px;">Category Type</label
+                                          >
+                                          <select
+                                            name="product"
+                                            id="product"
+                                            class="form-select rounded-0"
+                                            required
+                                            v-model="
+                                              this.formdata.categoryName
+                                            "
+                                             style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;height:47px"
+                                          >
+                                            <option value="" selected disabled >
+                                              Product Type
+                                            </option>
+                                            <option
+                                              v-for="category in this.allcategory"
+                                              v-bind:value="category.categoryName"
+                                              :key="category.categoryID"
+                                            >
+                                              {{ category.categoryName }}
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                      <div class="form-group" style="margin-top: 10px;">
+                                      <label style="font-family: inter;font-size: 16px;">Re-Order Level</label>
+                                      <div class="input-group">
+                                        <input
+                                          type="text"
+                                          name="quantity"
+                                          id="quantity"
+                                          class="form-control rounded-0"
+                                          required
+                                          v-model="this.formdata.reOrderLevel"
+                                          style="background-color: #f5f5f5;font-family: inter;font-size: 13px;"
+                                        />
+                                      </div>
+                                      </div>
+                                      </div>
+                                    </div>
+                                      <div class="row">
+                                      <div class="">
+                                        <div class="form-group">
+                                          <label id="name-label" for="name"
+                                          style="font-family: inter;font-size: 16px;">Indicative Price</label
+                                          >
+                                          <div
+                                            class="form-inline form-group"
+                                            style="display: flex"
+                                          >
+                                            <select
+                                              class="form-control input-sm w-5"
+                                              style="width: 60px;background-color:#f5f5f5;font-family: inter;font-size: 13px;color: gray;"
+                                              v-model="this.formdata.currency"
+                                            >
+                                            <option value="" selected disabled hidden style="margin-top:30px">
+                                             KES
+                                            </option>
+                                              <option value="USD">USD</option>
+                                              <option value="KES">KES</option>
+                                              <option value="UGX">UGX</option>
+                                              <option value="TZ">TZ</option>
+                                            </select>
+                                            <input
+                                              type="text"
+                                              class="form-control"
+                                              required
+                                              v-model="
+                                                this.formdata.buyingPrice
+                                              "
+                                               style="background-color: #f5f5f5;"
+                                            />
+                                          </div>
+                                        </div>
 
-                            <div class="form-group">
+                                      </div>
+                                    
+                                    </div>
+                                    <div class="form-group" style="margin-top: 10px;">
+                                      <label style="font-family: inter;font-size: 16px;">Item Description</label>
+                                      <div class="input-group">
+                                        <textarea
+                                          type="text"
+                                          name="quantity"
+                                          id="quantity"
+                                          class="form-control rounded-0"
+                                          placeholder="Please describe the item here....."
+                                          required
+                                          v-model="this.formdata.itemDescription"
+                                          style="background-color: #f5f5f5;font-family: inter;font-size: 13px;"
+                                        ></textarea>
+                                      </div>
+                                      </div>
+
+                            <div class="form-group" style="margin-top:10px">
                               <input
                                 type="submit"
                                 name="action"
                                 id="action"
-                                class="btn btn-primary btn-sm"
-                                value="Add"
+                                class="btn btn-success btn-sm"
+                                value="Save"
                                 form="purchaseForm"
                                 @click.prevent="CreateItem()"
 
-                                style="margin-top: 20px"
+                                style="margin-bottom: 30px;margin-left: 70px;width: 60%;font-family: inter;font-size: 13px;"
                               />
-                              <button
-                                @click="showModal = false"
-                                type="button"
-                                class="btn btn-default border btn-sm"
-                                data-bs-dismiss="modal"
-                                style="margin-left: 75px"
-                              >
-                                Close
-                              </button>
+                             
                             </div>
                           </form>
                         </div>
@@ -252,20 +381,29 @@
                       
                     <table 
                       id="purchaseList"
-                      class="table  table-hover"
+                      class="table  table-hover table-bordered"
                     >
                       <thead  style="background-color: rgb(214, 211, 211);font-family: inter;font-weight: bold;font-size: 16px;">
                         <tr>
                           <th>Item ID</th>
                           <th style="">Item Name</th>
+                          <th style="">Category Name</th>
+                          <th style="">ReOrder Level</th>
+                          <th>Indicative Price</th>
+                          <th>Item Description</th>
 
-                          <th style="width: 120px;text-align: left;">Action</th>
+                          <th style="width: 120px;margin-left: 10px;">Action</th>
                         </tr>
                       </thead>
                       <tbody v-for="items in this.allitems" v-bind:key="items.id">
                         <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
                           <th scope="row">{{ items.itemID }}</th>
-                          <td >{{items.itemName}}</td>
+                          <td >{{items.brandName}}  {{items.itemName}} </td>
+                          <td >{{items.category}}  </td>
+                          <td >{{items.reOrderLevel}}  </td>
+                          <td style="width:150px">{{items.currency}}  {{formatPrice(items.indicativePrice) }}</td>
+                          <td>{{ items.itemDescription }}</td>
+
 
                           <td>
                           
@@ -277,7 +415,7 @@
                                   class="bi bi-pencil-square"
                                   viewBox="0 0 16 16"
                                   @click="editItem(items.itemID)"
-                                  style="margin-left:20px"
+                                  style="margin-left:10px"
                                
                                 
                                 >
@@ -331,8 +469,18 @@ export default {
     return {
       showModal: false,
       allitems:[],
+      allbrands:[],
+      allcategory:[],
+      alldevices:[],
       formdata: {
         itemName:"",
+        BrandNameSelected:"",
+        categoryName:"",
+        reOrderLevel:"",
+        currency:"",
+        buyingPrice:"",
+        itemDescription:"",
+
         
 
     
@@ -353,10 +501,57 @@ console.log("allitems: ", this.allitems);
 return response;
 
 },
+formatPrice(value) {
+        let val = (value/1).toFixed(2).replace('.', ',')
+        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+    },
+async GetAllCategory(){
+
+const response= await this.gettingCategory();
+this.allcategory=response.body;
+
+console.log("category response: ", response);
+
+
+
+console.log("allbrands: ", this.allcategory);
+return response;
+
+},
+async GetAllBrands() {
+      const response = await this.gettingAllBrands();
+      this.allbrands = response.body;
+
+      console.log("Brands response: ", response);
+
+      console.log("allbrands: ", this.allbrands);
+      return response;
+    },
+    async GetAllDevices(){
+
+const response= await this.getitngDevices();
+this.alldevices=response.body;
+
+console.log("Brands response: ", response);
+
+
+
+console.log("allbrands: ", this.alldevices);
+return response;
+
+},
     async CreateItem() {
   
   var body={
-    itemName:this.formdata.itemName
+    itemName:this.formdata.itemName,
+    brandName:this.formdata.BrandNameSelected,
+    category:this.formdata.categoryName,
+    reOrderLevel:this.formdata.reOrderLevel,
+    currency:this.formdata.currency,
+    indicativePrice:this.formdata.buyingPrice,
+    itemDescription:this.formdata.itemDescription,
+
+
   }
 
   
@@ -367,10 +562,12 @@ if (response.isTrue==true) {
   swal.fire({
     html: `<h5 class="text-success">${response.message}</h5>`,
   });
+  this.$refs.myForm.reset();
 } else {
   swal.fire({
     html: `<h5 class="text-danger">${response.message}</h5>`,
   });
+  this.$refs.myForm.reset();
 
       }
       this.GetAllItems();
@@ -385,6 +582,9 @@ if (response.isTrue==true) {
   },
   created(){
     this.GetAllItems();
+    this.GetAllBrands();
+    this.GetAllDevices();
+    this.GetAllCategory();
   }
 }
 

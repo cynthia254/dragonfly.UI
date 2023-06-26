@@ -12,7 +12,7 @@
       <nav style="margin-right: 90px">
         <ul>
           <li>
-            <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
+            <a href="/stock" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
           </li>
           <li class="dropDown-menu fixed-top">
             <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
@@ -69,15 +69,25 @@
     </header>
     </section>
   <div class="" style="width: 95%; margin-left: 64px; margin-top: 60px">
+    <div class="row">
+      <div class="col">
+        <nav aria-label="breadcrumb " class="bg-light rounded-3 p-3 mb-4">
+          <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item " style="font-family:inter;font-size:16px"><a href="/stockdashboard" style="color:#FF8C22">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px">Manage Invoice</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
     <div class="table-wrapper">
                   <div
                     class="table-title"
-                    style="background: rgb(231, 23, 23); height: 50px"
+                    style="background:white; height: 50px;box-shadow: 3px 2px 3px rgba(0, 0, 0, .2);"
                   >
-                    <div class="row">
+                    <div class="row" >
                       <div class="col-sm-6">
-                        <h2 style="font-size: 1.50rem; color: white; width: 5.19rem; height: 1.81rem; border-width: 0.06rem; left: 1.19rem; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;font-weight:500;">
-                          BRANDS
+                        <h2 style="font-size: 1.50rem; color: rgb(211, 3, 3);  height: 1.81rem; border-width: 0.06rem; left: 1.19rem; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;font-weight:500;white-space: nowrap;width: fit-content;">
+                          INVOICE LIST
                         </h2>
                       </div>
                   
@@ -87,30 +97,18 @@
                   type="button"
                   name="addPurchase"
                   id="addPurchase"
-                  class="btn btn-success btn-sm rounded-0"
+                  class="btn btn- btn-sm rounded-0"
                   style="width: 130px;
                             margin-left: 240%;
-                            margin-top: 10px;
+                            margin-top: 15px;
                             border-radius: 4px;
                             font-family: inter;
                             display: flex;
-                            align-items: center;"
+                            align-items: center;background:#FF8C22;color: white;text-align: center;height: 25px;"
                 >
-                <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="16"
-                                      fill="currentColor"
-                                      class="bi bi-plus-lg"
-                                      viewBox="0 0 16 16"
-                                      style="margin-left: 10%;color: white;font-weight: bold;"
-                                    >
-                                      <path
-                                        fill-rule="evenodd"
-                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                                      />
-                                    </svg>Add Brand
-                </button>
+             <h2 style="font-size: 14px;color: white;margin-top: 8px;margin-left: 15px;font-family:inter">ADD INVOICE</h2>
+              
+            </button>
               </div>
               <transition name="modal">
                 <div
@@ -150,7 +148,7 @@
                         <div class="modal-header">
                           <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px; font-family: inter;font-size: 22px;">
                            
-                            Add Brand
+                            Add Invoice
                           </h4>
                           <button
                             @click="showModal = false"
@@ -169,33 +167,55 @@
                             align-content: center;
                           "
                         >
-                          <form  id="purchaseForm">
+                          <form  id="purchaseForm" ref="myForm">
                           
 
                             <div class="form-group">
-                              <label style="font-family: inter;font-size: 16px;">Brand Name</label>
+                              <label style="font-family: inter;font-size: 16px;">Invoice Date</label>
                               <div class="input-group">
                                 <input 
-                                  type="text"
-                                  v-model="this.formdata.brandName"
-
+                                  type="date"
                                   class="form-control rounded-0"
                                   required
                                   style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5"
+                                 v-model="this.formdata.invoiceDate"
+                                />
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label style="font-family: inter;font-size: 16px;">LPO Date</label>
+                              <div class="input-group">
+                                <input 
+                                  type="date"
+                                  class="form-control rounded-0"
+                                  required
+                                  style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5"
+                                  v-model="this.formdata.lpoDate"
                                  
                                 />
                               </div>
                             </div>
-
+                           
                             <div class="form-group">
-                              <input @click.prevent="CreateBrand()"
+                                <label style="font-family: inter;font-size: 16px;">Supplier Name</label>
+                                    <select name="supplierid" id="supplierid" class="form-select rounded-0" required v-model="this.formdata.supplierName"  style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;">
+                                        <option value="">Select Supplier</option>
+                                        <option  v-for="supplier in this.allsuppliers"
+                                              v-bind:value="supplier.supplierName"
+                                              :key="supplier.supplierId">{{supplier.supplierName}}</option>
+                                              </select>
+                    </div>
+
+                            <div class="form-group" style="margin-top: 20px;">
+                              <input @click.prevent="AddingInvoice()"
                                 type="submit"
                                
                                 class="btn btn-success btn-sm"
-                                value="Add"
+                                value="Save"
                                 form="purchaseForm"
                                 style="margin-bottom: 30px;margin-left: 70px;width: 60%;font-family: inter;font-size: 13px;"
-                              />
+                             
+                                />
                             
                             </div>
                           </form>
@@ -205,11 +225,17 @@
                   </div>
                 </div>
               </transition>
+              <div class="form-control"  style="margin-top: 30px;margin-left: 10px;
+
+background: #FFF;
+box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 10px;" >
+
+    
               <div class="row mx-5">
                   <div class="col-sm-6 d-flex mt-2">
                     <div
     class="search"
-    style="margin-left: 900px; margin-top: 5px; display: flex"
+    style="margin-left: 500px; margin-top: 5px; display: flex"
   >
   <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -233,19 +259,31 @@
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
-                        <table id="purchaseList" class="table table-hover ">
-                      <thead style="background-color: rgb(214, 211, 211);font-family: inter;font-weight: bold;font-size: 16px;">
+                        <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:40px">
+                      <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 18px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
+        padding: 12px 34px">
                         <tr >
-                          <th>Brand ID</th>
-                          <th>Brand Name</th>
+                          <th>Invoice Number</th>
+                          <th>Invoice Date</th>
+                          <th>LPO Number</th>
+                          <th>LPO Date</th>
+                          <th>Supplier Name</th>
+                          <th>Date Added</th>
+                          
 
                           <th style="width: 120px">Action</th>
+                      
                         </tr>
                       </thead>
-                      <tbody v-for="brands in this.allbrands" v-bind:key="brands.id">
-                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
-                          <th scope="row">{{brands.brandId }}</th>
-                          <td>{{brands.brandName}}</td>
+                      <tbody v-for="invoice in this.allinvoice" v-bind:key="invoice.id">
+                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;white-space: nowrap; ">
+                          <th scope="row"    @click.prevent="editInvoice(invoice.invoiceNumber)"><a href="" style="text-decoration: none;color: gray;">{{invoice.invoiceNumber }}</a></th>
+                        
+                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ getFormattedDate(invoice.invoiceDate) }}</td>
+                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{invoice.lpoNumber}}</td>
+                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ getFormattedDate(invoice.lpoDate) }}</td>
+                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{invoice.supplierName}}</td>
+                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ formatDateAssigned(invoice.stockInDate) }}</td>
 
                           <td>
                             <svg
@@ -255,7 +293,7 @@
                                   fill="green"
                                   class="bi bi-pencil-square"
                                   viewBox="0 0 16 16"
-                                  @click.prevent="editBrand(brands.brandId)"
+                                  @click.prevent="editInvoice(invoice.invoiceNumber)"
                                
                                 
                                 >
@@ -294,20 +332,26 @@
             </div>
           </div>
         </div>
+        </div>
   
 </template>
 <script>
 import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared"
+import moment from 'moment';
 export default {
-  name: "brandPage",
+  name: "InvoiceDetails",
   mixins: [AppMixins],
   data() {
     return {
       showModal: false,
-      allbrands:[],
+      allinvoice:[],
+      invoiceBody:[],
+      invoiceNumber:"",
       formdata: {
-        brandName:"",
+        invoiceDate:"",
+        lpoDate:"",
+        supplierName:"",
         
 
     
@@ -315,50 +359,83 @@ export default {
     };
   },
   methods: {
-    async GetAllBrands(){
+    async GetAllInvoice(){
 
-const response= await this.gettingAllBrands();
-this.allbrands=response.body;
+const response= await this.gettingInvoice();
+this.allinvoice=response.body;
 
-console.log("Brands response: ", response);
+console.log("invoice response: ", response);
 
 
 
-console.log("allbrands: ", this.allbrands);
+console.log("allinvoice: ", this.allinvoice);
 return response;
 
 },
-async editBrand(brandId) {
-      console.log("brand id is:", brandId);
+async getitnginvoicebyname() {
+      var invoiceNumber=this.invoiceNumber;
+      var response = await this.gettinginvoicebynumber(invoiceNumber);
+      this.invoiceBody = response.body;
+      console.log("response on returnned body: : ", this.invoiceBody);
+      //console.log("body returned: ",this.stockBody);
+
+},
+formatDateAssigned(value) {
+      let formattedDate = new Date(value);
+      formattedDate = `${formattedDate.toDateString()} at ${formattedDate.toLocaleTimeString()}`;
+      return formattedDate;
+    },
+    getFormattedDate(date) {
+            return moment(date).format("YYYY-MM-DD")
+        },
+async editInvoice(invoiceNumber) {
+      console.log("Invoice Number is:", invoiceNumber);
       this.$router.push({
-        path: `/editbrand/${brandId}`,
+        path: `/invoiceItems/${invoiceNumber}`,
         replace: true,
       });
     },
-    async CreateBrand() {
+    async AddingInvoice() {
   
         var body={
-          brandName:this.formdata.brandName
+          lpoDate:this.formdata.lpoDate,
+          invoiceDate:this.formdata.invoiceDate,
+          supplierName:this.formdata.supplierName,
+
         }
     
         
     
-       console.log("Brand new: ", body);
-      var response = await this.creatingBrand(body);
+       console.log("Invoice new: ", body);
+      var response = await this.creatinginvoice(body);
       if (response.isTrue==true) {
         swal.fire({
           html: `<h5 class="text-success">${response.message}</h5>`,
         });
+        this.$refs.myForm.reset();
       } else {
         swal.fire({
           html: `<h5 class="text-danger">${response.message}</h5>`,
         });
+        this.$refs.myForm.reset();
       }
-      this.GetAllBrands();
+      this.GetAllInvoice();
     },
+    async GetAllSuppliers(){
+
+const response= await this.gettingAllSuppliers();
+this.allsuppliers=response.body;
+console.log("allsuppliers: ", this.allsuppliers);
+return response;
+
+},
   },
   created(){
-    this.GetAllBrands();
+    this.invoiceNumber = this.$route.params.invoiceNumber;
+        console.log("ItemId :", this.invoiceNumber);
+    this.GetAllInvoice();
+    this.GetAllSuppliers();
+    this.getitnginvoicebyname();
   }
 };
 </script>

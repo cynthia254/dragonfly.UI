@@ -103,58 +103,89 @@
 <div id="purchaseModal" class="modal-mask fixed-top" v-if="showModal" style="position:fixed;width: 100%;margin-left:0px;margin-top: 0px;align-content: center;align-items: center;">
 <div class="modal-wrapper" style="vertical-align:middle;display: table-cell;">
         <div class="modal-dialog modal-dialog-centered" style="align-content:center;margin-top:40px;margin-left:300px" >
-                <div class="modal-content" style=" width: 50%;
-                                  margin-left: 50px;
-                                  margin-top: 50px;
+                <div class="modal-content" style="  width: 50%;
+                                  margin-left: 120px;
+                                  margin-top: 85px;
                                   background: #f5f5f5;
                                   border-radius: 18px;
                                   height:100%;"  >
                     <div class="modal-header" >
-                        <h4 class="modal-title" style="margin-left:50px;margin-top:20px"> Stock Out</h4>
+                        <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px; font-family: inter;font-size: 22px;"> Stock Out</h4>
                         <button @click="showModal=false"  type="button" class="btn-close" data-bs-dismiss="modal" style="margin-right:30px"></button>
                     </div>
                     <div class="modal-body" style="width:60%;margin-left:50px;vertical-align:middle;align-content:center" >                           
                         <form method="post" id="purchaseForm">
                         <input type="hidden" name="purchase_id" id="purchase_id"  />
                         <input type="hidden" name="btn_action" id="btn_action" />
-                            <div class="form-group">
-                                <label>Brand Name</label>
-                                <select name="product" id="product" class="form-select rounded-0" required v-model="this.formdata.selectedBrand"  style="background-color: #f5f5f5;">
-                                    <option value="">Select Brand</option>
-                                    <option     v-for="brands in this.allbrands"
+                        <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group" style="background:#f5f5f5">
+                                          <label style="font-family: inter;font-size: 16px;">Brand Name</label>
+                                          <select
+                                            name="product"
+                                            id="product"
+                                            class="form-select rounded-0"
+                                            required
+                                            v-model="
+                                              this.formdata.selectedBrand
+                                            "
+                                             style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
+                                          >
+                                            <option value="">
+                                              Select Brand
+                                            </option>
+                                            <option
+                                              v-for="brands in this.allbrands"
                                               v-bind:value="brands.brandName"
                                               :key="brands.brandId"
-                                              >
-                                              {{ brands.brandName }} 
+                                            >
+                                              {{ brands.brandName }}
                                             </option>
-                                   
-                                </select>
-                            </div>	
-                            <div class="form-group">
-                                <label>Item Name</label>
-                                <select name="product" id="product" class="form-select rounded-0" required v-model="this.formdata.selectedItem"  style="background-color: #f5f5f5;">
-                                    <option value="">Select Item</option>
-                                    <option  v-for="items in this.allitems"
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label id="name-label" for="name"
+                                          style="font-family: inter;font-size: 16px;">Item Name</label
+                                          >
+                                          <select
+                                            name="product"
+                                            id="product"
+                                            class="form-select rounded-0"
+                                            required
+                                            v-model="
+                                              this.formdata.selectedItem
+                                            "
+                                             style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
+                                          >
+                                            <option value="">
+                                              Select Item
+                                            </option>
+                                            <option
+                                              v-for="items in this.allitems"
                                               v-bind:value="items.itemName"
-                                              :key="items.itemID">
+                                              :key="items.itemID"
+                                            >
                                               {{ items.itemName }}
                                             </option>
-                                   
-                                </select>
-                            </div>   
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
                                                     
-                            <div class="form-group">
-                                <label>Product Quantity</label>
+                            <div class="form-group" style="margin-top: 10px;">
+                                <label style="font-family: inter;font-size: 16px;">Product Quantity</label>
                                 <div class="input-group">
-                                    <input v-model="this.formdata.quantity" type="number" name="quantity" id="quantity" class="form-control rounded-0" required pattern="[+-]?([0-9]*[.])?[0-9]+"   style="background-color: #f5f5f5;"/>        
+                                    <input v-model="this.formdata.quantity" type="number" name="quantity" id="quantity" class="form-control rounded-0" required  style="background-color: #f5f5f5;font-family: inter;font-size: 13px;"/>        
                                 </div>
                             </div> 
                             <div class="row">
                               <div class="col-md-6"> 
                             <div class="form-group">
-                                <label>Issued To</label>
+                                <label style="font-family: inter;font-size: 16px;">Issued To</label>
                                 <select name="supplierid" id="supplierid" class="form-select rounded-0" required
-                                v-model="this.formdata.selectedCustomer"  style="background-color: #f5f5f5;">
+                                v-model="this.formdata.selectedCustomer"  style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;">
                                     <option value="">Recipient</option>
                                     <option v-for="customers in this.allcustomers"
                                               v-bind:value="customers.customerName"
@@ -167,8 +198,8 @@
                           </div>
                                       <div class="col-md-6">                              
                             <div class="form-group">
-                                <label>Department</label>
-                                <select name="product" id="product" class="form-select rounded-0" required v-model="this.formdata.selectedDepartment"  style="background-color: #f5f5f5;">
+                                <label style="font-family: inter;font-size: 16px;">Department</label>
+                                <select name="product" id="product" class="form-select rounded-0" required v-model="this.formdata.selectedDepartment"  style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;">
                                   <option value="">Department</option>
                                   <option      v-for="department in this.alldepartment"
                           v-bind:value="department.departmentName"
@@ -180,14 +211,14 @@
                             </div>  
                             </div>
                             </div>
-                            <div class="form-group">
-                                <label>Comments</label>
+                            <div class="form-group" style="margin-top: 10px;">
+                                <label style="font-family: inter;font-size: 16px;">Comments</label>
                                 <div class="input-group">
-                                    <textarea v-model="this.formdata.comments" type="text" name="quantity" id="quantity" class="form-control rounded-0" required  style="background-color: #f5f5f5;" placeholder="Type reason for stock out here..."> </textarea>       
+                                    <textarea v-model="this.formdata.comments" type="text" name="quantity" id="quantity" class="form-control rounded-0" required  style="background-color: #f5f5f5;font-family: inter;font-size: 13px;" placeholder="Type reason for stock out here..."> </textarea>       
                                 </div>
                             </div> 
-                       <div class="form-group"  >
-                        <input @click.prevent="AdditionSales();" type="submit" name="action" id="action" class="btn btn-success btn-sm " value="Update" form="purchaseForm" style="margin-bottom: 10px;margin-left: 60px;width: 60%;"/>
+                       <div class="form-group" style="margin-top: 10px;"  >
+                        <input @click.prevent="AdditionSales();" type="submit" name="action" id="action" class="btn btn-success btn-sm " value="Update" form="purchaseForm"    style="margin-bottom: 30px;margin-left: 80px;width: 60%;font-family: inter;font-size: 13px;"/>
                        
                       </div>
                         </form>

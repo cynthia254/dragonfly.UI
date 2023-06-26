@@ -86,48 +86,83 @@
 <div id="purchaseModal" class="modal-mask fixed-top" v-if="showModal" style="position:fixed;width: 100%;margin-left:0px;margin-top: 0px;align-content: center;align-items: center;">
     <div class="modal-wrapper" style="vertical-align:middle;display: table-cell;">
             <div class="modal-dialog modal-dialog-centered" style="align-content:center;margin-top:40px;margin-left:300px" >
-                    <div class="modal-content" style="width:40%;margin-left:50px;margin-top:70px;"  >
+                    <div class="modal-content" style=" width: 50%;
+                                  margin-left: 120px;
+                                  margin-top: 80px;
+                                  background: #f5f5f5;
+                                  border-radius: 18px;
+                                  height:100%;"  >
                         <div class="modal-header" >
-                            <h4 class="modal-title"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
-</svg> Returned Stock</h4>
-                            <button @click="showModal=false"  type="button" class="btn-close" data-bs-dismiss="modal" style="margin-right:10px"></button>
+                            <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px; font-family: inter;font-size: 22px;">Returned Stock</h4>
+                            <button @click="showModal=false"  type="button" class="btn-close" data-bs-dismiss="modal" style="margin-right:30px"></button>
                         </div>
                         <div class="modal-body" style="width:80%;margin-left:50px;vertical-align:middle;align-content:center" >                           
                             <form method="post" id="purchaseForm">
                             <input type="hidden" name="purchase_id" id="purchase_id"  />
                             <input type="hidden" name="btn_action" id="btn_action" />
-                                <div class="form-group">
-                                    <label>Brand Name</label>
-                                    <select name="product" id="product" class="form-select rounded-0" required v-model="this.formdata.selectedBrand">
-                                        <option value="">Select Brand</option>
-                                        <option  v-for="brands in this.allbrands"
+                            <div class="row">
+                                      <div class="col-md-6">
+                                        <div class="form-group" style="background:#f5f5f5">
+                                          <label style="font-family: inter;font-size: 16px;">Brand Name</label>
+                                          <select
+                                            name="product"
+                                            id="product"
+                                            class="form-select rounded-0"
+                                            required
+                                            v-model="
+                                              this.formdata.BrandNameSelected
+                                            "
+                                             style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
+                                          >
+                                            <option value=""> Select Brand</option>
+                                             
+                                            
+                                            <option
+                                              v-for="brands in this.allbrands"
                                               v-bind:value="brands.brandName"
-                                              :key="brands.brandId">{{brands.brandName}}</option>
-                                       
-                                       
-                                    </select>
-                                </div>	 
-                                <div class="form-group">
-                                    <label>Item Name</label>
-                                    <select name="product" id="product" class="form-select rounded-0" required v-model="this.formdata.selectedItem">
-                                        <option value="">Select Product</option>
-                                        <option  v-for="items in this.allitems"
+                                              :key="brands.brandId"
+                                            >
+                                              {{ brands.brandName }}
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="col-md-6">
+                                        <div class="form-group">
+                                          <label id="name-label" for="name"
+                                          style="font-family: inter;font-size: 16px;">Item Name</label
+                                          >
+                                          <select
+                                            name="product"
+                                            id="product"
+                                            class="form-select rounded-0"
+                                            required
+                                            v-model="
+                                              this.formdata.ItemNameSelected
+                                            "
+                                             style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
+                                          >
+                                            <option value="">Select Item</option>
+                                            <option
+                                              v-for="items in this.allitems"
                                               v-bind:value="items.itemName"
-                                              :key="items.itemID"> {{ items.itemName }}</option>
-                                     
-                                       
-                                    </select>
-                                </div>	                          
-                                <div class="form-group">
-                                    <label>Returned Quantity</label>
+                                              :key="items.itemID"
+                                            >
+                                              {{ items.itemName }}
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>	                          
+                                <div class="form-group" style="margin-top: 10px;">
+                                    <label style="font-family: inter;font-size: 16px;">Returned Quantity</label>
                                     <div class="input-group">
-                                        <input type="number" name="quantity" id="quantity" class="form-control rounded-0" required pattern="[+-]?([0-9]*[.])?[0-9]+" v-model="this.formdata.quantity" />        
+                                        <input type="number" name="quantity" id="quantity" class="form-control rounded-0" required  v-model="this.formdata.quantity" style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;" />        
                                     </div>
                                 </div>                           
                                 <div class="form-group">
-                                    <label>Returned Status</label>
-                                    <select name="supplierid" id="supplierid" class="form-select rounded-0" required v-model="this.formdata.returnedStatus">
+                                    <label style="font-family: inter;font-size: 16px;">Returned Status</label>
+                                    <select name="supplierid" id="supplierid" class="form-select rounded-0" required v-model="this.formdata.returnedStatus" style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;">
                                         <option value="">Select Status</option>
                                         <option  v-for="status in this.allreturnedstatus"
                                               v-bind:value="status.returnedStatus"
@@ -136,16 +171,16 @@
                                        
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label> Returned Reason</label>
+                                <div class="form-group" style="margin-top: 10px;">
+                                    <label style="font-family: inter;font-size: 16px;"> Returned Reason</label>
                                     <div class="input-group">
-                                        <textarea type="text" name="quantity" id="quantity" class="form-control rounded-0" required pattern="[+-]?([0-9]*[.])?[0-9]+" v-model="this.formdata.returnedReason" > </textarea>       
+                                        <textarea type="text" name="quantity" id="quantity" class="form-control rounded-0" required  v-model="this.formdata.returnedReason" style="background-color: #f5f5f5;font-family: inter;font-size: 13px;"> </textarea>       
                                     </div>
                                 </div>    
-                                <div class="form-group"  >
-                            <input @click.prevent="AdditionReturnedStock();" type="submit" name="action" id="action" class="btn btn-primary btn-sm " value="Add" form="purchaseForm" style="margin-top:20px;"/>
-                            <button @click="showModal=false" type="button" class="btn btn-default border btn-sm " data-bs-dismiss="modal" style="margin-left:75px">Close</button>
-                        </div>
+                                <div class="form-group"   >
+                            <input @click.prevent="AdditionReturnedStock();" type="submit" name="action" id="action" class="btn btn-success btn-sm " value="Update" form="purchaseForm"    style="margin-bottom: 20px;margin-left: 70px;width: 60%;font-family: inter;font-size: 13px;"/>
+                           
+                          </div>
                             </form>
                         </div>
                        

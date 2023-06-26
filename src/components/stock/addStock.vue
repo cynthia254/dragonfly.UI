@@ -49,9 +49,8 @@
             <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Reports</a>
             <ul>
               <li>
-                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Sales Reports</a>
+                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Report</a>
               </li>
-              <li><a href="/purchase" style="font-size: 16px;font-family:inter;font-weight:medium">Purchase Reports</a></li>
             </ul>
           </li>
         </ul>
@@ -538,17 +537,17 @@
                                 class="modal-content"
                                 style="
                                   width: 50%;
-                                  margin-left: 50px;
-                                  margin-top: 200px;
+                                  margin-left: 120px;
+                                  margin-top: 95px;
                                   background: #f5f5f5;
                                   border-radius: 18px;
                                   height:100%;
                                 "
                               >
                                 <div class="modal-header">
-                                  <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px;">
+                                  <h4 class="modal-title" style="margin-left: 47px;margin-top: 20px; font-family: inter;font-size: 22px;">
                                     
-                                    New Stock
+                                   NEW STOCK
                                   </h4>
                                   <button
                                     @click="showModal = false"
@@ -567,7 +566,7 @@
                                     align-content: center;
                                   "
                                 >
-                                  <form method="post" id="purchaseForm">
+                                  <form method="post" ref="myForm"  id="purchaseForm">
                                     <input
                                       type="hidden"
                                       name="purchase_id"
@@ -581,7 +580,7 @@
                                     <div class="row">
                                       <div class="col-md-6">
                                         <div class="form-group" style="background:#f5f5f5">
-                                          <label>Brand Name</label>
+                                          <label style="font-family: inter;font-size: 16px;">Brand Name</label>
                                           <select
                                             name="product"
                                             id="product"
@@ -590,7 +589,7 @@
                                             v-model="
                                               this.formdata.BrandNameSelected
                                             "
-                                             style="background-color: #f5f5f5;"
+                                             style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
                                           >
                                             <option value="">
                                               Select Brand
@@ -608,7 +607,7 @@
                                       <div class="col-md-6">
                                         <div class="form-group">
                                           <label id="name-label" for="name"
-                                            >Item Name</label
+                                          style="font-family: inter;font-size: 16px;">Item Name</label
                                           >
                                           <select
                                             name="product"
@@ -618,8 +617,9 @@
                                             v-model="
                                               this.formdata.ItemNameSelected
                                             "
-                                             style="background-color: #f5f5f5;"
-                                          >
+                                             style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
+                                          
+                                             >
                                             <option value="">
                                               Select Item
                                             </option>
@@ -634,9 +634,9 @@
                                         </div>
                                       </div>
                                     </div>
-                                
-                                    <div class="form-group">
-                                      <label>Re-Order Level</label>
+                                    <div class="row">
+                                    <div class="form-group" style="margin-top: 10px;">
+                                      <label style="font-family: inter;font-size: 16px;">Re-Order Level</label>
                                       <div class="input-group">
                                         <input
                                           type="text"
@@ -646,15 +646,16 @@
                                           required
                                           pattern="[+-]?([0-9]*[.])?[0-9]+"
                                           v-model="this.formdata.reOrderLevel"
-                                          style="background-color: #f5f5f5;"
+                                          style="background-color: #f5f5f5;font-family: inter;font-size: 13px;"
                                         />
+                                      </div>
                                       </div>
                                     </div>
                                     <div class="row">
                                       <div class="col-md-6">
                                         <div class="form-group">
                                           <label id="name-label" for="name"
-                                            >Buying Price</label
+                                          style="font-family: inter;font-size: 16px;">Buying Price</label
                                           >
                                           <div
                                             class="form-inline form-group"
@@ -662,12 +663,12 @@
                                           >
                                             <select
                                               class="form-control input-sm w-5"
-                                              style="width: 60px;background-color:#f5f5f5"
+                                              style="width: 60px;background-color:#f5f5f5;font-family: inter;font-size: 13px;color: gray;"
                                               v-model="this.formdata.currency"
                                             >
-                                              <option value="--" selected>
-                                                --
-                                              </option>
+                                            <option value="" selected disabled hidden style="margin-top:30px">
+                                             KES
+                                            </option>
                                               <option value="USD">USD</option>
                                               <option value="KES">KES</option>
                                               <option value="UGX">UGX</option>
@@ -687,8 +688,8 @@
                                       </div>
                                       <div class="col-md-6">
                                         <div class="form-group">
-                                          <label id="name-label" for="email"
-                                            >Quantity</label
+                                          <label id="name-label" 
+                                          style="font-family: inter;font-size: 16px;" >Quantity</label
                                           >
                                        
 
@@ -699,7 +700,7 @@
                                               v-model="
                                                 this.formdata.quantity
                                               "
-                                               style="background-color: #f5f5f5;"
+                                               style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
                                             />
                                          
                                         </div>
@@ -725,7 +726,7 @@
                                       >
                                     </div>-->
 
-                                    <div class="form-group">
+                                    <div class="form-group" style="margin-top: 10px;">
                                       <input
                                         @click.prevent="AdditionStock()"
                                         type="submit"
@@ -734,9 +735,10 @@
                                         class="btn btn-success btn-sm"
                                         value="Update"
                                         form="purchaseForm"
-                                        style="margin-bottom: 10px;margin-left: 60px;width: 60%;"
+                                        style="margin-bottom: 30px;margin-left: 70px;width: 60%;font-family: inter;font-size: 13px;"
                                     
                                       />
+
                                      
                                     </div>
                                   </form>
@@ -829,14 +831,13 @@
                                
                                   type="button"
                                   class="btn btn-sm"
-                                  style="
-                                    background-color: green;
-                                    width: 60px;
+                                  style="   width: 60px;
                                     font-size: 15px;
                                     height: 30px;
                                     color: white;
-                                    border-radius: 37px;
-                                  "
+                                    border-radius: 37px;"
+                                  :style="getStatusStyle(stock)"
+                                  
                                 >
                                 {{ stock.status }}
                                 </button>
@@ -900,14 +901,13 @@
                                
                                   type="button"
                                   class="btn btn-sm"
-                                  style="
-                                    background-color: green;
-                                    width: 60px;
+                                  style="   width: 60px;
                                     font-size: 15px;
                                     height: 30px;
                                     color: white;
-                                    border-radius: 37px;
-                                  "
+                                    border-radius: 37px;"
+                                  :style="getStatusStyle(stock)"
+                                  
                                 >
                                 {{ stock.status }}
                                 </button>
@@ -986,6 +986,25 @@ console.log("allstock: ", this.allstock);
 return response;
 
 },
+getStatusStyle(stock){
+  if(stock.status==="Good"){
+    return{
+      background:"green"
+    };
+  }else if(stock.status==="Low"){
+    return{
+      background:"orange"
+    };
+
+  }else if(stock.status==="Out"){
+    return{
+      background:"red"
+    };
+  }else{
+    return "";
+  }
+},
+
 formatPrice(value) {
         let val = (value/1).toFixed(2).replace('.', ',')
         return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
@@ -1016,6 +1035,7 @@ formatDateAssigned(value) {
         swal.fire({
           html: `<h5 class="text-success">${response.message}</h5>`,
         });
+        this.$refs.myForm.reset();
       } else {
         swal.fire({
           html: `<h5 class="text-danger">${response.message}</h5>`,
@@ -1023,6 +1043,7 @@ formatDateAssigned(value) {
       }
 
       this.GetAllStock();
+
       
     },
 
@@ -1058,6 +1079,7 @@ formatDateAssigned(value) {
         replace: true,
       });
     },
+   
   },
   watch: {
     searchword(passedvalue) {

@@ -69,9 +69,9 @@
      box-sizing: border-box;
      position: relative;
      border-bottom: 5px solid #ccc;">
-     <h2 style="display: flex;font-size: 16px;">Update Supplier Details</h2>
+     <h2 style="display: flex;font-size:18px;font-family:inter">Update Supplier Details</h2>
      <div class="form-group">
-       <label for="email">Supplier Name:</label>
+       <label  style="font-family: inter;font-size: 16px;">Supplier Name:</label>
        <div class="relative">
          <input
            class="form-control"
@@ -79,6 +79,7 @@
            type="text"
            autocomplete=""
            v-model="supplierBody.supplierName"
+           style="font-family: inter;font-size: 13px;color: gray;"
           
          
          />
@@ -86,7 +87,7 @@
        </div>
      </div>
      <div class="form-group">
-       <label for="email">Company Name:</label>
+       <label style="font-family: inter;font-size: 16px;">Company Name:</label>
        <div class="relative">
          <input
            class="form-control"
@@ -94,6 +95,7 @@
            type="text"
            autocomplete=""
            v-model="supplierBody.companyName"
+           style="font-family: inter;font-size: 13px;color: gray;"
          
          
          />
@@ -101,7 +103,7 @@
        </div>
      </div>
      <div class="form-group">
-       <label for="email">Email:</label>
+       <label style="font-family: inter;font-size: 16px;">Email:</label>
        <div class="relative">
          <input
            class="form-control"
@@ -110,6 +112,7 @@
         
            autocomplete=""
            v-model="supplierBody.email"
+           style="font-family: inter;font-size: 13px;color: gray;"
          
          
          />
@@ -117,7 +120,7 @@
        </div>
      </div>
      <div class="form-group">
-       <label for="email">Phone Number:</label>
+       <label style="font-family: inter;font-size: 16px;">Phone Number:</label>
        <div class="relative">
          <input
            class="form-control"
@@ -125,6 +128,7 @@
            type="text"
            autocomplete=""
            v-model="supplierBody.phoneNumber"
+           style="font-family: inter;font-size: 13px;color: gray;"
          
          
          />
@@ -138,7 +142,7 @@
      <div class="tright d-flex mx-5" >
     
        <a href="/sales"
-         ><button class="movebtn movebtnsu" style="margin-left: 110%;" @click.prevent="changepurchasestatus()" >
+         ><button class="movebtn movebtnsu btn-success"    style="margin-bottom: 30px;margin-left: 70px;width: 50%;font-family: inter;font-size: 13px;" @click.prevent="changepurchasestatus()" >
            Submit</button
        ></a>
      </div>
@@ -221,24 +225,7 @@
  };
  </script>
  <style>
- form:before {
-     content: '';
-     position: absolute;
-     top: 0;
-     left: 0;
-     right: 0;
-     height: 8px;
-     background: #c4e17f;
-     border-radius: 5px 5px 0 0  ;
-     background: rgba(196,225,127,1);
-     background: -moz-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-     background: -webkit-gradient(left top, right top, color-stop(0%, rgba(196,225,127,1)), color-stop(20%, rgba(196,225,127,1)), color-stop(20%, rgba(247,253,202,1)), color-stop(40%, rgba(247,253,202,1)), color-stop(40%, rgba(254,207,113,1)), color-stop(60%, rgba(254,207,113,1)), color-stop(60%, rgba(240,119,108,1)), color-stop(80%, rgba(240,119,108,1)), color-stop(80%, rgba(219,157,190,1)), color-stop(100%, rgba(219,157,190,1)));
-     background: -webkit-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-     background: -o-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-     background: -ms-linear-gradient(left, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-     background: linear-gradient(to right, rgba(196,225,127,1) 0%, rgba(196,225,127,1) 20%, rgba(247,253,202,1) 20%, rgba(247,253,202,1) 40%, rgba(254,207,113,1) 40%, rgba(254,207,113,1) 60%, rgba(240,119,108,1) 60%, rgba(240,119,108,1) 80%, rgba(219,157,190,1) 80%, rgba(219,157,190,1) 100%);
-     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c4e17f', endColorstr='#db9dbe', GradientType=1 );
- }
+
  .form h2 {
      margin: 18px 0;
      padding-bottom: 10px;
