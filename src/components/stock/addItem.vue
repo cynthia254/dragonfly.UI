@@ -1,83 +1,90 @@
 <template>
    <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
-    <section>
+   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
+    <section style="background: var(--background-color, #EDF0F4);">
             <header class="top">
-      <div class="frame-24" style="width: 40px">
+              <div class="frame-24" style="width: 40px;margin-left: 25px;">
       <img
         alt=""
         class="payhouse-logo-1"
-        src="https://static.overlay-tech.com/assets/fef105cb-ec3b-4485-a2d5-9b3c5fb2d9f2.png"
+        src="../../assets/images/payhouse.png"
       />
     </div>
-      <nav style="margin-right: 90px;white-space: nowrap;">
-        <ul>
-          <li>
-            <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
-          </li>
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
-            <ul>
-              <li class="dropDown-menu fixed-top">
-                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Customers</a>
-                <ul>
-                  <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Customers</a></li>
-                </ul>
-              </li>
-              <li class="dropDown-menu fixed-top">
-                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Suppliers</a>
-                <ul>
-                  <li><a href="/supplier" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Suppliers</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
+    <nav style="margin-right: 90px;white-space: nowrap;color: white;margin-top: 15px;">
+       <ul>
+         <li>
+           <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium;">Home</a>
+         </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
+           <ul>
+             <li class="dropDown-menu fixed-top">
+               <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Recipient</a>
+               <ul>
+                 <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Recipient</a></li>
+               </ul>
+             </li>
+             <li class="dropDown-menu fixed-top">
+               <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Suppliers</a>
+               <ul>
+                 <li><a href="/supplier" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Suppliers</a></li>
+               </ul>
+             </li>
+           </ul>
+         </li>
 
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
-            <ul>
-              <li>
-                <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
-              </li>
-              <li>
-                <a href="/addItem" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Item</a>
-              </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
+           <ul>
+             <li>
+               <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
+             </li>
+             <li>
+               <a href="/addItem" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Item</a>
+             </li>
+             <li>
+               <a href="/category" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Category</a>
+             </li>
+             
+             <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
-              <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
-            </ul>
-          </li>
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Orders</a>
-            <ul>
-              <li>
-                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Sales Orders</a>
-              </li>
-              <li><a href="/purchase" style="font-size: 16px;font-family:inter;font-weight:medium">Purchase Orders</a></li>
-            </ul>
-          </li>
-
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Reports</a>
-            <ul>
-              <li>
-                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Sales Reports</a>
-              </li>
-              <li><a href="/purchase" style="font-size: 16px;font-family:inter;font-weight:medium">Purchase Reports</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
+             <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
+           </ul>
+         </li>
+      
+         <li style="">
+           <a style="display: flex;margin-left:100px;font-size: 16px;font-family:inter;font-weight:medium"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+  <path fill-rule="" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+</svg><p style="margin-left:7px;">{{userbody.firstName}} {{userbody.lastName}}</p></a>
+         </li>
+         
+       </ul>
+     </nav>
     </header>
-    </section>
-  <div class="" style="width: 95%; margin-left: 64px; margin-top: 60px">
-    <div class="table-wrapper">
+  <div class="" style="width: 95%; margin-left: 35px; margin-top: 60px;background: var(--background-color, #EDF0F4);">
+    <div class="" style="background: var(--background-color, #EDF0F4);">
                   <div
-                    class="table-title"
-                    style="background: rgb(231, 23, 23); height: 50px"
+                    class=""
+                    style=" height: 50px;box-shadow: 3px 2px 3px rgba(0, 0, 0, .2);border-radius: 12px;
+background: #FFF;border:none
+
+/* Shadow */
+box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);height:71px"
                   >
                     <div class="row">
                       <div class="col-sm-6">
-                        <h2 style="font-size: 1.50rem; color: white; width: 5.19rem; height: 1.81rem; border-width: 0.06rem; left: 1.19rem; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;font-weight:bolder;">
-                          ITEMS
+                        <h2 style="color: var(--grey, #1E1E1E);
+text-align: center;
+
+/* H3 */
+font-size: 16px;
+font-family: Inter;
+font-style: normal;
+font-weight: 700;
+line-height: normal; border-width: 0.06rem;margin-top: 10px; margin-left:34px; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;white-space: nowrap;width: fit-content;">
+                          ITEM MASTER PAGE
                         </h2>
                       </div>
                       
@@ -88,22 +95,17 @@
                   type="button"
                   name="addPurchase"
                   id="addPurchase"
-                  class="btn btn-success btn-sm rounded-0"
-                  style="width: 110px;margin-top: 10px;margin-left: 460px;"
+                  class="btn  btn-sm rounded-0"
+                  style="  width: 130px;
+                margin-left: 230%;
+                margin-top: 20px;
+                border-radius: 4px;
+                font-family: inter;
+                display: flex;
+                align-items: center;background:#FF8C22;color: white;font-size: 15px;height: 34px;
+                "
                 >
-                <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="16"
-                                      fill="currentColor"
-                                      class="bi bi-plus-lg"
-                                      viewBox="0 0 16 16"
-                                    >
-                                      <path
-                                        fill-rule="evenodd"
-                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                                      />
-                                    </svg>Add Item
+                <h2 style="margin-left: 25px;color: white;font-size: 14px;font-family: inter;margin-top: 7px;">Add Item</h2>
                 </button>
               </div>
               <transition name="modal">
@@ -217,7 +219,7 @@
                                             "
                                              style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;"
                                           >
-                                            <option value="" selected disabled >
+                                            <option value=""  >
                                               Device Name
                                             </option>
                                             <option
@@ -247,7 +249,7 @@
                                             "
                                              style="background-color: #f5f5f5;font-family: inter;font-size: 13px;color: gray;height:47px"
                                           >
-                                            <option value="" selected disabled >
+                                            <option value=""  >
                                               Product Type
                                             </option>
                                             <option
@@ -292,7 +294,7 @@
                                               style="width: 60px;background-color:#f5f5f5;font-family: inter;font-size: 13px;color: gray;"
                                               v-model="this.formdata.currency"
                                             >
-                                            <option value="" selected disabled hidden style="margin-top:30px">
+                                            <option value=""  style="margin-top:30px">
                                              KES
                                             </option>
                                               <option value="USD">USD</option>
@@ -352,6 +354,12 @@
                   </div>
                 </div>
               </transition>
+              <div style="background: var(--background-color, #EDF0F4);">
+              <div class="form-control" style="margin-top: 30px;border:0;border-radius: 12px;
+
+background: #FFF;
+box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
+              
               <div class="row mx-5">
                   <div class="col-sm-6 d-flex mt-2">
                     <div
@@ -382,8 +390,10 @@
                     <table 
                       id="purchaseList"
                       class="table  table-hover table-bordered"
+                      style="overflow:hidden;margin-left:40px"
                     >
-                      <thead  style="background-color: rgb(214, 211, 211);font-family: inter;font-weight: bold;font-size: 16px;">
+                      <thead style="background-color:   #F3E6DA;font-family: inter;font-weight: bold;font-size: 16px;white-space: nowrap;">
+                       
                         <tr>
                           <th>Item ID</th>
                           <th style="">Item Name</th>
@@ -401,7 +411,7 @@
                           <td >{{items.brandName}}  {{items.itemName}} </td>
                           <td >{{items.category}}  </td>
                           <td >{{items.reOrderLevel}}  </td>
-                          <td style="width:150px">{{items.currency}}  {{formatPrice(items.indicativePrice) }}</td>
+                          <td style="width:150px">{{items.currency}}  {{formatCurrency(items.indicativePrice) }}</td>
                           <td>{{ items.itemDescription }}</td>
 
 
@@ -450,14 +460,19 @@
                       </tbody>
                     </table>
                   </div>
+                </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+           
+        
         </div>
       </div>
-  
+    </div>
+
+  </div>
+</div>
+</section>
 </template>
 <script>
 import swal from "sweetalert2";
@@ -472,6 +487,7 @@ export default {
       allbrands:[],
       allcategory:[],
       alldevices:[],
+      userbody: {},
       formdata: {
         itemName:"",
         BrandNameSelected:"",
@@ -518,6 +534,28 @@ console.log("allbrands: ", this.allcategory);
 return response;
 
 },
+formatCurrency(value) {
+  // Convert the value to a string
+  const stringValue = String(value);
+
+  // Split the string into integer and decimal parts (if any)
+  const [integerPart, decimalPart = ''] = stringValue.split('.');
+
+  // Add commas to the integer part
+  const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  // Combine the formatted integer part with the decimal part (if any)
+  const formattedValue = decimalPart ? `${formattedIntegerPart}.${decimalPart}` : formattedIntegerPart;
+
+
+  return formattedValue;
+
+},
+async GetLoggedInUser() {
+      var response = await this.Gettingloggedinuser();
+      this.userbody = response.body;
+      console.log("Logged in user __________ email:", this.userbody);
+    },
 async GetAllBrands() {
       const response = await this.gettingAllBrands();
       this.allbrands = response.body;
@@ -560,13 +598,17 @@ return response;
 var response = await this.creatingItem(body);
 if (response.isTrue==true) {
   swal.fire({
-    html: `<h5 class="text-success">${response.message}</h5>`,
+    heightAuto: false,
+    html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+    
   });
   this.$refs.myForm.reset();
 } else {
   swal.fire({
-    html: `<h5 class="text-danger">${response.message}</h5>`,
+    html: `<h5 class="text-danger" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+
   });
+  window.location.reload();
   this.$refs.myForm.reset();
 
       }
@@ -585,6 +627,7 @@ if (response.isTrue==true) {
     this.GetAllBrands();
     this.GetAllDevices();
     this.GetAllCategory();
+    this.GetLoggedInUser();
   }
 }
 
@@ -603,4 +646,5 @@ if (response.isTrue==true) {
   display: table-cell;
   vertical-align: middle;
 }
+body { background: var(--background-color, #EDF0F4) !important; }
 </style>

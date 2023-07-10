@@ -1,80 +1,76 @@
 <template>
     <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
     <section>
             <header class="top">
-      <div class="frame-24" style="width: 40px">
+      <div class="frame-24" style="width: 40px;margin-left: 25px;">
       <img
         alt=""
         class="payhouse-logo-1"
-        src="https://static.overlay-tech.com/assets/fef105cb-ec3b-4485-a2d5-9b3c5fb2d9f2.png"
+        src="../../assets/images/payhouse.png"
       />
     </div>
-      <nav style="margin-right: 90px">
-        <ul>
-          <li>
-            <a href="/stock" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
-          </li>
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
-            <ul>
-              <li class="dropDown-menu fixed-top">
-                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Customers</a>
-                <ul>
-                  <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Customers</a></li>
-                </ul>
-              </li>
-              <li class="dropDown-menu fixed-top">
-                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Suppliers</a>
-                <ul>
-                  <li><a href="/supplier" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Suppliers</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
+    <nav style="margin-right: 90px;white-space: nowrap;color: white;margin-top: 15px;">
+       <ul>
+         <li>
+           <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium;">Home</a>
+         </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
+           <ul>
+             <li class="dropDown-menu fixed-top">
+               <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Recipient</a>
+               <ul>
+                 <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Recipient</a></li>
+               </ul>
+             </li>
+             <li class="dropDown-menu fixed-top">
+               <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Suppliers</a>
+               <ul>
+                 <li><a href="/supplier" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Suppliers</a></li>
+               </ul>
+             </li>
+           </ul>
+         </li>
 
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
-            <ul>
-              <li>
-                <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
-              </li>
-              <li>
-                <a href="/addItem" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Item</a>
-              </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
+           <ul>
+             <li>
+               <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
+             </li>
+             <li>
+               <a href="/addItem" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Item</a>
+             </li>
+             <li>
+               <a href="/category" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Category</a>
+             </li>
+             
+             <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
-              <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
-            </ul>
-          </li>
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Orders</a>
-            <ul>
-              <li>
-                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Sales Orders</a>
-              </li>
-              <li><a href="/purchase" style="font-size: 16px;font-family:inter;font-weight:medium">Purchase Orders</a></li>
-            </ul>
-          </li>
-
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Reports</a>
-            <ul>
-              <li>
-                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Sales Reports</a>
-              </li>
-              <li><a href="/purchase" style="font-size: 16px;font-family:inter;font-weight:medium">Purchase Reports</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
+             <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
+           </ul>
+         </li>
+      
+         <li style="">
+           <a style="display: flex;margin-left:100px;font-size: 16px;font-family:inter;font-weight:medium"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+  <path fill-rule="" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+</svg><p style="margin-left:7px;">{{userbody.firstName}} {{userbody.lastName}}</p></a>
+         </li>
+         
+       </ul>
+     </nav>
     </header>
     </section>
-  <div class="" style="width: 95%; margin-left: 64px; margin-top: 60px">
+  <div class="" style="width: 95%; margin-left: 25px; margin-top: 60px">
     <div class="row">
       <div class="col">
-        <nav aria-label="breadcrumb " class="bg-light rounded-3 p-3 mb-4">
+        <nav aria-label="breadcrumb " class="bg-light  p-3 mb-4" style="border-radius: 12px;">
           <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item " style="font-family:inter;font-size:16px"><a href="/stockdashboard" style="color:#FF8C22">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px">Manage Invoice</li>
+            <li class="breadcrumb-item " style="font-family:inter;font-size:16px"><a href="/stockdashboard" style="color:gray">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px;color:#FF8C22">Manage Invoice</li>
           </ol>
         </nav>
       </div>
@@ -82,11 +78,19 @@
     <div class="table-wrapper">
                   <div
                     class="table-title"
-                    style="background:white; height: 50px;box-shadow: 3px 2px 3px rgba(0, 0, 0, .2);"
+                    style="background:white; height: 50px;box-shadow: 3px 2px 3px rgba(0, 0, 0, .2);border-radius: 12px;height: 71px;"
                   >
                     <div class="row" >
                       <div class="col-sm-6">
-                        <h2 style="font-size: 1.50rem; color: rgb(211, 3, 3);  height: 1.81rem; border-width: 0.06rem; left: 1.19rem; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;font-weight:500;white-space: nowrap;width: fit-content;">
+                        <h2 style="font-size: 1.50rem; color: var(--grey, #1E1E1E);
+text-align: center;
+
+/* H3 */
+font-size: 16px;
+font-style: normal;
+font-weight: 700;
+margin-top:10px;
+line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;white-space: nowrap;width: fit-content;">
                           INVOICE LIST
                         </h2>
                       </div>
@@ -100,13 +104,13 @@
                   class="btn btn- btn-sm rounded-0"
                   style="width: 130px;
                             margin-left: 240%;
-                            margin-top: 15px;
+                            margin-top: 20px;
                             border-radius: 4px;
                             font-family: inter;
                             display: flex;
-                            align-items: center;background:#FF8C22;color: white;text-align: center;height: 25px;"
+                            align-items: center;background:#FF8C22;color: white;text-align: center;height: 34px;"
                 >
-             <h2 style="font-size: 14px;color: white;margin-top: 8px;margin-left: 15px;font-family:inter">ADD INVOICE</h2>
+             <h2 style="font-size: 14px;color: white;margin-top: 8px;margin-left: 15px;font-family:inter;">Add Invoice</h2>
               
             </button>
               </div>
@@ -235,7 +239,7 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                   <div class="col-sm-6 d-flex mt-2">
                     <div
     class="search"
-    style="margin-left: 500px; margin-top: 5px; display: flex"
+    style="margin-left: 450px; margin-top: 5px; display: flex"
   >
   <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
   <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
@@ -246,6 +250,7 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
       name="gsearch"
       placeholder="   Search"
       style="width: 280px;text-align: center;height:40px;"
+      v-model="searchword"
      
     />
     <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
@@ -255,20 +260,58 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                 </div>
 
               
-                <div class="table-wrapper">
+                <div class="table-wrapper"  v-if="showallstock">
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
                         <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:40px">
-                      <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 18px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
+                      <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
         padding: 12px 34px">
                         <tr >
-                          <th>Invoice Number</th>
-                          <th>Invoice Date</th>
-                          <th>LPO Number</th>
-                          <th>LPO Date</th>
-                          <th>Supplier Name</th>
-                          <th>Date Added</th>
+                          <th style="width: 100px">Invoice Number</th>
+                          <th style="width: 120px">Invoice Date</th>
+                          <th style="width: 120px">LPO Number</th>
+                          <th style="width: 120px">LPO Date</th>
+                          <th style="width: 120px">Supplier Name</th>
+                          <th style="width: 150px">Date Added</th>
+                          
+
+                         
+                        </tr>
+                      </thead>
+                      <tbody v-for="invoice in this.allinvoice" v-bind:key="invoice.id">
+                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; ">
+                          <th scope="row"    @click.prevent="editInvoice(invoice.invoiceNumber)"><a href="" style="text-decoration: none;color: gray;">{{invoice.invoiceNumber }}</a></th>
+                        
+                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ getFormattedDate(invoice.invoiceDate) }}</td>
+                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{invoice.lpoNumber}}</td>
+                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ getFormattedDate(invoice.lpoDate) }}</td>
+                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{invoice.supplierName}}</td>
+                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ formatDate(invoice.stockInDate) }}</td>
+
+                         
+                        </tr>
+                      
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              </div>
+              <div class="table-wrapper" v-if="showallstocksearch">
+                  <div class="table-title">
+                    <div class="">
+                      <div class="col-sm table-responsive">
+                        <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:40px">
+                      <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
+        padding: 12px 34px">
+                        <tr >
+                          <th style="width: 100px">Invoice Number</th>
+                          <th style="width: 120px">Invoice Date</th>
+                          <th style="width: 120px">LPO Number</th>
+                          <th style="width: 120px">LPO Date</th>
+                          <th style="width: 120px">Supplier Name</th>
+                          <th style="width: 150px">Date Added</th>
                           
 
                           <th style="width: 120px">Action</th>
@@ -276,14 +319,14 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                         </tr>
                       </thead>
                       <tbody v-for="invoice in this.allinvoice" v-bind:key="invoice.id">
-                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;white-space: nowrap; ">
+                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; ">
                           <th scope="row"    @click.prevent="editInvoice(invoice.invoiceNumber)"><a href="" style="text-decoration: none;color: gray;">{{invoice.invoiceNumber }}</a></th>
                         
                           <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ getFormattedDate(invoice.invoiceDate) }}</td>
                           <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{invoice.lpoNumber}}</td>
                           <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ getFormattedDate(invoice.lpoDate) }}</td>
                           <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{invoice.supplierName}}</td>
-                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ formatDateAssigned(invoice.stockInDate) }}</td>
+                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ formatDate(invoice.stockInDate) }}</td>
 
                           <td>
                             <svg
@@ -347,7 +390,11 @@ export default {
       showModal: false,
       allinvoice:[],
       invoiceBody:[],
+      userbody: {},
       invoiceNumber:"",
+      searchword:"",
+      showallstock:true,
+      showallstocksearch:false,
       formdata: {
         invoiceDate:"",
         lpoDate:"",
@@ -372,6 +419,11 @@ console.log("allinvoice: ", this.allinvoice);
 return response;
 
 },
+async GetLoggedInUser() {
+      var response = await this.Gettingloggedinuser();
+      this.userbody = response.body;
+      console.log("Logged in user __________ email:", this.userbody);
+    },
 async getitnginvoicebyname() {
       var invoiceNumber=this.invoiceNumber;
       var response = await this.gettinginvoicebynumber(invoiceNumber);
@@ -380,6 +432,11 @@ async getitnginvoicebyname() {
       //console.log("body returned: ",this.stockBody);
 
 },
+formatDate(dateString) {
+            const date = new Date(dateString);
+
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        },
 formatDateAssigned(value) {
       let formattedDate = new Date(value);
       formattedDate = `${formattedDate.toDateString()} at ${formattedDate.toLocaleTimeString()}`;
@@ -410,12 +467,14 @@ async editInvoice(invoiceNumber) {
       var response = await this.creatinginvoice(body);
       if (response.isTrue==true) {
         swal.fire({
-          html: `<h5 class="text-success">${response.message}</h5>`,
+          heightAuto: false,
+          html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
         });
         this.$refs.myForm.reset();
       } else {
         swal.fire({
-          html: `<h5 class="text-danger">${response.message}</h5>`,
+          heightAuto: false,
+          html: `<h5 class="text-danger" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
         });
         this.$refs.myForm.reset();
       }
@@ -429,6 +488,22 @@ console.log("allsuppliers: ", this.allsuppliers);
 return response;
 
 },
+async searchinvoice() {
+      this.showallstock = false;
+      this.showallstocksearch = true;
+      var resp = await this.SearchingInvoice(this.searchword);
+      this.allinvoice = resp.body;
+      console.log("search  return body: ", resp.body);
+    },
+  },
+  watch: {
+    searchword(passedvalue) {
+      if (passedvalue != "") {
+        this.searchinvoice();
+      } else {
+        this.GetAllInvoice();
+      }
+    },
   },
   created(){
     this.invoiceNumber = this.$route.params.invoiceNumber;
@@ -436,7 +511,9 @@ return response;
     this.GetAllInvoice();
     this.GetAllSuppliers();
     this.getitnginvoicebyname();
-  }
+    this.GetLoggedInUser();
+  },
+ 
 };
 </script>
 <style>
@@ -452,4 +529,5 @@ return response;
   display: table-cell;
   vertical-align: middle;
 }
+
 </style>

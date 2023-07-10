@@ -1,4 +1,7 @@
 <template>
+     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css" />
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <div class="">
     <section class="vh-100 bg-danger" style="">
       <div class="w-75 mx-auto py-5 h-100">
@@ -128,11 +131,12 @@ export default {
         localStorage.setItem("token", `Bearer ${response.data.token}`);
 
         this.$router.push({
-          path: `/home`,
+          path: `/stockdashboard`,
           replace: true,
         });
 
         swal.fire({
+          heightAuto: false,
           title: "WELCOME BACK",
           text: `${response.data.firstname} ${response.data.lastName}`,
           icon: "success",
@@ -140,10 +144,12 @@ export default {
 
         });
       } else {
+
         this.spinner=false;
         console.log("Error message: ", response.message);
 
         return swal.fire({
+          heightAuto: false,
           html: `<h4 class="text-danger">${response.data.message}</h4>`,
         });
       }

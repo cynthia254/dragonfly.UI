@@ -187,6 +187,12 @@ export default {
       console.log("response",response);
       return response.data;
     },
+    async gettingitembybrandname(brandName){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GettingItemByBrandName?BrandName=${brandName}`)
+      console.log("response",response);
+      return response.data;
+    },
     async gettinginvoicenumber(invoiceNumber){
       this.setAuthHeader();
       var response=await axios.post(`Stock/GetInvoiceLinesByInvoiceNumber?invoiceNumber=${invoiceNumber}`)
@@ -626,6 +632,16 @@ export default {
             var response=await axios.post(`Stock/SearchStock?search_query=${searchword}`);
             return response.data;
           },
+          async SearchingInvoice(searchword){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/SearchInvoice?search_query=${searchword}`);
+            return response.data;
+          },
+          async SearchingInvoiceLines(searchword){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/SearchInvoiceLines?search_query=${searchword}`);
+            return response.data;
+          },
           async SearchingStockIn(searchword){
             this.setAuthHeader();
             var response=await axios.post(`Stock/SearchStockIn?search_query=${searchword}`);
@@ -646,12 +662,38 @@ export default {
             var response=await axios.post(`Stock/SearchSupplier?search_query=${searchword}`);
             return response.data;
           },
+          async uploadingbulk(body){
+            this.setAuthHeader();
+            console.log(" form values:  ", body);
+            var response=await axios.post("Stock/upload_bulk",
+            
+            {
+              body
+            }
+            
+            );
+            return response.data;
+          },
           async GetUsersWithRole(roleId){
             this.setAuthHeader();
             var resp=await axios.post(`Roles/Total_Users_With_Role?roleid=${roleId}`);
             console.log("response of user roles from mixins :", resp.data);
             return resp.data;
-          }
+          },
+          async uploadingFiles(body){
+            this.setAuthHeader();
+            console.log(" form values:  ", body);
+            var response=await axios.post("Stock/uploading",
+            
+            body, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+            
+            );
+            return response.data;
+          },
         }
    
 }  

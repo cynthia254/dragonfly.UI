@@ -82,6 +82,8 @@ import stockDashboard from "../components/stock/stockDashboard.vue";
 import devicePage from "../components/stock/addSparePart.vue";
 import InvoiceLinesByNumber from "../components/stock/invoiceLinesnyNumber.vue";
 import invoiceItemAdd from "../components/stock/invoice_Items_add.vue";
+import UploadFile from "../components/stock/uploadFile.vue";
+import UploadProduct from "../components/stock/uploadProduct.vue"
 const routes = [
   {
     path: "/home",
@@ -246,6 +248,18 @@ const routes = [
     name: "returnedStatus",
 
     component: returnedStatus,
+  },
+  {
+    path: "/uploadProduct",
+    name: "UploadProduct",
+
+    component: UploadProduct,
+  },
+  {
+    path: "/uploadFile",
+    name: "UploadFile",
+
+    component: UploadFile,
   },
   {
     path: "/returnedStock",

@@ -1,83 +1,87 @@
 <template>
+   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
     <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
     <section>
             <header class="top">
-      <div class="frame-24" style="width: 40px">
+              <div class="frame-24" style="width: 40px;margin-left: 25px;">
       <img
         alt=""
         class="payhouse-logo-1"
-        src="https://static.overlay-tech.com/assets/fef105cb-ec3b-4485-a2d5-9b3c5fb2d9f2.png"
+        src="../../assets/images/payhouse.png"
       />
     </div>
-      <nav style="margin-right: 90px">
-        <ul>
-          <li>
-            <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
-          </li>
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
-            <ul>
-              <li class="dropDown-menu fixed-top">
-                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Customers</a>
-                <ul>
-                  <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Customers</a></li>
-                </ul>
-              </li>
-              <li class="dropDown-menu fixed-top">
-                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Suppliers</a>
-                <ul>
-                  <li><a href="/supplier" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Suppliers</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
+    <nav style="margin-right: 90px;white-space: nowrap;color: white;margin-top: 15px;">
+       <ul>
+         <li>
+           <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium;">Home</a>
+         </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
+           <ul>
+             <li class="dropDown-menu fixed-top">
+               <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Recipient</a>
+               <ul>
+                 <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Recipient</a></li>
+               </ul>
+             </li>
+             <li class="dropDown-menu fixed-top">
+               <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Suppliers</a>
+               <ul>
+                 <li><a href="/supplier" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Suppliers</a></li>
+               </ul>
+             </li>
+           </ul>
+         </li>
 
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
-            <ul>
-              <li>
-                <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
-              </li>
-              <li>
-                <a href="/addItem" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Item</a>
-              </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
+           <ul>
+             <li>
+               <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
+             </li>
+             <li>
+               <a href="/addItem" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Item</a>
+             </li>
+             <li>
+               <a href="/category" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Category</a>
+             </li>
+             
+             <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
-              <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
-            </ul>
-          </li>
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Orders</a>
-            <ul>
-              <li>
-                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Sales Orders</a>
-              </li>
-              <li><a href="/purchase" style="font-size: 16px;font-family:inter;font-weight:medium">Purchase Orders</a></li>
-            </ul>
-          </li>
-
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Reports</a>
-            <ul>
-              <li>
-                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Sales Reports</a>
-              </li>
-              <li><a href="/purchase" style="font-size: 16px;font-family:inter;font-weight:medium">Purchase Reports</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
+             <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
+           </ul>
+         </li>
+      
+         <li style="">
+           <a style="display: flex;margin-left:100px;font-size: 16px;font-family:inter;font-weight:medium"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+  <path fill-rule="" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+</svg><p style="margin-left:7px;">{{userbody.firstName}} {{userbody.lastName}}</p></a>
+         </li>
+         
+       </ul>
+     </nav>
     </header>
     </section>
-  <div class="" style="width: 95%; margin-left: 64px; margin-top: 60px">
+  <div class="" style="width: 95%; margin-left: 25px; margin-top: 60px">
     <div class="table-wrapper">
                   <div
                     class="table-title"
-                    style="background: rgb(231, 23, 23); height: 50px"
+                    style="background:white; height: 50px;box-shadow: 3px 2px 3px rgba(0, 0, 0, .2);border-radius: 12px;height: 71px;"
                   >
                     <div class="row">
                       <div class="col-sm-6">
-                        <h2 style="font-size: 1.50rem; color: white; width: 5.19rem; height: 1.81rem; border-width: 0.06rem; left: 1.19rem; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;font-weight:500;">
-                          BRANDS
+                        <h2 style="font-size: 1.50rem;color: var(--grey, #1E1E1E);
+text-align: center;
+
+/* H3 */
+font-size: 16px;
+font-family: Inter;
+font-style: normal;
+font-weight: 700;
+line-height: normal;   height: 1.81rem; border-width: 0.06rem;margin-top: 10px; margin-left: 34px; top: 1.25rem; padding-top: 0.88rem;white-space: nowrap;width: fit-content;">
+                          BRAND LIST
                         </h2>
                       </div>
                   
@@ -87,30 +91,19 @@
                   type="button"
                   name="addPurchase"
                   id="addPurchase"
-                  class="btn btn-success btn-sm rounded-0"
-                  style="width: 130px;
-                            margin-left: 240%;
-                            margin-top: 10px;
-                            border-radius: 4px;
-                            font-family: inter;
-                            display: flex;
-                            align-items: center;"
+                  class="btn  btn-sm rounded-0"
+                  style="  width: 130px;
+                margin-left: 235%;
+                margin-top: 10px;
+                border-radius: 4px;
+                font-family: inter;
+                display: flex;
+                align-items: center;background:#FF8C22;color: white;font-size: 15px;margin-top: 20px;height: 34px;;
+                "
                 >
-                <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      width="20"
-                                      height="16"
-                                      fill="currentColor"
-                                      class="bi bi-plus-lg"
-                                      viewBox="0 0 16 16"
-                                      style="margin-left: 10%;color: white;font-weight: bold;"
-                                    >
-                                      <path
-                                        fill-rule="evenodd"
-                                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                                      />
-                                    </svg>Add Brand
-                </button>
+                <h2 style="margin-left: 24px;color: white;font-size: 14px;margin-top: 8px;font-family: inter;">Add Brand</h2> 
+               
+              </button>
               </div>
               <transition name="modal">
                 <div
@@ -169,7 +162,7 @@
                             align-content: center;
                           "
                         >
-                          <form  id="purchaseForm">
+                          <form  id="purchaseForm" ref="myForm">
                           
 
                             <div class="form-group">
@@ -205,6 +198,11 @@
                   </div>
                 </div>
               </transition>
+              <div class="form-control" style="margin-top: 30px;margin-left: 10px;border:0;border-radius: 10px;
+
+background: #FFF;
+box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
+              
               <div class="row mx-5">
                   <div class="col-sm-6 d-flex mt-2">
                     <div
@@ -230,11 +228,12 @@
 
               
                 <div class="table-wrapper">
-                  <div class="table-title">
+                  <div class="table-title" >
                     <div class="">
                       <div class="col-sm table-responsive">
-                        <table id="purchaseList" class="table table-hover ">
-                      <thead style="background-color: rgb(214, 211, 211);font-family: inter;font-weight: bold;font-size: 16px;">
+                        <table id="purchaseList" class="table table-hover " style="overflow:hidden;">
+                      <thead style="background-color:   #F3E6DA;font-family: inter;font-weight: bold;font-size: 16px;white-space: nowrap;">
+                       
                         <tr >
                           <th>Brand ID</th>
                           <th>Brand Name</th>
@@ -294,6 +293,7 @@
             </div>
           </div>
         </div>
+        </div>
   
 </template>
 <script>
@@ -305,6 +305,7 @@ export default {
   data() {
     return {
       showModal: false,
+      userbody: {},
       allbrands:[],
       formdata: {
         brandName:"",
@@ -328,6 +329,11 @@ console.log("allbrands: ", this.allbrands);
 return response;
 
 },
+async GetLoggedInUser() {
+      var response = await this.Gettingloggedinuser();
+      this.userbody = response.body;
+      console.log("Logged in user __________ email:", this.userbody);
+    },
 async editBrand(brandId) {
       console.log("brand id is:", brandId);
       this.$router.push({
@@ -347,11 +353,13 @@ async editBrand(brandId) {
       var response = await this.creatingBrand(body);
       if (response.isTrue==true) {
         swal.fire({
-          html: `<h5 class="text-success">${response.message}</h5>`,
+          heightAuto: false,
+          html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
         });
+        this.$refs.myForm.reset();
       } else {
         swal.fire({
-          html: `<h5 class="text-danger">${response.message}</h5>`,
+          html: `<h5 class="text-danger" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
         });
       }
       this.GetAllBrands();
@@ -359,6 +367,7 @@ async editBrand(brandId) {
   },
   created(){
     this.GetAllBrands();
+    this.GetLoggedInUser();
   }
 };
 </script>

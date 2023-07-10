@@ -1,21 +1,22 @@
-<template >
+<template>
     <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
-   
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     
-    <section>
-           <header class="top">
-     <div class="frame-24" style="width: 40px">
-     <img
-       alt=""
-       class="payhouse-logo-1"
-       src="https://static.overlay-tech.com/assets/fef105cb-ec3b-4485-a2d5-9b3c5fb2d9f2.png"
-     />
-   </div>
-     <nav style="margin-right: 90px;white-space: nowrap;">
-       <ul>
+    <section style="background: var(--background-color, #EDF0F4);" >
+           <header class="fixed-top" style="position: fixed;" >
+            <div class="frame-24" style="width: 40px;margin-left: 25px;">
+      <img
+        alt=""
+        class="payhouse-logo-1"
+        src="../../assets/images/payhouse.png"
+      />
+    </div>
+     <nav  style="margin-right: 90px;white-space: nowrap;color: white;margin-top: 15px;">
+       <ul class="fixed">
          <li>
-           <a href="/home" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
+           <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium;">Home</a>
          </li>
          <li class="dropDown-menu fixed-top">
            <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
@@ -44,11 +45,22 @@
              <li>
                <a href="/addItem" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Item</a>
              </li>
+             <li>
+               <a href="/category" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Category</a>
+             </li>
              
              <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
              <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
            </ul>
+         </li>
+      
+         <li style="">
+           <a style="display: flex;margin-left:100px;font-size: 16px;font-family:inter;font-weight:medium"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+  <path fill-rule="" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+</svg><p style="margin-left:7px;">{{userbody.firstName}} {{userbody.lastName}}</p></a>
+
          </li>
          
        </ul>
@@ -56,12 +68,13 @@
    </header>
   
  
- <div class="" >
+ <div class="" style="width: 95%;margin-left: 35px;">
 
-   <div class=""  >
-    <div class="row" style="margin-top: 40px;margin-left: 1.94rem;">
-      <div class="col-xl-3 col-sm-6 col-12 "  > 
-        <div class="card" style="display: flex;
+   <div class="card-list"  >
+    
+    <div class="row" style="margin-top: 100px;" >
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4" style="background: var(--background-color, #EDF0F4);"  > 
+        <div class="card" style="display: flex;width: 290px;
 padding: 8px 84px;
 flex-direction: column;
 align-items: center;
@@ -97,7 +110,7 @@ font-family: Inter;margin-bottom: 20px;">Stocks In</h5>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12 "  > 
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4 "  > 
         <div class="card" style="display: flex;
 width: 290px;
 padding: 8px 84px;
@@ -135,7 +148,7 @@ font-family: Inter;margin-bottom: 20px;">Stocks Out</h5>
           </div>
         </div>
       </div>
-      <div class="col-xl-3 col-sm-6 col-12 "  > 
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4 "  > 
         <div class="card" style="display: flex;
 width: 290px;
 padding: 8px 84px;
@@ -170,7 +183,7 @@ font-family: Inter;margin-bottom: 20px;white-space: nowrap;width: fit-content;">
           </div>
         </div>
       </div>
-      <div class="col-xl-3   "  > 
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3 mb-4 "  > 
         <div class="card box-shadow" style="display: flex;
 width: 290px;
 padding: 8px 84px;
@@ -207,12 +220,11 @@ font-family: Inter;margin-bottom: 20px;display: flex;white-space: nowrap;width: 
       </div>
       </div>
       </div>
- </div>
-</section>
+ 
 
  
-   <div class="" style="background: #FFF;">
-     <div class="form-control "  style="margin-top: 30px;margin-left: 40px;border:0;
+   <div class="" style="background: var(--background-color, #EDF0F4);">
+     <div class="form-control "  style="margin-top: 30px;border:0;
 
 background: #FFF;
 box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);" >
@@ -271,52 +283,44 @@ font-weight: 600;margin-left:30px;margin-top: 50px;"><b>STOCK SUMMARY</b></h4>
                                         </div>
                                       </div>
                                       <div class=" ">
-                                        <div class="form-group" style="width: 184px;"><a href="/invoicedetails" style="text-decoration: none;">
+                                        <div class="" style="width: 184px;"><a href="/invoicedetails" style="text-decoration: none;">
                                             <input
-                                        type="submit"
-                                        name="action"
-                                        id="action"
-                                        class="btn  btn-sm"
+                                            type="submit"
+                            class="button"
                                         value="View Invoices"
                                         form="purchaseForm"
-                                        style="margin-bottom: 40px;height:40px;font-family: inter;font-size: 13px;margin-left: 61px;width: 124px;border-radius: 4px;
-background: #FF8C22;color: white;font-weight: 500;"
+                                        style="height:40px;font-family: inter;font-size: 13px;margin-left: 61px;width: 124px;
+background: #FF8C22;color:white;border: none;"
+
                                     
                                       />
                                         </a>
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="table-wrapper" >
+                                    <div class="table-wrapper">
                   <div class="table-title">
-                                    <div class="col-sm table-responsive">        
-                 <table class="card-list-table table-hover table-bordered   " id="customers" style="text-align: center;  table-layout: fixed;
-  background: transparent;
-  margin-bottom: 0;
-  width: 100%;margin-left: 30px;
- ">
-                   <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
+                    <div class="">
+                      <div class="table-responsive">
+                        <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:20px">
+                      <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
         padding: 12px 34px">
                      <tr>
-                       <th scope="col">Stock ID</th>
-                       <th scope="col" >Stock Name</th>
-                       <th scope="col">Opening Stock</th>
-                       <th scope="col">New Stock</th>
-                       <th scope="col">Total StockOut</th>
-                       <th scope="col">Returned Stock</th>
-                       <th scope="col">Closing Stock</th>
-                       <th scope="col">Last Updated</th>
-                       <th scope="col">Status</th>
-                       <th scope="col">Updated By</th>
+                       <th >Stock ID</th>
+                       <th  >Stock Name</th>
+                       <th >Opening Stock</th>
+                       <th >New Stock</th>
+                       <th >Total StockOut</th>
+                       <th >Returned Stock</th>
+                       <th>Closing Stock</th>
+                       <th >Last Updated</th>
+                       <th >Status</th>
+                       <th >Updated By</th>
                        <th scope="col " >Action</th>
                      </tr>
                    </thead>
-                   <tbody style="white-space: nowrap;">
-                     <tr style=" 
-    background: #fff;
-    border-bottom: 1px solid  darken(#f8f8f8, 10%);
-    padding: 15px 10px;
-    margin: 0 0 10px 0;display: table-row;">
+                   <tbody style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
+                     <tr>
                        <th scope="row" style="padding-left: 25px;">1</th>
                        <td style="">Feitian F20</td>
                        <td style="padding-left: 25px;">40</td>
@@ -380,12 +384,14 @@ background: #FF8C22;color: white;font-weight: 500;"
                </div>
            
 </div>
+</div>
 
 
          </div>
          </div>
          </div>
-       
+        </div>
+
 
        <!--  <div class="tab-content">
                                        <div class="tab-pane fade active show" id="tab-eg-55">
@@ -751,12 +757,32 @@ background: #FF8C22;color: white;font-weight: 500;"
                                    </div>
                                </div>
                            </div>-->
-
+                        </section>
 </template>
 <script>
-    export default {
-        name:'stockDashboard',
-    };
+ // import swal from "sweetalert2";
+import AppMixins from "../../Mixins/shared";
+export default {
+  name: "AddStock",
+  mixins: [AppMixins],
+  data() {
+    return {
+      
+      userbody: {},
+    }
+},
+methods:{
+    async GetLoggedInUser() {
+      var response = await this.Gettingloggedinuser();
+      this.userbody = response.body;
+      console.log("Logged in user __________ email:", this.userbody);
+    },
+
+},
+created(){
+    this.GetLoggedInUser();
+  }
+}
 </script>
 <style>
 
@@ -796,9 +822,60 @@ th {
         vertical-align: middle;
       }
       thead th {
-    text-transform: uppercase;
+   
     font-size: .85em;
     color:black;
     letter-spacing: .5pt;
+  }.my-custom-scrollbar {
+position: relative;
+height: 200px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+.table {
+  table-layout: fixed;
+}
+@media(max-width: 767px){
+   
+    body{
+       display:flex;
+       flex-direction: column;
+       position: fixed;
+     
+     }
+ 
   }
+  @media (max-width: 991px) {
+  .card-registration-2 .bg-indigo {
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+}
+@media (min-width: 992px) {
+  .card-registration-2 .bg-indigo {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+}
+nav ul li a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    transition: width .2s;
+    background-color:  white;
+          -webkit-transition: opacity .3s ease,width .3s ease;
+          -moz-transition: opacity .3s ease,width .3s ease;
+          -o-transition: opacity .3s ease,width .3s ease;
+          transition: opacity .3s ease,width .3s ease;
+          -ms-transition: opacity .3s ease,width .3s ease;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+    transition: width .3s;
+}
+
 </style>

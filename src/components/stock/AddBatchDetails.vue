@@ -3,6 +3,8 @@
     href="https://fonts.googleapis.com/css?family=Inter:500,700"
     rel="stylesheet"
   />
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
   <section>
     <header class="top">
       <div class="frame-24" style="width: 40px">
@@ -12,181 +14,50 @@
           src="https://static.overlay-tech.com/assets/fef105cb-ec3b-4485-a2d5-9b3c5fb2d9f2.png"
         />
       </div>
-      <nav style="margin-right: 90px">
-        <ul>
-          <li>
-            <a
-              href="/stock"
-              style="font-size: 16px; font-family: inter; font-weight: medium"
-              >Home</a
-            >
-          </li>
-          <li class="dropDown-menu fixed-top">
-            <a
-              href=""
-              style="font-size: 16px; font-family: inter; font-weight: medium"
-              >Stock Users</a
-            >
-            <ul>
-              <li class="dropDown-menu fixed-top">
-                <a
-                  href=""
-                  style="
-                    font-size: 16px;
-                    font-family: inter;
-                    font-weight: medium;
-                  "
-                  >Customers</a
-                >
-                <ul>
-                  <li>
-                    <a
-                      href="/customer"
-                      style="
-                        font-size: 16px;
-                        font-family: inter;
-                        font-weight: medium;
-                      "
-                      >Manage Customers</a
-                    >
-                  </li>
-                </ul>
-              </li>
-              <li class="dropDown-menu fixed-top">
-                <a
-                  href=""
-                  style="
-                    font-size: 16px;
-                    font-family: inter;
-                    font-weight: medium;
-                  "
-                  >Suppliers</a
-                >
-                <ul>
-                  <li>
-                    <a
-                      href="/supplier"
-                      style="
-                        font-size: 16px;
-                        font-family: inter;
-                        font-weight: medium;
-                      "
-                      >Manage Suppliers</a
-                    >
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
+      <nav style="margin-right: 90px;white-space: nowrap;">
+       <ul>
+         <li>
+           <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
+         </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
+           <ul>
+             <li class="dropDown-menu fixed-top">
+               <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Recipient</a>
+               <ul>
+                 <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Recipient</a></li>
+               </ul>
+             </li>
+             <li class="dropDown-menu fixed-top">
+               <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Suppliers</a>
+               <ul>
+                 <li><a href="/supplier" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Suppliers</a></li>
+               </ul>
+             </li>
+           </ul>
+         </li>
 
-          <li class="dropDown-menu fixed-top">
-            <a
-              href=""
-              style="font-size: 15px; font-family: inter; font-weight: medium"
-              >Inventory</a
-            >
-            <ul>
-              <li>
-                <a
-                  href="/brand"
-                  style="
-                    font-size: 16px;
-                    font-family: inter;
-                    font-weight: medium;
-                  "
-                  >Manage ProductBrand</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/addItem"
-                  style="
-                    font-size: 16px;
-                    font-family: inter;
-                    font-weight: medium;
-                  "
-                  >Manage Item</a
-                >
-              </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
+           <ul>
+             <li>
+               <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
+             </li>
+             <li>
+               <a href="/addItem" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Item</a>
+             </li>
+             <li>
+               <a href="/category" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Category</a>
+             </li>
+             
+             <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
-              <li>
-                <a
-                  href="/addStock"
-                  style="
-                    font-size: 16px;
-                    font-family: inter;
-                    font-weight: medium;
-                  "
-                  >Manage Stock</a
-                >
-              </li>
-            </ul>
-          </li>
-          <li class="dropDown-menu fixed-top">
-            <a
-              href=""
-              style="font-size: 15px; font-family: inter; font-weight: medium"
-              >Orders</a
-            >
-            <ul>
-              <li>
-                <a
-                  href="/sales"
-                  style="
-                    font-size: 16px;
-                    font-family: inter;
-                    font-weight: medium;
-                  "
-                  >Sales Orders</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/purchase"
-                  style="
-                    font-size: 16px;
-                    font-family: inter;
-                    font-weight: medium;
-                  "
-                  >Purchase Orders</a
-                >
-              </li>
-            </ul>
-          </li>
-
-          <li class="dropDown-menu fixed-top">
-            <a
-              href=""
-              style="font-size: 15px; font-family: inter; font-weight: medium"
-              >Reports</a
-            >
-            <ul>
-              <li>
-                <a
-                  href="/sales"
-                  style="
-                    font-size: 16px;
-                    font-family: inter;
-                    font-weight: medium;
-                  "
-                  >Sales Reports</a
-                >
-              </li>
-              <li>
-                <a
-                  href="/purchase"
-                  style="
-                    font-size: 16px;
-                    font-family: inter;
-                    font-weight: medium;
-                  "
-                  >Purchase Reports</a
-                >
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
+             <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
+           </ul>
+         </li>
+         
+       </ul>
+     </nav>
     </header>
   </section>
   <div class="" style="width: 95%; margin-left: 64px; margin-top: 60px">
@@ -800,13 +671,14 @@ export default {
       var response = await this.addingInvoiceLines(body);
       if (response.isTrue == true) {
         swal.fire({
-          html: `<h5 class="text-success">${response.message}</h5>`,
+          heightAuto: false,
+          html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
         });
         this.$refs.myForm.reset();
         this.GetAllInvoice();
       } else {
         swal.fire({
-          html: `<h5 class="text-danger">${response.message}</h5>`,
+          html: `<h5 class="text-danger" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
         });
         this.$refs.myForm.reset();
       }

@@ -1,4 +1,5 @@
 <template>
+     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
   <section class="h-100 h-custom gradient-custom-2" style="width: 100%">
     <div class="container w-100 h-100 py-5">
       <div class="row d-flex justify-content-center align-items-center h-100">

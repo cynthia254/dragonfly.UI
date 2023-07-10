@@ -1,62 +1,61 @@
 <template>
     <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
     <section>
-            <header class="top">
-      <div class="frame-24" style="width: 40px">
+      <header class="fixed-top" style="position: fixed;" >
+            <div class="frame-24" style="width: 40px;margin-left: 25px;">
       <img
         alt=""
         class="payhouse-logo-1"
-        src="https://static.overlay-tech.com/assets/fef105cb-ec3b-4485-a2d5-9b3c5fb2d9f2.png"
+        src="../../assets/images/payhouse.png"
       />
     </div>
-      <nav style="margin-right: 90px">
-        <ul>
-          <li>
-            <a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
-          </li>
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
-            <ul>
-              <li class="dropDown-menu fixed-top">
-                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Recipient</a>
-                <ul>
-                  <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Recipient</a></li>
-                </ul>
-              </li>
-              <li class="dropDown-menu fixed-top">
-                <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Suppliers</a>
-                <ul>
-                  <li><a href="/supplier" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Suppliers</a></li>
-                </ul>
-              </li>
-            </ul>
-          </li>
+     <nav  style="margin-right: 90px;white-space: nowrap;color: white;margin-top: 15px;">
+       <ul class="fixed">
+         <li>
+           <a href="/stockdashboard" style="font-size: 16px;font-family:inter;font-weight:medium;">Home</a>
+         </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Stock Users</a>
+           <ul>
+             <li class="dropDown-menu fixed-top">
+               <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Recipient</a>
+               <ul>
+                 <li><a href="/customer" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Recipient</a></li>
+               </ul>
+             </li>
+             <li class="dropDown-menu fixed-top">
+               <a href="" style="font-size: 16px;font-family:inter;font-weight:medium">Suppliers</a>
+               <ul>
+                 <li><a href="/supplier" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Suppliers</a></li>
+               </ul>
+             </li>
+           </ul>
+         </li>
 
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
-            <ul>
-              <li>
-                <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
-              </li>
-              <li>
-                <a href="/addItem" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Item</a>
-              </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
+           <ul>
+             <li>
+               <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
+             </li>
+             <li>
+               <a href="/addItem" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Item</a>
+             </li>
+             <li>
+               <a href="/category" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Category</a>
+             </li>
+             
+             <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
-              <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
-            </ul>
-          </li>
-          <li class="dropDown-menu fixed-top">
-            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Reports</a>
-            <ul>
-              <li>
-                <a href="/sales" style="font-size: 16px;font-family:inter;font-weight:medium">Sales Reports</a>
-              </li>
-              <li><a href="/purchase" style="font-size: 16px;font-family:inter;font-weight:medium">Purchase Reports</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-    </header>
+             <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
+           </ul>
+         </li>
+      
+         
+       </ul>
+     </nav>
+   </header>
+  
     </section>
    <form class="form" style=" max-width: calc(100vw - 40px);
      width: 500px;

@@ -9,7 +9,7 @@
         src="https://static.overlay-tech.com/assets/fef105cb-ec3b-4485-a2d5-9b3c5fb2d9f2.png"
       />
     </div>
-      <nav style="margin-right: 90px">
+      <nav style="margin-right: 90px;background: #E00613;" >
         <ul>
           <li>
             <a href="/home" style="font-size: 16px;font-family:inter;font-weight:medium">Home</a>
@@ -590,12 +590,13 @@ export default {
 </script>
 <style>
 header {
-  background-color: white;
+  background-color: #E00613;
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.3);
   padding: 0px 10px;
+  height: 60px;
 }
 header h1 {
   margin: 0px;
@@ -614,16 +615,17 @@ nav > ul > li {
 nav ul li a {
   text-decoration: none;
   color: black;
-
 }
 nav ul li a:active {
-  color: red;
+  color:white;
 }
 nav ul li a:visited {
-  color: red;
+  color: white;
 }
-nav ul li a:hover {
-  color: green;
+nav ul li a:hover::after {
+ 
+    transform: scaleX(1);
+
 }
 .dropDown-menu {
   position: relative;
@@ -668,10 +670,20 @@ nav .dropDown-menu > ul {
   min-width: 150px;
   box-shadow: 0px 6px 6px 0px rgba(0, 0, 0, 0.3);
   display: none;
+  color: red;
 }
+nav .dropDown-menu > ul :visited{
+ 
+  color: orangered;
+}
+nav .dropDown-menu > ul :hover{
+ 
+ color: green;
+}
+
 nav .dropDown-menu .dropDown-menu > ul {
   margin: 0px 0px 0px;
-  left: 100%;
+  left: 1rgb(87, 82, 82)(87, 82, 82);
   top: 0px;
 }
 nav .dropDown-menu .dropDown-menu.left > ul {
@@ -684,6 +696,7 @@ nav .dropDown-menu:hover > ul {
 nav .dropDown-menu li a {
   display: block;
   padding: 12px 12px;
+  color: red;
 }
 .home-content .overview-boxes {
   display: flex;

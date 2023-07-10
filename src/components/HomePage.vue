@@ -1144,6 +1144,7 @@ nav > ul {
 nav > ul > li {
     position: relative;
     padding: 25px 15px;
+    
 }
 nav ul li a {
     text-decoration: none;
