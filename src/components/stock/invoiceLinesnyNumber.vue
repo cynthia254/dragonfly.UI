@@ -174,7 +174,7 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                     style="
                       width: 50%;
                       margin-left: 120px;
-                      margin-top: 40px;
+                      margin-top: 10px;
                       background: #f5f5f5;
                       border-radius: 18px;
                       height: 100%;
@@ -511,15 +511,15 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                         <tr>
                           <th>Item ID</th>
                           <th>Item Name</th>
-                          <th style="width:130px">Category Name</th>
+                          <th style="width:100px">Category Name</th>
                           <th>Quantity</th>
                           <th style="width:150px">Unit Price</th>
                           <th>Warranty<br><span style="font-size:11px;font-weight: bolder;color: gray;">(In Months)</span></th>
                           <th style="width:130px">Warranty Start Date</th>
                           <th style="width:130px">Warranty End Date</th>
-                          <th>Updated By</th>
-                          <th>Updated on</th>
-                          <th>Status</th>
+                          <th style="width:100px">Updated By</th>
+                          <th style="width:110px">Updated on</th>
+                          <th style="width:110px">Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -601,10 +601,10 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                           <th style="width:150px">Unit Price</th>
                           <th>Warranty<br><span style="font-size:11px;font-weight: bolder;color: gray;">(In Months)</span></th>
                           <th style="width:130px">Warranty Start Date</th>
-                          <th style="width:130px">Warranty End Date</th>
+                          <th style="width:120px">Warranty End Date</th>
                           <th>Updated By</th>
                           <th>Updated on</th>
-                          <th>Status</th>
+                          <th style="width:150px">Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -779,11 +779,21 @@ export default {
         swal.fire({
           heightAuto: false,
           html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
-        },
-        function(){ 
-       location.reload();
-   }
-        );
+
+        });
+
+        this.$router.push({
+          path: `/invoiceItems/${this.invoiceNumber}`,
+          replace: true,
+        });
+
+
+        setTimeout(()=>{
+          location.reload();
+
+        },4000)
+
+
        
 
         await this.GetAllItems();
@@ -802,6 +812,7 @@ export default {
       if (invoicelines.status === "Complete") {
         return {
           color: "green",
+          
         };
       } else if (invoicelines.status === "Incomplete") {
         return {

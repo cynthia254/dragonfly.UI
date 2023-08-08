@@ -73,8 +73,9 @@
         <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item" style="font-family:inter;font-size:16px"><a href="/stockdashboard" style="color:gray">Home</a></li>
-          
-            <li class="breadcrumb-item" style="font-family:inter;font-size:16px"><a @click.prevent="editInvoice()" href="" style="color:gray">Manage Invoice Lines</a></li>
+            <li class="breadcrumb-item " aria-current="page" style="font-family:inter;font-size:16px;color:gray"><a href="/purchaseordered" style="color:gray">Manage Purchase Orders</a></li>
+           
+            <li class="breadcrumb-item" style="font-family:inter;font-size:16px"><a @click.prevent="pushPO()" href="" style="color:gray">Manage Purchase Ordered Items</a></li>
             
             <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px;color:#FF8C22">Manage Product Details</li>
           </ol>
@@ -230,10 +231,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
     </transition> 
     </div>
     <div class="form-control" style="margin-top:50px;border:0;border-radius: 10px;box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
-      <div style="margin-top:100px;">
-      <input type="file" @change="handleFileUpload" />
-      <button @click.prevent="uploadData">Upload</button>
-    </div>
+      
       <div class="table-wrapper">
                   <div class="table-title">
                     <div class="">
@@ -246,6 +244,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
       <th scope="col">Serial Number</th>
       <th>IMEI 1</th>
       <th>IMEI 2</th>
+      <th>Action</th>
 
     </tr>
   </thead>
@@ -255,6 +254,31 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
       <td style="text-transform: uppercase;">{{invoiceitem.serialNumber}}</td>
       <td>{{ invoiceitem.imeI1 }}</td>
       <td>{{ invoiceitem.imeI2 }}</td>
+      <td>
+                            <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="20"
+                                  height="20"
+                                  fill="green"
+                                  class="bi bi-pencil-square"
+                                  viewBox="0 0 16 16"
+                                  @click="editSerialNumber(invoiceitem.batchID)"
+                                  style="margin-left:20px"
+                               
+                                
+                                >
+                                  <path
+                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                                  />
+                                  <path
+                                    fill-rule="evenodd"
+                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+                                  />
+                                </svg>
+
+                              
+                             
+                          </td>
     </tr>
   </tbody>
 </table>
@@ -272,7 +296,6 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
   <script>
   import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared";
-import * as XLSX from 'xlsx' ;
   export default {
     name:"invoiceItemAdd",
     mixins: [AppMixins],
@@ -281,7 +304,6 @@ import * as XLSX from 'xlsx' ;
    
     data() {
       return {
-        fileData: null,
         batchID:"",
         invoiceItemBody:[],
         userbody: {},
@@ -295,6 +317,9 @@ import * as XLSX from 'xlsx' ;
         reference_number:"",
         numbering_body:{},
         productlineBody:[],
+        poBody:[],
+        poNumber:"",
+        allinvoice:[],
       };
     },
     methods:{
@@ -311,7 +336,8 @@ import * as XLSX from 'xlsx' ;
     imeI1:this.formdata.imei1,
     batchID:this.batchID,
     product_No:this.selected_Number,
-    reference_Number:this.reference_number
+    reference_Number:this.reference_number,
+
 
 
 
@@ -337,7 +363,17 @@ if (response.isTrue==true) {
     
   
   
- this.gettingproductdetailsbyid();
+ await this.gettingproductdetailsbyid();
+ this.$router.push({
+          path: `/invoice_item/${this.batchID}`,
+          replace: true,
+        });
+
+
+        setTimeout(()=>{
+          location.reload();
+
+        },700)
 } else {
   swal.fire({
     heightAuto: false,
@@ -351,62 +387,17 @@ if (response.isTrue==true) {
     async editInvoice() {
       console.log("Invoice Number is:", );
       this.$router.push({
-        path: `/invoiceItems/${this.productlineBody.invoiceNumber}`,
+        path: `/uploadedpoitems/${this.poBody.poNumber}`,
         replace: true,
       });
     },
-    async GetLoggedInUser() {
-      var response = await this.Gettingloggedinuser();
-      this.userbody = response.body;
-      console.log("Logged in user __________ email:", this.userbody);
+    async editSerialNumber(batchID) {
+      console.log("batch id is:", batchID);
+      this.$router.push({
+        path: `/editserialnumber/${batchID}`,
+        replace: true,
+      });
     },
-    handleFileUpload(event) {
-        const file = event.target.files[0];
-        const reader = new FileReader();
-  
-        reader.onload = (e) => {
-          const data = new Uint8Array(e.target.result);
-          const workbook = XLSX.read(data, { type: 'array' });
-          const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-          const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-          console.log("data:",data);
-          console.log("workbook:",workbook);
-          console.log("worksheet:",worksheet);
-          console.log("JSON data:",jsonData);
-  
-          // Extract the relevant fields from jsonData and store them in a suitable format
-          this.fileData = jsonData.map(row => ({
-            SerialNumber: row[0],
-            IMEI1: row[1],
-            IMEI2: row[2],
-          }));
-          this.fileData.forEach(row => {
-        console.log(row.SerialNumber);
-        console.log(row.IMEI1);
-        console.log(row.IMEI2);
-          });
-
-          console.log(" form data:    ", this.fileData);
-        };
-  
-        reader.readAsArrayBuffer(file);
-      },
-    async  uploadData() {
-      const body = this.fileData.map(data => ({
-      serialNumber: data.SerialNumber,
-      imeI1: data.IMEI1,
-      imeI2: data.IMEI2,
-    }));
-        console.log("body:",body);
-    
-          var resp=await this.uploadingbulk(body);
-       
-
-        console.log("This is the bulk body  ____", resp)
-      
-       
-      },
-  
     async GetAllInvoiceItems() {
       const response = await this.gettingAllinvoiceitems();
       this.allinvoiceitems = response.body;
@@ -434,6 +425,34 @@ async gettingproductlineByid() {
  
       
 },
+async gettingitemsbypo() {
+      var poNumber = this.poNumber;
+      var response = await this.gettingitemsinPO(poNumber);
+      this.poBody = response.body;
+      console.log("response on PO body: : ", this.poBody);
+    },
+    async pushPO() {
+      console.log("PO Number is:", this.allinvoice.poNumber);
+      this.$router.push({
+        path: `/uploadedpoitems/${this.allinvoice.poNumber}`,
+        replace: true,
+      });
+    },
+    async GetAllPOS(){
+
+const response= await this.gettingAllPOS();
+this.allinvoice=response.body;
+
+console.log("invoice responses pos____________: ", response);
+
+
+
+console.log("allinvoice: ", this.allinvoice);
+return response;
+
+
+},
+
 async gettingreferencenumbers() {
   var resp = await this.gettingproductlinebyid(this.batchID);
        console.log("this is reference no: ", resp.body.reference_Number);
@@ -447,14 +466,14 @@ async gettingreferencenumbers() {
 },
     },
     created() {
-      this.batchID = this.$route.params.invoiceLineId;
-        console.log("ItemId :", this.batchID);
+      this.poNumber = this.$route.params.poNumber;
+        console.log("poNumber :", this.poNumber);
     this.GetAllInvoiceItems();
     this.gettingproductdetailsbyid();
     this.gettingreferencenumbers();
-    this.GetLoggedInUser();
     this.gettingproductlineByid();
-   
+    this.gettingitemsbypo();
+   this.GetAllPOS();
    
   },
   

@@ -89,6 +89,27 @@ export default {
       var response=await axios.post("User/EditUser",body)
       return response.data;
     },
+    async editSerialNumber(body){
+      //console.log("passed id: ", userId)
+      this.setAuthHeader();
+      var response=await axios.post("Stock/EditSerialNumber",body)
+      console.log("response is :",response);
+      return response.data;
+    },
+    async ScannedData(body){
+      //console.log("passed id: ", userId)
+      this.setAuthHeader();
+      var response=await axios.post("Stock/ScannedData",body)
+      console.log("response is :",response);
+      return response.data;
+    },
+    async PDFPO(body){
+      //console.log("passed id: ", userId)
+      this.setAuthHeader();
+      var response=await axios.post("Stock/UploadPDFFile",body)
+      console.log("response is :",response);
+      return response.data;
+    },
     async gettinguserbyemail(useremail){
 
       this.setAuthHeader();
@@ -208,6 +229,13 @@ export default {
     async gettingproductbyId(batchID){
       this.setAuthHeader();
       var response=await axios.post(`Stock/GetProductDetailsbyid?itemID=${batchID}`)
+      console.log("response",response);
+      return response.data;
+    },
+    async gettingserilaNumber(batchID){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetSerialNumber?itemID=${batchID}`)
+      console.log("Product details by id:",response);
       console.log("response",response);
       return response.data;
     },
@@ -692,6 +720,159 @@ export default {
             }
             
             );
+            return response.data;
+          },
+          async uploadingPO(body){
+            this.setAuthHeader();
+            console.log(" form values:  ", body);
+            var response=await axios.post("Stock/UploadPODetails",
+              body
+            );
+            return response.data;
+          },
+          async GettingAllPOS() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetAllPOS");
+      
+            return response.data;
+          },
+          async uploadingPOitems(body){
+            this.setAuthHeader();
+            console.log(" form values details:  ", body);
+            var response=await axios.post("Stock/UploadPOItems",
+              body
+            );
+            return response.data;
+          },
+          async uploadingpoItems(body,poNumber){
+            this.setAuthHeader();
+            console.log(" form values:  ", body,poNumber);
+            var response=await axios.post(`Stock/Uploading>>>?PONumber=${poNumber}`,
+            
+            body, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+            
+            );
+            return response.data;
+          },
+          async uploadingPOFiles(body){
+            this.setAuthHeader();
+            console.log(" form values:  ", body);
+            var response=await axios.post("Stock/UploadingPO>>>>>",
+            
+            body, {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+            
+            );
+            return response.data;
+          },
+          async gettimgitemsbypo(poNumber){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/GetItemsByPO?PONumber=${poNumber}`)
+            console.log("response",response);
+            return response.data;
+          },
+          async gettingAllPOS() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetAllPOSDetails");
+      
+            return response.data;
+          },
+          async gettingitemsinPO(poNumber){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/GettingItemInPO?PONumber=${poNumber}`)
+            console.log("response of the po Number",response);
+            return response.data;
+          },
+          async gettingAllPurchaseOrderss() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetAllPurchaseOrderss");
+      
+            return response.data;
+          },
+          async addingPurchaseDetailss(body){
+            this.setAuthHeader();
+            var resp=await axios.post(`Stock/AddingPurchaseOrdersDetails`,body);
+            return resp.data;
+      
+          },
+          async adjustingstock(body){
+            this.setAuthHeader();
+            var resp=await axios.post(`Stock/AdjustStock`,body);
+            return resp.data;
+      
+          },
+          async issuingItems(id){
+            console.log("passed mail: ", id)
+            this.setAuthHeader();
+            var response= await axios.post(`Stock/IssueProcess?id=${id}`)
+            return response.data;
+          },
+          async gettingpoitemsByID(id){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/GetPOItemsbyID?ItemId=${id}`)
+            console.log("response",response);
+            return response.data;
+          },
+          async getstockadjustedById(itemID){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/GetAdjustedStockByID?ItemID=${itemID}`)
+            console.log("response on adjustedcstock",response);
+            return response.data;
+          },
+          async getFormbyId(id){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/GetFormByID?Id=${id}`)
+            console.log("response on requisition form is:",response);
+            return response.data;
+          },
+          async getFormbyemail(){
+
+            this.setAuthHeader();
+            var response=await axios.post("Stock/GetFormbyUserEmail")
+            console.log("response on requisition form is:",response);
+            return response.data;
+          },
+          async GettingAllStockItems() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetAllItemsStock");
+      
+            return response.data;
+          },
+          async applyingForm(body){
+            this.setAuthHeader();
+            var resp=await axios.post(`Stock/ApplyingRequisitionForm`,body);
+            return resp.data;
+      
+          },
+          async GettingRequisiotin() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetAllRequisition");
+      
+            return response.data;
+          },
+          async ApplicationStatus(body){
+            this.setAuthHeader();
+            var resp=await axios.post(`Stock/ApplicationStatus`,body);
+            return resp.data;
+      
+          },
+          async StatusPending() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetFormWithStatusPending");
+      
+            return response.data;
+          },
+          async StatusApproved() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetFormStatusWithApproved");
+      
             return response.data;
           },
         }

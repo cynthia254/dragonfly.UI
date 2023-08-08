@@ -283,13 +283,13 @@ font-weight: 600;margin-left:30px;margin-top: 50px;"><b>STOCK SUMMARY</b></h4>
                                         </div>
                                       </div>
                                       <div class=" ">
-                                        <div class="" style="width: 184px;"><a href="/invoicedetails" style="text-decoration: none;">
+                                        <div class="" style="width: 184px;"><a href="/purchaseordered" style="text-decoration: none;">
                                             <input
                                             type="submit"
                             class="button"
-                                        value="View Invoices"
+                                        value="View Purchase Orders"
                                         form="purchaseForm"
-                                        style="height:40px;font-family: inter;font-size: 13px;margin-left: 61px;width: 124px;
+                                        style="height:40px;font-family: inter;font-size: 13px;margin-left: 61px;width: 154px;
 background: #FF8C22;color:white;border: none;"
 
                                     
@@ -313,22 +313,22 @@ background: #FF8C22;color:white;border: none;"
                        <th >Total StockOut</th>
                        <th >Returned Stock</th>
                        <th>Closing Stock</th>
-                       <th >Last Updated</th>
+                       <th style="width: 200px;">Last Updated</th>
                        <th >Status</th>
                        <th >Updated By</th>
                        <th scope="col " >Action</th>
                      </tr>
                    </thead>
-                   <tbody style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
+                   <tbody style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;" v-for="(stock,index) in this.allstockitems" v-bind:key="stock.id">
                      <tr>
-                       <th scope="row" style="padding-left: 25px;">1</th>
-                       <td style="">Feitian F20</td>
+                       <th scope="row" style="padding-left: 25px;">{{index +1}}</th>
+                       <td style="">{{stock.itemName}}</td>
+                       <td style="padding-left: 25px;">{{stock.openingStock}}</td>
+                       <td style="padding-left: 25px;">{{stock.quantity}}</td>
+                       <td style="padding-left: 25px;">{{stock.stockOut}}</td>
                        <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
+                       <td style="padding-left: 25px;">{{stock.availableStock}}</td>
+                       <td style="padding-left: 25px;font-size: 15px;">{{formatDate(stock.dateAdded)}}</td>
                        <td style="padding-left: 25px;">40</td>
                        <td style="padding-left: 25px;">40</td>
                        <td style="">
@@ -339,46 +339,7 @@ background: #FF8C22;color:white;border: none;"
                        
                               </td>
                      </tr>
-                     <tr>
-                        <th scope="row" style="padding-left: 25px;">2</th>
-                       <td style="">Feitian F20</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                      
-                       <td >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-info-circle" viewBox="0 0 16 16"  @click="editStock(stock.stockId);" style="margin-left: 20px;">
-  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-</svg>
-                       
-                              </td>
-                     </tr>
-                     <tr>
-                        <th scope="row" style="padding-left: 25px;">3</th>
-                       <td style="">Feitian F20</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
-                      
-                       <td >
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-info-circle" viewBox="0 0 16 16"  @click="editStock(stock.stockId);" style="margin-left: 20px;">
-  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-</svg>
-                       
-                              </td>
-                     </tr>
+                    
                    </tbody>
                 </table>
                </div>
@@ -769,6 +730,7 @@ export default {
     return {
       
       userbody: {},
+      allstockitems:{},
     }
 },
 methods:{
@@ -777,10 +739,29 @@ methods:{
       this.userbody = response.body;
       console.log("Logged in user __________ email:", this.userbody);
     },
+    async GetAllStockItemss(){
+
+const response= await this.GettingAllStockItems();
+this.allstockitems=response.body;
+console.log("allsuppliers: ", this.allstockitems);
+return response;
+
+},
+formatDateAssigned(value) {
+      let formattedDate = new Date(value);
+      formattedDate = `${formattedDate.toDateString()} at ${formattedDate.toLocaleTimeString()}`;
+      return formattedDate;
+    },
+    formatDate(dateString) {
+            const date = new Date(dateString);
+
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        },
 
 },
 created(){
     this.GetLoggedInUser();
+    this.GetAllStockItemss();
   }
 }
 </script>

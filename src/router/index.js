@@ -84,6 +84,22 @@ import InvoiceLinesByNumber from "../components/stock/invoiceLinesnyNumber.vue";
 import invoiceItemAdd from "../components/stock/invoice_Items_add.vue";
 import UploadFile from "../components/stock/uploadFile.vue";
 import UploadProduct from "../components/stock/uploadProduct.vue"
+import editSerialNumber from "../components/stock/editSerialNumber.vue"
+import ScanProduct from "../components/stock/scanProduct.vue"
+import PoDetails from "../components/stock/POdetails.vue"
+//import UploadPODetails from "../components/stock/UploadPO.vue"
+//import UploadingPODetails from "../components/stock/UploadingPO.vue"
+import uploadedPDF from "../components/stock/uploadedPDF.vue"
+import POItems from "../components/stock/POItem.vue"
+import UploadPoItems from "../components/stock/uploadPOItem.vue"
+import downloadExcel from "../components/stock/excelDataEntry.vue"
+import uploadingItemsinPO from "../components/stock/ItemsInPO.vue"
+import PurchaseOrdered from "../components/stock/AddPurchaseOrders.vue"
+import AdjustStock from "../components/stock/stockAdjustment.vue"
+import ApplyRequisitionForm from "../components/stock/ApplyRequistion.vue"
+import ApplicationStatus from "../components/stock/ApplicationStatus.vue"
+import ApproveReject from "../components/stock/approveReject.vue"
+import IssueStock from "../components/stock/Issue.vue"
 const routes = [
   {
     path: "/home",
@@ -117,6 +133,42 @@ const routes = [
     component: stockDashboard,
   },
   {
+    path: "/apply",
+    name: "ApplyRequisitionForm",
+
+    component: ApplyRequisitionForm,
+  },
+  {
+    path: "/applicationstatus",
+    name: "ApplicationStatus",
+
+    component: ApplicationStatus,
+  },
+  {
+    path: "/issueitems",
+    name: "IssueStock",
+
+    component: IssueStock,
+  },
+  {
+    path: "/approvereject/:id",
+    name: "ApproveReject",
+
+    component: ApproveReject,
+  },
+  {
+    path: "/adjuststock/:id",
+    name: "AdjustStock",
+
+    component: AdjustStock,
+  },
+  {
+    path: "/downloadexcel",
+    name: "downloadExcel",
+
+    component: downloadExcel,
+  },
+  {
     path: "/device",
     name: "devicePage",
 
@@ -127,6 +179,54 @@ const routes = [
     name: "registerPage",
 
     component: registerPage,
+  },
+  {
+    path: "/podetails",
+    name: "PoDetails",
+
+    component: PoDetails,
+  },
+  {
+    path: "/purchaseordered",
+    name: "PurchaseOrdered",
+
+    component: PurchaseOrdered,
+  },
+  {
+    path: "/poitems/:poNumber",
+    name: "POItems",
+
+    component: POItems,
+  },
+  {
+    path: "/uploadedpoitems/:poNumber",
+    name: "uploadingItemsinPO",
+
+    component: uploadingItemsinPO,
+  },
+  {
+    path: "/itemspo/:poNumber",
+    name: "UploadPoItems",
+
+    component: UploadPoItems,
+  },
+  {
+    path: "/uploadPODetails",
+    name: "uploadedPDF",
+    component: uploadedPDF,
+  },
+  
+  {
+    path: "/scanProduct",
+    name: "ScanProduct",
+
+    component: ScanProduct,
+  },
+   {
+    path: "/scanProduct",
+    name: "ScanProduct",
+
+    component: ScanProduct,
   },
   {
     path: "/doughnut",
@@ -176,6 +276,12 @@ const routes = [
     name: "editPurchase",
 
     component: editPurchase,
+  },
+  {
+    path: "/editserialnumber/:batchID",
+    name: "editSerialNumber",
+
+    component: editSerialNumber,
   },
   {
     path: "/editsales/:salesId",

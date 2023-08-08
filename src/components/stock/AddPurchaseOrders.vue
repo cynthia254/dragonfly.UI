@@ -70,7 +70,7 @@
         <nav aria-label="breadcrumb " class="bg-light  p-3 mb-4" style="border-radius: 12px;">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item " style="font-family:inter;font-size:16px"><a href="/stockdashboard" style="color:gray">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px;color:#FF8C22">Manage Invoice</li>
+            <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px;color:#FF8C22">Manage Purchase Order</li>
           </ol>
         </nav>
       </div>
@@ -91,7 +91,7 @@ font-style: normal;
 font-weight: 700;
 margin-top:10px;
 line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;white-space: nowrap;width: fit-content;">
-                          INVOICE LIST
+                          PURCHASE ORDER LIST
                         </h2>
                       </div>
                   
@@ -102,15 +102,15 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                   name="addPurchase"
                   id="addPurchase"
                   class="btn btn- btn-sm rounded-0"
-                  style="width: 130px;
-                            margin-left: 240%;
+                  style="width: 170px;
+                            margin-left: 200%;
                             margin-top: 20px;
                             border-radius: 4px;
                             font-family: inter;
                             display: flex;
                             align-items: center;background:#FF8C22;color: white;text-align: center;height: 34px;"
                 >
-             <h2 style="font-size: 14px;color: white;margin-top: 8px;margin-left: 15px;font-family:inter;">Add Invoice</h2>
+             <h2 style="font-size: 14px;color: white;margin-top: 8px;margin-left: 15px;font-family:inter;">Add Purchase Order</h2>
               
             </button>
               </div>
@@ -152,7 +152,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                         <div class="modal-header">
                           <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px; font-family: inter;font-size: 22px;">
                            
-                            Add Invoice
+                            Add Purchase Orders
                           </h4>
                           <button
                             @click="showModal = false"
@@ -178,11 +178,11 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                               <label style="font-family: inter;font-size: 16px;">PO Number</label>
                               <div class="input-group">
                                 <input 
-                                  type="date"
+                                  type="text"
                                   class="form-control rounded-0"
                                   required
                                   style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5"
-                                 v-model="this.formdata.invoiceDate"
+                                 v-model="this.formdata.poNumber"
                                 />
                               </div>
                             </div>
@@ -194,7 +194,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                                   class="form-control rounded-0"
                                   required
                                   style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5"
-                                  v-model="this.formdata.lpoDate"
+                                  v-model="this.formdata.poDate"
                                  
                                 />
                               </div>
@@ -260,7 +260,7 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                 </div>
 
               
-                <div class="table-wrapper"  v-if="showallstock">
+                <div class="table-wrapper"  >
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
@@ -268,27 +268,22 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                       <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
         padding: 12px 34px">
                         <tr >
-                          <th style="width: 100px">Invoice Number</th>
-                          <th style="width: 120px">Invoice Date</th>
-                          <th style="width: 120px">LPO Number</th>
-                          <th style="width: 120px">LPO Date</th>
+                            <th style="width: 100px">PO ID</th>
+                          <th style="width: 120px">PO Number</th>
+                          <th style="width: 120px">PO Date</th>
                           <th style="width: 120px">Supplier Name</th>
-                          <th style="width: 150px">Date Added</th>
-                          
 
                          
                         </tr>
                       </thead>
-                      <tbody v-for="invoice in this.allinvoice" v-bind:key="invoice.id">
-                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; ">
-                          <th scope="row"    @click.prevent="editInvoice(invoice.invoiceNumber)"><a href="" style="text-decoration: none;color: gray;">{{invoice.invoiceNumber }}</a></th>
-                        
-                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ getFormattedDate(invoice.invoiceDate) }}</td>
-                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{invoice.lpoNumber}}</td>
-                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ getFormattedDate(invoice.lpoDate) }}</td>
-                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{invoice.supplierName}}</td>
-                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ formatDate(invoice.stockInDate) }}</td>
-
+                      <tbody  v-for="(invoice, index) in this.allinvoice" :key="invoice.id">
+                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; " @click.prevent="pushPO(invoice.poNumber)">
+                          <th scope="row"   ><a href="" style="text-decoration: none;color: gray;">{{index+1 }}</a></th>
+                          <td>{{invoice.poNumber}}</td>
+                          <td >{{ getFormattedDate(invoice.poDate) }}</td>
+                         
+                          <td >{{invoice.vendor}}</td>
+                          
                          
                         </tr>
                       
@@ -298,79 +293,7 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                 </div>
               </div>
               </div>
-              <div class="table-wrapper" v-if="showallstocksearch">
-                  <div class="table-title">
-                    <div class="">
-                      <div class="col-sm table-responsive">
-                        <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:40px">
-                      <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
-        padding: 12px 34px">
-                        <tr >
-                          <th style="width: 100px">Invoice Number</th>
-                          <th style="width: 120px">Invoice Date</th>
-                          <th style="width: 120px">LPO Number</th>
-                          <th style="width: 120px">LPO Date</th>
-                          <th style="width: 120px">Supplier Name</th>
-                          <th style="width: 150px">Date Added</th>
-                          
-
-                          <th style="width: 120px">Action</th>
-                      
-                        </tr>
-                      </thead>
-                      <tbody v-for="invoice in this.allinvoice" v-bind:key="invoice.id">
-                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; ">
-                          <th scope="row"    @click.prevent="editInvoice(invoice.invoiceNumber)"><a href="" style="text-decoration: none;color: gray;">{{invoice.invoiceNumber }}</a></th>
-                        
-                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ getFormattedDate(invoice.invoiceDate) }}</td>
-                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{invoice.lpoNumber}}</td>
-                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ getFormattedDate(invoice.lpoDate) }}</td>
-                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{invoice.supplierName}}</td>
-                          <td  @click.prevent="editInvoice(invoice.invoiceNumber)">{{ formatDate(invoice.stockInDate) }}</td>
-
-                          <td>
-                            <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  fill="green"
-                                  class="bi bi-pencil-square"
-                                  viewBox="0 0 16 16"
-                                  @click.prevent="editInvoice(invoice.invoiceNumber)"
-                               
-                                
-                                >
-                                  <path
-                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                                  />
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                                  />
-                                </svg>
-
-                                <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  fill="red"
-                                  class="bi bi-trash3 mx-2"
-                                  viewBox="0 0 16 16"
-                                >
-                                  <path
-                                    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"
-                                  />
-                                </svg>
-                             
-                          </td>
-                        </tr>
-                      
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              </div>
+            
             </div>
             </div>
           </div>
@@ -383,7 +306,7 @@ import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared"
 import moment from 'moment';
 export default {
-  name: "InvoiceDetails",
+  name: 'PurchaseOrdered',
   mixins: [AppMixins],
   data() {
     return {
@@ -396,9 +319,9 @@ export default {
       showallstock:true,
       showallstocksearch:false,
       formdata: {
-        invoiceDate:"",
-        lpoDate:"",
-        supplierName:"",
+        poDate:"",
+        poNumber:"",
+        vendor:"",
         
 
     
@@ -408,7 +331,7 @@ export default {
   methods: {
     async GetAllInvoice(){
 
-const response= await this.gettingInvoice();
+const response= await this.gettingAllPurchaseOrderss();
 this.allinvoice=response.body;
 
 console.log("invoice response: ", response);
@@ -419,19 +342,19 @@ console.log("allinvoice: ", this.allinvoice);
 return response;
 
 },
+async pushPO(poNumber) {
+      console.log("PO Number is:", poNumber);
+      this.$router.push({
+        path: `/uploadedpoitems/${poNumber}`,
+        replace: true,
+      });
+    },
+  
 async GetLoggedInUser() {
       var response = await this.Gettingloggedinuser();
       this.userbody = response.body;
       console.log("Logged in user __________ email:", this.userbody);
     },
-async getitnginvoicebyname() {
-      var invoiceNumber=this.invoiceNumber;
-      var response = await this.gettinginvoicebynumber(invoiceNumber);
-      this.invoiceBody = response.body;
-      console.log("response on returnned body: : ", this.invoiceBody);
-      //console.log("body returned: ",this.stockBody);
-
-},
 formatDate(dateString) {
             const date = new Date(dateString);
 
@@ -455,16 +378,16 @@ async editInvoice(invoiceNumber) {
     async AddingInvoice() {
   
         var body={
-          lpoDate:this.formdata.lpoDate,
-          invoiceDate:this.formdata.invoiceDate,
-          supplierName:this.formdata.supplierName,
+          poDate:this.formdata.poDate,
+          poNumber:this.formdata.poNumber,
+          vendor:this.formdata.supplierName,
 
         }
     
         
     
        console.log("Invoice new: ", body);
-      var response = await this.creatinginvoice(body);
+      var response = await this.addingPurchaseDetailss(body);
       if (response.isTrue==true) {
         swal.fire({
           heightAuto: false,
@@ -489,30 +412,14 @@ console.log("allsuppliers: ", this.allsuppliers);
 return response;
 
 },
-async searchinvoice() {
-      this.showallstock = false;
-      this.showallstocksearch = true;
-      var resp = await this.SearchingInvoice(this.searchword);
-      this.allinvoice = resp.body;
-      console.log("search  return body: ", resp.body);
-    },
 
   },
-  watch: {
-    searchword(passedvalue) {
-      if (passedvalue != "") {
-        this.searchinvoice();
-      } else {
-        this.GetAllInvoice();
-      }
-    },
-  },
+  
   created(){
     this.invoiceNumber = this.$route.params.invoiceNumber;
         console.log("ItemId :", this.invoiceNumber);
     this.GetAllInvoice();
     this.GetAllSuppliers();
-    this.getitnginvoicebyname();
     this.GetLoggedInUser();
   },
  
