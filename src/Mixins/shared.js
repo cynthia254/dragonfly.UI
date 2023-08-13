@@ -226,9 +226,9 @@ export default {
       console.log("response",response);
       return response.data;
     },
-    async gettingproductbyId(batchID){
+    async gettingproductbyId(itemID){
       this.setAuthHeader();
-      var response=await axios.post(`Stock/GetProductDetailsbyid?itemID=${batchID}`)
+      var response=await axios.post(`Stock/GetProductDetailsbyid?itemID=${itemID}`)
       console.log("response",response);
       return response.data;
     },
@@ -248,9 +248,9 @@ export default {
       return response.data;
     },
     
-    async gettingproductlinebyid(invoiceLineId){
+    async gettingproductlinebyid(id){
       this.setAuthHeader();
-      var response=await axios.post(`Stock/GetProductlinebyid?product_line_id=${invoiceLineId}`)
+      var response=await axios.post(`Stock/GetProductlinebyid?product_line_id=${id}`)
       console.log("response",response);
       return response.data;
     },
@@ -272,6 +272,14 @@ export default {
       return resp.data;
 
     },
+    async gettingselectedserial(issueID) {
+      this.setAuthHeader();
+      var resp = await axios.post(`Stock/GetSelectedByIssueID?issueID=${issueID}`);
+    
+      console.log("the body of selected serial is,", issueID);
+      return resp.data;
+    },
+    
     async creatingBrand(body){
       this.setAuthHeader();
       var resp=await axios.post("Stock/AddBrand",body);
@@ -306,6 +314,12 @@ export default {
     async addingStock(body){
       this.setAuthHeader();
       var resp=await axios.post("Stock/AddStock",body);
+      return resp.data;
+
+    },
+    async selectSerialNumber(body){
+      this.setAuthHeader();
+      var resp=await axios.post("Stock/SelectSerialNumber",body);
       return resp.data;
 
     },
@@ -872,6 +886,12 @@ export default {
           async StatusApproved() {
             this.setAuthHeader();
             var response = await axios.get("Stock/GetFormStatusWithApproved");
+      
+            return response.data;
+          },
+          async StatusNotIssued() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetNotIssuedSerial");
       
             return response.data;
           },

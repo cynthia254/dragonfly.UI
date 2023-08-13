@@ -149,16 +149,52 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                         </tr>
                       </thead>
                       <tbody  v-for="(invoice, index) in this.allinvoice" :key="invoice.id">
-                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; ">
-                          <th scope="row"   ><a href="" style="text-decoration: none;color: gray;">{{index+1 }}</a></th>
-                          <td>{{invoice.brandName}} {{ invoice.itemName }}</td>
-                          <td>{{invoice.quantity}}</td>
-                          <td>{{invoice.deviceBeingRepaired}}</td>
-                          <td>{{invoice.clientName}}</td>
-                          <td>{{invoice.purpose}}</td>
-                          <td>{{invoice.department}}</td>
-                          <td>{{invoice.requisitioner}}</td>
-                          <td :style="getStatusStyle(invoice)" style="font-size:13px">{{invoice.approvedStatus}}</td>
+                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; "  >
+                          <th scope="row" @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                              invoice.categoryName
+                            )"><a href="" style="text-decoration: none;color: gray;">{{index+1 }}</a></th>
+                          <td @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                              invoice.categoryName
+                            )">{{invoice.brandName}} {{ invoice.itemName }}</td>
+                          <td @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                              invoice.categoryName
+                            )">{{invoice.quantity}}</td>
+                          <td @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                              invoice.categoryName
+                            )">{{invoice.deviceBeingRepaired}}</td>
+                          <td @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                              invoice.categoryName
+                            )">{{invoice.clientName}}</td>
+                          <td @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                              invoice.categoryName
+                            )">{{invoice.purpose}}</td>
+                          <td @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                              invoice.categoryName
+                            )">{{invoice.department}}</td>
+                          <td @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                              invoice.categoryName
+                            )">{{invoice.requisitioner}}</td>
+                          <td :style="getStatusStyle(invoice)" style="font-size:13px" @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                              invoice.categoryName
+                            )">{{invoice.approvedStatus}}</td>
                           <td>  <div class="dropdown" style="width: 100%">
               <a class="" >
                 <svg
@@ -252,7 +288,7 @@ return response;
 async adjustStock(id) {
       console.log("Item ID  is:", id);
       this.$router.push({
-        path: `/approvereject/${id}`,
+        path: `/issuingSerial/${id}`,
         replace: true,
       });
     },
@@ -275,6 +311,20 @@ if (response.isTrue==true) {
 
 }
 },
+async editinvoiceitem(id, categoryname) {
+      if (categoryname == "Product") {
+        console.log("Invoice Number is:", id);
+        this.$router.push({
+          path: `/issuingSerial/${id}`,
+          replace: true,
+        });
+      } //else {
+        //return swal.fire({
+         // heightAuto: false,
+         // html: `<p class="text-danger" style="font-size:23px;font-family:inter;margin-top:22px">Oops! Nothing else to be added on accesory</p>`,
+       // });
+    //  }
+    },
 getStatusStyle(invoice){
   if(invoice.approvedStatus==="Approved"){
     return{

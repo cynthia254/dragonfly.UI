@@ -99,138 +99,40 @@ font-weight: 700;
 line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; top: 1.25rem;margin-top: 10px; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;white-space: nowrap;width: fit-content;">
                           PRODUCT DETAILS LIST
                         </h2>
+                        
+                      </div>
                       </div>
                   
-              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 text-end">
-                <button
-                  @click="showModal = true"
-                  type="button"
-                  name="addPurchase"
-                  id="addPurchase"
-                  class="btn btn- btn-sm rounded-0"
-                  style="width: 200px;
-                            margin-left: 200%;
-                            margin-top: 15px;
-                            border-radius: 4px;
-                            font-family: inter;
-                            display: flex;
-                            margin-top: 20px;
-                            align-items: center;background:#FF8C22;color: white;text-align: center;height: 34px;"
-                >
-             <h2 style="font-size: 14px;color: white;margin-top: 8px;margin-left: 15px;font-family:inter">Add Product Details</h2>
-              
-            </button>
-              </div>
-      <transition name="modal">
-                <div
-                  id="purchaseModal"
-                  class="modal-mask fixed-top"
-                  v-if="showModal"
-                  style="
-                    position: fixed;
-                    width: 100%;
-                    margin-left: 0px;
-                    margin-top: 0px;
-                    align-content: center;
-                    align-items: center;
-                  "
-                >
-                  <div
-                    class="modal-wrapper"
-                    style="vertical-align: middle; display: table-cell"
-                  >
-                    <div
-                      class="modal-dialog modal-dialog-centered"
-                      style="
-                        align-content: center;
-                        margin-top: 40px;
-                        margin-left: 300px;
-                      "
-                    >
-                      <div
-                        class="modal-content"
-                        style=" width: 50%;
-                                  margin-left: 120px;
-                                  margin-top: 80px;
-                                  background: #f5f5f5;
-                                  border-radius: 18px;
-                                  height:100%;"
-                      >
-                        <div class="modal-header">
-                          <h4 class="modal-title" style="margin-left: 40px;margin-top: 20px; font-family: inter;font-size: 22px;">
-                           
-                            Add Product Details
-                          </h4>
-                          <button
-                            @click="showModal = false"
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            style="margin-right: 30px"
-                          ></button>
-                        </div>
-                        <div
-                          class="modal-body"
-                          style="
-                            width: 60%;
-                            margin-left: 50px;
-                            vertical-align: middle;
-                            align-content: center;
-                          "
-                        >
-        <form class=" " ref="myForm">
-            <select class="form-control"  v-model="selected_Number"   style="
-                                  background-color: #f5f5f5;
-                                  font-family: inter;
-                                  font-size: 16px;
-                                  color: gray;
-                                  height: 50px;
-                                  width: 100%;
-                                ">
-              <option value=""       style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5">Select Number</option>
-                
-              <option  v-for="numbererd in this.numbering_body" v-bind:value="numbererd.numberValue" :key="numbererd.productNumberID">{{ numbererd.numberValue }}</option>
      
+                      <form class="row g-3" @submit.prevent="CreateItem">
+    <div class="row">
+      <div class="">
+        <div class="d-flex flex-column flex-lg-row justify-content-lg-center panel" style="margin-top: 33px;">
+          <div style="width: 25%; margin-left: 10px; margin-top: 30px;">
+            <select class="form-control" ref="selectednumber" @keydown.enter="moveToIMEI0" v-model="selected_Number" style="background-color: white; font-family: inter; font-size: 16px; color: gray; height: 50px; width: 100%; border-style: none;">
+              <option value="" style="font-family: inter; font-size: 13px; color: gray; background: #f5f5f5">Select Number</option>
+              <option v-for="numbererd in numbering_body" :value="numbererd.numberValue" :key="numbererd.productNumberID"  >{{ numbererd.numberValue }}</option>
+           
             </select>
-            <div class="form-group">
-        <label for="name" style="font-family: inter;font-size: 16px;">Serial Number:</label>
-        <input type="text" class="form-control" id="name" placeholder="Enter serial number" v-model="this.formdata.serialNumber"       style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5">
+          </div>
+          <div v-if="selected_Number" style="width: 25%; margin-left: 10px; font-family: inter;">
+            <label for="serialNumber" class="form-label">Serial Number:</label>
+            <input ref="serialNumberInput" v-model="formdata.serialNumber" @keydown.enter="moveToIMEI1" type="text" class="form-control" required placeholder="SerialNumber" style="border-style: none;">
+          </div>
+          <div v-if="formdata.serialNumber" style="width: 25%; margin-left: 10px; font-family: inter;">
+            <label for="imei1" class="form-label">IMEI 1:</label>
+            <input ref="imei1Input" v-model="formdata.imei1" @keydown.enter="moveToIMEI2" type="text" class="form-control" required placeholder="IMEI1" style="border-style: none;">
+          </div>
+          <div v-if="formdata.imei1" style="width: 25%; margin-left: 10px; font-family: inter;">
+            <label for="imei2" class="form-label">IMEI 2:</label>
+            <input ref="imei2Input" v-model="formdata.imei2" @keydown.enter="CreateItem" type="text" class="form-control" required placeholder="IMEI2" style="border-style: none;">
+          </div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="" style="font-family: inter;font-size: 16px;">IMEI 1:</label>
-        <input type="number" class="form-control" id="" placeholder="Enter IMEI1" v-model="this.formdata.imei1 "       style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5">
-      </div>
-      <div class="form-group">
-        <label for="password" style="font-family: inter;font-size: 16px;">IMEI 2:</label>
-        <input type="number" class="form-control" id="" placeholder="Enter IMEI2" v-model="this.formdata.imei2"       style="font-family: inter;font-size: 13px;color: gray;background:#f5f5f5">
-      </div>
-      <div class="form-group" style="margin-top: 20px">
-                          <input
-                          @click.prevent="CreateItem();"
-                            type="submit"
-                            class="btn btn-success btn-sm"
-                            value="Save"
-                            form="purchaseForm"
-                            style="
-                              margin-bottom: 30px;
-                              margin-left: 70px;
-                              width: 60%;
-                              font-family: inter;
-                              font-size: 13px;
-                            "
-                          />
-                        </div>
-        </form>
+    </div>
+  </form>
 
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
-    </transition> 
-    </div>
-    <div class="form-control" style="margin-top:50px;border:0;border-radius: 10px;box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
+    <div class="form-control" style="margin-top:5px;border:0;border-radius: 10px;box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
       
       <div class="table-wrapper">
                   <div class="table-title">
@@ -244,16 +146,18 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
       <th scope="col">Serial Number</th>
       <th>IMEI 1</th>
       <th>IMEI 2</th>
+      <th>Serial Status</th>
       <th>Action</th>
 
     </tr>
   </thead>
   <tbody>
-    <tr v-for="(invoiceitem,index) in this.invoiceItemBody" :key="invoiceitem.batchID" style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;  ">
+    <tr v-for="(invoiceitem,index) in this.invoiceItemBody" :key="invoiceitem.itemID" style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;  ">
       <th scope="row">{{index +1}}</th>
       <td style="text-transform: uppercase;">{{invoiceitem.serialNumber}}</td>
       <td>{{ invoiceitem.imeI1 }}</td>
       <td>{{ invoiceitem.imeI2 }}</td>
+      <td>{{ invoiceitem.serialStatus }}</td>
       <td>
                             <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -300,13 +204,14 @@ import AppMixins from "../../Mixins/shared";
     name:"invoiceItemAdd",
     mixins: [AppMixins],
     allinvoiceitems:[],
-    invoiceNumber:"",
+    poNumber:"",
    
     data() {
       return {
-        batchID:"",
+      
         invoiceItemBody:[],
         userbody: {},
+        itemID:"",
         showModal:false,
         formdata: {
             serialNumber:"",
@@ -323,18 +228,29 @@ import AppMixins from "../../Mixins/shared";
       };
     },
     methods:{
+      moveToIMEI0() {
+      this.$refs.serialNumberInput.focus();
+    },
+      moveToIMEI1() {
+      this.$refs.imei1Input.focus();
+    },
+    moveToIMEI2() {
+      this.$refs.imei2Input.focus();
+    },
         async CreateItem() {
 
-          if(this.selected_Number==""){
-            swal.fire({
-              html:`<h5 class="text-success">Kindly select the  item number</h5>`});
-          }
+          if (!this.formdata.serialNumber || !this.formdata.imei1 || !this.formdata.imei2) {
+        swal.fire({
+          html: `<h5 class="text-danger">Please fill in all fields</h5>`
+        });
+        return;
+      }
   
   var body={
     serialNumber:this.formdata.serialNumber,
     imeI2:this.formdata.imei2,
     imeI1:this.formdata.imei1,
-    batchID:this.batchID,
+    batchID:this.id,
     product_No:this.selected_Number,
     reference_Number:this.reference_number,
 
@@ -356,16 +272,9 @@ if (response.isTrue==true) {
     html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
 
   });
-
-  
-   await this.gettingreferencenumbers();
-   await this.$refs.myForm.reset();
-    
-  
-  
- await this.gettingproductdetailsbyid();
- this.$router.push({
-          path: `/invoice_item/${this.batchID}`,
+  await this.gettingproductdetailsbyid();
+  this.$router.push({
+          path: `/invoice_item/${this.id}`,
           replace: true,
         });
 
@@ -374,6 +283,16 @@ if (response.isTrue==true) {
           location.reload();
 
         },700)
+   await this.gettingreferencenumbers();
+   await this.$refs.myForm.reset();
+      // Clear form data
+      this.formdata.serialNumber = "";
+      this.formdata.imei1 = "";
+      this.formdata.imei2 = "";
+  
+  
+
+
 } else {
   swal.fire({
     heightAuto: false,
@@ -387,7 +306,7 @@ if (response.isTrue==true) {
     async editInvoice() {
       console.log("Invoice Number is:", );
       this.$router.push({
-        path: `/uploadedpoitems/${this.poBody.poNumber}`,
+        path: `/uploadedpoitems/${this.batchID}`,
         replace: true,
       });
     },
@@ -408,17 +327,17 @@ if (response.isTrue==true) {
       return response;
     },
     async gettingproductdetailsbyid() {
-       var batchID=this.batchID;
-       var response = await this.gettingproductbyId(batchID);
-       this.invoiceItemBody = response.body;
-       console.log("response on invoice body: : ", this.invoiceItemBody);
-       //this.reference_number=this.invoiceItemBody.reference_Number;
- 
-      
+// Assuming batchID is defined and contains the correct value
+   var response = await this.gettingproductbyId(this.id);
+   this.invoiceItemBody = response.body;
+   console.log("response on invoice body: : ", this.invoiceItemBody);
+   //this.reference_number=this.invoiceItemBody.reference_Number;
 },
-async gettingproductlineByid() {
 
-       var response = await this.gettingproductlinebyid(this.batchID);
+async gettingproductlineByid() {
+  var ID=this.id;
+
+       var response = await this.gettingproductlinebyid(ID);
        this.productlineBody = response.body;
        console.log("response on productline body: : ", this.productlineBody);
        //this.reference_number=this.productlineBody.reference_Number;
@@ -434,7 +353,7 @@ async gettingitemsbypo() {
     async pushPO() {
       console.log("PO Number is:", this.allinvoice.poNumber);
       this.$router.push({
-        path: `/uploadedpoitems/${this.allinvoice.poNumber}`,
+        path: `/uploadedpoitems/${this.id}`,
         replace: true,
       });
     },
@@ -454,7 +373,7 @@ return response;
 },
 
 async gettingreferencenumbers() {
-  var resp = await this.gettingproductlinebyid(this.batchID);
+  var resp = await this.gettingproductlinebyid(this.id);
        console.log("this is reference no: ", resp.body.reference_Number);
         this.reference_number=resp.body.reference_Number;
        var response = await this.gettingreferenceNumber(this.reference_number);
@@ -468,7 +387,12 @@ async gettingreferencenumbers() {
     created() {
       this.poNumber = this.$route.params.poNumber;
         console.log("poNumber :", this.poNumber);
+        this.id = this.$route.params.id;
+        console.log("poNumber :", this.id);
+        this.itemID = this.$route.params.itemID;
+        console.log("batchid :", this.itemID);
     this.GetAllInvoiceItems();
+    this.gettingproductlineByid();
     this.gettingproductdetailsbyid();
     this.gettingreferencenumbers();
     this.gettingproductlineByid();

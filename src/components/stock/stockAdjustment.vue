@@ -284,8 +284,20 @@ async editInvoice(invoiceNumber) {
           heightAuto: false,
           html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
         });
-        this.$refs.myForm.reset();
+        
         await this.getAdjustedStock();
+        this.$router.push({
+          path: `/adjuststock/${this.id}`,
+          replace: true,
+        });
+
+
+        setTimeout(()=>{
+          location.reload();
+
+        },700)
+        this.$refs.myForm.reset();
+
    
       } else {
         swal.fire({

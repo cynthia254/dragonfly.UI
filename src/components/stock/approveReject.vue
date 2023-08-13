@@ -210,7 +210,7 @@
               style="font-family: inter; font-size: 16px"
             >
               <a href="/applicationstatus" style="color: gray"
-                >Manage Requisition Forms</a
+                >Manage Application Status</a
               >
             </li>
 
@@ -497,34 +497,35 @@
               <div class="table-title">
                 <div class="">
                   <div class="col-sm table-responsive">
-<table class="table table-bordered" >
+                    <table class="table table-bordered">
   <thead>
     <tr>
-        <th style="width: 50px">ID</th>
-        <th style="width: 120px">Item Name</th>
-        <th style="width: 120px">Quantity</th>
-        <th style="width: 150px">Device Being Repaired</th>
-        <th style="width: 120px">Client Name</th>
-        <th style="width: 120px">Purpose</th>
-        <th style="width: 120px">Department Name</th>
-        <th style="width: 120px">Requisitioner</th>
-        <th style="width: 120px">Status</th>
-    </tr>
-    <tr v-for="(invoice_data , index) in data_formBody" v-bind:key="invoice_data.id ">
-      <td>{{ index + 1 }}</td>
-    <td  >{{ invoice_data.itemName }}</td>
-    <td  >{{ invoice_data.quantity }}</td>
-    <td  >{{ invoice_data.deviceBeingRepaired }}</td>
-    <td  >{{ invoice_data.clientName }}</td>
-    <td  >{{ invoice_data.purpose }}</td>
-    <td  >{{ invoice_data.department }}</td>
-    <td  >{{ invoice_data.requisitioner }}</td>
-    <td :style="getStatusStyle(invoice_data)">{{ invoice_data.approvedStatus }}</td>
-    
+      <th style="width: 50px">ID</th>
+      <th style="width: 120px">Item Name</th>
+      <th style="width: 120px">Quantity</th>
+      <th style="width: 150px">Device Being Repaired</th>
+      <th style="width: 120px">Client Name</th>
+      <th style="width: 120px">Purpose</th>
+      <th style="width: 120px">Department Name</th>
+      <th style="width: 120px">Requisitioner</th>
+      <th style="width: 120px">Status</th>
     </tr>
   </thead>
+  <tbody>
+    <tr >
+      <td>{{ data_formBody.id}}</td>
+      <td>{{ data_formBody.itemName }}</td>
+      <td>{{ data_formBody.quantity }}</td>
+      <td>{{ data_formBody.deviceBeingRepaired }}</td>
+      <td>{{ data_formBody.clientName }}</td>
+      <td>{{ data_formBody.purpose }}</td>
+      <td>{{ data_formBody.department }}</td>
+      <td>{{ data_formBody.requisitioner }}</td>
+      <td :style="getStatusStyle(data_formBody)">{{ data_formBody.approvedStatus }}</td>
+    </tr>
+  </tbody>
+</table>
 
- </table>
                   </div>
                 </div>
               </div>
@@ -559,6 +560,7 @@ export default {
       data_formBody: [],
       allbrands: {},
       id: "",
+      allstatuspending:{},
       datearea: false,
       formdata: {
         selectedOption: "",
@@ -576,16 +578,16 @@ export default {
       console.log("allbrands: ", this.allbrands);
       return response;
     },
-    getStatusStyle(invoice_data) {
-      if (invoice_data.approvedStatus === "Approved") {
+    getStatusStyle(data_formBody) {
+      if (data_formBody.approvedStatus === "Approved") {
         return {
           color: "green",
         };
-      } else if (invoice_data.approvedStatus === "Waiting For Approval") {
+      } else if (data_formBody.approvedStatus === "Waiting For Approval") {
         return {
           color: "blue",
         };
-      } else if (invoice_data.approvedStatus === "Rejected") {
+      } else if (data_formBody.approvedStatus === "Rejected") {
         return {
           color: "red",
         };
@@ -656,7 +658,19 @@ export default {
           heightAuto: false,
           html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
         });
+        await this.GetStatusPending();
+this.$router.push({
+  path: "/applicationstatus" ,  
+          replace: true,
+        });
+
+
+        setTimeout(()=>{
+          location.reload();
+
+        },700)
         this.$refs.myForm.reset();
+   
       } else {
         swal.fire({
           heightAuto: false,
@@ -692,6 +706,19 @@ export default {
       console.log("form body with id >>>>>>>>>>>>>>>>: ", this.data_formBody);
       return response;
     },
+    async GetStatusPending(){
+
+const response= await this.StatusPending();
+this.allstatuspending=response.body;
+
+console.log("invoice response: ", response);
+
+
+
+console.log("allstatuspending>>>>>>>>>>: ", this.allstatuspending);
+return response;
+
+},
 
     async getAllDepartment() {
       const response = await this.GettingAllDepartment();
@@ -720,6 +747,7 @@ export default {
     this.GetAllCustomers();
     this.GetAllBrands();
     this.gettingformbyid();
+    this.GetStatusPending();
   },
   watch: {
   'formdata.selectedOption': function(newOption) {

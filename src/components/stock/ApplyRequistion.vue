@@ -210,8 +210,8 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                                 />
                                               </div>
                                         </div>
-                                        <div class="col-md-6">
-                            <div class="form-group">
+                                        <div class="col-md-6" >
+                            <div  class="form-group" v-if="datearea" >
                                 <label style="font-family: inter;font-size: 16px;white-space: nowrap;">Device Being Repaired:</label>
                                 <input 
                                   type="text"
@@ -413,6 +413,7 @@ export default {
       allcustomers:{},
       allbrands:{},
       emailFormBody:{},
+      datearea: false,
       formdata: {
         stockNeed:"",
         itemName:"",
@@ -618,20 +619,30 @@ async getallusers() {
     },
 
   },
-  
-  created(){
-    this.invoiceNumber = this.$route.params.invoiceNumber;
-        console.log("ItemId :", this.invoiceNumber);
-    this.GetAllInvoice();
-    this.GetAllSuppliers();
-   // this.GetLoggedInUser();
-    this.GetAllStockItemss();
-    this.getAllDepartment();
-    this.getallusers();
-    this.GetAllCustomers();
-    this.GetAllBrands();
-    this.gettingemailbyid();
+  watch: {
+  'formdata.stockNeed': function(newOption) {
+    if (newOption === 'Customer Order') {
+      this.datearea = false;
+    } else {
+      this.datearea = true;
+    }
   },
+},
+
+created() {
+  this.invoiceNumber = this.$route.params.invoiceNumber;
+  console.log("ItemId :", this.invoiceNumber);
+  this.GetAllInvoice();
+  this.GetAllSuppliers();
+  // this.GetLoggedInUser();
+  this.GetAllStockItemss();
+  this.getAllDepartment();
+  this.getallusers();
+  this.GetAllCustomers();
+  this.GetAllBrands();
+  this.gettingemailbyid();
+},
+
  
 };
 </script>

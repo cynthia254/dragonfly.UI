@@ -38,6 +38,7 @@
 
          <li class="dropDown-menu fixed-top">
            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
+          
            <ul>
              <li>
                <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
@@ -52,10 +53,17 @@
              <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
              <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
+             <li><a  href="/apply" style="font-size: 16px;font-family:inter;font-weight:medium">Apply</a></li>
+             <li><a href="/applicationstatus" style="font-size: 16px;font-family:inter;font-weight:medium">Application Status</a></li>
+             <li><a href="/issueitems" style="font-size: 16px;font-family:inter;font-weight:medium">IssueItems</a></li>
            </ul>
          </li>
-      
+         <li >
+           <button class="fixed-top" id="blinking-button" style="font-size: 15px;font-family:inter;font-weight:medium;color: orange;width: 120px;display:fixed"><router-link to="/apply"><h1 id="blinking-text" style="font-size: 16px;margin-right: 40px;color:white;font-family:inter">APPLY</h1></router-link></button>
+         
+          </li>
          <li style="">
+        
            <a style="display: flex;margin-left:100px;font-size: 16px;font-family:inter;font-weight:medium"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-person-circle" viewBox="0 0 16 16">
   <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
   <path fill-rule="" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
@@ -200,7 +208,7 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;"  >
                 </div>
                 <div class="media-body text-right">
                     <h2 style="font-size: 16px; color: black;font-family:inter;font-weight:600;white-space: nowrap;width: fit-content;">
-                         Closing Stock
+                         Available Stock
                         </h2>
 <h4 style="color: var(--green, #14B554);
 
@@ -311,26 +319,39 @@ background: #FF8C22;color:white;border: none;"
                        <th >Opening Stock</th>
                        <th >New Stock</th>
                        <th >Total StockOut</th>
-                       <th >Returned Stock</th>
-                       <th>Closing Stock</th>
+                       <th>Available Stock</th>
                        <th style="width: 200px;">Last Updated</th>
                        <th >Status</th>
-                       <th >Updated By</th>
+                       <th style="width: 130px;">Updated By</th>
                        <th scope="col " >Action</th>
                      </tr>
                    </thead>
                    <tbody style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;" v-for="(stock,index) in this.allstockitems" v-bind:key="stock.id">
                      <tr>
                        <th scope="row" style="padding-left: 25px;">{{index +1}}</th>
-                       <td style="">{{stock.itemName}}</td>
+                       <td style="">{{stock.brandName}}<br>{{stock.itemName}}</td>
                        <td style="padding-left: 25px;">{{stock.openingStock}}</td>
                        <td style="padding-left: 25px;">{{stock.quantity}}</td>
                        <td style="padding-left: 25px;">{{stock.stockOut}}</td>
-                       <td style="padding-left: 25px;">40</td>
                        <td style="padding-left: 25px;">{{stock.availableStock}}</td>
                        <td style="padding-left: 25px;font-size: 15px;">{{formatDate(stock.dateAdded)}}</td>
-                       <td style="padding-left: 25px;">40</td>
-                       <td style="padding-left: 25px;">40</td>
+                       <td style="text-align: center;">
+                        <button
+                               
+                               type="button"
+                               class="btn btn-sm"
+                               style="   width: 60px;
+                                 font-size: 15px;
+                                 height: 30px;
+                                 color: white;
+                                 border-radius: 37px;"
+                               :style="getStatusStyle(stock)"
+                               
+                             >
+                             {{ stock.status }}
+                             </button>
+                     </td>
+                       <td style="padding-left: 25px;">{{stock.updatedBy}}</td>
                        <td style="">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-info-circle" viewBox="0 0 16 16"  @click="editStock(stock.stockId);" style="margin-left: 20px;">
   <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -734,6 +755,25 @@ export default {
     }
 },
 methods:{
+  getStatusStyle(stock){
+  if(stock.status==="Good"){
+    return{
+      background:"green"
+    };
+  }else if(stock.status==="Low"){
+    return{
+      background:"orange"
+    };
+
+  }else if(stock.status==="Out"){
+    return{
+      background:"red"
+    };
+  }else{
+    return "";
+  }
+},
+  
     async GetLoggedInUser() {
       var response = await this.Gettingloggedinuser();
       this.userbody = response.body;
@@ -857,6 +897,69 @@ nav ul li a::after {
 nav ul li a:hover::after {
     width: 100%;
     transition: width .3s;
+}
+.blink {
+    color : red;
+    margin-right: 0.5rem;
+      animation: blink 2s steps(5, start) infinite;
+      -webkit-animation: blink 1s steps(5, start) infinite;
+    }
+    @keyframes blink {
+      to {
+        visibility: hidden;
+      }
+    }
+    @-webkit-keyframes blink {
+      to {
+        visibility: hidden;
+      }
+    }
+.noblink {
+   margin-right: 0.5rem;
+    }
+    #blinking-button {
+  position: fixed;
+  top: 0;
+  left: 760px;
+  font-size: 15px;
+  font-family: inter;
+  font-weight: medium;
+  color: orange;
+  width: 120px;
+  background-color: orange;
+  border: none;
+  border-radius: 48px 0;
+  padding: 8px 35px;
+  animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    background-color: rgb(30, 235, 23);
+  }
+  50% {
+    background-color: orange;
+  }
+}
+
+
+@keyframes blink {
+  0%, 100% {
+    background-color: rgb(30, 235, 23);
+  }
+  50% {
+    background-color: orange;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {background-color:rgb(30, 235, 23);}
+  50% {background-color: orange;}
+}
+#blinking-button {
+  background-color:orange;
+  color: white;
+  animation: blink 1s linear infinite;
 }
 
 </style>

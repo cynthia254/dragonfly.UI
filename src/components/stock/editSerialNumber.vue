@@ -2,11 +2,6 @@
     <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 
-   
-   <div class="form-control"  style="margin-top:100px;">
-      <button class="btn btn-primary"  @click="back_fn()">Back</button>
-
-   </div>
        <section>
         <header class="fixed-top" style="position: fixed;" >
             <div class="frame-24" style="width: 40px;margin-left: 25px;">
@@ -126,15 +121,23 @@
          <i class="fa fa-user"></i>
        </div>
      </div>
-   
-     
- 
-     <div class="tright d-flex mx-5" >
-       
-      <button class="movebtn movebtnsu"  style="margin-bottom: 30px;margin-left: 70px;width:30%;font-family: inter;font-size: 13px;" @click.prevent="changepurchasestatus()" >
+     <div class="row">
+    <div class="col-12 col-sm-6 col-md-6">
+       <form>
+        <button class="movebtn movebtnsu"  style="margin-bottom: 30px;margin-left: 10px;width:40%;font-family: inter;font-size: 13px;" @click.prevent="back_fn()" >
+           Back</button
+       >
+       </form>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6">
+      <form>
+        <button class="movebtn movebtnsu"  style="margin-bottom: 30px;margin-left: 70px;width:40%;font-family: inter;font-size: 13px;background-color: green;" @click.prevent="changepurchasestatus()" >
            Submit</button
        >
-     </div>
+       </form>
+    </div>
+    </div>
+    
    </form>
  
   

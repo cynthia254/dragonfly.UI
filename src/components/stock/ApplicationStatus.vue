@@ -266,6 +266,7 @@ if (response.isTrue==true) {
           html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
         });
         this.$refs.myForm.reset();
+        await  this.GetAllInvoice();
    
       } else {
         swal.fire({

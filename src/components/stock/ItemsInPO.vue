@@ -253,7 +253,7 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                             editinvoiceitem(
                               po.id,
                               po.categoryName
-                            )" >{{ po.quantity }}</td>
+                            )" >{{ po.actualQuantity }}</td>
                              <td  >{{ po.ajustedQuantity }}</td>
                           <td  @click.prevent="
                             editinvoiceitem(
@@ -335,8 +335,8 @@ import moment from 'moment';
       generateExcel() {
         // Sample data for demonstration
         const data = [
-        ['poNumber','itemName', 'quantity', 'rate', 'amount', 'Warranty', 'Warranty Start Date', 'Category Name'],
-        ['', '', '', '', '', '', '', '', ''],
+        ['poNumber','itemName','brandName', 'quantity','reOrderLevel', 'rate', 'amount', 'Warranty', 'Warranty Start Date', 'Category Name'],
+        ['', '', '', '', '', '', '', '', '','','',],
         // Add more data as needed...
       ];
 

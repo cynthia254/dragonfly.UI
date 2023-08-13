@@ -395,6 +395,11 @@ export default {
       searchword:"",
       showallstock:true,
       showallstocksearch:false,
+      scannedItems: [
+        { serialNumber: "SN123", imei1: "IMEI123", imei2: "IMEI456", isEditing: false },
+        { serialNumber: "SN456", imei1: "IMEI789", imei2: "IMEI012", isEditing: false }
+        // Add more items as needed
+      ],
       formdata: {
         invoiceDate:"",
         lpoDate:"",
@@ -423,6 +428,10 @@ async GetLoggedInUser() {
       var response = await this.Gettingloggedinuser();
       this.userbody = response.body;
       console.log("Logged in user __________ email:", this.userbody);
+    },
+    toggleEdit(item) {
+      item.isEditing = !item.isEditing;
+      // You can implement save logic here if needed
     },
 async getitnginvoicebyname() {
       var invoiceNumber=this.invoiceNumber;

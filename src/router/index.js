@@ -100,6 +100,7 @@ import ApplyRequisitionForm from "../components/stock/ApplyRequistion.vue"
 import ApplicationStatus from "../components/stock/ApplicationStatus.vue"
 import ApproveReject from "../components/stock/approveReject.vue"
 import IssueStock from "../components/stock/Issue.vue"
+import IssuingSerial from "../components/stock/issuingprocess.vue"
 const routes = [
   {
     path: "/home",
@@ -137,6 +138,12 @@ const routes = [
     name: "ApplyRequisitionForm",
 
     component: ApplyRequisitionForm,
+  },
+   {
+    path: "/issuingSerial/:id",
+    name: "IssuingSerial",
+
+    component: IssuingSerial,
   },
   {
     path: "/applicationstatus",
@@ -645,7 +652,7 @@ const routes = [
   },
 
   {
-    path: "/invoice_item/:invoiceLineId",
+    path: "/invoice_item/:id",
     name: "invoiceItemAdd",
     component: invoiceItemAdd,
   },
