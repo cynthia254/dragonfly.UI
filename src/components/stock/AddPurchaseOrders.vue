@@ -49,8 +49,10 @@
              
              <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
-             <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
-           </ul>
+             <li><a href="/PoPending" style="font-size: 16px;font-family:inter;font-weight:medium">Approval Of PO</a></li>
+             <li><a href="/poComplete" style="font-size: 16px;font-family:inter;font-weight:medium">Update Batch</a></li>
+           
+            </ul>
          </li>
       
          <li style="">
@@ -269,10 +271,12 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
         padding: 12px 34px">
                         <tr >
                             <th style="width: 100px">PO ID</th>
-                          <th style="width: 120px">PO Number</th>
-                          <th style="width: 120px">PO Date</th>
-                          <th style="width: 120px">Supplier Name</th>
-
+                          <th style="width: 80px">PO Number</th>
+                          <th style="width: 90px">PO Date</th>
+                          <th style="width: 100px">Supplier Name</th>
+                          <th style="width: 120px">Date Updated</th>
+                          <th style="width: 80px">Capture Status</th>
+                          <th style="width: 80px">Delivery Status</th>
                          
                         </tr>
                       </thead>
@@ -283,6 +287,9 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                           <td >{{ getFormattedDate(invoice.poDate) }}</td>
                          
                           <td >{{invoice.vendor}}</td>
+                          <td >{{ formatDate(invoice.dateCreated) }}</td>
+                          <td :style="getStatusStyle(invoice)" style="font-size:14px">{{ invoice.captureStatus }}</td>
+                          <td :style="getDeliveryStatus(invoice)" style="font-size:14px">{{ invoice.deliveryStatus }}</td>
                           
                          
                         </tr>
@@ -299,7 +306,6 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
           </div>
         </div>
         </div>
-  
 </template>
 <script>
 import swal from "sweetalert2";
@@ -329,6 +335,11 @@ export default {
     };
   },
   methods: {
+    formatDate(dateString) {
+            const date = new Date(dateString);
+
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        },
     async GetAllInvoice(){
 
 const response= await this.gettingAllPurchaseOrderss();
@@ -345,7 +356,7 @@ return response;
 async pushPO(poNumber) {
       console.log("PO Number is:", poNumber);
       this.$router.push({
-        path: `/uploadedpoitems/${poNumber}`,
+        path: `/PoItemLines/${poNumber}`,
         replace: true,
       });
     },
@@ -355,11 +366,7 @@ async GetLoggedInUser() {
       this.userbody = response.body;
       console.log("Logged in user __________ email:", this.userbody);
     },
-formatDate(dateString) {
-            const date = new Date(dateString);
 
-            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-        },
 formatDateAssigned(value) {
       let formattedDate = new Date(value);
       formattedDate = `${formattedDate.toDateString()} at ${formattedDate.toLocaleTimeString()}`;
@@ -402,6 +409,16 @@ async editInvoice(invoiceNumber) {
         });
         this.$refs.myForm.reset();
       }
+      this.$router.push({
+  path: "/purchaseordered" ,  
+          replace: true,
+        });
+
+
+        setTimeout(()=>{
+          location.reload();
+
+        },700)
       this.GetAllInvoice();
     },
     async GetAllSuppliers(){
@@ -412,6 +429,39 @@ console.log("allsuppliers: ", this.allsuppliers);
 return response;
 
 },
+getStatusStyle(invoice){
+  if(invoice.captureStatus==="Complete"){
+    return{
+      color:"green"
+    };
+  }else if(invoice.captureStatus==="Incomplete"){
+    return{
+      color:"red"
+    };
+    
+  }
+  else if(invoice.captureStatus==="Pending"){
+    return{
+      color:"orange"
+    };
+  }else{
+    return "";
+  }
+},
+getDeliveryStatus(invoice){
+  if(invoice.deliveryStatus==="Complete"){
+    return{
+      color:"green"
+    };
+  }else if(invoice.deliveryStatus==="Incomplete"){
+    return{
+      color:"red"
+    };
+  }else{
+    return "";
+  }
+},
+
 
   },
   
@@ -438,5 +488,34 @@ return response;
   display: table-cell;
   vertical-align: middle;
 }
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
+.modal {
+  position: fixed;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  z-index: 10000;
+}
+
+.fade-enter-active, .fade-leave-active,
+.pop-enter-active, .pop-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter, .fade-leave-to,
+.pop-enter, .pop-leave-to {
+  opacity: 0;
+}
 </style>

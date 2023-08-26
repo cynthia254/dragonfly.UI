@@ -1,4 +1,5 @@
 <template>
+  <div class=""  style="background: green;">
     <link
       href="https://fonts.googleapis.com/css?family=Inter:500,700"
       rel="stylesheet"
@@ -8,12 +9,12 @@
       href="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css"
     />
   
-    <section>
+    <section  style="background-color: blue;">
       <header class="top">
-        <div class="frame-24" style="width: 40px; margin-left: 25px">
+        <div class="img" style="width:40%; margin-left:5%;">
           <img
             alt=""
-            class="payhouse-logo-1"
+            class="payhouse-logo-1"  
             src="../../assets/images/payhouse.png"
           />
         </div>
@@ -190,6 +191,8 @@
         </nav>
       </header>
     </section>
+
+    </div>
     <div class="" style="width: 95%; margin-left: 25px; margin-top: 60px">
       <div class="row">
         <div class="col">
@@ -225,7 +228,7 @@
           </nav>
         </div>
       </div>
-  <div class="table-wrapper">
+   <div class="table-wrapper">
     <div
       class="table-title"
       style="
@@ -266,7 +269,7 @@
             <h2
               style="
                 font-size: 24px;
-                color: white;
+                color: blue;
                 margin: 0;
                 font-family: inter;
                 margin-right:200px;
@@ -335,7 +338,7 @@
             </div>
             <div class="modal-body" style="width: 70%; margin-left: 50px; vertical-align: middle; align-content: center;">
 
-              <h2 style="font-size: 28px; color: white; margin: 10px 0; font-family: inter;" id="blinking-text">
+              <h2 style="font-size: 28px; color: blue; margin: 10px 0; font-family: inter;" id="blinking-text">
                 Quantity:
                 <span style="font-size: 24px;" >
                   {{ this.requisitionbody.quantity }}
@@ -371,7 +374,7 @@
                 border-radius: 10px;
               "
             >
-              <div class="row mx-5">
+              <div class="row mx-5 ">
                 <div class="col-sm-6 d-flex mt-2">
                   <div
                     class="search"
@@ -416,8 +419,7 @@
                   </div>
                 </div>
               </div>
-  
-              <div class="table-wrapper">
+ <div class="table-wrapper  ">
                 <div class="table-title">
                   <div class="">
                     <div class="col-sm table-responsive">
@@ -441,12 +443,85 @@
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+            <div class="container w-100" id="downloadagreement" style="">
+    <div class="frame-24" style="display: flex; justify-content: center; align-items: center; margin-top: 5px;">
+        <img alt="Payhouse Logo" class="payhouse-logo-1" src="../../assets/images/payhouse.png" style="max-height: 100%; max-width: 100%;">
     </div>
+    <h1 style="font-size: 12px;margin-top: 5px;font-weight: bold;">DELIVERY NOTE</h1>
+    <div class="" style="margin-left: auto; margin-right: 25px; margin-top: 30px; text-align: right;">
+        <p>DATE: {{ getFormattedDate(requisitionbody.issuedByDate) }}</p>
+    </div>
+    
+
+    <table style="margin-top: 10px;">
+        <tr>
+            <td style="display: flex; text-align: right;">Item Description:</td>
+            <td style="text-align: left;">{{ requisitionbody.brandName }} {{ requisitionbody.itemName }}</td>
+        </tr>
+        <!-- Other Information -->
+        <tr>
+            <td style="text-align: right;">Quantity:</td>
+            <td style="text-align: left;">{{ requisitionbody.quantity }} Pieces</td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">Serial Numbers:</td>
+            <td style="text-align: left;">As Attached</td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">Manufacturer:</td>
+            <td style="text-align: left;">Feitian Technologies Limited</td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">Supplier:</td>
+            <td style="text-align: left;">Payhouse Limited</td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">Client Name:</td>
+            <td style="text-align: left;">{{ requisitionbody.clientName }}</td>
+        </tr>
+    </table>
+    <div style="margin-top: 20px;">
+        <div style="text-align: left;">
+            <h4>Delivered By:</h4>
+            <p>Name: __________________________________</p>
+            <p>Signature & Stamp: _________________________</p>
+            <p>Date: _____________________________________</p>
+        </div>
+        <div style="text-align: left;">
+            <h4>Received By:</h4>
+            <p>Name: ____________________________________</p>
+            <p>Signature & Stamp: _________________________</p>
+            <p>Date: ____________________________________</p>
+        </div>
+    </div>
+   
+    <div class="footer" style="text-align: left; margin-top: 15px;">
+    <h2 style="margin:0;color: rgb(189, 16, 16); font-family: inter; font-size: 6px;">Payhouse Limited Mukima Drive</h2>
+    <p style="margin: 0;font-size: 6px;">P.O BOX 3343-00621 Nairobi, Kenya</p>
+    <p style="margin: 0;font-size: 6px;">T: +254 720 494 210, +254 704 633 455</p>
+    <p style="margin: 0;font-size: 6px;">Email: sales@payhouse.co.ke Website: payhouse.co.ke</p>
+</div>
+
+</div>
+
+<div style="margin-top: 20px; display: flex; justify-content: center;">
+    <button @click.prevent="generatePdf()" class="btn btn-primary">
+        Download DNote
+    </button>
+</div>
+</div>
+</div>
+</div>
+
+  
+    </div>
+  
+  
+   
   </template>
+
   <script>
+  import html2pdf from "html2pdf.js";
   import swal from "sweetalert2";
   import AppMixins from "../../Mixins/shared";
   import moment from "moment";
@@ -480,6 +555,27 @@
       };
     },
     methods: {
+      generatePdf() {
+      const val = Math.floor(10000 + Math.random() * 90000);
+      var number =
+        Math.floor(1000 + Math.random() * 9000) +
+        Math.floor(10000 + Math.random() * 90000);
+      number = number + 1;
+      let pdfName = "DeliveryNote";
+
+      const element = document.getElementById("downloadagreement");
+      const opt = {
+        margin: 0.5,
+        filename: pdfName + val + number + ".pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      };
+
+      html2pdf().set(opt).from(element).save();
+
+      this.spinner = false;
+    },
       async GetAllInvoice() {
         const response = await this.GettingRequisiotin();
         this.allinvoice = response.body;
@@ -506,8 +602,10 @@
         return formattedDate;
       },
       getFormattedDate(date) {
-        return moment(date).format("YYYY-MM-DD");
-      },
+  const formattedDate = moment(date).format("Do MMMM YYYY");
+  return formattedDate;
+},
+
       async editInvoice(invoiceNumber) {
         console.log("Invoice Number is:", invoiceNumber);
         this.$router.push({
@@ -615,7 +713,7 @@ return response;
       this.id = this.$route.params.id;
       console.log("Id>>>>>>>>>>>>>>> :", this.id);
       this.GetAllInvoice();
-      // this.GetLoggedInUser();
+     this.GetLoggedInUser();
       this.gettingformbyid();
       this.gettingrequisitonbyid();
       this.GetAllSerialNumbers();

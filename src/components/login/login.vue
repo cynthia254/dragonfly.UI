@@ -2,6 +2,8 @@
      <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css" />
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+
   <div class="">
     <section class="vh-100 bg-danger" style="">
       <div class="w-75 mx-auto py-5 h-100">
@@ -22,8 +24,8 @@
                
                       <div class="d-flex align-items-center mb-3 pb-1">
                         <span
-                          class="h1 fw-bold mb-0 text-center text-danger mx-4.5"
-                          >PAYHOUSE LOGIN</span
+                          class="h1  mb-0 text-center text-danger mx-4.5 "
+                          style="font-family: 'Montserrat';font-size: 32px;font-weight: bolder;">PAYHOUSE LOGIN</span
                         >
                       </div>
 
@@ -36,7 +38,7 @@
                           required
                         />
                         <label class="form-label" for="form2Example17"
-                          >Email address</label
+                          style="font-family: 'Montserrat'">Email address</label
                         >
                       </div>
 
@@ -49,16 +51,16 @@
                           required
                         />
                         <label class="form-label" for="form2Example27"
-                          >Password</label
+                          style="font-family: 'Montserrat'">Password</label
                         >
                       </div>
 
-                      <div class="pt-1 mb-4" style="margin-left: 40%;">
+                      <div class="pt-1 mb-4" style="margin-right:100px;margin-left: 0px;">
                         <button
                           class="btn btn-dark btn-lg btn-block"
                           type="button"
                           @click="this.loginUser()"
-                        >
+                        style="font-family: 'Montserrat';font-weight: bold;">
                           Login
                         </button>
                       </div>

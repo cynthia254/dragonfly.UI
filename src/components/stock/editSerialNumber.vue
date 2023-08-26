@@ -188,17 +188,25 @@
            
             console.log("response on assigning ;   ", resp);
             swal.fire({
+              heightAuto: false, 
            html: `<h5 class="text-success">${resp.message}</h5>`,
          });
          
-      this.$router.push({
-          path: `/invoice_item/${this.invoiceItemBody.itemID}`,
+         this.$router.push({
+          path: `/invoice_item/${this.invoiceItemBody.batchNumber}`,
           replace: true,
         });
+
+
+setTimeout(()=>{
+location.reload();
+
+},700)
             }
             else{
              this.spinner=false;
              swal.fire({
+              heightAuto: false,
            html: `<h5 class="text-danger">${resp.message}</h5>`,
          });
        
@@ -211,7 +219,7 @@
      async back_fn(){
 
       this.$router.push({
-          path: `/invoice_item/${this.invoiceItemBody.itemID}`,
+          path: `/invoice_item/${this.invoiceItemBody.batchNumber}`,
           replace: true,
         });
      }

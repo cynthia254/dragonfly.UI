@@ -40,7 +40,12 @@
            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
           
            <ul>
+            <li><a  href="/apply" style="font-size: 16px;font-family:inter;font-weight:medium">Apply</a></li>
+             <li><a href="/applicationstatus" style="font-size: 16px;font-family:inter;font-weight:medium">Application Status</a></li>
+             <li><a href="/issueitems" style="font-size: 16px;font-family:inter;font-weight:medium">IssueItems</a></li>
+         
              <li>
+              
                <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
              </li>
              <li>
@@ -53,13 +58,11 @@
              <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
              <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
-             <li><a  href="/apply" style="font-size: 16px;font-family:inter;font-weight:medium">Apply</a></li>
-             <li><a href="/applicationstatus" style="font-size: 16px;font-family:inter;font-weight:medium">Application Status</a></li>
-             <li><a href="/issueitems" style="font-size: 16px;font-family:inter;font-weight:medium">IssueItems</a></li>
-           </ul>
+            
+            </ul>
          </li>
          <li >
-           <button class="fixed-top" id="blinking-button" style="font-size: 15px;font-family:inter;font-weight:medium;color: orange;width: 120px;display:fixed"><router-link to="/apply"><h1 id="blinking-text" style="font-size: 16px;margin-right: 40px;color:white;font-family:inter">APPLY</h1></router-link></button>
+           <button class="fixed-top" id="blinking-button" style="font-size: 15px;font-family:inter;font-weight:medium;color: blue;width: 120px;display:fixed"><router-link to="/apply"><h1  style="font-size: 16px;margin-right: 20px;color:blue;font-family:inter">APPLY</h1></router-link></button>
          
           </li>
          <li style="">
@@ -323,7 +326,6 @@ background: #FF8C22;color:white;border: none;"
                        <th style="width: 200px;">Last Updated</th>
                        <th >Status</th>
                        <th style="width: 130px;">Updated By</th>
-                       <th scope="col " >Action</th>
                      </tr>
                    </thead>
                    <tbody style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;" v-for="(stock,index) in this.allstockitems" v-bind:key="stock.id">
@@ -352,13 +354,7 @@ background: #FF8C22;color:white;border: none;"
                              </button>
                      </td>
                        <td style="padding-left: 25px;">{{stock.updatedBy}}</td>
-                       <td style="">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-info-circle" viewBox="0 0 16 16"  @click="editStock(stock.stockId);" style="margin-left: 20px;">
-  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-  <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-</svg>
-                       
-                              </td>
+           
                      </tr>
                     
                    </tbody>
@@ -920,11 +916,11 @@ nav ul li a:hover::after {
     #blinking-button {
   position: fixed;
   top: 0;
-  left: 760px;
+  left: 850px;
   font-size: 15px;
   font-family: inter;
   font-weight: medium;
-  color: orange;
+  color: rgb(235, 232, 68);
   width: 120px;
   background-color: orange;
   border: none;

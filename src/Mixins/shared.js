@@ -227,8 +227,16 @@ export default {
       return response.data;
     },
     async gettingproductbyId(itemID){
+      console.log("item id ::::::::::::::::::::::::::::;",itemID);
       this.setAuthHeader();
-      var response=await axios.post(`Stock/GetProductDetailsbyid?itemID=${itemID}`)
+      var response=await axios.post(`Stock/GetProductDetailsbyid?BatchNumber=${itemID}`)
+      
+      console.log("response:;;:::::::::::::::::::::::::::::::;",response);
+      return response.data;
+    },
+    async gettingbatchbyid(itemID){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetDeliveryByBatchNumber?itemId=${itemID}`)
       console.log("response",response);
       return response.data;
     },
@@ -251,6 +259,12 @@ export default {
     async gettingproductlinebyid(id){
       this.setAuthHeader();
       var response=await axios.post(`Stock/GetProductlinebyid?product_line_id=${id}`)
+      console.log("response",response);
+      return response.data;
+    },
+    async gettingbatchNumber(batchNumber){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetProductbyBatchNumber?BatchNumber=${batchNumber}`)
       console.log("response",response);
       return response.data;
     },
@@ -314,6 +328,12 @@ export default {
     async addingStock(body){
       this.setAuthHeader();
       var resp=await axios.post("Stock/AddStock",body);
+      return resp.data;
+
+    },
+    async adjustingStocks(body){
+      this.setAuthHeader();
+      var resp=await axios.post("Stock/StockAdjustment",body);
       return resp.data;
 
     },
@@ -722,12 +742,12 @@ export default {
             console.log("response of user roles from mixins :", resp.data);
             return resp.data;
           },
-          async uploadingFiles(body){
+          async uploadingFiles(body,batchNumber){
             this.setAuthHeader();
-            console.log(" form values:  ", body);
-            var response=await axios.post("Stock/uploading",
+            console.log(" form values:  ", body,batchNumber);
+            var response=await axios.post(`Stock/uploading?BatchNumber=${batchNumber}`,
             
-            body, {
+            body,batchNumber, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },
@@ -804,6 +824,12 @@ export default {
             console.log("response of the po Number",response);
             return response.data;
           },
+          async markingpocomplete(poNumber){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/MarkingPOComplete?PONumber=${poNumber}`)
+            console.log("response of the po Number",response);
+            return response.data;
+          },
           async gettingAllPurchaseOrderss() {
             this.setAuthHeader();
             var response = await axios.get("Stock/GetAllPurchaseOrderss");
@@ -813,6 +839,12 @@ export default {
           async addingPurchaseDetailss(body){
             this.setAuthHeader();
             var resp=await axios.post(`Stock/AddingPurchaseOrdersDetails`,body);
+            return resp.data;
+      
+          },
+          async addingPOItemLines(body){
+            this.setAuthHeader();
+            var resp=await axios.post(`Stock/AddingPOItemLines`,body);
             return resp.data;
       
           },
@@ -834,9 +866,9 @@ export default {
             console.log("response",response);
             return response.data;
           },
-          async getstockadjustedById(itemID){
+          async getstockadjustedById(batchNumber){
             this.setAuthHeader();
-            var response=await axios.post(`Stock/GetAdjustedStockByID?ItemID=${itemID}`)
+            var response=await axios.post(`Stock/GetAdjustedStockByID?batchNumber=${batchNumber}`)
             console.log("response on adjustedcstock",response);
             return response.data;
           },
@@ -877,9 +909,45 @@ export default {
             return resp.data;
       
           },
+          async BatchReviewStatus(body){
+            this.setAuthHeader();
+            var resp=await axios.post(`Stock/ApproversReview`,body);
+            return resp.data;
+      
+          },
+          async ActionPO(body){
+            this.setAuthHeader();
+            var resp=await axios.post(`Stock/ApprovalofPO`,body);
+            return resp.data;
+      
+          },
           async StatusPending() {
             this.setAuthHeader();
             var response = await axios.get("Stock/GetFormWithStatusPending");
+      
+            return response.data;
+          },
+          async CaptureStatusComplete() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetPOWithStatusComplete");
+      
+            return response.data;
+          },
+          async GetBatchStatusComplete() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetBatchWithStatusComplete");
+      
+            return response.data;
+          },
+          async GetPOWithStatusPending() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetPOWithPendingStatus");
+      
+            return response.data;
+          },
+          async StatusWithIssued() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetStatusIssued");
       
             return response.data;
           },
@@ -894,6 +962,12 @@ export default {
             var response = await axios.get("Stock/GetNotIssuedSerial");
       
             return response.data;
+          },
+          async AddDeliveryNote(body){
+            this.setAuthHeader();
+            var resp=await axios.post(`Stock/AddDeliveryNote`,body);
+            return resp.data;
+      
           },
         }
    

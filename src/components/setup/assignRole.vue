@@ -113,23 +113,19 @@
             </div>
           </div>
           <label class="mb-0">Roles</label>
+<div class="mb-4 pb-2" style="width: 100%">
+  <div v-for="role in allroles" :key="role.rolesID">
+    <label>
+      <input
+        type="checkbox"
+        :value="role.rolesID"
+        v-model="rolesID"
+      />
+      {{ role.roleName }}
+    </label>
+  </div>
+</div>
 
-          <div class="mb-4 pb-2" style="width: 100%">
-            <select 
-              class="selectpicker" 
-              style="width: 100%; height: 50px; background-color: white"
-              v-model="this.rolesID"
-            >
-              <option
-                v-for="roles in this.allroles"
-                v-bind:value="roles.rolesID"
-                :key="roles.rolesID"
-              >
-                {{ roles.roleName }}
-              </option>
-            </select>
-         
-          </div>
            
           
 
@@ -167,7 +163,7 @@ export default {
       allroles: {},
       allresponsibility: {},
       allusers: {},
-      rolesID: "",
+   rolesID: [],
       usermail:"",
       logbody:{},
       

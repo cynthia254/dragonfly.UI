@@ -1,7 +1,7 @@
-<template>
+<template style="background-color:white">
     <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
-
+<div v-if="showtickets">
     <section>
             <header class="top">
       <div class="frame-24" style="width: 40px;margin-left: 25px;">
@@ -70,12 +70,15 @@
         <nav aria-label="breadcrumb " class="bg-light  p-3 mb-4" style="border-radius: 12px;">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item " style="font-family:inter;font-size:16px"><a href="/stockdashboard" style="color:gray">Home</a></li>
+            <li class="breadcrumb-item " style="font-family:inter;font-size:16px"><a href="/stockissued" style="color:gray">CheckIssuedRequisition</a></li>
+           
             <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px;color:#FF8C22">Manage Requisition Forms</li>
+        
           </ol>
         </nav>
       </div>
     </div>
-    <div class="table-wrapper">
+    <div class="table-wrapper  bg-danger">
                   <div
                     class="table-title"
                     style="background:white; height: 50px;box-shadow: 3px 2px 3px rgba(0, 0, 0, .2);border-radius: 12px;height: 71px;"
@@ -229,7 +232,76 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
           </div>
         </div>
         </div>
-  
+  </div>
+  <div class="mx-4" v-if="acessdenied">
+    <body>
+      <div class="box">
+        <div class="head">
+          <div class="eyer"></div>
+          <div class="eyel"></div>
+          <div class="smile"></div>
+        </div>
+        <div class="handr1"></div>
+        <div class="handr2"></div>
+        <div class="handl1"></div>
+        <div class="handl2"></div>
+        <div class="body1"></div>
+        <div class="body"></div>
+        <div class="legr"></div>
+        <div class="legl"></div>
+        <div class="feetr"></div>
+        <div class="feetl"></div>
+        <h2
+          style="
+            position: absolute;
+            top: 20%;
+            right: -50%;
+            color: red;
+            font-size: 50px;
+          "
+        >
+          403 Forbidden Error
+        </h2>
+        <p
+          style="
+            position: absolute;
+            top: 40%;
+            right: -50%;
+            color: red;
+            font-size: 20px;
+          "
+        >
+          You don't have permission to access / on this server.
+        </p>
+        <h1
+          style="
+            position: absolute;
+            top: 20%;
+            left: 33%;
+            color: black;
+            font-size: 50px;
+            transform: rotate(-38deg);
+            animation: blink 0.8s infinite ease;
+          "
+        >
+          ?
+        </h1>
+        <p
+          style="
+            margin-top: 60px;
+            margin-right: 200px;
+            position: absolute;
+            top: 40%;
+            right: -50%;
+            color: red;
+            font-size: 20px;
+          "
+        >
+          <a class="btn btn-danger" href="/stockdashboard">Go Back</a>
+        </p>
+      </div>
+    </body>
+  </div>
 </template>
 <script>
 import swal from "sweetalert2";
@@ -251,6 +323,8 @@ export default {
       allstockitems:{},
       alldepartment:{},
       allusers:{},
+      showtickets: false,
+      acessdenied: false,
       allcustomers:{},
       allbrands:{},
       formdata: {
@@ -349,6 +423,19 @@ const response= await this.StatusApproved();
 this.allinvoice=response.body;
 
 console.log("invoice response: ", response);
+if (response.isTrue==true) {
+        this.acessdenied = false;
+        this.showtickets = true;
+        this.alltickets = response.body;
+        console.log("All tickets:", this.allinvoice);
+      } else {
+        this.acessdenied = true;
+        this.showtickets = false;
+        swal.fire({
+          heightAuto: false,
+          html: `<h5 class="text-danger">${response.message}</h5>`,
+        });
+      }
 
 
 
@@ -479,7 +566,7 @@ async getallusers() {
         console.log("ItemId :", this.invoiceNumber);
     this.GetAllInvoice();
     this.GetAllSuppliers();
-   // this.GetLoggedInUser();
+   this.GetLoggedInUser();
     this.GetAllStockItemss();
     this.getAllDepartment();
     this.getallusers();

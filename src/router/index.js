@@ -101,6 +101,16 @@ import ApplicationStatus from "../components/stock/ApplicationStatus.vue"
 import ApproveReject from "../components/stock/approveReject.vue"
 import IssueStock from "../components/stock/Issue.vue"
 import IssuingSerial from "../components/stock/issuingprocess.vue"
+import GenerateDeliveryNote from "../components/stock/generateDelivery.vue"
+import IssuedStock from "../components/stock/StockWithIssue.vue"
+import AddDeliveryNumber from "../components/stock/AddDeliveryNote.vue"
+import StockAdjusted from "../components/stock/AdjustedStocks.vue"
+import ApproversBatchReview from "../components/stock/GetBatchStatusComplete.vue"
+import ApprovalsBatchReview from "../components/stock/ApproversBatchReveiw.vue"
+import POStatus from "../components/stock/GetPOWithPending.vue"
+import AppprovePOAction from "../components/stock/ApprovePOPedning.vue"
+import CaptureStatusComplete from "../components/stock/GetPOWithComplete.vue"
+import POLinesWithCaptureComplete from "../components/stock/POLinescomplete.vue"
 const routes = [
   {
     path: "/home",
@@ -134,6 +144,12 @@ const routes = [
     component: stockDashboard,
   },
   {
+    path: "/stockissued",
+    name: "IssuedStock",
+
+    component: IssuedStock,
+  },
+  {
     path: "/apply",
     name: "ApplyRequisitionForm",
 
@@ -152,16 +168,34 @@ const routes = [
     component: ApplicationStatus,
   },
   {
+    path: "/generate",
+    name: "GenerateDeliveryNote",
+
+    component: GenerateDeliveryNote,
+  },
+  {
     path: "/issueitems",
     name: "IssueStock",
 
     component: IssueStock,
   },
   {
+    path: "/POComplete",
+    name: "CaptureStatusComplete",
+
+    component: CaptureStatusComplete,
+  },
+  {
     path: "/approvereject/:id",
     name: "ApproveReject",
 
     component: ApproveReject,
+  },
+  {
+    path: "/approvepo/:id",
+    name: "AppprovePOAction",
+
+    component: AppprovePOAction,
   },
   {
     path: "/adjuststock/:id",
@@ -279,6 +313,12 @@ const routes = [
     component: categoryPage,
   },
   {
+    path: "/PoPending",
+    name: "POStatus",
+
+    component: POStatus,
+  },
+  {
     path: "/editpurchase/:purchaseId",
     name: "editPurchase",
 
@@ -303,10 +343,16 @@ const routes = [
     component: editBrand,
   },
   {
-    path: "/invoiceItems/:invoiceNumber",
+    path: "/PoItemLines/:id",
     name: "InvoiceLinesByNumber",
 
     component: InvoiceLinesByNumber,
+  },
+  {
+    path: "/POLinesComplete/:id",
+    name: "POLinesWithCaptureComplete",
+
+    component: POLinesWithCaptureComplete,
   },
   {
     path: "/edititem/:itemId",
@@ -363,7 +409,7 @@ const routes = [
     component: returnedStatus,
   },
   {
-    path: "/uploadProduct",
+    path: "/uploadProduct/:id",
     name: "UploadProduct",
 
     component: UploadProduct,
@@ -527,6 +573,11 @@ const routes = [
     component: StatusTable,
   },
   {
+    path: "/approversBatch/:id",
+    name: "ApprovalsBatchReview",
+    component: ApprovalsBatchReview,
+  },
+  {
     path: "/close/:ticketid",
     name: "closePage",
     component: closePage,
@@ -657,9 +708,24 @@ const routes = [
     component: invoiceItemAdd,
   },
   {
+    path: "/adjustedStock/:id",
+    name: "StockAdjusted",
+    component: StockAdjusted,
+  },
+  {
+    path: "/adddelivery/:id",
+    name: "AddDeliveryNumber",
+    component: AddDeliveryNumber,
+  },
+  {
     path: "/sales",
     name: "salesPage",
     component: salesPage,
+  },
+  {
+    path: "/batchreview",
+    name: "ApproversBatchReview",
+    component: ApproversBatchReview,
   },
   {
     path: "/brand",

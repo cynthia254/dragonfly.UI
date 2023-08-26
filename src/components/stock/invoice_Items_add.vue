@@ -75,7 +75,7 @@
             <li class="breadcrumb-item" style="font-family:inter;font-size:16px"><a href="/stockdashboard" style="color:gray">Home</a></li>
             <li class="breadcrumb-item " aria-current="page" style="font-family:inter;font-size:16px;color:gray"><a href="/purchaseordered" style="color:gray">Manage Purchase Orders</a></li>
            
-            <li class="breadcrumb-item" style="font-family:inter;font-size:16px"><a @click.prevent="pushPO()" href="" style="color:gray">Manage Purchase Ordered Items</a></li>
+            <li class="breadcrumb-item" style="font-family:inter;font-size:16px"><a @click.prevent="pushPO()" href="" style="color:gray">Manage Batch Delivered Items</a></li>
             
             <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px;color:#FF8C22">Manage Product Details</li>
           </ol>
@@ -104,7 +104,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                       </div>
                   
      
-                      <form class="row g-3" @submit.prevent="CreateItem">
+                      <form class="row g-3" @submit.prevent="CreateItem" ref="myForm">
     <div class="row">
       <div class="">
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center panel" style="margin-top: 33px;">
@@ -138,7 +138,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
-    <table class=" table table-hover" style="margin-left:40px">
+    <table class=" table table-hover table-bordered" style="margin-left:40px">
   <thead style="background-color:   #F3E6DA;font-family: inter;font-weight: bold;font-size: 16px;white-space: nowrap;">
                         
     <tr>
@@ -147,6 +147,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
       <th>IMEI 1</th>
       <th>IMEI 2</th>
       <th>Serial Status</th>
+      <th> Condition</th>
       <th>Action</th>
 
     </tr>
@@ -154,10 +155,12 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
   <tbody>
     <tr v-for="(invoiceitem,index) in this.invoiceItemBody" :key="invoiceitem.itemID" style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;  ">
       <th scope="row">{{index +1}}</th>
+     
       <td style="text-transform: uppercase;">{{invoiceitem.serialNumber}}</td>
       <td>{{ invoiceitem.imeI1 }}</td>
       <td>{{ invoiceitem.imeI2 }}</td>
-      <td>{{ invoiceitem.serialStatus }}</td>
+      <td  :style="getStatusStyle(invoiceitem)">{{ invoiceitem.serialStatus }}</td>
+      <td  :style="getStatusStyle(invoiceitem)">{{ invoiceitem.itemStatus }}</td>
       <td>
                             <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -189,6 +192,27 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
 </div>
 </div>
 </div>
+<div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 text-end">
+                <button
+                  @click="showModal = true"
+                  type="button"
+                  name="addPurchase"
+                  id="addPurchase"
+                  class="btn btn- btn-sm "
+                  style="width: 140px;
+                            margin-top: 20px;
+                            border-radius: 50px;
+                            font-family: inter;
+                            display: flex;
+                            align-items: center;background:rgb(1, 1, 141);color: white;text-align: center;height: 34px;"
+                >
+                
+             <h2 style="font-size: 14px;color: white;margin-top: 8px;margin-left: 15px;font-family:inter;" @click.prevent="pushBulk()">Upload Bulk</h2>
+              
+            </button>
+              </div>
+       
+
 </div>
 </div>
 </div>
@@ -250,7 +274,8 @@ import AppMixins from "../../Mixins/shared";
     serialNumber:this.formdata.serialNumber,
     imeI2:this.formdata.imei2,
     imeI1:this.formdata.imei1,
-    batchID:this.id,
+    batchID:this.productlineBody.itemID,
+    batchNumber:this.id,
     product_No:this.selected_Number,
     reference_Number:this.reference_number,
 
@@ -283,6 +308,7 @@ if (response.isTrue==true) {
           location.reload();
 
         },700)
+
    await this.gettingreferencenumbers();
    await this.$refs.myForm.reset();
       // Clear form data
@@ -303,6 +329,25 @@ if (response.isTrue==true) {
       }
       this.GetAllInvoiceItems();
     },
+    handleFileUpload(event) {
+        this.file = event.target.files[0];
+      },
+     
+    getStatusStyle(invoiceitem){
+  if(invoiceitem.serialStatus==="Issued"){
+    return{
+      color:"red"
+    };
+  }else if(invoiceitem.serialStatus==="Not Issued"){
+    return{
+      color:"green"
+    };
+
+  }
+  else{
+    return "";
+  }
+},
     async editInvoice() {
       console.log("Invoice Number is:", );
       this.$router.push({
@@ -329,6 +374,7 @@ if (response.isTrue==true) {
     async gettingproductdetailsbyid() {
 // Assuming batchID is defined and contains the correct value
    var response = await this.gettingproductbyId(this.id);
+   console.log("delivery id:",this.id);
    this.invoiceItemBody = response.body;
    console.log("response on invoice body: : ", this.invoiceItemBody);
    //this.reference_number=this.invoiceItemBody.reference_Number;
@@ -337,23 +383,25 @@ if (response.isTrue==true) {
 async gettingproductlineByid() {
   var ID=this.id;
 
-       var response = await this.gettingproductlinebyid(ID);
+       var response = await this.gettingbatchNumber(ID);
        this.productlineBody = response.body;
        console.log("response on productline body: : ", this.productlineBody);
        //this.reference_number=this.productlineBody.reference_Number;
  
       
 },
-async gettingitemsbypo() {
-      var poNumber = this.poNumber;
-      var response = await this.gettingitemsinPO(poNumber);
-      this.poBody = response.body;
-      console.log("response on PO body: : ", this.poBody);
-    },
+
     async pushPO() {
-      console.log("PO Number is:", this.allinvoice.poNumber);
+      console.log("PO Number is:", this.productlineBody.itemID);
       this.$router.push({
-        path: `/uploadedpoitems/${this.id}`,
+        path: `/adddelivery/${this.productlineBody.itemID}`,
+        replace: true,
+      });
+    },
+    async pushBulk() {
+      console.log("PO Number is:", this.id);
+      this.$router.push({
+        path: `/uploadProduct/${this.id}`,
         replace: true,
       });
     },
@@ -373,7 +421,7 @@ return response;
 },
 
 async gettingreferencenumbers() {
-  var resp = await this.gettingproductlinebyid(this.id);
+  var resp = await this.gettingbatchNumber(this.id);
        console.log("this is reference no: ", resp.body.reference_Number);
         this.reference_number=resp.body.reference_Number;
        var response = await this.gettingreferenceNumber(this.reference_number);
@@ -385,18 +433,15 @@ async gettingreferencenumbers() {
 },
     },
     created() {
-      this.poNumber = this.$route.params.poNumber;
-        console.log("poNumber :", this.poNumber);
+      this.batchID = this.$route.params.batchID;
+        console.log("batch id :", this.batchID);
         this.id = this.$route.params.id;
         console.log("poNumber :", this.id);
-        this.itemID = this.$route.params.itemID;
-        console.log("batchid :", this.itemID);
     this.GetAllInvoiceItems();
     this.gettingproductlineByid();
     this.gettingproductdetailsbyid();
     this.gettingreferencenumbers();
     this.gettingproductlineByid();
-    this.gettingitemsbypo();
    this.GetAllPOS();
    
   },

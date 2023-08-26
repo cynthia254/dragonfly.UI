@@ -52,8 +52,8 @@
              
              <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
-             <li><a href="/addStock" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Stock</a></li>
-           </ul>
+            
+            </ul>
          </li>
       
          <li style="">
@@ -82,8 +82,8 @@
               class="breadcrumb-item"
               style="font-family: inter; font-size: 16px"
             >
-              <a href="/invoicedetails" style="color: gray"
-                >Manage Invoice</a
+              <a href="/purchaseordered" style="color: gray"
+                >Manage POS</a
               >
             </li>
             <li
@@ -115,13 +115,14 @@ font-size: 16px;
 font-style: normal;
 font-weight: 700;
 line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;white-space: nowrap;width: fit-content;">
-                          INVOICE ITEMS LIST
+                          PO ITEM LIST
                         </h2>
           </div>
 
           <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 text-end">
             <button
               @click="showModal = true"
+              :disabled="isCaptureStatusComplete"
               type="button"
               name="addPurchase"
               id="addPurchase"
@@ -140,7 +141,7 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                 height: 34px;
               "
             >
-             <h2 style="color: white;font-size: 14px;font-family: inter;margin-left: 30px;margin-top: 5px;">Add Invoice Lines</h2>
+             <h2 style="color: white;font-size: 14px;font-family: inter;margin-left: 30px;margin-top: 5px;">Add PO Items</h2>
             </button>
           </div>
           <transition name="modal">
@@ -190,7 +191,7 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                           font-size: 22px;
                         "
                       >
-                        Add InvoiceLines
+                        Add POLines
                       </h4>
                       <button
                         @click="showModal = false"
@@ -465,29 +466,50 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
               box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);
             "
           >
-          <div class="row mx-5">
-                  <div class="col-sm-6 d-flex mt-2">
-                    <div
-    class="search"
-    style="margin-left: 450px; margin-top: 5px; display: flex"
-  >
-  <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-</svg></span>
-    <input
-      type="search"
-      id="gsearch"
-      name="gsearch"
-      placeholder="   Search"
-      style="width: 280px;text-align: center;height:40px;"
-      v-model="searchword"
-     
-    />
-    <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
+  <div>
+    <div>
+      <div>
+    <div class="row mx-5 d-flex align-items-center">
+      <!-- Search input -->
+      <div class="col-sm-6 d-flex">
+        <div class="search">
+          <!-- Search input code... -->
+          <div class="search" style="margin-left: 450px; margin-top: 5px; display: flex">
+          <span class="form-control-feedback">
+            <svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+          </span>
+          <input
+            type="search"
+            id="gsearch"
+            name="gsearch"
+            placeholder="   Search"
+            style="width: 280px;text-align: center;height:40px;"
+            v-model="searchword"
+          />
+          <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
+        </div>
+        </div>
+      </div>
+      <!-- Complete button and animation text -->
+      <div class="col-sm-6 d-flex align-items-center justify-content-end">
+  <!-- Show the Complete button when allItemsAdded is true and captureStatus is not Complete -->
+  <button :disabled="isCaptureStatusComplete" v-if="allItemsAdded" @click="markComplete" class="complete-button">Complete</button>
   
+  <!-- Show the moving text only when allItemsAdded is false and captureStatus is not Complete -->
+  <div v-else-if="!allItemsAdded && !isCaptureStatusComplete" @click="showCompleteButton" class="moving-animation">
+    <p class="move-text" style="color: purple">Click me if you have completed adding all the items</p>
   </div>
-               </div>
-                </div>
+  
+  <!-- Show disabled text when captureStatus is Complete -->
+  <p v-else  style="color: gray">Disabled: Capture status is 'Complete'</p>
+</div>
+
+    </div>
+  </div>
+  </div>
+</div>
             <div class="table-wrapper" v-if="showallstock">
               <div class="table-title">
                 <div class="">
@@ -519,17 +541,12 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                           <th style="width:130px">Warranty End Date</th>
                           <th style="width:100px">Updated By</th>
                           <th style="width:110px">Updated on</th>
-                          <th style="width:110px">Status</th>
+                          <th style="width:110px">Delivery Status</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr
-                          @click.prevent="
-                            editinvoiceitem(
-                              invoicelines.invoiceLineId,
-                              invoicelines.categoryName
-                            )
-                          "
+                        
                           v-for="(invoicelines, index) in this.invoiceItemBody"
                           :key="invoicelines.invoiceLineId"
                           style="
@@ -564,7 +581,7 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                             {{ formatDate(invoicelines.updatedOn) }}
                           </td>
                           <td :style="getStatusStyle(invoicelines)">
-                            {{ invoicelines.status }}
+                            {{ invoicelines.productStatus }}
                           </td>
                         </tr>
                       </tbody>
@@ -604,17 +621,12 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                           <th style="width:120px">Warranty End Date</th>
                           <th>Updated By</th>
                           <th>Updated on</th>
-                          <th style="width:150px">Status</th>
+                          <th style="width:150px">Delivery Status</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr
-                          @click.prevent="
-                            editinvoiceitem(
-                              invoicelines.invoiceLineId,
-                              invoicelines.categoryName
-                            )
-                          "
+                  
                           v-for="(invoicelines, index) in this.invoiceItemBody"
                           :key="invoicelines.invoiceLineId"
                           style="
@@ -649,7 +661,7 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                             {{ formatDate(invoicelines.updatedOn) }}
                           </td>
                           <td :style="getStatusStyle(invoicelines)">
-                            {{ invoicelines.status }}
+                            {{ invoicelines.productStatus }}
                           </td>
                         </tr>
                       </tbody>
@@ -685,6 +697,7 @@ export default {
       searchword:"",
       showallstock:true,
       showallstocksearch:false,
+      allItemsAdded: false, 
       formdata: {
         InvoiceSelected: "",
         itemSelected: "",
@@ -697,10 +710,15 @@ export default {
       },
     };
   },
+  computed: {
+    isCaptureStatusComplete() {
+      return this.invoiceItemBody.some(item => item.captureStatus === 'Complete');
+    },
+  },
 
   methods: {
     async GetAllInvoice() {
-      const response = await this.gettingInvoice();
+      const response = await this.gettingAllPOS();
       this.allinvoice = response.body;
 
       console.log("invoice response: ", response);
@@ -748,6 +766,41 @@ export default {
   return formattedValue;
 
 },
+
+async markComplete() {
+  const response = await this.markingpocomplete(this.poNumber);
+  console.log("form body is: ", response);
+
+  if (response.isTrue == true) {
+    swal.fire({
+      heightAuto: false,
+      html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+    });
+
+    // Reset allItemsAdded to hide the button and animation
+    this.allItemsAdded = false;
+
+    // Fetch updated data and perform any necessary actions
+    await this.gettingitembyinvoice();
+    this.$router.push({
+      path: `/PoItemLines/${this.poNumber}`,
+      replace: true,
+    });
+
+    // Reload after a short delay
+    setTimeout(() => {
+      location.reload();
+    }, 700);
+
+    this.$refs.myForm.reset();
+  } else {
+    swal.fire({
+      heightAuto: false,
+      html: `<h5 class="text-danger" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+    });
+  }
+},
+
     async GetAllCategory() {
       const response = await this.gettingCategory();
       this.allcategory = response.body;
@@ -767,23 +820,24 @@ export default {
         quantity: this.formdata.Quantity,
         unitPrice: this.formdata.unitPrice,
         itemName: this.formdata.itemSelected,
-        invoiceNumber: this.invoiceNumber,
+        poNumber: this.poNumber,
         currency: this.formdata.currency,
         warranty: this.formdata.warranty,
         warrantyStartDate: this.formdata.warrantStartDate,
+        
       };
 
       console.log("Invoice new: ", body);
-      var response = await this.addingInvoiceLines(body);
+      var response = await this.addingPOItemLines(body);
       if (response.isTrue == true) {
         swal.fire({
           heightAuto: false,
           html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
 
         });
-
-        this.$router.push({
-          path: `/invoiceItems/${this.invoiceNumber}`,
+        await this.gettingitembyinvoice();
+this.$router.push({
+          path: `/PoItemLines/${this.poNumber}`,
           replace: true,
         });
 
@@ -791,15 +845,7 @@ export default {
         setTimeout(()=>{
           location.reload();
 
-        },4000)
-
-
-       
-
-        await this.GetAllItems();
-       
-
-        await this.gettingitembyinvoice();
+        },700)
         this.$refs.myForm.reset();
       } else {
         swal.fire({
@@ -807,14 +853,16 @@ export default {
           html: `<h5 class="text-danger" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
         });
       }
+   
+      
     },
     getStatusStyle(invoicelines) {
-      if (invoicelines.status === "Complete") {
+      if (invoicelines.productStatus === "Complete") {
         return {
           color: "green",
           
         };
-      } else if (invoicelines.status === "Incomplete") {
+      } else if (invoicelines.productStatus === "Incomplete") {
         return {
           color: "red",
         };
@@ -822,11 +870,20 @@ export default {
         return "";
       }
     },
+    async pushPO(poNumber) {
+      console.log("PO Number is:", poNumber);
+      this.$router.push({
+        path: `/PoItemLines/${poNumber}`,
+        replace: true,
+      });
+    },
 
     async gettingitembyinvoice() {
-      var invoiceNumber = this.invoiceNumber;
-      var response = await this.gettinginvoicenumber(invoiceNumber);
+      var poNumber = this.poNumber;
+      var response = await this.gettingitemsinPO(poNumber);
       this.invoiceItemBody = response.body;
+      this.captureStatus = this.invoiceItemBody.captureStatus;
+      console.log("capture status>>>>>>>>>>>>>>>>>>>>>>>>>",this.captureStatus);
       console.log("response on invoice body: : ", this.invoiceItemBody);
     },
     async gettingitembybrand() {
@@ -891,6 +948,10 @@ export default {
       this.invoiceItemBody = resp.body;
       console.log("search  return body: ", resp.body);
     },
+    showCompleteButton() {
+      // This function is called when the moving text is clicked
+      this.allItemsAdded = true; // Show the Complete button
+    },
   },
  
   
@@ -916,11 +977,10 @@ export default {
  
     
   created() {
-    this.invoiceNumber = this.$route.params.invoiceNumber;
-    console.log("ItemId :", this.invoiceNumber);
+    this.poNumber=this.$route.params.id;
+        console.log("item id:",this.poNumber);
     this.GetAllInvoice();
     this.GetAllSuppliers();
-    this.getitnginvoicebyname();
     this.gettingitembyinvoice();
     this.GetAllItems();
     this.GetAllCategory();
@@ -951,6 +1011,66 @@ export default {
 th
  {
   overflow: hidden;
+}
+.moving-animation {
+  overflow: hidden;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.move-text {
+  white-space: nowrap;
+  font-family: inter;
+  font-size: 14px;
+  color: gray;
+  animation: moveText 10s linear infinite;
+}
+.complete-button {
+  margin-left: 200px;
+  color: green;
+  font-size: 14px;
+  padding: 8px 16px;
+  background-color: white;
+  border: 1px solid green;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.complete-button:hover {
+  background-color: green;
+  color: white;
+}
+
+/* Animation styles */
+.moving-animation {
+  overflow: hidden;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.move-text {
+  white-space: nowrap;
+  font-family: inter;
+  font-size: 14px;
+  color: gray;
+  animation: moveText 10s linear infinite;
+}
+
+@keyframes moveText {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+@keyframes moveText {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 </style>

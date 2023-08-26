@@ -65,7 +65,7 @@
           
             <li class="breadcrumb-item " aria-current="page" style="font-family:inter;font-size:16px;color:gray"><a href="/purchaseordered" style="color:gray">Manage Purchase Orders</a></li>
            
-            <li class="breadcrumb-item" style="font-family:inter;font-size:16px"><a @click.prevent="pushPO()" href="" style="color:gray">Manage Purchase Ordered Items</a></li>
+            <li class="breadcrumb-item" style="font-family:inter;font-size:16px"><a @click.prevent="pushPO()" href="" style="color:gray">Manage Batch Delivered Items</a></li>
            
             <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px;color:#FF8C22">Adjust Stock</li>
           
@@ -78,7 +78,7 @@
       <div class="col-md-6">
    <form class="form" style=" max-width: calc(100vw - 40px);
      width: 500px;
-     height: 380px;
+     height: 500px;
      background: rgba(255, 255, 255, 1);
      border-radius: 8px;
      box-shadow: 0 0 40px -10px #fff;
@@ -88,7 +88,7 @@
      position: relative;
      border-bottom: 5px solid #ccc;
      margin-top: 10px;">
-     <h2 style="display: flex;font-family: inter;font-size: 18px;">Adjust PO Items</h2>
+     <h2 style="display: flex;font-family: inter;font-size: 18px;">Adjust Batch Items</h2>
      <div class="form-group">
        <label style="font-family: inter;font-size: 16px;">Quantity Damaged:</label>
        <div class="relative">
@@ -106,6 +106,21 @@
        </div>
      </div>
      <div class="form-group">
+  <label style="font-family: inter; font-size: 16px;" v-if="datearea" >Serial Numbers:</label>
+  <div v-for="brand in invoiceItemBody" :key="brand.serialNumber">
+    <label    style="font-size: 13px;font-family:inter;">
+      <input
+        type="checkbox"
+        v-model="formdata.selectedSerialNumbers"
+        :value="brand.serialNumber"
+        style="font-size: 13px;font-family:inter;"
+      />
+      {{ brand.serialNumber }}
+    </label>
+  </div>
+</div>
+
+     <div class="form-group">
        <label style="font-family: inter;font-size: 16px;">Comments:</label>
        <div class="relative">
          <textarea
@@ -120,15 +135,28 @@
          <i class="fa fa-user"></i>
        </div>
      </div>
-      <div class="tright d-flex " >
+      <div class="tright d-flex justify-content-between" >
     
+        <div class="row">
+    <div class="col-12 col-sm-6 col-md-6 ">
       
-         <button class="movebtn movebtnsu"  style="margin-bottom: 30px;margin-left: 250px;width: 20%;font-family: inter;font-size: 13px;" @click.prevent="AddingInvoice()" >
+        <button class="movebtn movebtnsu"  style="margin-top:10px; margin-left: 10px;width:40%;font-family: inter;font-size: 13px;" @click.prevent="pushPO()" >
+           Back</button
+       >
+      
+    </div>
+    <div class="col-12 col-sm-6 col-md-6">
+     
+        <button class="movebtn movebtnsu"  style="margin-top: 10px; margin-left: 150px;width: 40%;font-family: inter;font-size: 13px;" @click.prevent="AddingInvoice()" >
            Submit</button
        >
-     </div>
-    
+      
+    </div>
+    </div>
+   
+</div>
    </form>
+
    </div>
    <div class="col-md-6">
    <div class="form-control" style="border-style: none;margin-top: 13px;">
@@ -156,6 +184,7 @@
                           <th>Item ID</th>
                           <th>Quantity Damaged</th>
                           <th>Description</th>
+                          <th style="width: 170px;">Serial Number</th>
                         </tr>
                       </thead>
                       <tbody v-for="(po,index) in this.adjustedBody" v-bind:key="po.id">
@@ -173,6 +202,7 @@
                         {{po.quantityDamaged}}
                           </td>
                           <td>{{po.description}}</td>
+                          <td>{{po.serialNumber}}</td>
                         </tr>
                       </tbody>
                     </table>
@@ -191,7 +221,7 @@ import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared"
 import moment from 'moment';
 export default {
-  name: "AdjustStock",
+  name: "StockAdjusted",
   mixins: [AppMixins],
   data() {
     return {
@@ -201,9 +231,11 @@ export default {
       userbody: {},
       poBody:[],
       invoiceNumber:"",
+      datearea: false,
       poNumber:"",
       searchword:"",
       id:"",
+      invoiceItemBody:[],
      // itemID:"",
       showallstock:true,
       showallstocksearch:false,
@@ -212,6 +244,8 @@ export default {
       formdata: {
         comments:"",
         quantityDamaged:"",
+        serialNumber:"",
+        selectedSerialNumbers: [],
         
 
     
@@ -220,9 +254,9 @@ export default {
   },
   methods: {
     async pushPO() {
-      console.log("PO Number is:", this.productlineBody.poNumber);
+      console.log("PO Number is:", this.productlineBody.itemID);
       this.$router.push({
-        path: `/uploadedpoitems/${this.productlineBody.poNumber}`,
+        path: `/adddelivery/${this.productlineBody.itemID}`,
         replace: true,
       });
     },
@@ -238,6 +272,14 @@ console.log("invoice response: ", response);
 console.log("allinvoice: ", this.allinvoice);
 return response;
 
+},
+async gettingproductdetailsbyid() {
+// Assuming batchID is defined and contains the correct value
+   var response = await this.gettingproductbyId(this.id);
+   console.log("delivery id:",this.id);
+   this.invoiceItemBody = response.body;
+   console.log("response on invoice body: : ", this.invoiceItemBody);
+   //this.reference_number=this.invoiceItemBody.reference_Number;
 },
 async getitnginvoicebyname() {
       var invoiceNumber=this.invoiceNumber;
@@ -270,23 +312,26 @@ async editInvoice(invoiceNumber) {
     async adjustStock(itemID) {
       console.log("Invoice Number is:", itemID);
       this.$router.push({
-        path: `/adjuststock/${itemID}`,
+        path: `/adjustedStock/${itemID}`,
         replace: true,
       });
     },
     async AddingInvoice() {
+        this.formdata.selectedSerialNumbers = String(this.formdata.selectedSerialNumbers);
   
         var body={
           quantityDamaged:this.formdata.quantityDamaged,
           description:this.formdata.comments,
-          itemID:this.id,
+          batchNumber:this.id,
+          serialNumber:this.formdata. selectedSerialNumbers,
+          itemID:this.itemID,
           
         }
     
         
     
        console.log("Invoice new: ", body);
-      var response = await this.adjustingstock(body);
+      var response = await this.adjustingStocks(body);
       if (response.isTrue==true) {
         swal.fire({
           heightAuto: false,
@@ -295,7 +340,7 @@ async editInvoice(invoiceNumber) {
         
         await this.getAdjustedStock();
         this.$router.push({
-          path: `/adjuststock/${this.id}`,
+          path: `/adjustedStock/${this.id}`,
           replace: true,
         });
 
@@ -316,6 +361,7 @@ async editInvoice(invoiceNumber) {
       }
      await this.getAdjustedStock();
     },
+   
     async GetAllSuppliers(){
 
 const response= await this.gettingAllSuppliers();
@@ -334,23 +380,10 @@ return response;
       
  
  },
-async searchinvoice() {
-      this.showallstock = false;
-      this.showallstocksearch = true;
-      var resp = await this.SearchingInvoice(this.searchword);
-      this.allinvoice = resp.body;
-      console.log("search  return body: ", resp.body);
-    },
-    async gettingitemsbypo() {
-      var id = this.id;
-      var response = await this.gettingpoitemsByID(id);
-      this.poBody = response.body;
-      console.log("response on PO body: : ", this.poBody);
-    },
     async gettingproductlineByid() {
   var ID=this.id;
 
-       var response = await this.gettingproductlinebyid(ID);
+       var response = await this.gettingbatchNumber(ID);
        this.productlineBody = response.body;
        console.log("response on productline body: : ", this.productlineBody);
        //this.reference_number=this.productlineBody.reference_Number;
@@ -358,15 +391,7 @@ async searchinvoice() {
       
 },
   },
-  watch: {
-    searchword(passedvalue) {
-      if (passedvalue != "") {
-        this.searchinvoice();
-      } else {
-        this.GetAllInvoice();
-      }
-    },
-  },
+ 
   created(){
     this.invoiceNumber = this.$route.params.invoiceNumber;
         console.log("ItemId :", this.invoiceNumber);
@@ -375,12 +400,20 @@ async searchinvoice() {
         this.allinvoice.poNumber = this.$route.params.poNumber;
         console.log("stock adjusted item id :", this.allinvoice.poNumber);
     this.GetAllInvoice();
-    this.GetAllSuppliers();
-    this.getitnginvoicebyname();
-    this.gettingitemsbypo();
     this.getAdjustedStock();
     this.gettingproductlineByid();
+    this.gettingproductdetailsbyid();
   },
+  watch: {
+  'productlineBody.categoryName': function(newOption) {
+    if (newOption === 'Accesory') {
+      this.datearea = false;
+    } else {
+      this.datearea = true;
+    }
+  },
+},
+
  
 };
 </script>

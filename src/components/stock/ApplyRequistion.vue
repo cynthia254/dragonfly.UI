@@ -371,6 +371,7 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                           <td>{{invoice.requisitioner}}</td>
                           <td :style="getStatusStyle(invoice)" style="font-size:13px">{{invoice.approvedStatus}}     <br v-if="invoice.approvedStatus === 'Rejected'">
     <span v-if="invoice.approvedStatus === 'Rejected'" style="color:black;font-size:12px">{{ invoice.rejectReason }}</span>
+ 
   </td>
                           
                          

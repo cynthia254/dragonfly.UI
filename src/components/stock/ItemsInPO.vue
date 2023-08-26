@@ -201,7 +201,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
               </div>
               </div>
             
-              <div class="form-control"  style="margin-top: 30px;margin-left: 10px;width: 95%;margin-left: 20px;
+              <div class="form-control"  style="margin-top: 30px;margin-left: 10px;width: 95%;
 
 background: #FFF;
 box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 10px;" >
@@ -214,90 +214,47 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
-                        <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:40px">
+                        <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:20px">
                       <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
         padding: 12px 34px">
                         <tr >
-                          <th style="width: 40px">Item ID</th>
+                          <th style="width: 60px">Item ID</th>
                           <th style="width: 120px">Item Name</th>
-                          <th style="width: 70px">Category Name</th>
-                          <th style="width: 60px">Total Quantity </th>
-                          <th style="width: 60px">Adjusted Quantity </th>
+                          <th style="width: 90px">Category Name</th>
+                          <th style="width: 80px">Total Quantity </th>
+                          <th style="width: 80px">Total Delivered Quantity</th>
+                          <th style="width: 100px">Outstanding Quantity</th>
+                          <th style="width: 80px">Okay Quantity</th>
                           <th style="width: 50px">Rate</th>
-                          <th style="width: 60px">Amount<br> <span style="color:gray;font-size:12px">(In USD)</span></th>
-                          <th style="width: 70px">Warranty<br> <span style="color: gray;font-size:12px">(In Months)</span></th>
-                          <th style="width: 100px">Warranty Start Date</th>
-                          <th style="width: 100px">Warranty End Date</th>
-                          <th style="width: 100px;">Action</th>
+                          <th style="width: 80px">Amount<br> <span style="color:gray;font-size:12px">(In USD)</span></th>
+                          <th style="width: 90px">Warranty<br> <span style="color: gray;font-size:12px">(In Months)</span></th>
+                          <th style="width: 110px">Warranty Start Date</th>
+                          <th style="width: 110px">Warranty End Date</th>
+                          <th style="width: 100px">Status</th>
                       
                         </tr>
                       </thead>
                       <tbody v-for="(po,index) in this.poBody" v-bind:key="po.id">
-                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; "  >
-                            <th  @click.prevent="
-                            editinvoiceitem(
+                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; "  @click.prevent="
+                            addDeliveryNumber(
                               po.id,
-                              po.categoryName
-                            )" scope="row">{{index +1}}</th>
-                          <td @click.prevent="
-                            editinvoiceitem(
-                              po.id,
-                              po.categoryName
-                            )" >{{ po.itemName }}</td>
-                          <td  @click.prevent="
-                            editinvoiceitem(
-                              po.id,
-                              po.categoryName
-                            )">{{ po.categoryName }}</td>
-                          <td  @click.prevent="
-                            editinvoiceitem(
-                              po.id,
-                              po.categoryName
-                            )" >{{ po.actualQuantity }}</td>
-                             <td  >{{ po.ajustedQuantity }}</td>
-                          <td  @click.prevent="
-                            editinvoiceitem(
-                              po.id,
-                              po.categoryName
-                            )" >{{ po.rate }}</td>
-                          <td  @click.prevent="
-                            editinvoiceitem(
-                              po.id,
-                              po.categoryName
-                            )" >{{ po.amount }}</td>
-                          <td  @click.prevent="
-                            editinvoiceitem(
-                              po.id,
-                              po.categoryName
-                            )" >{{ po.warranty }}</td>
-                          <td  @click.prevent="
-                            editinvoiceitem(
-                              po.id,
-                              po.categoryName
-                            )">{{ getFormattedDate(po.warrantyStartDate) }}</td>
-                          <td  @click.prevent="
-                            editinvoiceitem(
-                              po.id,
-                              po.categoryName
-                            )" >{{ getFormattedDate(po.warrantyEndDate) }}</td>
-                            <td>  <div class="dropdown" style="width: 100%">
-              <a class="" >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="16"
-                  fill="gray"
-                  class="bi bi-three-dots"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-                  />
-                </svg>
-              </a>
-              <div class="dropdown-content" style=" width: 50%;color:red;">
-                <a @click.prevent="adjustStock(po.id)">Stock Adjustment</a></div></div></td>
-                          </tr>
+                            )"   >
+                            <th scope="row">{{index +1}}</th>
+                          <td  >{{ po.itemName }}</td>
+                          <td  >{{ po.categoryName }}</td>
+                          <td   >{{ po.actualQuantity }}</td>
+                             <td  >{{ po.totalDelivered }}</td>
+                             <td   >{{ po.outstandingQuantity }}</td>  
+                              <td   >{{ po.okQuantity }}</td>
+                          <td  >{{ po.rate }}</td>
+                          <td  >{{ po.amount }}</td>
+                          <td  >{{ po.warranty }}</td>
+                          <td  >{{ getFormattedDate(po.warrantyStartDate) }}</td>
+                            
+                          <td  >{{ getFormattedDate(po.warrantyEndDate) }}</td>
+                            <td  :style="getStatusStyle(po)" style="font-size:13px">{{ po.productStatus }}</td>
+                               
+              </tr>
                           </tbody>
                           </table>
                           </div>
@@ -373,6 +330,19 @@ return response;
 
 
 },
+getStatusStyle(po){
+  if(po.productStatus==="Complete"){
+    return{
+      color:"green"
+    };
+  }else if(po.productStatus==="Incomplete"){
+    return{
+      color:"red"
+    };
+  }else{
+    return "";
+  }
+},
 
 
 getFormattedDate(date) {
@@ -443,6 +413,20 @@ this.$router.push({
           replace: true,
         });
       } //else {
+        //return swal.fire({
+         // heightAuto: false,
+         // html: `<p class="text-danger" style="font-size:23px;font-family:inter;margin-top:22px">Oops! Nothing else to be added on accesory</p>`,
+       // });
+    //  }
+    },
+    async addDeliveryNumber(id) {
+     
+        console.log("id is:", id);
+        this.$router.push({
+          path: `/adddelivery/${id}`,
+          replace: true,
+        });
+       //else {
         //return swal.fire({
          // heightAuto: false,
          // html: `<p class="text-danger" style="font-size:23px;font-family:inter;margin-top:22px">Oops! Nothing else to be added on accesory</p>`,

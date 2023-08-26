@@ -669,8 +669,9 @@ this.$router.push({
           location.reload();
 
         },700)
-        this.$refs.myForm.reset();
+
    
+
       } else {
         swal.fire({
           heightAuto: false,
@@ -679,6 +680,7 @@ this.$router.push({
         this.$refs.myForm.reset();
       }
       this.gettingformbyid();
+    
     },
     async GetAllSuppliers() {
       const response = await this.gettingAllSuppliers();
@@ -740,7 +742,7 @@ return response;
     console.log("Id>>>>>>>>>>>>>>> :", this.id);
     this.GetAllInvoice();
     this.GetAllSuppliers();
-    // this.GetLoggedInUser();
+    this.GetLoggedInUser();
     this.GetAllStockItemss();
     this.getAllDepartment();
     this.getallusers();

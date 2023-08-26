@@ -63,6 +63,9 @@
     </table>
  
   </div>
+  <div class="mx-4" v-if="acessdenied">
+    <p>You do not have permission to access this page.</p>
+  </div>
  
 </template>
 
