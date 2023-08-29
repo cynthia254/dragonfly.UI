@@ -514,7 +514,7 @@
     <tbody>
       <tr >
         <td>{{ invoiceItemBody.poNumber}}</td>
-        <td>{{ invoiceItemBody.poDate }}</td>
+        <td>{{ invoiceItemBody.itemName }}</td>
         <td>{{ invoiceItemBody.quantity }}</td>
         <td>{{ invoiceItemBody.deviceBeingRepaired }}</td>
         <td>{{ invoiceItemBody.clientName }}</td>
@@ -554,7 +554,6 @@
         showallstock: true,
         showallstocksearch: false,
         allstockitems: {},
-        invoiceItemBody:[],
         alldepartment: {},
         allusers: {},
         allcustomers: {},
@@ -680,6 +679,7 @@
           });
           this.$refs.myForm.reset();
         }
+        this.gettingformbyid();
       
       },
       async GetAllSuppliers() {
@@ -695,7 +695,8 @@
         return response;
       },
       async gettingitembyinvoice() {
-      var response = await this.gettingitemsinPO(this.id);
+      var poNumber = this.poNumber;
+      var response = await this.gettingitemsinPO(poNumber);
       this.invoiceItemBody = response.body;
       console.log("response on invoice body: : ", this.invoiceItemBody);
     },
@@ -741,6 +742,7 @@
       this.getallusers();
       this.GetAllCustomers();
       this.GetAllBrands();
+      this.gettingformbyid();
       this.GetStatusPending();
       this.gettingitembyinvoice();
     },

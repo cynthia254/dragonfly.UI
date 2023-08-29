@@ -49,9 +49,24 @@
              
              <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
-             <li><a href="/PoPending" style="font-size: 16px;font-family:inter;font-weight:medium">Approval Of PO</a></li>
              <li><a href="/poComplete" style="font-size: 16px;font-family:inter;font-weight:medium">Update Batch</a></li>
            
+            </ul>
+         </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Approvals</a>
+           <ul>
+            
+            <li><a href="/PoPending" style="font-size: 16px;font-family:inter;font-weight:medium">Approval Of PO-Capture Level</a></li>
+            
+             <li>
+               <a href="/batchreview" style="font-size: 16px;font-family:inter;font-weight:medium">Approval Of Batch</a>
+             </li>
+             <li>
+               <a href="/deliveryPending" style="font-size: 16px;font-family:inter;font-weight:medium">Approval of PO-Delivery Level</a>
+             </li>
+             
+          
             </ul>
          </li>
       

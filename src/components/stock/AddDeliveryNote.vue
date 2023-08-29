@@ -138,11 +138,11 @@
                     <th style="width:160px" >Delivery Date</th>
                     <th >Batch Quantity</th>
                     <th>Damaged Quantity</th>
-                    <th >Category Name</th>
                     <th>Means Of Delivery</th>
                     <th>AirWay BillNumber</th>
-                    <th>Status</th>
+                    <th>Product Status</th>
                     <th>Date Added</th>
+                   
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -153,10 +153,10 @@
                     <td @click.prevent="editinvoiceitem(invoiceitem)" >{{ getFormattedDate(invoiceitem.deliveryDate) }}</td>
                     <td @click.prevent="editinvoiceitem(invoiceitem)" >{{ invoiceitem.batchQuantity }}</td>
                     <td @click.prevent="adjustStock(invoiceitem)" >{{ invoiceitem.quantityDamaged }}</td>
-                    <td @click.prevent="editinvoiceitem(invoiceitem)" >{{ invoiceitem.categoryName }}</td>
                     <td @click.prevent="editinvoiceitem(invoiceitem)" >{{ invoiceitem.meansOfDelivery }}</td>
                     <td @click.prevent="editinvoiceitem(invoiceitem)"  >{{ invoiceitem.airWayBillNumber }}</td>
-                    <td :style="getStatusStyle(invoiceitem)" @click.prevent="editinvoiceitem(invoiceitem)" >{{ invoiceitem.productStatus }}</td>
+                    <td :style="getStatusStyle(invoiceitem)" >{{ invoiceitem.productStatus }}</td>
+                     
                     <td @click.prevent="editinvoiceitem(invoiceitem)" >{{ formatDate(invoiceitem.dateCreated) }}</td>
                     <td>  <div class="dropdown" style="width: 100%">
               <a class="" >
@@ -175,6 +175,12 @@
               </a>
               <div class="dropdown-content" style=" width: 50%;color:red;">
                 <a @click.prevent="adjustStock(invoiceitem)">Stock Adjustment</a></div></div></td>
+                <td>  <span
+              @click="markComplete(invoiceitem)"
+              style="cursor: pointer; color: green; text-decoration: underline;"
+            >
+              Complete
+            </span></td>
                    
                   </tr>
                 </tbody>
@@ -211,6 +217,40 @@ export default {
     };
   },
   methods: {
+    async markComplete(invoiceitem) {
+  const response = await this.markingbatchascomplete(invoiceitem.batchNumber);
+  console.log("form body is: ", response);
+
+  if (response.isTrue == true) {
+    swal.fire({
+      heightAuto: false,
+      html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+    });
+
+    // Reset allItemsAdded to hide the button and animation
+    this.allItemsAdded = false;
+
+    // Fetch updated data and perform any necessary actions
+    await this.gettingitembyinvoice();
+    this.$router.push({
+      path: `/PoItemLines/${this.poNumber}`,
+      replace: true,
+    });
+
+    // Reload after a short delay
+    setTimeout(() => {
+      location.reload();
+    }, 700);
+
+    this.$refs.myForm.reset();
+  } else {
+    swal.fire({
+      heightAuto: false,
+      html: `<h5 class="text-danger" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+    });
+  }
+},
+
     // Your methods here
 
     moveToIMEI1() {
@@ -332,6 +372,11 @@ getStatusStyle(invoiceitem){
   }else if(invoiceitem.productStatus==="Incomplete"){
     return{
       color:"red"
+    };
+  }
+  else if(invoiceitem.productStatus==="Pending"){
+    return{
+      color:"orange"
     };
   }
     else if(invoiceitem.productStatus==="Closed"){

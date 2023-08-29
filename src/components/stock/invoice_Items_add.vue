@@ -104,7 +104,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                       </div>
                   
      
-                      <form class="row g-3" @submit.prevent="CreateItem" ref="myForm">
+                      <form class="row g-3" @submit.prevent="CreateItem" ref="myForm" v-if="!showBulkUpload">
     <div class="row">
       <div class="">
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center panel" style="margin-top: 33px;">

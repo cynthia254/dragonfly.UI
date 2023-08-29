@@ -210,23 +210,11 @@
                   <a href="/stockdashboard" style="color: gray">Home</a>
                 </li>
                 <li
-                  class="breadcrumb-item"
-                  style="font-family: inter; font-size: 16px"
-                >
-                  <a href="/pocomplete" style="color: gray">Purchase Orders</a>
-                </li>
-                <li
-                  class="breadcrumb-item"
-                  style="font-family: inter; font-size: 16px"
-                >
-                  <a style="color: gray" @click.prevent="PushPO()">Batch Items</a>
-                </li>
-                <li
                   class="breadcrumb-item active"
                   aria-current="page"
                   style="font-family: inter; font-size: 16px; color: #ff8c22"
                 >
-                Manage Batch Status Complete
+                  Manage Requisition Forms
                 </li>
               </ol>
             </nav>
@@ -271,7 +259,7 @@
                     width: fit-content;
                   "
                 >
-                 BATCH STATUS REVIEW
+                  REQUISITION FORM LIST
                 </h2>
               </div>
   
@@ -340,7 +328,7 @@
                         <table
                           id="purchaseList"
                           class="table card-list-table table-hover table-bordered"
-                          style="margin-top: 30px; margin-left: 10px"
+                          style="margin-top: 30px; margin-left: 40px"
                         >
                           <thead
                             style="
@@ -352,191 +340,185 @@
                               padding: 12px 34px;
                             "
                           >
-                          <tr>
-                    <th scope="col">Batch Number</th>
-                    <th scope="col">Delivery Number</th>
-                    <th style="width:160px" >Delivery Date</th>
-                    <th>Batch Quantity</th>
-                    <th>Damaged Quantity</th>
-                    <th >Category Name</th>
-                    <th>Means Of Delivery</th>
-                    <th>AirWay BillNumber</th>
-                    <th>Status</th>
-                    <th>Date Added</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr   v-for="(invoiceitem) in allinvoice" :key="invoiceitem.itemID" style="font-family: inter; font-size: 16px; font-weight: medium; color: gray;">
-                    <td
-            @mouseenter="showModalOnHover = true; hoveredRowIndex = index"
-            @mouseleave="showModalOnHover = false"
-            style="position: relative;" 
-          >
-            <span style="position: relative; z-index: 2;">{{ invoiceitem.batchNumber }}</span>
-            <transition name="modal">
-              <div v-if="showModalOnHover && hoveredRowIndex === index" class="modal-overlay">
-                <div class="modal-content" style=" background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  font-size: 14px;">
-                  <h1 style="font-size: 16px;">Hi there, I'm the modal content!</h1>
-                </div>
-              </div>
-            </transition>
-          </td>
-                    <td style="text-transform: uppercase;" >{{ invoiceitem.deliveryNumber }}</td>
-                    <td >{{ getFormattedDate(invoiceitem.deliveryDate) }}</td>
-                    <td  >{{ invoiceitem.batchQuantity }}</td>
-                    <td >{{ invoiceitem.quantityDamaged }}</td>
-                    <td>{{ invoiceitem.categoryName }}</td>
-                    <td>{{ invoiceitem.meansOfDelivery }}</td>
-                    <td >{{ invoiceitem.airWayBillNumber }}</td>
-                    <td style="color:green">{{ invoiceitem.productStatus }}</td>
-                    <td >{{ formatDate(invoiceitem.dateCreated) }}</td>
-                    <td>
+                            <tr>
+                                <th style="width: 50px">ID</th>
+                              <th style="width: 50px">PO Number</th>
+                              <th style="width: 120px">Supplier</th>
+                              <th style="width: 120px">Date Updated</th>
+                              <th style="width: 150px">Delivery Status</th>
+                              <th style="width: 120px">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody
+                            v-for="(invoice, index) in this.allinvoice"
+                            :key="invoice.id"
+                          >
+                            <tr
+                              style="
+                                font-family: inter;
+                                font-size: 16px;
+                                font-weight: medium;
+                                color: gray;
+                              "
+                            >
+                              <th scope="row">
+                                <a
+                                  href=""
+                                  style="text-decoration: none; color: gray"
+                                  >{{ index + 1 }}</a
+                                >
+                              </th>
+                              <td>
+                                {{ invoice.poNumber }} 
+                              </td>
+                              <td>{{ invoice.vendor }}</td>
+                              <td>{{ formatDate(invoice.dateCreated) }}</td>
+                              <td
+                                :style="getStatusStyle(invoice)"
+                                style="font-size: 15px;color: orange;"
+                              >
+                                {{ invoice.captureStatus }}
+                              </td>
+                              <td>
                             
-                            <div class="">
-  <span @click="openModal(invoiceitem)" class="link-button d-flex" style="font-size:13px">Approve/Reject</span>
-</div>
-                              <transition name="modal">
-          <div
-            id="purchaseModal"
-            class="modal-mask fixed-top"
-            v-if="showModal"
-            style="
-              position: fixed;
-              width: 100%;
-              margin-left: 0px;
-              margin-top: 0px;
-              align-content: center;
-              align-items: center;
-            "
-          >
-            <div
-              class="modal-wrapper"
-              style="vertical-align: middle; display: table-cell"
-            >
+                                <div class="">
+      <span @click="openModal(invoice)" class="link-button">Approve/Reject</span>
+    </div>
+                                  <transition name="modal">
               <div
-                class="modal-dialog modal-dialog-centered"
+                id="purchaseModal"
+                class="modal-mask fixed-top"
+                v-if="showModal"
                 style="
+                  position: fixed;
+                  width: 100%;
+                  margin-left: 0px;
+                  margin-top: 0px;
                   align-content: center;
-                  margin-top: 10px;
-                  margin-left: 300px;
+                  align-items: center;
                 "
               >
                 <div
-                  class="modal-content"
-                  style="
-                    width: 50%;
-                    margin-left: 50px;
-                    margin-top: 5px;
-                    background: #f5f5f5;
-                    border-radius: 18px;
-                    height: 70%;
-                  "
+                  class="modal-wrapper"
+                  style="vertical-align: middle; display: table-cell"
                 >
-                  <div class="modal-header">
-                    <h4
-                      class="modal-title"
-                      style="
-                        margin-left: 40px;
-                        margin-top: 20px;
-                        font-family: inter;
-                        font-size: 22px;
-                      "
-                    >
-                      Approve/Reject
-                    </h4>
-                    <button
-                      @click="showModal = false"
-                      type="button"
-                      class="btn-close"
-                      data-bs-dismiss="modal"
-                      style="margin-right: 30px"
-                    ></button>
-                  </div>
                   <div
-                    class="modal-body"
+                    class="modal-dialog modal-dialog-centered"
                     style="
-                      width: 70%;
-                      margin-left: 50px;
-                      vertical-align: middle;
                       align-content: center;
+                      margin-top: 10px;
+                      margin-left: 300px;
                     "
                   >
-                    <form id="purchaseForm" ref="myForm">
-                      <div class="form-group">
-                        <label style="font-family: inter; font-size: 16px"
-                          >Approve/Reject:</label
-                        >
-                        <select
-                          name=""
-                          id=""
-                          class="form-select rounded-0"
-                          required
-                          v-model="this.formdata.selectedOption"
+                    <div
+                      class="modal-content"
+                      style="
+                        width: 50%;
+                        margin-left: 50px;
+                        margin-top: 5px;
+                        background: #f5f5f5;
+                        border-radius: 18px;
+                        height: 70%;
+                      "
+                    >
+                      <div class="modal-header">
+                        <h4
+                          class="modal-title"
                           style="
-                            background-color: #f5f5f5;
+                            margin-left: 40px;
+                            margin-top: 20px;
                             font-family: inter;
-                            font-size: 15px;
-                            color: gray;
+                            font-size: 22px;
                           "
                         >
-                          <option value="" disabled>Select Action</option>
-                          <option value="Approve">Approve</option>
-                          <option value="Reject">Reject</option>
-                        </select>
+                          Approve/Reject
+                        </h4>
+                        <button
+                          @click="showModal = false"
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          style="margin-right: 30px"
+                        ></button>
                       </div>
-                      <div v-if="datearea" class="form-group">
-                        <label style="font-family: inter; font-size: 16px"
-                          >Comments:</label
-                        >
-                        <div class="input-group">
-                          <textarea
-                            type="text"
-                            class="form-control rounded-0"
-                            required
-                            style="
-                              font-family: inter;
-                              font-size: 13px;
-                              color: gray;
-                              background: #f5f5f5;
-                            "
-                            placeholder="Describe the reason here......."
-                            v-model="this.formdata.reason"
-                          ></textarea>
-                        </div>
+                      <div
+                        class="modal-body"
+                        style="
+                          width: 70%;
+                          margin-left: 50px;
+                          vertical-align: middle;
+                          align-content: center;
+                        "
+                      >
+                        <form id="purchaseForm" ref="myForm">
+                          <div class="form-group">
+                            <label style="font-family: inter; font-size: 16px"
+                              >Approve/Reject:</label
+                            >
+                            <select
+                              name=""
+                              id=""
+                              class="form-select rounded-0"
+                              required
+                              v-model="this.formdata.selectedOption"
+                              style="
+                                background-color: #f5f5f5;
+                                font-family: inter;
+                                font-size: 15px;
+                                color: gray;
+                              "
+                            >
+                              <option value="" disabled>Select Action</option>
+                              <option value="Approve">Approve</option>
+                              <option value="Reject">Reject</option>
+                            </select>
+                          </div>
+                          <div v-if="datearea" class="form-group">
+                            <label style="font-family: inter; font-size: 16px"
+                              >Comments:</label
+                            >
+                            <div class="input-group">
+                              <textarea
+                                type="text"
+                                class="form-control rounded-0"
+                                required
+                                style="
+                                  font-family: inter;
+                                  font-size: 13px;
+                                  color: gray;
+                                  background: #f5f5f5;
+                                "
+                                placeholder="Describe the reason here......."
+                                v-model="this.formdata.reason"
+                              ></textarea>
+                            </div>
+                          </div>
+  
+                          <div class="form-group" style="margin-top: 10px">
+                            <input
+                              @click.prevent="AddingInvoice()"
+                              type="submit"
+                              class="btn btn-success btn-sm"
+                              value="Save"
+                              form="purchaseForm"
+                              style="
+                                margin-bottom: 30px;
+                                margin-left: 100px;
+                                width: 30%;
+                                font-family: inter;
+                                font-size: 13px;background-color: green;
+                              "
+                            />
+                          </div>
+                        </form>
                       </div>
-
-                      <div class="form-group" style="margin-top: 10px">
-                        <input
-                          @click.prevent="AddingInvoice()"
-                          type="submit"
-                          class="btn btn-success btn-sm"
-                          value="Save"
-                          form="purchaseForm"
-                          style="
-                            margin-bottom: 30px;
-                            margin-left: 100px;
-                            width: 30%;
-                            font-family: inter;
-                            font-size: 13px;background-color: green;
-                          "
-                        />
-                      </div>
-                    </form>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </transition>
-                          </td>
-                   
-                  </tr>
-                   
+            </transition>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -624,7 +606,7 @@
   import AppMixins from "../../Mixins/shared";
   import moment from "moment";
   export default {
-    name: "ApproversBatchReview",
+    name: "PODelivery",
     mixins: [AppMixins],
     data() {
       return {
@@ -632,8 +614,6 @@
         allinvoice: [],
         invoiceBody: [],
         userbody: {},
-        showModalOnHover: false,
-      hoveredRowIndex: -1,
         invoiceNumber: "",
         searchword: "",
         showallstock: true,
@@ -643,63 +623,22 @@
         allusers: {},
         allcustomers: {},
         allbrands: {},
+        selectedInvoice: null,
+        datearea: false,
         showtickets: false,
         acessdenied: false,
-        selectedInvoice: null,
         formdata: {
-          stockNeed: "",
-          itemName: "",
-          quantity: "",
-          deviceRepaired: "",
-          departmentName: "",
-          clientName: "",
-          purpose: "",
-          Description: "",
-          brandName: "",
+        selectedOption: '',
+        reason: ''
+      
         },
       };
     },
     methods: {
-      openModal(invoiceitem) {
-      this.selectedInvoice = invoiceitem;
+      openModal(invoice) {
+      this.selectedInvoice = invoice;
       this.showModal = true;
     },
-    async AddingInvoice() {
-        var body = {
-          rejectedReason: this.formdata.reason,
-          selectedOption: this.formdata.selectedOption,
-          batchNumber: this.selectedInvoice.batchNumber,
-        };
-  
-        console.log("Invoice new:>>>>>>>>>>>>>>>>>>>>>>>>>>>> ", body);
-        var response = await this.BatchReviewStatus(body);
-        if (response.isTrue == true) {
-          swal.fire({
-            heightAuto: false,
-            html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
-          });
-this.$router.push({
-  path: "/batchreview" ,  
-          replace: true,
-        });
-
-
-        setTimeout(()=>{
-          location.reload();
-
-        },700)
-  
-        } else {
-          swal.fire({
-            heightAuto: false,
-            html: `<h5 class="text-danger" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
-          });
-          
-          this.$refs.myForm.reset();
-        }
-        
-      
-      },
       async GetAllBrands() {
         const response = await this.gettingAllBrands();
         this.allbrands = response.body;
@@ -709,24 +648,14 @@ this.$router.push({
         console.log("allbrands: ", this.allbrands);
         return response;
       },
-      async adjustStock(invoiceitem) {
-     
-     console.log(" ____________________________________________*****************is______________***********:", invoiceitem);
-     this.$router.push({
-       path: `/approversBatch/${invoiceitem.batchNumber}`,
-       replace: true,
-     });
- 
-},
-async PushPO() {
-     
-     console.log(" ____________________________________________*****************is______________***********:", );
-     this.$router.push({
-       path: `/adddelivery/${this.allinvoice.itemID}`,
-       replace: true,
-     });
- 
-},
+      async adjustStock(id) {
+        console.log("Item ID  is:", id);
+        this.$router.push({
+          path: `/approvepo/${id}`,
+          replace: true,
+        });
+      },
+  
       async issuingitems(id) {
         const response = await this.issuingItems(id);
         console.log("form body is: ", response);
@@ -744,10 +673,26 @@ async PushPO() {
           });
         }
       },
+      getStatusStyle(invoice) {
+        if (invoice.approvedStatus === "Approved") {
+          return {
+            color: "green",
+          };
+        } else if (invoice.approvedStatus === "Waiting For Approval") {
+          return {
+            color: "blue",
+          };
+        } else if (invoice.approvedStatus === "Rejected") {
+          return {
+            color: "red",
+          };
+        } else {
+          return "";
+        }
+      },
       async GetAllInvoice() {
-        const response = await this.GetBatchStatusComplete();
+        const response = await this.GetPODeliveryStatus();
         this.allinvoice = response.body;
-        console.log("All status:::::::::::::::::::::;",this.allinvoice);
   
         console.log("invoice response: ", response);
         if (response.isTrue==true) {
@@ -807,18 +752,49 @@ async PushPO() {
           replace: true,
         });
       },
-    
+   
       async GetAllSuppliers() {
         const response = await this.gettingAllSuppliers();
         this.allsuppliers = response.body;
         console.log("allsuppliers: ", this.allsuppliers);
         return response;
       },
-      async GetAllStockItemss() {
-        const response = await this.GettingAllStockItems();
-        this.allstockitems = response.body;
-        console.log("allstockitems: ", this.allstockitems);
-        return response;
+      async AddingInvoice() {
+        var body = {
+          rejectedReason: this.formdata.reason,
+          selectedOption: this.formdata.selectedOption,
+          poNumber:  this.selectedInvoice.poNumber,
+        };
+  
+        console.log("Invoice new:>>>>>>>>>>>>>>>>>>>>>>>>>>>> ", body);
+        var response = await this.DeliveryStatus(body);
+        if (response.isTrue == true) {
+          swal.fire({
+            heightAuto: false,
+            html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+          });
+          await this.GetAllInvoice();
+  this.$router.push({
+    path: "/deliveryPending" ,  
+            replace: true,
+          });
+  
+  
+          setTimeout(()=>{
+            location.reload();
+  
+          },700)
+  
+     
+  
+        } else {
+          swal.fire({
+            heightAuto: false,
+            html: `<h5 class="text-danger" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+          });
+          this.$refs.myForm.reset();
+        }
+      
       },
       async getAllDepartment() {
         const response = await this.GettingAllDepartment();
@@ -841,40 +817,23 @@ async PushPO() {
       this.GetAllInvoice();
       this.GetAllSuppliers();
       this.GetLoggedInUser();
-      this.GetAllStockItemss();
       this.getAllDepartment();
       this.getallusers();
       this.GetAllCustomers();
       this.GetAllBrands();
     },
+    watch: {
+    'formdata.selectedOption': function(newOption) {
+      if (newOption === 'Approve') {
+        this.datearea = false;
+      } else {
+        this.datearea = true;
+      }
+    },
+  },
   };
   </script>
   <style>
-  
-
-
-.modal-overlay {
-  position: absolute;
-  width: 300%;
-  top: 0;
-  left: 0;
- 
-  height: 100%;
-  background-color: rgba(161, 159, 159, 0.5); /* Semi-transparent background */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-}
-
-.modal-content {
- 
-}
-
-.popover-content {
-  font-size: 14px;
-  color: gray;
-}
   .modal-mask {
     background-color: rgba(0, 0, 0, 0.5);
     display: table;
@@ -897,6 +856,13 @@ async PushPO() {
     border: 3px solid white;
     border-style: none;
   }
+  .link-button {
+  color: blue; /* Set the color you want for the link */
+  text-decoration: underline; /* Add underline to simulate link style */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  font-family: inter;
+  font-size: 16px;
+}
   .head {
     position: absolute;
     width: 50px;

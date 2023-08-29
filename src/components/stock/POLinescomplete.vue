@@ -118,342 +118,6 @@
                             PO ITEM LIST
                           </h2>
             </div>
-  
-            <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 text-end">
-              <button
-                @click="showModal = true"
-                :disabled="isCaptureStatusComplete"
-                type="button"
-                name="addPurchase"
-                id="addPurchase"
-                class="btn btn- btn-sm rounded-0"
-                style="
-                  width: 200px;
-                  margin-left: 200%;
-                  margin-top: 20px;
-                  border-radius: 4px;
-                  font-family: inter;
-                  display: flex;
-                  align-items: center;
-                  background: #ff8c22;
-                  color: white;
-                  font-size: 15px;
-                  height: 34px;
-                "
-              >
-               <h2 style="color: white;font-size: 14px;font-family: inter;margin-left: 30px;margin-top: 5px;">Add PO Items</h2>
-              </button>
-            </div>
-            <transition name="modal">
-              <div
-                id="purchaseModal"
-                class="modal-mask fixed-top"
-                v-if="showModal"
-                style="
-                  position: fixed;
-                  width: 100%;
-                  margin-left: 0px;
-                  margin-top: 0px;
-                  align-content: center;
-                  align-items: center;
-                "
-              >
-                <div
-                  class="modal-wrapper"
-                  style="vertical-align: middle; display: table-cell"
-                >
-                  <div
-                    class="modal-dialog modal-dialog-centered"
-                    style="
-                      align-content: center;
-                      margin-top: 40px;
-                      margin-left: 300px;
-                    "
-                  >
-                    <div
-                      class="modal-content"
-                      style="
-                        width: 50%;
-                        margin-left: 120px;
-                        margin-top: 10px;
-                        background: #f5f5f5;
-                        border-radius: 18px;
-                        height: 100%;
-                      "
-                    >
-                      <div class="modal-header">
-                        <h4
-                          class="modal-title"
-                          style="
-                            margin-left: 40px;
-                            margin-top: 20px;
-                            font-family: inter;
-                            font-size: 22px;
-                          "
-                        >
-                          Add POLines
-                        </h4>
-                        <button
-                          @click="showModal = false"
-                          type="button"
-                          class="btn-close"
-                          data-bs-dismiss="modal"
-                          style="margin-right: 30px"
-                        ></button>
-                      </div>
-                      <div
-                        class="modal-body"
-                        style="
-                          width: 60%;
-                          margin-left: 50px;
-                          vertical-align: middle;
-                          align-content: center;
-                        "
-                      >
-                        <form id="purchaseForm" ref="myForm">
-                          <div class="row">
-                            <div class="">
-                              <div class="form-group">
-                                <label
-                                  style="
-                                    font-family: inter;
-                                    font-size: 16px;
-                                    margin-top: 10px;
-                                  "
-                                  >Select Brand</label
-                                >
-  
-                                <select
-                                  name="product"
-                                  id="product"
-                                  class="form-select rounded-0"
-                                  required
-                                  v-model="this.formdata.brandSelected"
-                                  style="
-                                    background-color: #f5f5f5;
-                                    font-family: inter;
-                                    font-size: 16px;
-                                    color: gray;
-                                    height: 50px;
-                                    width: 100%;
-                                  "
-                                >
-                                <option value=""  >
-                                                Select Brand
-                                              </option>
-                                              <option
-                                                v-for="brands in this.allbrands"
-                                                v-bind:value="brands.brandName"
-                                                :key="brands.brandId"
-                                              >
-                                                {{ brands.brandName }}
-                                              </option>
-                                </select>
-                              </div>
-                            </div>
-                          </div>
-  
-                          <div class="row">
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label
-                                  style="
-                                    font-family: inter;
-                                    font-size: 16px;
-                                    margin-top: 10px;
-                                  "
-                                  >Select Item</label
-                                >
-  
-                                <select
-                                  name="product"
-                                  id="product"
-                                  class="form-select rounded-0"
-                                  required
-                                  v-model="this.formdata.itemSelected"
-                                  style="
-                                    background-color: #f5f5f5;
-                                    font-family: inter;
-                                    font-size: 16px;
-                                    color: gray;
-                                    height: 50px;
-                                    width: 100%;
-                                  "
-                                >
-                                  <option value="" >
-                                    Select Item
-                                  </option>
-                                  <option
-                                    v-for="invoice in this.itenbrandBody"
-                                    v-bind:value="invoice.itemName"
-                                    :key="invoice.brandId"
-                                  >
-                                    {{ invoice.brandName }}--{{
-                                      invoice.itemName
-                                    }}
-                                  </option>
-                                </select>
-                              </div>
-                            </div>
-  
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label
-                                  style="
-                                    font-family: inter;
-                                    font-size: 16px;
-                                    margin-top: 10px;
-                                  "
-                                  >Quantity</label
-                                >
-                                <div class="input-group">
-                                  <input
-                                    type="number"
-                                    class="form-control rounded-0"
-                                    required
-                                    style="
-                                      font-family: inter;
-                                      font-size: 13px;
-                                      color: gray;
-                                      background: #f5f5f5;
-                                    "
-                                    v-model="this.formdata.Quantity"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="row">
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label
-                                  style="
-                                    font-family: inter;
-                                    font-size: 16px;
-                                    white-space: nowrap;
-                                    margin-top: 10px;
-                                  "
-                                  >Warranty In Months</label
-                                >
-                                <div class="input-group">
-                                  <input
-                                    type="number"
-                                    class="form-control rounded-0"
-                                    required
-                                    style="
-                                      font-family: inter;
-                                      font-size: 13px;
-                                      color: gray;
-                                      background: #f5f5f5;
-                                    "
-                                    v-model="this.formdata.warranty"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-  
-                            <div class="col-md-6">
-                              <div class="form-group">
-                                <label
-                                  style="
-                                    font-family: inter;
-                                    font-size: 16px;
-                                    white-space: nowrap;
-                                    margin-top: 10px;
-                                  "
-                                  >Warranty Start Date</label
-                                >
-                                <div class="input-group">
-                                  <input
-                                    type="date"
-                                    class="form-control rounded-0"
-                                    required
-                                    style="
-                                      font-family: inter;
-                                      font-size: 13px;
-                                      color: gray;
-                                      background: #f5f5f5;
-                                    "
-                                    v-model="this.formdata.warrantStartDate"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-  
-                          <div class="row">
-                            <div class="">
-                              <div class="form-group">
-                                <label
-                                  id="name-label"
-                                  for="name"
-                                  style="font-family: inter; font-size: 16px"
-                                  >Unit Price</label
-                                >
-                                <div
-                                  class="form-inline form-group"
-                                  style="display: flex"
-                                >
-                                  <select
-                                    class="form-control input-sm w-5"
-                                    style="
-                                      width: 60px;
-                                      background-color: #f5f5f5;
-                                      font-family: inter;
-                                      font-size: 13px;
-                                      color: gray;
-                                    "
-                                    v-model="this.formdata.currency"
-                                  >
-                                    <option
-                                      value=""
-                                      style="margin-top: 30px"
-                                    >
-                                      KES
-                                    </option>
-                                    <option value="USD">USD</option>
-                                    <option value="KES">KES</option>
-                                    <option value="UGX">UGX</option>
-                                    <option value="TZ">TZ</option>
-                                  </select>
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    required
-                                    v-model="this.formdata.unitPrice"
-                                    style="
-                                      background-color: #f5f5f5;
-                                      width: 800px;
-                                    "
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-  
-                          <div class="form-group" style="margin-top: 20px">
-                            <input
-                              @click.prevent="AddingInvoiceLines()"
-                              type="submit"
-                              class="btn btn-success btn-sm"
-                              value="Save"
-                              form="purchaseForm"
-                              style="
-                                margin-bottom: 30px;
-                                margin-left: 70px;
-                                width: 60%;
-                                font-family: inter;
-                                font-size: 13px;
-                              "
-                            />
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </transition>
             <div
               class="form-control"
               style="
@@ -492,19 +156,22 @@
           </div>
           </div>
         </div>
-        <!-- Complete button and animation text -->
-        <div class="col-sm-6 d-flex align-items-center justify-content-end">
-    <!-- Show the Complete button when allItemsAdded is true and captureStatus is not Complete -->
-    <button :disabled="isCaptureStatusComplete" v-if="allItemsAdded" @click="markComplete" class="complete-button">Complete</button>
-    
-    <!-- Show the moving text only when allItemsAdded is false and captureStatus is not Complete -->
-    <div v-else-if="!allItemsAdded && !isCaptureStatusComplete" @click="showCompleteButton" class="moving-animation">
-      <p class="move-text" style="color: purple">Click me if you have completed adding all the items</p>
-    </div>
-    
-    <!-- Show disabled text when captureStatus is Complete -->
-    <p v-else  style="color: gray">Disabled: Capture status is 'Complete'</p>
-  </div>
+          <!-- Complete button and animation text -->
+      <div class="col-sm-6 d-flex align-items-center justify-content-end">
+  <!-- Show the Complete button when allItemsAdded is true and captureStatus is not Complete -->
+  <div v-if="showMovingText && !allDeliveryStatusComplete" class="moving-animation">
+  <p @click="showCompleteButton" class="move-text" style="color: purple;font-size: 15px;"><span style="font-weight: bolder;">N/B:</span>    Click me if all delivery status is complete.</p>
+</div>
+<div v-else-if="!allItemsAdded && !isCaptureStatusComplete">
+  <button @click="markComplete" class="complete-button">Complete</button>
+</div>
+
+<div v-else-if="allDeliveryStatusComplete">
+  <p style="color: gray">All items have been delivered and are marked as complete.</p>
+</div>
+</div>
+
+
   
       </div>
     </div>
@@ -600,6 +267,7 @@
         </div>
       </div>
     </div>
+    
   </template>
   <script>
   import swal from "sweetalert2";
@@ -613,10 +281,12 @@
         showModal: false,
         allinvoice: [],
         allitems: [],
+        showMovingText: true,
         allcategory: [],
         allbatch: [],
         invoiceItemBody: [],
         userbody: {},
+    allDeliveryStatusComplete: false,
         allbrands:[],
         itenbrandBody:[],
         searchword:"",
@@ -635,13 +305,19 @@
         },
       };
     },
-    computed: {
-      isCaptureStatusComplete() {
-        return this.invoiceItemBody.some(item => item.captureStatus === 'Complete');
-      },
-    },
+ 
   
     methods: {
+      adddeliveryNumbr() {
+    // Your existing logic to add delivery number...
+
+    // Check if all delivery statuses are complete
+    this.allDeliveryStatusComplete = this.invoiceItemBody.every(item => item.productStatus === 'Complete');
+  },
+      showCompleteButton() {
+    this.showMovingText = false;
+  },
+
       async GetAllInvoice() {
         const response = await this.gettingAllPOS();
         this.allinvoice = response.body;
@@ -693,7 +369,7 @@
   },
   
   async markComplete() {
-    const response = await this.markingpocomplete(this.poNumber);
+    const response = await this.markingpocompleteatDelivery(this.poNumber);
     console.log("form body is: ", response);
   
     if (response.isTrue == true) {
@@ -831,10 +507,7 @@
         this.invoiceItemBody = resp.body;
         console.log("search  return body: ", resp.body);
       },
-      showCompleteButton() {
-        // This function is called when the moving text is clicked
-        this.allItemsAdded = true; // Show the Complete button
-      },
+   
       async addDeliveryNumber(invoicelines) {
         this.$router.push({
           path: `/adddelivery/${invoicelines.id}`,

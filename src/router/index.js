@@ -111,6 +111,7 @@ import POStatus from "../components/stock/GetPOWithPending.vue"
 import AppprovePOAction from "../components/stock/ApprovePOPedning.vue"
 import CaptureStatusComplete from "../components/stock/GetPOWithComplete.vue"
 import POLinesWithCaptureComplete from "../components/stock/POLinescomplete.vue"
+import PODelivery  from "../components/stock/GetPOWithDelivery.vue"
 const routes = [
   {
     path: "/home",
@@ -184,6 +185,12 @@ const routes = [
     name: "CaptureStatusComplete",
 
     component: CaptureStatusComplete,
+  },
+  {
+    path: "/deliveryPending",
+    name: "PODelivery",
+
+    component: PODelivery,
   },
   {
     path: "/approvereject/:id",

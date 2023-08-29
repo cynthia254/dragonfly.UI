@@ -120,6 +120,7 @@
         type="checkbox"
         :value="role.rolesID"
         v-model="rolesID"
+       
       />
       {{ role.roleName }}
     </label>
@@ -172,24 +173,33 @@ export default {
   methods: {
     
     async AssignUserToRole() {
-      
-      var roleided= this.rolesID;
+   var roleIds =[this.rolesID]; // Convert the single role ID to an array
+   var userId = this.userId;
+   const allvalues=[];
+     for(let i=0; i<roleIds.length;i++){
+         allvalues.push(roleIds[i]);
+     }
+     
+   console.log("roleIds:  ____",allvalues);
+  console.log("userId:", userId);
 
-      console.log(" the role id :  _________", roleided);
-      var usermailer=this.usermail;
-      var response = await this.assigningRoles(roleided,usermailer) ;
+   try {
+     var response = await this.assigningMultipleRoles(userId, allvalues);
+     if (response && response.isTrue) {
+       swal.fire({
+         html: `<h5 class="text-success">${response.message}</h5>`,
+       });
+     } else {
+       swal.fire({
+         html: `<h5 class="text-danger">${response.message}</h5>`,
+       });
+     }
+   } catch (error) {
+     console.error(error);
+     // Handle error here
+   }
+ },
 
-      console.log(" whta is response _______", response)
-      if (response.isTrue==true) {
-        swal.fire({
-          html: `<h5 class="text-success">${response.message}</h5>`,
-        });
-      } else {
-        swal.fire({
-          html: `<h5 class="text-danger">${response.message}</h5>`,
-        });
-      }
-    },
     async GetAllRoles() {
       const response = await this.GettingAllRoles();
       this.allroles = response.body;

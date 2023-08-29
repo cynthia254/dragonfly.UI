@@ -494,6 +494,22 @@ export default {
 
 
     },
+    async assigningMultipleRoles(useremail, roleIds) {
+      this.setAuthHeader();
+      console.log("useremail",useremail);
+      console.log("role ids :::::::",roleIds);
+      
+      
+        const response = await axios.post(`Roles/AssignUserOtherRoles?userId=${useremail}`, {
+          
+          
+              roleIds: roleIds // Convert array to comma-separated string
+            
+        });
+
+        return response.data;
+      } ,
+ 
     async updatingstock(stockeid, quantityadded){
       this.setAuthHeader();
       var response =await axios.post(`Stock/UpdateStockQuantity?itemid=${stockeid}&quantityadded=${quantityadded}`);
@@ -742,12 +758,12 @@ export default {
             console.log("response of user roles from mixins :", resp.data);
             return resp.data;
           },
-          async uploadingFiles(body,batchNumber){
+          async uploadingFiles(body,batchNumber,batchID){
             this.setAuthHeader();
-            console.log(" form values:  ", body,batchNumber);
-            var response=await axios.post(`Stock/uploading?BatchNumber=${batchNumber}`,
+            console.log(" form values:  ", body,batchNumber,batchID);
+            var response=await axios.post(`Stock/uploading?BatchNumber=${batchNumber}&batchID=${batchID}`,
             
-            body,batchNumber, {
+            body,batchNumber,batchID,{
               headers: {
                 "Content-Type": "multipart/form-data",
               },
@@ -828,6 +844,18 @@ export default {
             this.setAuthHeader();
             var response=await axios.post(`Stock/MarkingPOComplete?PONumber=${poNumber}`)
             console.log("response of the po Number",response);
+            return response.data;
+          },
+          async markingpocompleteatDelivery(poNumber){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/MarkingPOLinesComplete?PONumber=${poNumber}`)
+            console.log("response of the po Number",response);
+            return response.data;
+          },
+          async markingbatchascomplete(batchNumber){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/MarkBatchAsComplete?BatchNumber=${batchNumber}`)
+            console.log("response of the batch Number",response);
             return response.data;
           },
           async gettingAllPurchaseOrderss() {
@@ -921,6 +949,12 @@ export default {
             return resp.data;
       
           },
+          async DeliveryStatus(body){
+            this.setAuthHeader();
+            var resp=await axios.post(`Stock/PODeliveryReview`,body);
+            return resp.data;
+      
+          },
           async StatusPending() {
             this.setAuthHeader();
             var response = await axios.get("Stock/GetFormWithStatusPending");
@@ -936,6 +970,12 @@ export default {
           async GetBatchStatusComplete() {
             this.setAuthHeader();
             var response = await axios.get("Stock/GetBatchWithStatusComplete");
+      
+            return response.data;
+          },
+          async GetPODeliveryStatus() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetAllPOSWithStatusPending");
       
             return response.data;
           },
