@@ -109,7 +109,8 @@
           <label class="mb-0">Email</label>
           <div class="row mb-1">
             <div class="col-lg-12">
-              <input class="form-control" type="text text-dark" v-model="this.usermail" />
+              <input class="form-control" type="text text-dark" v-model="this.usermail" disabled style=" background-color: #f0f0f0; /* Apply a gray background color */
+  color: black; " />
             </div>
           </div>
           <label class="mb-0">Roles</label>
@@ -131,14 +132,19 @@
           
 
           <!-- Table  -->
-          <button
-            class="btn btn-danger btn-lg float-center"
-            style="margin-left: 20%; margin-top: 2%"
-            type="submit"
-            @click.prevent="AssignUserToRole(id)"
-          >
-            ASSIGN ROLE
-          </button>
+         <!-- ... (your existing code) -->
+
+<div class="row mb-3">
+  <div class="col-md-6">
+    <router-link to="/viewusers"><button class="btn btn-danger btn-lg">Go Back</button></router-link>
+  </div>
+  <div class="col-md-6">
+    <button class="btn btn-success btn-lg " @click.prevent="AssignUserToRole(id)" style="margin-left:300px">ASSIGN ROLE</button>
+  </div>
+</div>
+
+<!-- ... (your existing code) -->
+
         </fieldset>
       </div>
     </div>
@@ -173,22 +179,33 @@ export default {
   methods: {
     
     async AssignUserToRole() {
-   var roleIds =[this.rolesID]; // Convert the single role ID to an array
+   var roleIds =this.rolesID; // Convert the single role ID to an array
    var userId = this.userId;
    const allvalues=[];
      for(let i=0; i<roleIds.length;i++){
          allvalues.push(roleIds[i]);
      }
      
-   console.log("roleIds:  ____",allvalues);
+   console.log("roleIds: tester __________:::::",allvalues);
   console.log("userId:", userId);
 
    try {
      var response = await this.assigningMultipleRoles(userId, allvalues);
-     if (response && response.isTrue) {
+     if ( response.code=="200") {
        swal.fire({
          html: `<h5 class="text-success">${response.message}</h5>`,
        });
+        // Fetch updated data and perform any necessary actions
+   
+    this.$router.push({
+      path: `/assignRole/${this.userId}`,
+      replace: true,
+    });
+
+    // Reload after a short delay
+    setTimeout(() => {
+      location.reload();
+    }, 700);
      } else {
        swal.fire({
          html: `<h5 class="text-danger">${response.message}</h5>`,

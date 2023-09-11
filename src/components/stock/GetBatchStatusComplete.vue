@@ -367,25 +367,54 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr   v-for="(invoiceitem) in allinvoice" :key="invoiceitem.itemID" style="font-family: inter; font-size: 16px; font-weight: medium; color: gray;">
-                    <td
-            @mouseenter="showModalOnHover = true; hoveredRowIndex = index"
-            @mouseleave="showModalOnHover = false"
-            style="position: relative;" 
-          >
-            <span style="position: relative; z-index: 2;">{{ invoiceitem.batchNumber }}</span>
-            <transition name="modal">
-              <div v-if="showModalOnHover && hoveredRowIndex === index" class="modal-overlay">
-                <div class="modal-content" style=" background-color: #fff;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  font-size: 14px;">
-                  <h1 style="font-size: 16px;">Hi there, I'm the modal content!</h1>
+                  <tr v-for="(invoiceitem) in allinvoice" :key="invoiceitem.itemID" style="font-family: inter; font-size: 16px; font-weight: medium; color: gray;">
+                
+                    
+                    <td>
+                      <span @click="ModalOpen(invoiceitem)" class="link-button d-flex" style="font-size:13px">{{ invoiceitem.batchNumber }}</span>
+     
+<transition name="modal">
+  <div id="purchaseModal" class="modal-mask fixed-top" v-if="isModalOpen">
+    <div class="modal-wrapper" style="vertical-align: middle; display: table-cell; text-align: right;">
+      <div class="modal-dialog" style=" margin-top: 10px; margin-right: 600px;">
+        <div class="modal-content" style="margin-top: 100px; padding: 20px; background: #fff; border-radius: 5px; width: 30%; position: relative; transition: all 5s ease-in-out;">
+        
+          
+                  <div class="modal-header">
+                 
+                    <button
+                      @click="isModalOpen = false"
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      style="margin-right: 30px"
+                    ></button>
+                  </div>
+                  <div
+                    class="modal-body"
+                    style="
+                      width: 70%;
+                      margin-left: 10px;
+                    "
+                  >
+                  <h2 style="display: flex;">{{ selectedInvoice.batchNumber }}</h2>
+     
+      <div class="content">
+        Thank you for popping me out    <span @click="viewMore(invoiceitem)" class="link-button d-flex" style="font-size:13px;margin-left:30px">View More</span>
+     
+      </div>
+                  </div>
                 </div>
               </div>
-            </transition>
-          </td>
+            
+          </div>
+          </div>
+        </transition>
+                  
+</td>
+
+
+
                     <td style="text-transform: uppercase;" >{{ invoiceitem.deliveryNumber }}</td>
                     <td >{{ getFormattedDate(invoiceitem.deliveryDate) }}</td>
                     <td  >{{ invoiceitem.batchQuantity }}</td>
@@ -534,8 +563,9 @@
           </div>
         </transition>
                           </td>
+                          </tr>
                    
-                  </tr>
+                  
                    
                           </tbody>
                         </table>
@@ -638,6 +668,7 @@
         searchword: "",
         showallstock: true,
         showallstocksearch: false,
+        isModalOpen:false,
         allstockitems: {},
         alldepartment: {},
         allusers: {},
@@ -664,6 +695,12 @@
       this.selectedInvoice = invoiceitem;
       this.showModal = true;
     },
+    ModalOpen(invoiceitem) {
+  console.log("ModalOpen called with", invoiceitem);
+  this.selectedInvoice = invoiceitem;
+  this.isModalOpen = true;
+},
+
     async AddingInvoice() {
         var body = {
           rejectedReason: this.formdata.reason,
@@ -700,6 +737,15 @@ this.$router.push({
         
       
       },
+      async viewMore(invoiceitem) {
+    console.log("Navigating to edit page for:", invoiceitem);
+    console.log(" ____________________________________________*****************is______________***********:", invoiceitem);
+        this.$router.push({
+          path: `/vieewbatch/${this.selectedInvoice.batchNumber}`,
+          replace: true,
+        });
+    
+  },
       async GetAllBrands() {
         const response = await this.gettingAllBrands();
         this.allbrands = response.body;
@@ -847,12 +893,124 @@ async PushPO() {
       this.GetAllCustomers();
       this.GetAllBrands();
     },
+    watch: {
+    'formdata.selectedOption': function(newOption) {
+      if (newOption === 'Approve') {
+        this.datearea = false;
+      } else {
+        this.datearea = true;
+      }
+    },
+  },
   };
   </script>
   <style>
   
+  .box {
+  width: 40%;
+  margin: 0 auto;
+  background: rgba(255,255,255,0.2);
+  padding: 35px;
+  border: 2px solid #fff;
+  border-radius: 20px/50px;
+  background-clip: padding-box;
+  text-align: center;
+}
 
 
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin-top: 280px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 5px;
+  width: 20%;
+  position: relative;
+  transition: all 5s ease-in-out;
+  
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+@media screen and (max-width: 700px){
+  .box{
+    width: 70%;
+  }
+  .popup{
+    width: 70%;
+  }
+}
+  .modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .modal-title {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+
+  .modal-subtitle {
+    font-size: 14px;
+    display: flex;
+    white-space: nowrap;
+    margin-bottom: 20px;
+  }
+
+ 
 .modal-overlay {
   position: absolute;
   width: 300%;

@@ -1,7 +1,6 @@
 <template>
-     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.11.0/sweetalert2.css" />
-     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+    
      <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
 
   <div class="">
@@ -91,7 +90,6 @@
 <script>
 import axios from "axios";
 import swal from "sweetalert2";
-import 'sweetalert2/dist/sweetalert2.min.css';
 import AppMixins from "../../Mixins/shared";
 
 export default {
@@ -138,13 +136,13 @@ export default {
         });
 
         swal.fire({
-          heightAuto: false,
-          title: "WELCOME BACK",
-          text: `${response.data.firstname} ${response.data.lastName}`,
-          icon: "success",
-          button: "OK!",
+  heightAuto: false,
+  title: "WELCOME BACK",
+  text: `${response.data.firstname} ${response.data.lastName}`,
+  icon: "success", // Use "success" for a success icon
+  button: "OK!",
+});
 
-        });
       } else {
 
         this.spinner=false;

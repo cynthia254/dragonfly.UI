@@ -119,17 +119,20 @@
               </select>
             </div>
           </div>
-          <div class="bg-danger"  v-if="this.notaddedtorole" >
-   
-   <small class="" style="font-style: bold;font-size: 20px;color: white;padding: 5px;margin-top: 50px;transition-duration:3s;">
-     {{ this.message }}
-   </small>
- </div>
- <div class="bg-success text-center" v-if="this.successfullycreated">
-   <small class="" style="font-style: bold;color: white;font-size: 20px;transition-duration:3s;">
-     {{ this.message }}
-   </small>
- </div>
+        <div class="messages-container">
+      <div class="dangerous" v-if="notaddedtorole && showError">
+        <small class="error-message">
+          {{ message }}
+        </small>
+      </div>
+      <div class="successfull text-center" v-if="successfullycreated && showSuccess">
+        <small class="success-message">
+          {{ message }}
+        </small>
+      </div>
+    </div>
+
+
         
       
 
@@ -215,8 +218,6 @@
 </template>
 
 <script>
-//import swal from "sweetalert2";
-
 import AppMixins from "../../Mixins/shared";
 export default {
   name: "AddClaimToRoles",
@@ -241,80 +242,67 @@ export default {
       showspinner: true,
       successfullycreated: false,
       notaddedtorole: false,
+      showError: false,
+      showSuccess: false,
     };
   },
   methods: {
     async GetAllRoles() {
       const response = await this.GettingAllRoles();
       this.allroles = response.body;
-
-      console.log("allroles: ", this.allroles);
-      return response;
     },
-
     async getallusers() {
       const response = await this.GettingAllUsers();
       this.userbody = response.body;
-      console.log("allusers: ", this.userbody);
-      
     },
     async GetAllRolecLaims() {
       const response = await this.GettingAllResponsibility();
       this.allresponsibility = response.body;
       this.nameofclaim = this.allresponsibility.claimName;
-      console.log("name of claim:", this.nameofclaim);
-      console.log("all claims:   : ", this.allresponsibility);
     },
     async GetLoggedInUser() {
       var response = await this.Gettingloggedinuser();
       this.userbody = response.body;
-      console.log("Logged in user __________ email:", this.userbody);
     },
-
     async AddRoleClaim(claimid) {
-      if (this.roleIdPassed === "empty string") {
-        this.message ==
-          "Kindly select a role first before trying to add a claim";
-      }
-      this.texttext = claimid;
+  if (!claimid || !this.roleIdPassed) {
+    this.message = "Kindly select a role first before trying to add a claim";
+    this.showError = true;
+    this.showSuccess = false;
+    setTimeout(() => {
+      this.showError = false;
+    }, 3000);
+    return;
+  }
 
-      console.log("passded id ___", claimid);
+  // ... (rest of the method)
 
-      console.log(" role id passed here : _____}}}_____", this.roleIdPassed);
+  var response = await this.addingclaimstoRoles(claimid, this.roleIdPassed);
+  if (response.isTrue === true) {
+    this.notaddedtorole = false;
+    this.successfullycreated = true;
+    this.showSuccess = true;
+    this.showError = false;
+    this.message = response.message;
+    setTimeout(() => {
+      this.showSuccess = false;
+    }, 4000);
+  } else {
+    this.successfullycreated = false;
+    this.notaddedtorole = true;
+    this.showSuccess = false;
+    this.showError = true;
+    this.message = response.message;
+    setTimeout(() => {
+      this.showError = false;
+    }, 4000);
+  }
+},
 
-      var response = await this.addingclaimstoRoles(claimid, this.roleIdPassed);
-      console.log("the RESPONSE is here _________", response);
-      if (response.isTrue === true) {
-        // swal.fire({
-        //  html: `<h5 class="text-success">${response.message}</h5>`,
-        // });
-        
-        this.notaddedtorole=false;
-        this.successfullycreated=true;
-        this.message=response.message;
-      } else {
-        // swal.fire({
-         //  html: `<h5 class="text-danger">${response.message}</h5>`,
-        // });
-        this.successfullycreated=false;
-      this.notaddedtorole = true;
-      this.message=response.message
-      }
-    
-    },
-  },
-
-  watch: {
-    deep: {
-      nameofclaim(newvalue) {
-        console.log("newvalue:_______", newvalue);
-      },
-    },
-  },
+},
   created() {
     this.GetAllRoles();
     this.GetLoggedInUser();
-
     this.GetAllRolecLaims();
   },
 };
@@ -337,6 +325,59 @@ export default {
   background-color: black;
   color: white;
 }
+
+/* Updated styles for the messages container */
+.messages-container {
+  position: fixed;
+  top: 51px; /* Adjust this value to your desired distance from the top */
+  left: 0;
+  right: 0;
+  z-index: 999; /* Ensure the messages appear above other content */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center vertically and horizontally */
+  flex-direction: column;
+  padding: 10px;
+  width: 100%;
+}
+
+/* Updated style for error messages */
+.dangerous {
+  background-color: rgb(245, 112, 112);
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center text vertically and horizontally */
+}
+
+/* Updated style for success messages */
+.successfull {
+  background-color: rgb(144, 243, 144);
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Center text vertically and horizontally */
+}
+
+/* Your existing styles for error-message and success-message */
+.error-message,
+.success-message {
+  font-style: bold;
+  font-size: 20px;
+  color: white;
+  padding: 5px;
+  margin-bottom: 10px;
+  text-align: center;
+  border-radius: 5px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+
+
 header {
     background-color: white;
     display: flex;

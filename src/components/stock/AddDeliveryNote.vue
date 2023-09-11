@@ -60,7 +60,7 @@
              <li class="breadcrumb-item" style="font-family:inter;font-size:16px"><a href="/stockdashboard" style="color:gray">Home</a></li>
              <li class="breadcrumb-item " aria-current="page" style="font-family:inter;font-size:16px;color:gray"><a href="/pocomplete" style="color:gray">Manage Purchase Orders</a></li>
             
-             <li class="breadcrumb-item" style="font-family:inter;font-size:16px"><a @click.prevent="pushPO()" href="" style="color:gray">Manage Purchase Ordered Items</a></li>
+             <li class="breadcrumb-item" style="font-family:inter;font-size:16px"><a @click.prevent="pushingPO()" href="" style="color:gray">Manage Purchase Ordered Items</a></li>
              
              <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px;color:#FF8C22">Manage Batch Delivered Items</li>
            </ol>
@@ -148,7 +148,48 @@
                 </thead>
                 <tbody>
                   <tr   v-for="(invoiceitem) in batchbody" :key="invoiceitem.itemID" style="font-family: inter; font-size: 16px; font-weight: medium; color: gray;">
-                    <th scope="row" @click.prevent="editinvoiceitem(invoiceitem)" style="text-align: center;vertical-align: middle;" >{{invoiceitem.batchNumber}}</th>
+                    <td>
+                      <span @click="ModalOpen(invoiceitem)" class="link-button d-flex" style="font-size:13px">{{ invoiceitem.batchNumber }}</span>
+     
+<transition name="modal">
+  <div id="purchaseModal" class="modal-mask fixed-top" v-if="isModalOpen">
+    <div class="modal-wrapper" style="vertical-align: middle; display: table-cell; text-align: right;">
+      <div class="modal-dialog" style=" margin-top: 10px; margin-right: 600px;">
+        <div class="modal-content" style="margin-top: 100px; padding: 20px; background: #fff; border-radius: 5px; width: 30%; position: relative; transition: all 5s ease-in-out;">
+        
+          
+                  <div class="modal-header">
+                 
+                    <button
+                      @click="isModalOpen = false"
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      style="margin-right: 30px"
+                    ></button>
+                  </div>
+                  <div
+                    class="modal-body"
+                    style="
+                      width: 70%;
+                      margin-left: 10px;
+                    "
+                  >
+                  <h2 style="display: flex;">{{ selectedInvoice.batchNumber }}</h2>
+     
+      <div class="content">
+        Thank you for popping me out    <span @click="viewMore(invoiceitem)" class="link-button d-flex" style="font-size:13px;margin-left:30px">View More</span>
+     
+      </div>
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+          </div>
+        </transition>
+                  
+</td>
                     <td style="text-transform: uppercase;" @click.prevent="editinvoiceitem(invoiceitem)"  >{{ invoiceitem.deliveryNumber }}</td>
                     <td @click.prevent="editinvoiceitem(invoiceitem)" >{{ getFormattedDate(invoiceitem.deliveryDate) }}</td>
                     <td @click.prevent="editinvoiceitem(invoiceitem)" >{{ invoiceitem.batchQuantity }}</td>
@@ -205,6 +246,11 @@ export default {
   mixins: [AppMixins],
   data() {
     return {
+      selectedInvoice: null,
+      
+      isModalOpen:false,
+      invoiceItemBody:[],
+      polinebody:{},
       formdata: {
         deliveryNumber: "",
         deliveryDate: "",
@@ -233,7 +279,7 @@ export default {
     // Fetch updated data and perform any necessary actions
     await this.gettingitembyinvoice();
     this.$router.push({
-      path: `/PoItemLines/${this.poNumber}`,
+      path: `/adddelivery/${this.id}`,
       replace: true,
     });
 
@@ -330,6 +376,14 @@ async pushPO() {
         replace: true,
       });
     },
+    async gettingitembyinvoice() {
+      var poNumber = this.poNumber;
+      var response = await this.gettingitemsinPO(poNumber);
+      this.invoiceItemBody = response.body;
+      this.captureStatus = this.invoiceItemBody.captureStatus;
+      console.log("capture status>>>>>>>>>>>>>>>>>>>>>>>>>",this.captureStatus);
+      console.log("response on invoice body: : ", this.invoiceItemBody);
+    },
 async adjustStock(invoiceitem) {
   if (invoiceitem.productStatus !== "Closed") {
     console.log("Navigating to edit page for:", invoiceitem);
@@ -400,19 +454,37 @@ formatDate(dateString) {
 
 
 async editinvoiceitem(invoiceitem) {
-  if (invoiceitem.productStatus !== "Closed") {
+  if (invoiceitem.productStatus !== "Closed" && invoiceitem.categoryName !== "Accesory") {
     console.log("Navigating to edit page for:", invoiceitem);
     this.$router.push({
       path: `/invoice_item/${invoiceitem.batchNumber}`,
       replace: true,
     });
+  } else if (invoiceitem.categoryName === "Accesory") {
+    swal.fire({
+      heightAuto: false,
+      icon: "warning",
+      title: "Cannot Edit",
+      text: "This category is 'Accesory'. Editing is not allowed.",
+    });
   } else {
     swal.fire({
+      heightAuto: false,
       icon: "warning",
       title: "Cannot Edit",
       text: "The status is 'Closed'. Editing is not allowed.",
     });
   }
+},
+
+async gettingpoitembyid() {
+// Assuming batchID is defined and contains the correct value
+   var response = await this.gettingpolinebyid(this.id);
+   this.polinebody = response.body;
+   console.log("response onproduct lines by idy:<<<<<<<<<<<<<<< : ", this.polinebody);
+   console.log("po number:", this.polinebody.poNumber);
+
+   //this.reference_number=this.invoiceItemBody.reference_Number;
 },
 
 async gettingproductdetailsbyid() {
@@ -423,6 +495,27 @@ async gettingproductdetailsbyid() {
    console.log("batch number:", this.batchbody.batchNumber);
 
    //this.reference_number=this.invoiceItemBody.reference_Number;
+},
+async viewMore(invoiceitem) {
+    console.log("Navigating to edit page for:", invoiceitem);
+    console.log(" ____________________________________________*****************is______________***********:", invoiceitem);
+        this.$router.push({
+          path: `/vieewbatch/${this.selectedInvoice.batchNumber}`,
+          replace: true,
+        });
+    
+  },
+  async pushingPO() {
+      console.log("PO Number is:", this.polinebody.poNumber);
+      this.$router.push({
+        path: `/POLinesComplete/${this.polinebody.poNumber}`,
+        replace: true,
+      });
+    },
+  ModalOpen(invoiceitem) {
+  console.log("ModalOpen called with", invoiceitem);
+  this.selectedInvoice = invoiceitem;
+  this.isModalOpen = true;
 },
 
    
@@ -437,6 +530,8 @@ async gettingproductdetailsbyid() {
         this.itemID = this.$route.params.itemID;
         console.log("batchid :", this.itemID);
     this.gettingproductdetailsbyid();
+    this.gettingitembyinvoice();
+    this.gettingpoitembyid();
    
   },
   // Your created hook and other lifecycle hooks here

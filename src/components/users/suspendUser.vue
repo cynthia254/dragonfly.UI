@@ -41,16 +41,18 @@
           name="date"
         />
       </div>
+      <div style="display: flex; justify-content: space-between;">
+ <router-link to="/viewusers"> <button type="reset" class="btn" style="background-color: red;color: white;width: 140px;">Back</button></router-link>
+  <button
+    type="submit"
+    class="btn"
+    style="background-color: green;color: white;"
+    @click.prevent="ChangeUserStatus()"
+  >
+    Submit
+  </button>
+</div>
 
-      <button type="reset" class="btn">Reset</button>
-      <button
-        type="submit"
-        class="btn"
-        style="float: right"
-        @click.prevent="ChangeUserStatus()"
-      >
-        Submit
-      </button>
       <div class="container" v-if="this.spinner">
         <div class="spinner-border text-primary" role="status">
           <span class="sr-only"></span>

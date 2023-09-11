@@ -32,6 +32,7 @@
     "pdf2json": "^3.0.4",
     "pdfjs-dist": "^3.8.162",
     "quagga": "^0.12.1",
+    "run-success-icon": "^1.0.9",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^11.7.3",
     "vue": "^3.2.47",

@@ -156,47 +156,38 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                           <th scope="row" @click.prevent="
                             editinvoiceitem(
                               invoice.id,
-                              invoice.categoryName
                             )"><a href="" style="text-decoration: none;color: gray;">{{index+1 }}</a></th>
                           <td @click.prevent="
                             editinvoiceitem(
                               invoice.id,
-                              invoice.categoryName
                             )">{{invoice.brandName}} {{ invoice.itemName }}</td>
                           <td @click.prevent="
                             editinvoiceitem(
                               invoice.id,
-                              invoice.categoryName
                             )">{{invoice.quantity}}</td>
                           <td @click.prevent="
                             editinvoiceitem(
                               invoice.id,
-                              invoice.categoryName
                             )">{{invoice.deviceBeingRepaired}}</td>
                           <td @click.prevent="
                             editinvoiceitem(
                               invoice.id,
-                              invoice.categoryName
                             )">{{invoice.clientName}}</td>
                           <td @click.prevent="
                             editinvoiceitem(
                               invoice.id,
-                              invoice.categoryName
                             )">{{invoice.purpose}}</td>
                           <td @click.prevent="
                             editinvoiceitem(
                               invoice.id,
-                              invoice.categoryName
                             )">{{invoice.department}}</td>
                           <td @click.prevent="
                             editinvoiceitem(
                               invoice.id,
-                              invoice.categoryName
                             )">{{invoice.requisitioner}}</td>
                           <td :style="getStatusStyle(invoice)" style="font-size:13px" @click.prevent="
                             editinvoiceitem(
                               invoice.id,
-                              invoice.categoryName
                             )">{{invoice.approvedStatus}}</td>
                           <td>  <div class="dropdown" style="width: 100%">
               <a class="" >
@@ -213,8 +204,10 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                   />
                 </svg>
               </a>
+              
               <div class="dropdown-content" style=" width: 50%;color:red;">
                 <a @click.prevent="issuingitems(invoice.id)">Issue</a>
+                
               </div></div></td>
                           
                          
@@ -385,20 +378,19 @@ if (response.isTrue==true) {
 
 }
 },
-async editinvoiceitem(id, categoryname) {
-      if (categoryname == "Product") {
+async editinvoiceitem(id) {
         console.log("Invoice Number is:", id);
         this.$router.push({
           path: `/issuingSerial/${id}`,
           replace: true,
         });
-      } //else {
+      } ,//else {
         //return swal.fire({
          // heightAuto: false,
          // html: `<p class="text-danger" style="font-size:23px;font-family:inter;margin-top:22px">Oops! Nothing else to be added on accesory</p>`,
        // });
     //  }
-    },
+    
 getStatusStyle(invoice){
   if(invoice.approvedStatus==="Approved"){
     return{

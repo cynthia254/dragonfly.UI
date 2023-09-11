@@ -377,7 +377,7 @@
                                 :style="getStatusStyle(invoice)"
                                 style="font-size: 15px;color: orange;"
                               >
-                                {{ invoice.captureStatus }}
+                                {{ invoice.deliveryStatus }}
                               </td>
                               <td>
                             

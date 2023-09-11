@@ -38,8 +38,11 @@
          </li>
 
          <li class="dropDown-menu fixed-top">
+          
            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
            <ul>
+            <li><a href="/poComplete" style="font-size: 16px;font-family:inter;font-weight:medium">Update Batch</a></li>
+
              <li>
                <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
              </li>
@@ -53,6 +56,22 @@
              <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
             
+            </ul>
+         </li>
+         <li class="dropDown-menu fixed-top">
+           <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Approvals</a>
+           <ul>
+            
+            <li><a href="/PoPending" style="font-size: 16px;font-family:inter;font-weight:medium">Approval Of PO-Capture Level</a></li>
+            
+             <li>
+               <a href="/batchreview" style="font-size: 16px;font-family:inter;font-weight:medium">Approval Of Batch</a>
+             </li>
+             <li>
+               <a href="/deliveryPending" style="font-size: 16px;font-family:inter;font-weight:medium">Approval of PO-Delivery Level</a>
+             </li>
+             
+          
             </ul>
          </li>
       
@@ -397,7 +416,7 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                                 <select
                                   class="form-control input-sm w-5"
                                   style="
-                                    width: 60px;
+                                    width: 85px;
                                     background-color: #f5f5f5;
                                     font-family: inter;
                                     font-size: 13px;
@@ -409,7 +428,7 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                                     value=""
                                     style="margin-top: 30px"
                                   >
-                                    KES
+                                    Currency
                                   </option>
                                   <option value="USD">USD</option>
                                   <option value="KES">KES</option>
@@ -471,40 +490,26 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
       <div>
     <div class="row mx-5 d-flex align-items-center">
       <!-- Search input -->
-      <div class="col-sm-6 d-flex">
-        <div class="search">
-          <!-- Search input code... -->
-          <div class="search" style="margin-left: 450px; margin-top: 5px; display: flex">
-          <span class="form-control-feedback">
-            <svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-            </svg>
-          </span>
-          <input
-            type="search"
-            id="gsearch"
-            name="gsearch"
-            placeholder="   Search"
-            style="width: 280px;text-align: center;height:40px;"
-            v-model="searchword"
-          />
-          <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
-        </div>
-        </div>
-      </div>
+    
       <!-- Complete button and animation text -->
       <div class="col-sm-6 d-flex align-items-center justify-content-end">
   <!-- Show the Complete button when allItemsAdded is true and captureStatus is not Complete -->
   <button :disabled="isCaptureStatusComplete" v-if="allItemsAdded" @click="markComplete" class="complete-button">Complete</button>
   
   <!-- Show the moving text only when allItemsAdded is false and captureStatus is not Complete -->
-  <div v-else-if="!allItemsAdded && !isCaptureStatusComplete" @click="showCompleteButton" class="moving-animation">
-    <p class="move-text" style="color: purple">Click me if you have completed adding all the items</p>
+  <div v-else-if="!allItemsAdded && !isCaptureStatusComplete" @click="showCompleteButton" class="">
+    <span
+            
+              style="cursor: pointer; color: rgb(58, 25, 202); text-decoration: underline;font-size: 18px;"
+            >
+             Click To Complete
+            </span>
   </div>
   
   <!-- Show disabled text when captureStatus is Complete -->
-  <p v-else  style="color: gray">Disabled: Capture status is 'Complete'</p>
+  <p v-else style="color: gray; font-size: 16px">Disabled: Capture status is 'Complete'</p>
 </div>
+
 
     </div>
   </div>
@@ -533,15 +538,18 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                         <tr>
                           <th>Item ID</th>
                           <th>Item Name</th>
-                          <th style="width:100px">Category Name</th>
-                          <th>Quantity</th>
-                          <th style="width:150px">Unit Price</th>
+                          <th>Category Name</th>
+                          <th>Quantity Ordered</th>
+                          
+                          <th >Total Delivered</th>
+                          <th>Total Damaged</th>
+                            <th style="width:120px" >Outstanding Quantity</th>
                           <th>Warranty<br><span style="font-size:11px;font-weight: bolder;color: gray;">(In Months)</span></th>
-                          <th style="width:130px">Warranty Start Date</th>
-                          <th style="width:130px">Warranty End Date</th>
-                          <th style="width:100px">Updated By</th>
-                          <th style="width:110px">Updated on</th>
-                          <th style="width:110px">Delivery Status</th>
+                          <th style="width:120px">Warranty Start Date</th>
+                          <th  style="width:115px">Warranty End Date</th>
+                          <th >Updated By</th>
+                          <th>Updated on</th>
+                          <th >Delivery Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -564,7 +572,9 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                           </td>
                           <td>{{ invoicelines.categoryName }}</td>
                           <td>{{ invoicelines.quantity }}</td>
-                          <td style="white-space: nowrap;">{{ invoicelines.currency }} {{formatCurrency (invoicelines.unitPrice )}}</td>
+                          <td>{{ invoicelines.totalDelivered }}</td>
+                          <td>{{ invoicelines.totalDamages }}</td>
+                            <td>{{ invoicelines.outstandingQuantity }}</td>
                           <td>{{ invoicelines.warranty }}</td>
                           <td>
                             {{
@@ -580,7 +590,7 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                           <td style="white-space: normal">
                             {{ formatDate(invoicelines.updatedOn) }}
                           </td>
-                          <td :style="getStatusStyle(invoicelines)">
+                          <td :style="getStatusStyle(invoicelines)" style="font-size: 14px;">
                             {{ invoicelines.productStatus }}
                           </td>
                         </tr>
@@ -614,8 +624,10 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                           <th>Item ID</th>
                           <th>Item Name</th>
                           <th style="width:130px">Category Name</th>
-                          <th>Quantity</th>
-                          <th style="width:150px">Unit Price</th>
+                          <th>Quantity Ordered</th>
+                          
+                          <th style="width:120px">Total Delivered</th>
+                            <th style="width:120px">Outstanding Quantity</th>
                           <th>Warranty<br><span style="font-size:11px;font-weight: bolder;color: gray;">(In Months)</span></th>
                           <th style="width:130px">Warranty Start Date</th>
                           <th style="width:120px">Warranty End Date</th>
@@ -644,7 +656,8 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                           </td>
                           <td>{{ invoicelines.categoryName }}</td>
                           <td>{{ invoicelines.quantity }}</td>
-                          <td style="white-space: nowrap;">{{ invoicelines.currency }} {{formatCurrency (invoicelines.unitPrice )}}</td>
+                          <td>{{ invoicelines.totalDelivered }}</td>
+                            <td>{{ invoicelines.outstandingQuantity }}</td>
                           <td>{{ invoicelines.warranty }}</td>
                           <td>
                             {{
@@ -1016,6 +1029,7 @@ th
   overflow: hidden;
   height: 30px;
   margin-top: 10px;
+
 }
 
 .move-text {
@@ -1073,4 +1087,20 @@ th
   }
 }
 
+.click-to-complete-button {
+  background-color: purple;
+  color: white;
+  font-size: 18px;
+  font-family: inter;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  width:200px;
+
+}
+
+.click-to-complete-button:hover {
+  background-color: darkpurple; /* Change the color on hover */
+}
 </style>

@@ -112,6 +112,12 @@ import AppprovePOAction from "../components/stock/ApprovePOPedning.vue"
 import CaptureStatusComplete from "../components/stock/GetPOWithComplete.vue"
 import POLinesWithCaptureComplete from "../components/stock/POLinescomplete.vue"
 import PODelivery  from "../components/stock/GetPOWithDelivery.vue"
+import viewBatchDetails from "../components/stock/viewUploadBatch.vue"
+import viewPOCaptureStatus from "../components/stock/viewPOCaptureStatus.vue"
+import ItemByClient from "../components/stock/GetItemByClient.vue"
+import viewPOPage from "../components/stock/viewpopage.vue"
+import viewBatchWithSerial from "../components/stock/viewBatchSerial.vue"
+import MakeApprover from "../components/stock/MakeApprover.vue"
 const routes = [
   {
     path: "/home",
@@ -163,10 +169,34 @@ const routes = [
     component: IssuingSerial,
   },
   {
+    path: "/viewCapturePO/:id",
+    name: "viewPOCaptureStatus",
+
+    component: viewPOCaptureStatus,
+  },
+  {
+    path: "/viewPOPage/:id",
+    name: "viewPOPage",
+
+    component: viewPOPage,
+  },
+  {
+    path: "/viewBatchWithSerial/:id",
+    name: "viewBatchWithSerial",
+
+    component: viewBatchWithSerial,
+  },
+  {
     path: "/applicationstatus",
     name: "ApplicationStatus",
 
     component: ApplicationStatus,
+  },
+  {
+    path: "/makeApprover",
+    name: "MakeApprover",
+
+    component: MakeApprover,
   },
   {
     path: "/generate",
@@ -306,6 +336,11 @@ const routes = [
     path: "/allroleclaims",
     name: "roleClaims",
     component: roleClaims,
+  },
+  {
+    path: "/ItemByClient",
+    name: "ItemByClient",
+    component: ItemByClient,
   },
   {
     path: "/department",
@@ -713,6 +748,11 @@ const routes = [
     path: "/invoice_item/:id",
     name: "invoiceItemAdd",
     component: invoiceItemAdd,
+  },
+  {
+    path: "/vieewbatch/:id",
+    name: "viewBatchDetails",
+    component: viewBatchDetails,
   },
   {
     path: "/adjustedStock/:id",

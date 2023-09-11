@@ -1,4 +1,6 @@
 <template>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
   <header class="top">
     <h1>PAYHOUSE</h1>
     <nav>
@@ -169,7 +171,10 @@
                   >Activate User</a
                 >
                 <a href="#" @click.prevent="Confirming_emailfn(user.email)"
-                  >Approve User</a
+                  >Approve New User</a
+                >
+                <a href="#" @click.prevent="MakeUserApprover(user.email)"
+                  >Make Approver</a
                 >
               </div>
             </div>
@@ -273,9 +278,7 @@
               <div class="dropdown-content" style="color: blue; width: 50%">
                 <a href="#" @click="viewUseremail(user.email)">User Profile</a>
                 <a href="#" @click="viewUseremails(user.userId)">Edit User</a>
-                <a href="#" @click.prevent="DeleteUser(user.email)"
-                  >Delete User</a
-                >
+            
                 <a href="#" @click.prevent="AssigningRole(user.userId)"
                   >Assign Role</a
                 >
@@ -286,7 +289,10 @@
                   >Activate User</a
                 >
                 <a href="#" @click.prevent="Confirming_emailfn(user.email)"
-                  >Approve User</a
+                  >Approve New User</a
+                >
+                <a href="#" @click.prevent="MakeUserApprover(user.email)"
+                  >Make Approver</a
                 >
               </div>
             </div>
@@ -423,7 +429,16 @@ export default {
         replace: true,
       });
     },
-
+    async MakeUserApprover(useremail) {
+      var response = await this.MakeApprover(useremail);
+      console.log("response on email confirmation: ", response);
+      if (response.code == "200") {
+        swal.fire({ html: `<p class="text-success">${response.message}</p>` });
+        this.getallusers();
+      } else {
+        swal.fire({ html: `<p class="text-danger">${response.message}</p>` });
+      }
+    },
     async Confirming_emailfn(useremail) {
       var response = await this.confirmEmail(useremail);
       console.log("response on email confirmation: ", response);

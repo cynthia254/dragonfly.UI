@@ -77,6 +77,18 @@ export default {
       var response=await axios.post(`User/ConfirmUserMail?useremail=${useremail}`)
       return response.data;
     },
+    async MakeApprover(useremail){
+      console.log("passed mail: ", useremail)
+      this.setAuthHeader();
+      var response=await axios.post(`User/MakeApprover?useremail=${useremail}`)
+      return response.data;
+    },
+    async RemoveApprover(useremail){
+      console.log("passed mail: ", useremail)
+      this.setAuthHeader();
+      var response=await axios.post(`User/RemoveApprover?userMail=${useremail}`)
+      return response.data;
+    },
     async activateUser(useremail){
       console.log("passed mail: ", useremail)
       this.setAuthHeader();
@@ -236,8 +248,18 @@ export default {
     },
     async gettingbatchbyid(itemID){
       this.setAuthHeader();
+      console.log("yreewfyytrtrrr",itemID);
       var response=await axios.post(`Stock/GetDeliveryByBatchNumber?itemId=${itemID}`)
       console.log("response",response);
+      console.log("yreewfyytrtrrrghyiuuyttrr",response);
+      return response.data;
+    },
+    async gettingpolinebyid(itemID){
+      this.setAuthHeader();
+      console.log("yreewfyytrtrrr",itemID);
+      var response=await axios.post(`Stock/GetPOLinesbyid?itemId=${itemID}`)
+      console.log("response",response);
+      console.log("yreewfyytrtrrrghyiuuyttrr",response);
       return response.data;
     },
     async gettingserilaNumber(batchID){
@@ -265,6 +287,18 @@ export default {
     async gettingbatchNumber(batchNumber){
       this.setAuthHeader();
       var response=await axios.post(`Stock/GetProductbyBatchNumber?BatchNumber=${batchNumber}`)
+      console.log("response",response);
+      return response.data;
+    },
+    async getbatchbypo(poNumber){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetBatchByPO?poNumber=${poNumber}`)
+      console.log("response",response);
+      return response.data;
+    },
+    async getserialbybatch(batchNumber){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetProductByBatch?BatchNumber=${batchNumber}`)
       console.log("response",response);
       return response.data;
     },
@@ -497,15 +531,14 @@ export default {
     async assigningMultipleRoles(useremail, roleIds) {
       this.setAuthHeader();
       console.log("useremail",useremail);
-      console.log("role ids :::::::",roleIds);
+      console.log("role ids :::::::______",roleIds);
       
       
-        const response = await axios.post(`Roles/AssignUserOtherRoles?userId=${useremail}`, {
+        const response = await axios.post(`Roles/AssignUserOtherRoles?userId=${useremail}`, 
           
-          
-              roleIds: roleIds // Convert array to comma-separated string
+           roleIds
             
-        });
+        );
 
         return response.data;
       } ,
@@ -667,6 +700,11 @@ export default {
     var resp= await axios.post(`Roles/GetAllroleClaims?roleid=${roleided}`);
     return  resp.data;
    },
+   async gettingItemByClient(clientName){
+
+    var resp= await axios.post(`Stock/GetItemByClient?ClientName=${clientName}`);
+    return  resp.data;
+   },
    async SendingUserMail(usermail){
     this.setAuthHeader();
        console.log("logger areas _________", usermail)
@@ -705,6 +743,14 @@ export default {
            var response= await axios.post(`User/SearchUsers?search_query=${searchword}`);
            return response.data;
           },
+          
+        async SearchingPO(searchword){
+          this.setAuthHeader();
+          console.log("searchwordiis:::::::::",searchword);
+        var response= await axios.post(`Stock/SearchForPO?search_query=${searchword}`);
+        console.log("searchwordiis:::::::::   thiiid mboyd",searchword);
+        return response.data;
+       },
           async SearchingStock(searchword){
             this.setAuthHeader();
             var response=await axios.post(`Stock/SearchStock?search_query=${searchword}`);
@@ -840,6 +886,12 @@ export default {
             console.log("response of the po Number",response);
             return response.data;
           },
+          async gettingdetailsbypo(poNumber){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/GetPONumberbyNumber?POnumber=${poNumber}`)
+            console.log("response of the po Number",response);
+            return response.data;
+          },
           async markingpocomplete(poNumber){
             this.setAuthHeader();
             var response=await axios.post(`Stock/MarkingPOComplete?PONumber=${poNumber}`)
@@ -916,6 +968,12 @@ export default {
           async GettingAllStockItems() {
             this.setAuthHeader();
             var response = await axios.get("Stock/GetAllItemsStock");
+      
+            return response.data;
+          },
+          async GettingAllItemsToBeReordered() {
+            this.setAuthHeader();
+            var response = await axios.get("Stock/GetItemsToBeReordered");
       
             return response.data;
           },
@@ -1009,6 +1067,13 @@ export default {
             return resp.data;
       
           },
+
+          async addinguserroles_(roleid,userid){
+
+            var res= await axios.post(`Roles/other_roles_assigned?roleid=${roleid}&userid=${userid}`);
+
+            return res.data;
+          }
         }
    
 }  

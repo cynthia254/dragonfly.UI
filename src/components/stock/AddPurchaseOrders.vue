@@ -258,26 +258,23 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
     class="search"
     style="margin-left: 450px; margin-top: 5px; display: flex"
   >
-  <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-</svg></span>
+ 
     <input
       type="search"
       id="gsearch"
       name="gsearch"
-      placeholder="   Search"
+      placeholder=" Search PO Here"
       style="width: 280px;text-align: center;height:40px;"
       v-model="searchword"
      
     />
-    <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
-  
+   
   </div>
                </div>
                 </div>
 
               
-                <div class="table-wrapper"  >
+                <div class="table-wrapper" v-if="showallstock"  >
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
@@ -296,15 +293,56 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                         </tr>
                       </thead>
                       <tbody  v-for="(invoice, index) in this.allinvoice" :key="invoice.id">
-                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; " @click.prevent="pushPO(invoice.poNumber)">
+                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; "  >
                           <th scope="row"   ><a href="" style="text-decoration: none;color: gray;">{{index+1 }}</a></th>
-                          <td>{{invoice.poNumber}}</td>
-                          <td >{{ getFormattedDate(invoice.poDate) }}</td>
+                          <td>
+                          <span @click="ModalOpen(invoice)" class="link-button d-flex" style="font-size:13px">{{ invoice.poNumber }}</span>
+     
+     <transition name="modal">
+       <div id="purchaseModal" class="modal-mask fixed-top" v-if="isModalOpen">
+         <div class="modal-wrapper" style="vertical-align: middle; display: table-cell; text-align: right;">
+           <div class="modal-dialog" style=" margin-top: 10px; margin-right: 600px;">
+             <div class="modal-content" style="margin-top: 100px; padding: 20px; background: #fff; border-radius: 5px; width: 30%; position: relative; transition: all 5s ease-in-out;">
+             
+               
+                       <div class="modal-header">
+                      
+                         <button
+                           @click="isModalOpen = false"
+                           type="button"
+                           class="btn-close"
+                           data-bs-dismiss="modal"
+                           style="margin-right: 30px"
+                         ></button>
+                       </div>
+                       <div
+                         class="modal-body"
+                         style="
+                           width: 70%;
+                           margin-left: 10px;
+                         "
+                       >
+                       <h2 style="display: flex;">{{ selectedInvoice.poNumber }}</h2>
+          
+           <div class="content">
+             Thank you for popping me out    <span @click="viewMore(invoice)" class="link-button d-flex" style="font-size:13px;margin-left:30px">View More</span>
+          
+           </div>
+                       </div>
+                     </div>
+                   </div>
+                 
+               </div>
+               </div>
+             </transition>
+                       
+                                   </td>
+                          <td @click.prevent="pushPO(invoice.poNumber)">{{ getFormattedDate(invoice.poDate) }}</td>
                          
-                          <td >{{invoice.vendor}}</td>
-                          <td >{{ formatDate(invoice.dateCreated) }}</td>
-                          <td :style="getStatusStyle(invoice)" style="font-size:14px">{{ invoice.captureStatus }}</td>
-                          <td :style="getDeliveryStatus(invoice)" style="font-size:14px">{{ invoice.deliveryStatus }}</td>
+                          <td @click.prevent="pushPO(invoice.poNumber)">{{invoice.vendor}}</td>
+                          <td @click.prevent="pushPO(invoice.poNumber)">{{ formatDate(invoice.dateCreated) }}</td>
+                          <td :style="getStatusStyle(invoice)" style="font-size:14px" @click.prevent="pushPO(invoice.poNumber)">{{ invoice.captureStatus }}</td>
+                          <td :style="getDeliveryStatus(invoice)" style="font-size:14px" @click.prevent="pushPO(invoice.poNumber)">{{ invoice.deliveryStatus }}</td>
                           
                          
                         </tr>
@@ -315,12 +353,94 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                 </div>
               </div>
               </div>
+              <div class="table-wrapper" v-if="showallstocksearch"   >
+                  <div class="table-title">
+                    <div class="">
+                      <div class="col-sm table-responsive">
+                        <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:40px">
+                      <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
+        padding: 12px 34px">
+                        <tr >
+                            <th style="width: 100px">PO ID</th>
+                          <th style="width: 80px">PO Number</th>
+                          <th style="width: 90px">PO Date</th>
+                          <th style="width: 100px">Supplier Name</th>
+                          <th style="width: 120px">Date Updated</th>
+                          <th style="width: 80px">Capture Status</th>
+                          <th style="width: 80px">Delivery Status</th>
+                         
+                        </tr>
+                      </thead>
+                      <tbody  v-for="(invoice, index) in this.allinvoice" :key="invoice.id">
+                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; ">
+                          <th scope="row"   ><a href="" style="text-decoration: none;color: gray;">{{index+1 }}</a></th>
+                          <td>
+                          <span @click="ModalOpen(invoice)" class="link-button d-flex" style="font-size:13px">{{ invoice.poNumber }}</span>
+     
+     <transition name="modal">
+       <div id="purchaseModal" class="modal-mask fixed-top" v-if="isModalOpen">
+         <div class="modal-wrapper" style="vertical-align: middle; display: table-cell; text-align: right;">
+           <div class="modal-dialog" style=" margin-top: 10px; margin-right: 600px;">
+             <div class="modal-content" style="margin-top: 100px; padding: 20px; background: #fff; border-radius: 5px; width: 30%; position: relative; transition: all 5s ease-in-out;">
+             
+               
+                       <div class="modal-header">
+                      
+                         <button
+                           @click="isModalOpen = false"
+                           type="button"
+                           class="btn-close"
+                           data-bs-dismiss="modal"
+                           style="margin-right: 30px"
+                         ></button>
+                       </div>
+                       <div
+                         class="modal-body"
+                         style="
+                           width: 70%;
+                           margin-left: 10px;
+                         "
+                       >
+                       <h2 style="display: flex;">{{ selectedInvoice.poNumber }}</h2>
+          
+           <div class="content">
+             Thank you for popping me out    <span @click="viewMore(invoice)" class="link-button d-flex" style="font-size:13px;margin-left:30px">View More</span>
+          
+           </div>
+                       </div>
+                     </div>
+                   </div>
+                 
+               </div>
+               </div>
+             </transition>
+                       
+                                   </td>
+                          <td @click.prevent="pushPO(invoice.poNumber)">{{ getFormattedDate(invoice.poDate) }}</td>
+                         
+                          <td @click.prevent="pushPO(invoice.poNumber)">{{invoice.vendor}}</td>
+                          <td @click.prevent="pushPO(invoice.poNumber)">{{ formatDate(invoice.dateCreated) }}</td>
+                          <td :style="getStatusStyle(invoice)" style="font-size:14px" @click.prevent="pushPO(invoice.poNumber)">{{ invoice.captureStatus }}</td>
+                          <td :style="getDeliveryStatus(invoice)" style="font-size:14px" @click.prevent="pushPO(invoice.poNumber)">{{ invoice.deliveryStatus }}</td>
+                          
+                         
+                        </tr>
+                      
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+            </div>
+          
             
             </div>
             </div>
           </div>
-        </div>
-        </div>
+        
+     
 </template>
 <script>
 import swal from "sweetalert2";
@@ -339,6 +459,8 @@ export default {
       searchword:"",
       showallstock:true,
       showallstocksearch:false,
+      isModalOpen:false,
+      selectedInvoice: null,
       formdata: {
         poDate:"",
         poNumber:"",
@@ -350,6 +472,11 @@ export default {
     };
   },
   methods: {
+    ModalOpen(invoice) {
+  console.log("ModalOpen called with", invoice);
+  this.selectedInvoice = invoice;
+  this.isModalOpen = true;
+},
     formatDate(dateString) {
             const date = new Date(dateString);
 
@@ -368,6 +495,14 @@ console.log("allinvoice: ", this.allinvoice);
 return response;
 
 },
+async searchPO() {
+      this.showallstock = false;
+      this.showallstocksearch = true;
+      var resp = await this.SearchingPO(this.searchword);
+      this.allinvoice = resp.body;
+      console.log("search  return body: ", resp.body);
+    },
+  
 async pushPO(poNumber) {
       console.log("PO Number is:", poNumber);
       this.$router.push({
@@ -444,6 +579,15 @@ console.log("allsuppliers: ", this.allsuppliers);
 return response;
 
 },
+async viewMore(invoice) {
+    console.log("Navigating to edit page for:", invoice);
+    console.log(" ____________________________________________*****************is______________***********:", invoice);
+        this.$router.push({
+          path: `/viewPOPage/${this.selectedInvoice.poNumber}`,
+          replace: true,
+        });
+    
+  },
 getStatusStyle(invoice){
   if(invoice.captureStatus==="Complete"){
     return{
@@ -488,11 +632,20 @@ getDeliveryStatus(invoice){
     this.GetLoggedInUser();
   },
  
+  watch: {
+    searchword(passedvalue) {
+      if (passedvalue != "") {
+        this.searchPO();
+      } else {
+        this.GetAllInvoice();
+      }
+    },
+  },
 };
 </script>
 <style>
 .modal-mask {
-    background-color: rgba(0, 0, 0, .5);
+    background-color: #fff(0, 0, 0, .5);
   display: table;
   transition: opacity 0.3s ease;
   width: 100%;
@@ -509,7 +662,7 @@ getDeliveryStatus(invoice){
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #fff(0, 0, 0, 0.5);
   z-index: 9999;
   display: flex;
   justify-content: center;

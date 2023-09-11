@@ -159,8 +159,9 @@
           <!-- Complete button and animation text -->
       <div class="col-sm-6 d-flex align-items-center justify-content-end">
   <!-- Show the Complete button when allItemsAdded is true and captureStatus is not Complete -->
-  <div v-if="showMovingText && !allDeliveryStatusComplete" class="moving-animation">
-  <p @click="showCompleteButton" class="move-text" style="color: purple;font-size: 15px;"><span style="font-weight: bolder;">N/B:</span>    Click me if all delivery status is complete.</p>
+  <div v-if="showMovingText && !allDeliveryStatusComplete" class="">
+  <span @click="showCompleteButton"  
+              style="cursor: pointer; color: rgb(58, 25, 202); text-decoration: underline;font-size: 18px;"><span style="font-weight: bolder;"></span>    Click to Complete</span>
 </div>
 <div v-else-if="!allItemsAdded && !isCaptureStatusComplete">
   <button @click="markComplete" class="complete-button">Complete</button>
@@ -198,19 +199,22 @@
                            
                           "
                         >
-                          <tr>
-                            <th>Item ID</th>
-                            <th>Item Name</th>
-                            <th style="width:130px">Category Name</th>
-                            <th>Quantity</th>
-                            <th style="width:150px">Unit Price</th>
-                            <th>Warranty<br><span style="font-size:11px;font-weight: bolder;color: gray;">(In Months)</span></th>
-                            <th style="width:130px">Warranty Start Date</th>
-                            <th style="width:120px">Warranty End Date</th>
-                            <th>Updated By</th>
-                            <th>Updated on</th>
-                            <th style="width:150px">Delivery Status</th>
-                          </tr>
+                        <tr>
+                          <th>Item ID</th>
+                          <th>Item Name</th>
+                          <th>Category Name</th>
+                          <th>Quantity Ordered</th>
+                          
+                          <th >Total Delivered</th>
+                          <th>Total Damaged</th>
+                            <th style="width:108px" >Outstanding</th>
+                          <th>Warranty<br><span style="font-size:11px;font-weight: bolder;color: gray;">(In Months)</span></th>
+                          <th style="width:120px">Warranty Start Date</th>
+                          <th  style="width:115px">Warranty End Date</th>
+                          <th >Updated By</th>
+                          <th>Updated on</th>
+                          <th >Delivery Status</th>
+                        </tr>
                         </thead>
                         <tbody>
                           <tr
@@ -229,32 +233,34 @@
                               overflow: hidden;
                             "
                           >
-                            <td>{{ index + 1 }}</td>
-                            <td style="white-space: normal">
-                              {{ invoicelines.brandName }}
-                              {{ invoicelines.itemName }}
-                            </td>
-                            <td>{{ invoicelines.categoryName }}</td>
-                            <td>{{ invoicelines.quantity }}</td>
-                            <td style="white-space: nowrap;">{{ invoicelines.currency }} {{formatCurrency (invoicelines.unitPrice )}}</td>
-                            <td>{{ invoicelines.warranty }}</td>
-                            <td>
-                              {{
-                                getFormattedDate(invoicelines.warrantyStartDate)
-                              }}
-                            </td>
-                            <td>
-                              {{ getFormattedDate(invoicelines.warrantyEndDate) }}
-                            </td>
-                            <td style="white-space: normal">
-                              {{ invoicelines.updatedBy }}
-                            </td>
-                            <td style="white-space: normal">
-                              {{ formatDate(invoicelines.updatedOn) }}
-                            </td>
-                            <td :style="getStatusStyle(invoicelines)">
-                              {{ invoicelines.productStatus }}
-                            </td>
+                          <td>{{ index + 1 }}</td>
+                          <td style="white-space: normal">
+                            {{ invoicelines.brandName }}
+                            {{ invoicelines.itemName }}
+                          </td>
+                          <td>{{ invoicelines.categoryName }}</td>
+                          <td>{{ invoicelines.quantity }}</td>
+                          <td>{{ invoicelines.totalDelivered }}</td>
+                          <td>{{ invoicelines.totalDamages }}</td>
+                            <td>{{ invoicelines.outstandingQuantity }}</td>
+                          <td>{{ invoicelines.warranty }}</td>
+                          <td>
+                            {{
+                              getFormattedDate(invoicelines.warrantyStartDate)
+                            }}
+                          </td>
+                          <td>
+                            {{ getFormattedDate(invoicelines.warrantyEndDate) }}
+                          </td>
+                          <td style="white-space: normal">
+                            {{ invoicelines.updatedBy }}
+                          </td>
+                          <td style="white-space: normal">
+                            {{ formatDate(invoicelines.updatedOn) }}
+                          </td>
+                          <td :style="getStatusStyle(invoicelines)" style="font-size: 14px;">
+                            {{ invoicelines.productStatus }}
+                          </td>
                           </tr>
                         </tbody>
                       </table>

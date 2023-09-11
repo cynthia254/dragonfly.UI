@@ -100,6 +100,17 @@
                 <ul>
                   <li>
                     <a
+                      href="/poComplete"
+                      style="
+                        font-size: 16px;
+                        font-family: inter;
+                        font-weight: medium;
+                      "
+                      >Update Batch</a
+                    >
+                  </li>
+                  <li>
+                    <a
                       href="/brand"
                       style="
                         font-size: 16px;
@@ -210,11 +221,17 @@
                   <a href="/stockdashboard" style="color: gray">Home</a>
                 </li>
                 <li
+                  class="breadcrumb-item"
+                  style="font-family: inter; font-size: 16px"
+                >
+                  <a href="/purchaseordered" style="color: gray">Purchase Orders</a>
+                </li>
+                <li
                   class="breadcrumb-item active"
                   aria-current="page"
                   style="font-family: inter; font-size: 16px; color: #ff8c22"
                 >
-                  Manage Requisition Forms
+                  Manage PO's with Capture-Pending
                 </li>
               </ol>
             </nav>
@@ -369,7 +386,46 @@
                                 >
                               </th>
                               <td>
-                                {{ invoice.poNumber }} 
+                      <span @click="ModalOpen(invoice)" class="link-button d-flex" style="font-size:13px">{{ invoice.poNumber }}</span>
+     
+<transition name="modal">
+  <div id="purchaseModal" class="modal-mask fixed-top" v-if="isModalOpen">
+    <div class="modal-wrapper" style="vertical-align: middle; display: table-cell; text-align: right;">
+      <div class="modal-dialog" style=" margin-top: 10px; margin-right: 600px;">
+        <div class="modal-content" style="margin-top: 100px; padding: 20px; background: #fff; border-radius: 5px; width: 30%; position: relative; transition: all 5s ease-in-out;">
+        
+          
+                  <div class="modal-header">
+                 
+                    <button
+                      @click="isModalOpen = false"
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      style="margin-right: 30px"
+                    ></button>
+                  </div>
+                  <div
+                    class="modal-body"
+                    style="
+                      width: 70%;
+                      margin-left: 10px;
+                    "
+                  >
+                  <h2 style="display: flex;">{{ selectedInvoice.poNumber }}</h2>
+     
+      <div class="content">
+        Thank you for popping me out    <span @click="viewMore(invoice)" class="link-button d-flex" style="font-size:13px;margin-left:30px">View More</span>
+     
+      </div>
+                  </div>
+                </div>
+              </div>
+            
+          </div>
+          </div>
+        </transition>
+                  
                               </td>
                               <td>{{ invoice.vendor }}</td>
                               <td>{{ formatDate(invoice.dateCreated) }}</td>
@@ -619,6 +675,7 @@
         showallstock: true,
         showallstocksearch: false,
         allstockitems: {},
+        isModalOpen:false,
         alldepartment: {},
         allusers: {},
         allcustomers: {},
@@ -639,6 +696,20 @@
       this.selectedInvoice = invoice;
       this.showModal = true;
     },
+    ModalOpen(invoice) {
+  console.log("ModalOpen called with", invoice);
+  this.selectedInvoice = invoice;
+  this.isModalOpen = true;
+},
+async viewMore(invoice) {
+    console.log("Navigating to edit page for:", invoice);
+    console.log(" ____________________________________________*****************is______________***********:", invoice);
+        this.$router.push({
+          path: `/viewCapturePO/${this.selectedInvoice.poNumber}`,
+          replace: true,
+        });
+    
+  },
       async GetAllBrands() {
         const response = await this.gettingAllBrands();
         this.allbrands = response.body;
@@ -774,16 +845,6 @@
             html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
           });
           await this.GetAllInvoice();
-  this.$router.push({
-    path: "/PoPending" ,  
-            replace: true,
-          });
-  
-  
-          setTimeout(()=>{
-            location.reload();
-  
-          },700)
   
      
   
@@ -794,6 +855,17 @@
           });
           this.$refs.myForm.reset();
         }
+        this.$router.push({
+  path: "/PoPending" ,  
+          replace: true,
+        });
+
+
+        setTimeout(()=>{
+          location.reload();
+
+        },700)
+      this.GetAllInvoice();
       
       },
       async getAllDepartment() {
@@ -809,11 +881,20 @@
         console.log("allusers: ", this.allusers);
         return response;
       },
+      async gettingitembyinvoice() {
+      var poNumber = this.id;
+      var response = await this.gettingitemsinPO(poNumber);
+      this.invoiceItemBody = response.body;
+      this.captureStatus = this.invoiceItemBody.captureStatus;
+      console.log("capture status>>>>>>>>>>>>>>>>>>>>>>>>>",this.captureStatus);
+      console.log("response on invoice body: : ", this.invoiceItemBody);
+    },
     },
   
     created() {
       this.invoiceNumber = this.$route.params.invoiceNumber;
-      console.log("ItemId :", this.invoiceNumber);
+      console.log("ItemId :", this.id);
+      this.gettingitembyinvoice();
       this.GetAllInvoice();
       this.GetAllSuppliers();
       this.GetLoggedInUser();

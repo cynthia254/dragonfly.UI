@@ -108,14 +108,8 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
     <div class="row">
       <div class="">
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center panel" style="margin-top: 33px;">
-          <div style="width: 25%; margin-left: 10px; margin-top: 30px;">
-            <select class="form-control" ref="selectednumber" @keydown.enter="moveToIMEI0" v-model="selected_Number" style="background-color: white; font-family: inter; font-size: 16px; color: gray; height: 50px; width: 100%; border-style: none;">
-              <option value="" style="font-family: inter; font-size: 13px; color: gray; background: #f5f5f5">Select Number</option>
-              <option v-for="numbererd in numbering_body" :value="numbererd.numberValue" :key="numbererd.productNumberID"  >{{ numbererd.numberValue }}</option>
-           
-            </select>
-          </div>
-          <div v-if="selected_Number" style="width: 25%; margin-left: 10px; font-family: inter;">
+          
+          <div  style="width: 25%; margin-left: 10px; font-family: inter;">
             <label for="serialNumber" class="form-label">Serial Number:</label>
             <input ref="serialNumberInput" v-model="formdata.serialNumber" @keydown.enter="moveToIMEI1" type="text" class="form-control" required placeholder="SerialNumber" style="border-style: none;">
           </div>
@@ -252,9 +246,6 @@ import AppMixins from "../../Mixins/shared";
       };
     },
     methods:{
-      moveToIMEI0() {
-      this.$refs.serialNumberInput.focus();
-    },
       moveToIMEI1() {
       this.$refs.imei1Input.focus();
     },
@@ -276,7 +267,7 @@ import AppMixins from "../../Mixins/shared";
     imeI1:this.formdata.imei1,
     batchID:this.productlineBody.itemID,
     batchNumber:this.id,
-    product_No:this.selected_Number,
+    product_No:0,
     reference_Number:this.reference_number,
 
 

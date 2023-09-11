@@ -345,16 +345,24 @@
                 </span>
               </h2>
 
-              <div class="form-group">
-                <label style="font-family: inter; font-size: 16px;">Select Serial Number</label>
-                <select name="product" id="product" class="form-select rounded-0" required v-model="selectedSerialNumbers" multiple style="background-color: #f5f5f5; font-family: inter; font-size: 13px; color: gray;">
-                  <option value="">Select Serial Number</option>
-                  <option v-for="brands in allinvoiceitems" :value="brands.serialNumber" :key="brands.batchID">{{ brands.serialNumber }}</option>
-                </select>
-              </div>
+              <div class="form-group" v-if="datearea">
+  <label style="font-family: inter; font-size: 16px;">Select Serial Numbers</label>
+  <div v-for="brands in allinvoiceitems" :key="brands.batchID">
+    <label>
+      <input
+        type="checkbox"
+        :value="brands.serialNumber"
+        v-model="selectedSerialNumbers"
+        style="background-color: #f5f5f5; font-family: inter; font-size: 13px; color: gray;"
+      />
+      {{ brands.serialNumber }}
+    </label>
+  </div>
+</div>
+
 
               <div class="form-group" style="margin-top: 10px">
-                <input @click.prevent="IssuingProcusee()" type="submit" class="btn btn-success btn-sm" value="Save" form="purchaseForm" style="margin-bottom: 30px; margin-left: 70px; width: 60%; font-family: inter; font-size: 13px;" />
+                <input @click.prevent="IssuingProcusee()" type="submit" class="btn btn-success btn-sm" value="Issue" form="purchaseForm" style="margin-bottom: 30px; margin-left: 70px; width: 60%; font-family: inter; font-size: 13px;" />
               </div>
             </div>
           </div>
@@ -443,7 +451,7 @@
                 </div>
               </div>
             </div>
-            <div class="container w-100" id="downloadagreement" style="">
+            <div class="container w-100 " id="downloadagreement" style="height: 1300px;">
     <div class="frame-24" style="display: flex; justify-content: center; align-items: center; margin-top: 5px;">
         <img alt="Payhouse Logo" class="payhouse-logo-1" src="../../assets/images/payhouse.png" style="max-height: 100%; max-width: 100%;">
     </div>
@@ -502,6 +510,38 @@
     <p style="margin: 0;font-size: 6px;">Email: sales@payhouse.co.ke Website: payhouse.co.ke</p>
 </div>
 
+<div class="table-wrapper w-100 " v-if="requisitionbody.categoryName !== 'Accessory'">
+  <h1 style="margin-top: 40px;font-size:15px;font-weight: bolder;">{{ requisitionbody.clientName }}</h1>
+                <div class="table-title">
+                  <div class="">
+                    <div class="col-sm table-responsive table-bordered">
+                      <table class=" table table-hover table-bordered" style="width: 100%; margin-left: 0px;">
+  <thead style="background-color:  rgb(247, 210, 89);font-family: inter;font-weight: bold;font-size: 16px;white-space: nowrap;">
+        
+
+      <tr>
+          <th style="width: 50px">ID</th>
+          <th style="width: 120px">Serial Number</th>
+          <th style="width: 120px">IMEI 1</th>
+          <th style="width: 120px">IMEI 2</th>
+      </tr>
+    </thead>
+  
+      <tr v-for="(invoice_data , index) in data_formBody" v-bind:key="invoice_data.issueID " style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;  ">
+        <td>{{ index + 1 }}</td>
+      <td  >{{ invoice_data.serialNumber }}</td>
+      <td  >{{ invoice_data.imeiI1 }}</td>
+      <td  >{{ invoice_data.imeI2 }}</td>
+      </tr>
+    
+   </table>
+                    </div>
+                  </div>
+                </div>
+                </div>
+             
+           
+          
 </div>
 
 <div style="margin-top: 20px; display: flex; justify-content: center;">
@@ -509,12 +549,16 @@
         Download DNote
     </button>
 </div>
-</div>
-</div>
+
 </div>
 
-  
+</div>
+
+</div>
+
+
     </div>
+   
   
   
    
@@ -614,24 +658,12 @@
         });
       },
       async IssuingProcusee() {
-        if (this.selectedSerialNumbers.length === 0) {
-          swal.fire({
-            heightAuto: false,
-            html: '<h5 class="text-danger" style="font-family: inter; margin-top: 22px">Please select at least one serial number</h5>',
-          });
-          return;
-        }
+    
 
         const expectedQuantity = this.requisitionbody.quantity;
         console.log("expected quantitiy ix]s:::::",expectedQuantity);
 
-        if (this.selectedSerialNumbers.length !== expectedQuantity) {
-          swal.fire({
-            heightAuto: false,
-            html: '<h5 class="text-danger" style="font-family: inter; margin-top: 22px">Number of selected serial numbers must match the quantity</h5>',
-          });
-          return;
-        }
+     
   const promises = this.selectedSerialNumbers.map(async (serialNumber) => {
     const body = {
       serialNumber,
@@ -652,7 +684,7 @@
         html: `<h5 class="text-success" style="font-family: inter; margin-top: 22px">${result.response.message}</h5>`,
       });
       this.$router.push({
-  path: "/issueitems" ,  
+        path: `/issuingSerial/${this.id}`, 
           replace: true,
         });
 
@@ -723,6 +755,16 @@ return response;
   });
 
     },
+    watch: {
+  'requisitionbody.categoryName': function(newValue) {
+    if (newValue === "Accesory") {
+      this.datearea = false;
+    } else {
+      this.datearea = true;
+    }
+  },
+},
+
   };
   </script>
   <style>
