@@ -2,6 +2,7 @@
    <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
 
+   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
    
 
     
@@ -87,32 +88,43 @@
                     class="table-title"
                     style="background:white; height: 71px;box-shadow: 3px 2px 3px rgba(0, 0, 0, .2);border-radius: 12px;"
                   >
-                    <div class="row" >
-                      <div class="col-sm-6">
-                        <h2 style="font-size: 1.50rem; color: var(--grey, #1E1E1E);
-text-align: center;
+                  <div class="row">
+  <div class="col-sm-6">
+    <h2 style="font-size: 1.50rem; color: var(--grey, #1E1E1E); text-align: center; font-size: 16px; font-style: normal; font-weight: 700; line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; top: 1.25rem; margin-top: 10px; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem; font-family: inter; white-space: nowrap; width: fit-content;">
+      PRODUCT DETAILS LIST
+    </h2>
+  </div>
+  <div class="col-sm-6 d-flex justify-content-end align-items-center">
+    <a href="" style="margin-right: 20px;margin-top: 20px; font-family: inter;"  v-if="productlineBody.productStatus !== 'Closed'" @click="generateExcel">Download Sample Excel</a>
+  </div>
+</div>
 
-/* H3 */
-font-size: 16px;
-font-style: normal;
-font-weight: 700;
-line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; top: 1.25rem;margin-top: 10px; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;white-space: nowrap;width: fit-content;">
-                          PRODUCT DETAILS LIST
-                        </h2>
-                        
-                      </div>
-                      </div>
                   
-     
+    
                       <form class="row g-3" @submit.prevent="CreateItem" ref="myForm" v-if="!showBulkUpload">
     <div class="row">
       <div class="">
         <div class="d-flex flex-column flex-lg-row justify-content-lg-center panel" style="margin-top: 33px;">
           
-          <div  style="width: 25%; margin-left: 10px; font-family: inter;">
-            <label for="serialNumber" class="form-label">Serial Number:</label>
-            <input ref="serialNumberInput" v-model="formdata.serialNumber" @keydown.enter="moveToIMEI1" type="text" class="form-control" required placeholder="SerialNumber" style="border-style: none;">
-          </div>
+          <div
+  v-if="productlineBody.productStatus !== 'Closed'"
+  style="width: 25%; margin-left: 10px; font-family: inter;"
+>
+  <label for="serialNumber" class="form-label">Serial Number:</label>
+  <input
+    ref="serialNumberInput"
+    v-model="formdata.serialNumber"
+    @keydown.enter="moveToIMEI1"
+    type="text"
+    class="form-control"
+    required
+    placeholder="SerialNumber"
+    style="border-style: none; background-color: white;"
+  >
+</div>
+
+
+
           <div v-if="formdata.serialNumber" style="width: 25%; margin-left: 10px; font-family: inter;">
             <label for="imei1" class="form-label">IMEI 1:</label>
             <input ref="imei1Input" v-model="formdata.imei1" @keydown.enter="moveToIMEI2" type="text" class="form-control" required placeholder="IMEI1" style="border-style: none;">
@@ -131,13 +143,13 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
       <div class="table-wrapper">
                   <div class="table-title">
                     <div class="">
-                      <div class="col-sm table-responsive">
-    <table class=" table table-hover table-bordered" style="margin-left:40px">
+                      <div class="col-sm table-responsive dataTable">
+    <table class=" table table-hover table-bordered" id="purchaseList" style="margin-left:40px">
   <thead style="background-color:   #F3E6DA;font-family: inter;font-weight: bold;font-size: 16px;white-space: nowrap;">
                         
     <tr>
       <th scope="col">No.</th>
-      <th scope="col">Serial Number</th>
+      <th scope="col" style="width:180px">Serial Number</th>
       <th>IMEI 1</th>
       <th>IMEI 2</th>
       <th>Serial Status</th>
@@ -154,32 +166,28 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
       <td>{{ invoiceitem.imeI1 }}</td>
       <td>{{ invoiceitem.imeI2 }}</td>
       <td  :style="getStatusStyle(invoiceitem)">{{ invoiceitem.serialStatus }}</td>
-      <td  :style="getStatusStyle(invoiceitem)">{{ invoiceitem.itemStatus }}</td>
+      <td  :style="getCodntionStyle(invoiceitem)">{{ invoiceitem.itemStatus }}</td>
       <td>
-                            <svg
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  width="20"
-                                  height="20"
-                                  fill="green"
-                                  class="bi bi-pencil-square"
-                                  viewBox="0 0 16 16"
-                                  @click="editSerialNumber(invoiceitem.batchID)"
-                                  style="margin-left:20px"
-                               
-                                
-                                >
-                                  <path
-                                    d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
-                                  />
-                                  <path
-                                    fill-rule="evenodd"
-                                    d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
-                                  />
-                                </svg>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="20"
+    height="20"
+    :fill="productlineBody.productStatus === 'Closed' ? 'gray' : 'green'"
+    class="bi bi-pencil-square"
+    viewBox="0 0 16 16"
+    @click="productlineBody.productStatus !== 'Closed' ? editSerialNumber(invoiceitem.batchID) : null"
+    style="margin-left:20px"
+  >
+    <path
+      d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+    />
+    <path
+      fill-rule="evenodd"
+      d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"
+    />
+  </svg>
+</td>
 
-                              
-                             
-                          </td>
     </tr>
   </tbody>
 </table>
@@ -199,6 +207,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                             font-family: inter;
                             display: flex;
                             align-items: center;background:rgb(1, 1, 141);color: white;text-align: center;height: 34px;"
+                             :disabled="productlineBody.productStatus === 'Closed'"
                 >
                 
              <h2 style="font-size: 14px;color: white;margin-top: 8px;margin-left: 15px;font-family:inter;" @click.prevent="pushBulk()">Upload Bulk</h2>
@@ -217,6 +226,14 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
   
   <script>
   import swal from "sweetalert2";
+  import * as  XLSX from 'xlsx';
+  import 'jquery';
+import 'datatables.net';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-select';
+import 'datatables.net-bs4';
+import $ from 'jquery';
+  import { saveAs } from 'file-saver';
 import AppMixins from "../../Mixins/shared";
   export default {
     name:"invoiceItemAdd",
@@ -245,7 +262,27 @@ import AppMixins from "../../Mixins/shared";
         allinvoice:[],
       };
     },
+  
     methods:{
+      generateExcel() {
+        // Sample data for demonstration
+        const data = [
+        ['SerialNumber','IMEI1','IMEI2'],
+        ['', '', '', ],
+        // Add more data as needed...
+      ];
+
+      // Create worksheet for Sheet1
+      const worksheet = XLSX.utils.aoa_to_sheet(data);
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+
+        // Generate Excel file and download
+        const excelBuffer = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+        const excelBlob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+        saveAs(excelBlob, 'data.xlsx');
+      },
+
       moveToIMEI1() {
       this.$refs.imei1Input.focus();
     },
@@ -330,6 +367,21 @@ if (response.isTrue==true) {
       color:"red"
     };
   }else if(invoiceitem.serialStatus==="Not Issued"){
+    return{
+      color:"green"
+    };
+
+  }
+  else{
+    return "";
+  }
+},
+getCodntionStyle(invoiceitem){
+  if(invoiceitem.itemStatus==="Faulty"){
+    return{
+      color:"red"
+    };
+  }else if(invoiceitem.itemStatus==="Okay"){
     return{
       color:"green"
     };
@@ -434,7 +486,43 @@ async gettingreferencenumbers() {
     this.gettingreferencenumbers();
     this.gettingproductlineByid();
    this.GetAllPOS();
+// Load data
+
+
+
    
+  },
+  mounted() {
+  // Load data (assuming this.gettingproductdetailsbyid() returns a Promise)
+  this.gettingproductdetailsbyid().then(() => {
+    // Assuming data is an array of objects
+    // Bind the data to the DataTable
+    // Assuming data is an array of objects
+// Bind the data to the DataTable
+let dataTable = $('#purchaseList').DataTable({
+  paging: true,
+  searching: true,
+  responsive: true,
+  // Other DataTable options here as needed
+});
+
+// If you want to re-draw the table after data is loaded (not always necessary)
+dataTable.draw();
+
+// Destroy the existing DataTable instance (if it exists)
+if ($.fn.DataTable.isDataTable('#purchaseList')) {
+  dataTable.destroy();
+}
+
+// Reinitialize the DataTable
+dataTable = $('#purchaseList').DataTable({
+  paging: true,
+  searching: true,
+  responsive: true,
+  // Other DataTable options here as needed
+});
+
+});
   },
   
   };

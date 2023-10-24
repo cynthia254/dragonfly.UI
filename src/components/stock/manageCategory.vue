@@ -219,26 +219,7 @@ background: #FFF;
 box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
               
               <div class="row mx-5">
-                  <div class="col-sm-6 d-flex mt-2">
-                    <div
-    class="search"
-    style="margin-left: 900px; margin-top: 5px; display: flex"
-  >
-  <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-</svg></span>
-    <input
-      type="search"
-      id="gsearch"
-      name="gsearch"
-      placeholder="   Search"
-      style="width: 280px;text-align: center;height:40px;"
-     
-    />
-    <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
-  
-  </div>
-               </div>
+      
                 </div>
 
               
@@ -246,7 +227,12 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
-                        <table id="purchaseList" class="table table-hover " style="overflow:hidden;margin-left:40px">
+                        <div class="search-container" style="margin-top: 30px; display: flex; align-items: center;">
+    <p style="margin-right: 10px;margin-top: 10px;">Search:</p>
+    <input type="text" v-model="search" id="table-search" placeholder="Search...">
+
+  </div>
+                        <table id="purchaseList" class="display" style="overflow:hidden;margin-left:40px">
                       <thead style="background-color:   #F3E6DA;font-family: inter;font-weight: bold;font-size: 16px;white-space: nowrap;">
                        
                         <tr >
@@ -257,11 +243,13 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
                           <th style="width: 120px">Action</th>
                         </tr>
                       </thead>
-                      <tbody v-for="brands in this.allbrands" v-bind:key="brands.id">
+                      <tbody v-for="brand in filteredBrands" v-bind:key="brand.categoryID">
+
+
                         <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
-                          <th scope="row">{{brands.categoryID }}</th>
-                          <td>{{brands.categoryName}}</td>
-                          <td>{{brands.categoryDesc}}</td>
+                          <th scope="row">{{brand.categoryID }}</th>
+                          <td>{{brand.categoryName}}</td>
+                          <td>{{brand.categoryDesc}}</td>
 
 
                           <td>
@@ -272,7 +260,7 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
                                   fill="green"
                                   class="bi bi-pencil-square"
                                   viewBox="0 0 16 16"
-                                  @click.prevent="editBrand(brands.brandId)"
+                                  @click.prevent="editBrand(brand.categoryID)"
                                
                                 
                                 >
@@ -315,12 +303,18 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
 </template>
 <script>
 import swal from "sweetalert2";
+import 'jquery';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-select';
+import 'datatables.net-bs4/js/dataTables.bootstrap4.min.js';
+import $ from 'jquery';
 import AppMixins from "../../Mixins/shared"
 export default {
   name: "categoryPage",
   mixins: [AppMixins],
   data() {
     return {
+      search:'',
       showModal: false,
       allbrands:[],
       userbody: {},
@@ -333,6 +327,15 @@ export default {
       },
     };
   },
+  computed: {
+  filteredBrands() {
+    return this.allbrands.filter((brand) =>
+      brand.categoryName.toLowerCase().includes(this.search.toLowerCase()) ||
+      brand.categoryDesc.toLowerCase().includes(this.search.toLowerCase())
+    );
+  },
+},
+
   methods: {
     async GetAllBrands(){
 
@@ -384,10 +387,23 @@ async editBrand(brandId) {
       this.GetAllBrands();
     },
   },
-  created(){
-    this.GetAllBrands();
-    this.GetLoggedInUser();
-  }
+  mounted() {
+  this.GetLoggedInUser().then(() => {
+    // Fetch brand data first
+    this.GetAllBrands().then(() => {
+      // Initialize DataTable after data load
+      $(document).ready(() => {
+        $('#purchaseList').DataTable({
+          paging: false,
+          searching: false,
+          responsive: true,
+          // Other DataTable options here as needed
+        });
+      });
+    });
+  });
+},
+
 };
 </script>
 <style>

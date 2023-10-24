@@ -1,7 +1,13 @@
 <template>
-    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
-    
-     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css"
+  />
+
+  <link
+    href="https://fonts.googleapis.com/css?family=Montserrat"
+    rel="stylesheet"
+  />
 
   <div class="">
     <section class="vh-100 bg-danger" style="">
@@ -10,7 +16,10 @@
           <div class="col col-xl-10">
             <div class="card" style="border-radius: 1rem">
               <div class="row g-0">
-                <div class="col-md-6 col-lg-5 d-none d-md-block bg-danger" style="height:100%;">
+                <div
+                  class="col-md-6 col-lg-5 d-none d-md-block bg-danger"
+                  style="height: 100%"
+                >
                   <img
                     src="../../assets/images/pexels-monstera-9432428.jpg"
                     alt="login form"
@@ -20,62 +29,103 @@
                 </div>
                 <div class="col-md-6 col-lg-7 d-flex align-items-center">
                   <div class="card-body p-4 p-lg-5 text-black">
-               
-                      <div class="d-flex align-items-center mb-3 pb-1">
-                        <span
-                          class="h1  mb-0 text-center text-danger mx-4.5 "
-                          style="font-family: 'Montserrat';font-size: 32px;font-weight: bolder;">PAYHOUSE LOGIN</span
-                        >
-                      </div>
+                    <div class="d-flex align-items-center mb-3 pb-1">
+                      <span
+                        class="h1 mb-0 text-center text-danger mx-4.5"
+                        style="
+                          font-family: 'Montserrat';
+                          font-size: 32px;
+                          font-weight: bolder;
+                        "
+                        >PAYHOUSE LOGIN</span
+                      >
+                    </div>
 
-                      <div class="form-outline mb-4">
-                        <input
-                          type="email"
-                          id="form2Example17"
-                          class="form-control form-control-lg"
-                          v-model="this.formdata.useremail"
-                          required
-                        />
-                        <label class="form-label" for="form2Example17"
-                          style="font-family: 'Montserrat'">Email address</label
-                        >
-                      </div>
+                    <div class="form-outline mb-4">
+                      <input
+                        type="email"
+                        id="form2Example17"
+                        class="form-control form-control-lg"
+                        v-model="this.formdata.useremail"
+                        required
+                      />
+                      <label
+                        class="form-label"
+                        for="form2Example17"
+                        style="font-family: 'Montserrat'"
+                        >Email address</label
+                      >
+                    </div>
 
-                      <div class="form-outline mb-4">
-                        <input
-                          type="password"
-                          id="form2Example27"
-                          class="form-control form-control-lg"
-                          v-model="this.formdata.userpassword"
-                          required
-                        />
-                        <label class="form-label" for="form2Example27"
-                          style="font-family: 'Montserrat'">Password</label
-                        >
-                      </div>
+                    <div class="form-outline mb-4">
+                      <input
+                        type="password"
+                        id="form2Example27"
+                        class="form-control form-control-lg"
+                        v-model="this.formdata.userpassword"
+                        required
+                      />
+                      <label
+                        class="form-label"
+                        for="form2Example27"
+                        style="font-family: 'Montserrat'"
+                        >Password</label
+                      >
+                    </div>
 
-                      <div class="pt-1 mb-4" style="margin-right:100px;margin-left: 0px;">
-                        <button
-                          class="btn btn-dark btn-lg btn-block"
-                          type="button"
-                          @click="this.loginUser()"
-                        style="font-family: 'Montserrat';font-weight: bold;">
-                          Login
-                        </button>
-                      </div>
-                      <div class="" v-if="this.spinner">
+                    <div
+                      class="pt-1 mb-4"
+                      style="margin-right: 100px; margin-left: 0px"
+                    >
+                      <button
+                        class="btn btn-dark btn-lg btn-block"
+                        type="button"
+                        @click="this.loginUser()"
+                        style="font-family: 'Montserrat'; font-weight: bold"
+                      >
+                        Login
+                      </button>
+                    </div>
+                    <div class="" v-if="this.spinner">
                       <div class="spinner-border text-primary" role="status">
                         <span class="sr-only"></span>
                       </div>
-
                     </div>
 
-                      <a class="small text-muted" href="#!" style="font-size: 16px;"><router-link  to="/password_reset_email" class="text-dark">Forgot password?</router-link></a>
-                      <br>
-                      <a href="#!" class="small text-muted" style="font-size: 16px;text-decoration: none;">Terms of use.</a>
-                      <a href="#!" class="small text-muted" style="font-size: 16px;text-decoration: none;">Privacy policy</a>
-                      <p style="text-align: center;font-size: 16px;">Not a member?  <a href="#!" ><router-link to="/addusers" class="" style="text-decoration: none;"><strong style="color: red;">Register</strong></router-link></a></p>
-                  
+                    <a
+                      class="small text-muted"
+                      href="#!"
+                      style="font-size: 16px"
+                      ><router-link to="/password_reset_email" class="text-dark"
+                        >Forgot password?</router-link
+                      ></a
+                    >
+                    <br />
+                    <a
+                      href="#!"
+                      class="small text-muted"
+                      style="font-size: 16px; text-decoration: none"
+                      >Terms of use.</a
+                    >
+                    <a
+                      href="#!"
+                      class="small text-muted"
+                      style="font-size: 16px; text-decoration: none"
+                      >Privacy policy</a
+                    >
+                    <p style="text-align: center; font-size: 16px">
+                      Not a member?
+                      <a href="#!"
+                        ><router-link
+                          to="/addusers"
+                          class=""
+                          style="text-decoration: none"
+                          ><strong style="color: red"
+                            >Register</strong
+                          ></router-link
+                        ></a
+                      >
+                    </p>
                   </div>
                 </div>
               </div>
@@ -100,22 +150,21 @@ export default {
     return {
       formdata: {
         userpassword: "",
-        useremail: "",  
+        useremail: "",
       },
-      spinner:false
+      spinner: false,
     };
   },
-  methods: {  
+  methods: {
     async loginUser() {
-      this.spinner=true;
+      this.spinner = true;
       console.log("formdata: ", this.formdata);
       this.setAuthHeader();
       const loginbody = {
         password: this.formdata.userpassword,
         userName: this.formdata.useremail,
       };
-    
-   
+
       const response = await axios.post("User/Authenticate", loginbody, {
         headers: {
           "Content-Type": "application/json",
@@ -124,7 +173,7 @@ export default {
       console.log("Response data:", response);
 
       if (response.data.code == "200") {
-        this.spinner=false;
+        this.spinner = false;
         console.log("loggin message: ", response.data.message);
         axios.defaults.headers.common["Authorization"] =
           "Bearer " + response.data.token;
@@ -134,18 +183,20 @@ export default {
           path: `/stockdashboard`,
           replace: true,
         });
-
         swal.fire({
-  heightAuto: false,
-  title: "WELCOME BACK",
-  text: `${response.data.firstname} ${response.data.lastName}`,
-  icon: "success", // Use "success" for a success icon
-  button: "OK!",
-});
-
+          heightAuto: false,
+          title: "WELCOME BACK",
+          text: `${response.data.firstname} ${response.data.lastName}`,
+          iconHtml:
+            '<div class="custom-icon-container"><span class="custom-checkmark">&#10004;</span></div>', // Custom HTML structure
+          confirmButtonText: "OK",
+          customClass: {
+            popup: "custom-popup",
+            content: "custom-content", // Apply custom styles to the content
+          },
+        });
       } else {
-
-        this.spinner=false;
+        this.spinner = false;
         console.log("Error message: ", response.message);
 
         return swal.fire({
@@ -158,5 +209,20 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style >
+.custom-icon-container {
+  width: 100px; /* Adjust width as needed */
+  height: 100px; /* Adjust height as needed */
+  background-color:purple; /* Adjust background color as needed */
+  border-radius: 50%; /* Makes the container an ellipse */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+.custom-checkmark {
+  color: white; /* Adjust text color as needed */
+  font-size: 50px; /* Adjust font size as needed */
+}
 </style>

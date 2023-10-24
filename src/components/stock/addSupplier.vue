@@ -1,5 +1,7 @@
 <template>
       <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
+      
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
       <section>
             <header class="top">
               <div class="frame-24" style="width: 40px;margin-left: 25px;">
@@ -256,33 +258,20 @@ background: #FFF;
 box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 10px;" >
 
                       <div class="row mx-5">
-                  <div class="col-sm-6 d-flex mt-2">
-                    <div
-    class="search"
-    style="margin-left: 500px; margin-top: 5px; display: flex"
-  >
-  <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-</svg></span>
-    <input
-      type="search"
-      id="gsearch"
-      name="gsearch"
-      placeholder="   Search"
-      style="width: 280px;text-align: center;height:40px;"
-      v-model="searchword"
-     
-    />
-    <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
-  
-  </div>
-               </div>
+                  
+    
+             
                 </div>
 
                 <div class="table-wrapper" v-if="showallstockin">
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
+                        <div class="search-container" style="margin-top: 30px; display: flex; align-items: center;">
+    <p style="margin-right: 10px;margin-top: 10px;">Search:</p>
+    <input type="text" v-model="search" id="table-search" placeholder="Search...">
+
+  </div>
                         <table id="purchaseList" class="table table-hover ">
                         <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
         padding: 12px 34px">
@@ -295,7 +284,7 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                             <th style="width: 120px">Action</th>
                           </tr>
                         </thead>
-                        <tbody v-for="supplier in this.allsuppliers" v-bind:key="supplier.id">
+                        <tbody v-for="supplier in filteredBrands" v-bind:key="supplier.id">
                           <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
                             <th scope="row">{{supplier.supplierId}}</th>
                             <td>{{supplier.supplierName}}</td>
@@ -403,6 +392,12 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
   </template>
   <script>
   import swal from "sweetalert2";
+  import 'jquery';
+import 'datatables.net';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-select';
+import 'datatables.net-bs4';
+import $ from 'jquery';
 import AppMixins from "../../Mixins/shared";
   export default {
     name: 'supplierPage',
@@ -422,9 +417,18 @@ import AppMixins from "../../Mixins/shared";
         searchword:"",
         allsupplier:{},
         userbody: {},
+        search:'',
 
       };
     },
+    computed: {
+  filteredBrands() {
+    return this.allsuppliers.filter((supplier) =>
+      supplier.supplierName.toLowerCase().includes(this.search.toLowerCase())
+    );
+  },
+},
+
     methods:{
       async AddingSupplier() {
   
@@ -497,7 +501,31 @@ async searchstocksin() {
     created(){
     this.GetAllSuppliers();
     this.GetLoggedInUser();
-  }
+  },
+  mounted() {
+  // Initialize DataTable after the component is mounted and the table is in the DOM
+  this.GetAllSuppliers().then(() => {
+    this.$nextTick(() => {
+      const dataTable = $('#purchaseList'); // Get a reference to the table element
+      
+      // Initialize DataTable with your desired options
+      dataTable.DataTable({
+        paging: false,
+        searching: false,
+        responsive: true,
+        // Other DataTable options here as needed
+      });
+      
+      // Add an event listener for the search event
+      dataTable.on("search.dt", () => {
+        const searchValue = dataTable.DataTable().search(); // Get the search query
+        console.log("Search Query:", searchValue);
+        
+        // You can further process or log the search query here
+      });
+    });
+  });
+}
   };
   </script>
   <style>

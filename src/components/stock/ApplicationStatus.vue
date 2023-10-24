@@ -3,6 +3,7 @@
     href="https://fonts.googleapis.com/css?family=Inter:500,700"
     rel="stylesheet"
   />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/>
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css"
@@ -276,50 +277,9 @@
               "
             >
               <div class="row mx-5">
-                <div class="col-sm-6 d-flex mt-2">
-                  <div
-                    class="search"
-                    style="margin-left: 450px; margin-top: 5px; display: flex"
-                  >
-                    <span class="form-control-feedback"
-                      ><svg
-                        style="
-                          position: absolute;
-                          margin-top: 12px;
-                          margin-left: 20px;
-                        "
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="16"
-                        height="16"
-                        fill="currentColor"
-                        class="bi bi-search"
-                        viewBox="0 0 16 16"
-                      >
-                        <path
-                          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-                        /></svg
-                    ></span>
-                    <input
-                      type="search"
-                      id="gsearch"
-                      name="gsearch"
-                      placeholder="   Search"
-                      style="width: 280px; text-align: center; height: 40px"
-                      v-model="searchword"
-                    />
-                    <img
-                      src="../../assets/images/filter.svg"
-                      style="
-                        width: 24px;
-                        height: 24px;
-                        position: absolute;
-                        margin-left: 250px;
-                        margin-top: 6px;
-                      "
-                    />
-                  </div>
-                </div>
+              
               </div>
+              
 
               <div class="table-wrapper">
                 <div class="table-title">
@@ -341,20 +301,20 @@
                           "
                         >
                           <tr>
-                            <th style="width: 50px">ID</th>
+                            <th style="width: 180px">Order No.</th>
                             <th style="width: 120px">Item Name</th>
-                            <th style="width: 120px">Quantity</th>
-                            <th style="width: 150px">Device Being Repaired</th>
+                            <th style="width: 80px">Quantity</th>
+                            <th style="width: 150px">Stock Need</th>
                             <th style="width: 120px">Client Name</th>
                             <th style="width: 120px">Purpose</th>
                             <th style="width: 120px">Department Name</th>
                             <th style="width: 120px">Requisitioner</th>
-                            <th style="width: 120px">Status</th>
+                            <th style="width: 70px">Status</th>
                             <th style="width: 120px">Action</th>
                           </tr>
                         </thead>
                         <tbody
-                          v-for="(invoice, index) in this.allinvoice"
+                          v-for="(invoice) in this.allinvoice"
                           :key="invoice.id"
                         >
                           <tr
@@ -365,18 +325,14 @@
                               color: gray;
                             "
                           >
-                            <th scope="row">
-                              <a
-                                href=""
-                                style="text-decoration: none; color: gray"
-                                >{{ index + 1 }}</a
-                              >
-                            </th>
+                          <td scope="row" style="" class="text-uppercase">
+    <a href="" style="text-decoration: none; color: rgb(202, 36, 7);font-weight: bold;">{{invoice.orderNumber }}</a>
+                          </td>
                             <td>
                               {{ invoice.brandName }} {{ invoice.itemName }}
                             </td>
                             <td>{{ invoice.quantity }}</td>
-                            <td>{{ invoice.deviceBeingRepaired }}</td>
+                            <td>{{ invoice.stockNeed }}</td>
                             <td>{{ invoice.clientName }}</td>
                             <td>{{ invoice.purpose }}</td>
                             <td>{{ invoice.department }}</td>
@@ -388,31 +344,144 @@
                               {{ invoice.approvedStatus }}
                             </td>
                             <td>
-                              <div class="dropdown" style="width: 100%">
-                                <a class="">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="22"
-                                    height="16"
-                                    fill="gray"
-                                    class="bi bi-three-dots"
-                                    viewBox="0 0 16 16"
-                                  >
-                                    <path
-                                      d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-                                    />
-                                  </svg>
-                                </a>
-                                <div
-                                  class="dropdown-content"
-                                  style="width: 50%; color: red"
-                                >
-                                  <a @click.prevent="adjustStock(invoice.id)"
-                                    >Approve/Reject</a
-                                  >
-                                </div>
-                              </div>
-                            </td>
+                            
+                            <div class="">
+  <span @click="openModal(invoice)" style="font-size: 12px;" class="link-button">Approve/Reject</span>
+</div>
+                              <transition name="modal">
+          <div
+            id="purchaseModal"
+            class="modal-mask fixed-top"
+            v-if="showModal"
+            style="
+              position: fixed;
+              width: 100%;
+              margin-left: 0px;
+              margin-top: 0px;
+              align-content: center;
+              align-items: center;
+            "
+          >
+            <div
+              class="modal-wrapper"
+              style="vertical-align: middle; display: table-cell"
+            >
+              <div
+                class="modal-dialog modal-dialog-centered"
+                style="
+                  align-content: center;
+                  margin-top: 10px;
+                  margin-left: 300px;
+                "
+              >
+                <div
+                  class="modal-content"
+                  style="
+                    width: 50%;
+                    margin-left: 50px;
+                    margin-top: 5px;
+                    background: #f5f5f5;
+                    border-radius: 18px;
+                    height: 70%;
+                  "
+                >
+                  <div class="modal-header">
+                    <h4
+                      class="modal-title"
+                      style="
+                        margin-left: 40px;
+                        margin-top: 20px;
+                        font-family: inter;
+                        font-size: 22px;
+                      "
+                    >
+                      Approve/Reject
+                    </h4>
+                    <button
+                      @click="showModal = false"
+                      type="button"
+                      class="btn-close"
+                      data-bs-dismiss="modal"
+                      style="margin-right: 30px"
+                    ></button>
+                  </div>
+                  <div
+                    class="modal-body"
+                    style="
+                      width: 70%;
+                      margin-left: 50px;
+                      vertical-align: middle;
+                      align-content: center;
+                    "
+                  >
+                    <form id="purchaseForm" ref="myForm">
+                      <div class="form-group">
+                        <label style="font-family: inter; font-size: 16px"
+                          >Approve/Reject:</label
+                        >
+                        <select
+                          name=""
+                          id=""
+                          class="form-select rounded-0"
+                          required
+                          v-model="this.formdata.selectedOption"
+                          style="
+                            background-color: #f5f5f5;
+                            font-family: inter;
+                            font-size: 15px;
+                            color: gray;
+                          "
+                        >
+                          <option value="" disabled>Select Action</option>
+                          <option value="Approve">Approve</option>
+                          <option value="Reject">Reject</option>
+                        </select>
+                      </div>
+                      <div v-if="datearea" class="form-group">
+                        <label style="font-family: inter; font-size: 16px"
+                          >Comments:</label
+                        >
+                        <div class="input-group">
+                          <textarea
+                            type="text"
+                            class="form-control rounded-0"
+                            required
+                            style="
+                              font-family: inter;
+                              font-size: 13px;
+                              color: gray;
+                              background: #f5f5f5;
+                            "
+                            placeholder="Describe the reason here......."
+                            v-model="this.formdata.reason"
+                          ></textarea>
+                        </div>
+                      </div>
+
+                      <div class="form-group" style="margin-top: 10px">
+                        <input
+                          @click.prevent="ApprovingApplication()"
+                          type="submit"
+                          class="btn btn-success btn-sm"
+                          value="Save"
+                          form="purchaseForm"
+                          style="
+                            margin-bottom: 30px;
+                            margin-left: 100px;
+                            width: 30%;
+                            font-family: inter;
+                            font-size: 13px;background-color: green;
+                          "
+                        />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
+                          </td>
                           </tr>
                         </tbody>
                       </table>
@@ -500,6 +569,12 @@
 import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared";
 import moment from "moment";
+import 'jquery';
+import 'datatables.net';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-select';
+import 'datatables.net-bs4';
+import $ from 'jquery';
 export default {
   name: "ApplicationStatus",
   mixins: [AppMixins],
@@ -520,20 +595,21 @@ export default {
       allbrands: {},
       showtickets: false,
       acessdenied: false,
+      selectedInvoice: null,
+      id:'',
       formdata: {
-        stockNeed: "",
-        itemName: "",
-        quantity: "",
-        deviceRepaired: "",
-        departmentName: "",
-        clientName: "",
-        purpose: "",
-        Description: "",
-        brandName: "",
+        reason: "",
+        selectedOption: "",
+       
+
       },
     };
   },
   methods: {
+    openModal(invoice) {
+      this.selectedInvoice = invoice;
+      this.showModal = true;
+    },
     async GetAllBrands() {
       const response = await this.gettingAllBrands();
       this.allbrands = response.body;
@@ -689,6 +765,44 @@ export default {
       console.log("allstockitems: ", this.allstockitems);
       return response;
     },
+    async ApprovingApplication() {
+      var body = {
+        rejectedReason: this.formdata.reason,
+        selectedOption: this.formdata.selectedOption,
+        id: this.selectedInvoice.id,
+      };
+
+      console.log("Invoice new:>>>>>>>>>>>>>>>>>>>>>>>>>>>> ", body);
+      var response = await this.ApplicationStatus(body);
+      if (response.isTrue == true) {
+        swal.fire({
+          heightAuto: false,
+          html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+        });
+        await this.GetAllInvoice();
+this.$router.push({
+  path: "/applicationstatus" ,  
+          replace: true,
+        });
+
+
+        setTimeout(()=>{
+          location.reload();
+
+        },700)
+
+   
+
+      } else {
+        swal.fire({
+          heightAuto: false,
+          html: `<h5 class="text-danger" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+        });
+        this.$refs.myForm.reset();
+      }
+      this.GetAllInvoice();
+    
+    },
     async getAllDepartment() {
       const response = await this.GettingAllDepartment();
       this.alldepartment = response.body;
@@ -716,6 +830,30 @@ export default {
     this.GetAllCustomers();
     this.GetAllBrands();
   },
+  mounted() {
+  // Initialize DataTable after the component is mounted and the table is in the DOM
+  this.GetAllInvoice().then(() => {
+    this.$nextTick(() => {
+      const dataTable = $('#purchaseList'); // Get a reference to the table element
+      
+      // Initialize DataTable with your desired options
+      dataTable.DataTable({
+        paging: true,
+        searching: true,
+        responsive: true,
+        // Other DataTable options here as needed
+      });
+      
+      // Add an event listener for the search event
+      dataTable.on("search.dt", () => {
+        const searchValue = dataTable.DataTable().search(); // Get the search query
+        console.log("Search Query:", searchValue);
+        
+        // You can further process or log the search query here
+      });
+    });
+  });
+}
 };
 </script>
 <style>

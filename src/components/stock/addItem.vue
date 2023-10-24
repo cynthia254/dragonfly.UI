@@ -345,6 +345,7 @@ line-height: normal; border-width: 0.06rem;margin-top: 10px; margin-left:34px; t
 
                                 style="margin-bottom: 30px;margin-left: 70px;width: 60%;font-family: inter;font-size: 13px;"
                               />
+                              
                              
                             </div>
                           </form>
@@ -361,31 +362,15 @@ background: #FFF;
 box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
               
               <div class="row mx-5">
-                  <div class="col-sm-6 d-flex mt-2">
-                    <div
-    class="search"
-    style="margin-left: 700px; margin-top: 5px; display: flex"
-  >
-  <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-</svg></span>
-    <input
-      type="search"
-      id="gsearch"
-      name="gsearch"
-      placeholder="   Search"
-      style="width: 280px;text-align: center;height:40px;"
-     
-    />
-    <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
-  
-  </div>
-               </div>
+      
+               
                 </div>
               <div class="table-wrapper">
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
+                        
+
                       
                     <table 
                       id="purchaseList"
@@ -405,7 +390,8 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
                           <th style="width: 120px;margin-left: 10px;">Action</th>
                         </tr>
                       </thead>
-                      <tbody v-for="items in this.allitems" v-bind:key="items.id">
+                      <tbody v-for="items in filteredBrands" v-bind:key="items.itemID">
+
                         <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
                           <th scope="row">{{ items.itemID }}</th>
                           <td >{{items.brandName}}  {{items.itemName}} </td>
@@ -476,12 +462,18 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
 </template>
 <script>
 import swal from "sweetalert2";
+import 'jquery';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-select';
+import 'datatables.net-bs4/js/dataTables.bootstrap4.min.js';
+import $ from 'jquery';
 import AppMixins from "../../Mixins/shared"
 export default {
   name: "AddItem",
   mixins: [AppMixins],
   data() {
     return {
+      search:'',
       showModal: false,
       allitems:[],
       allbrands:[],
@@ -503,6 +495,13 @@ export default {
       },
     };
   },
+  computed: {
+  filteredBrands() {
+    return this.allitems.filter((items) =>
+      items.itemName.toLowerCase().includes(this.search.toLowerCase())||items.brandName.toLowerCase().includes(this.search.toLocaleLowerCase())
+    );
+  },
+},
   methods:{
     async GetAllItems(){
 
@@ -628,8 +627,31 @@ if (response.isTrue==true) {
     this.GetAllDevices();
     this.GetAllCategory();
     this.GetLoggedInUser();
-  }
+  },
+  mounted() {
+  this.GetLoggedInUser().then(() => {
+    this.GetAllBrands().then(() => {
+      this.GetAllCategory().then(() => {
+        this.GetAllDevices().then(() => {
+    // Fetch brand data first
+    this.GetAllItems().then(() => {
+      // Initialize DataTable after data load
+      $(document).ready(() => {
+        $('#purchaseList').DataTable({
+          paging: false,
+          searching: false,
+          responsive: true,
+          // Other DataTable options here as needed
+        });
+      });
+    });
+  });
+})
+;    });
+  });
 }
+};
+ 
 
 
 </script>

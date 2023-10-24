@@ -1,7 +1,9 @@
 <template>
-   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
-
+  
     <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+  
     <section>
             <header class="top">
               <div class="frame-24" style="width: 40px;margin-left: 25px;">
@@ -204,47 +206,35 @@ background: #FFF;
 box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
               
               <div class="row mx-5">
-                  <div class="col-sm-6 d-flex mt-2">
-                    <div
-    class="search"
-    style="margin-left: 900px; margin-top: 5px; display: flex"
-  >
-  <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-</svg></span>
-    <input
-      type="search"
-      id="gsearch"
-      name="gsearch"
-      placeholder="   Search"
-      style="width: 280px;text-align: center;height:40px;"
      
-    />
-    <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
-  
-  </div>
-               </div>
+               
                 </div>
+      
 
               
                 <div class="table-wrapper">
                   <div class="table-title" >
                     <div class="">
                       <div class="col-sm table-responsive">
-                        <table id="purchaseList" class="table table-hover " style="overflow:hidden;">
-                      <thead style="background-color:   #F3E6DA;font-family: inter;font-weight: bold;font-size: 16px;white-space: nowrap;">
-                       
-                        <tr >
-                          <th>Brand ID</th>
-                          <th>Brand Name</th>
+                        <div class="search-container" style="margin-top: 30px; display: flex; align-items: center;">
+    <p style="margin-right: 10px;margin-top: 10px;">Search:</p>
+    <input type="text" v-model="search" id="table-search" placeholder="Search...">
 
-                          <th style="width: 120px">Action</th>
-                        </tr>
-                      </thead>
-                      <tbody v-for="brands in this.allbrands" v-bind:key="brands.id">
+  </div>
+
+                        <table id="purchaseList" class="display" style="overflow:hidden;width: 100%;">
+  <thead style="background-color:   #F3E6DA;font-family: inter;font-weight: bold;font-size: 16px;white-space: nowrap;">
+    <tr>
+      <th style="width: 5%">Brand ID</th>
+      <th style="width: 30%">Brand Name</th> <!-- Adjusted width for Brand Name -->
+      <th style="width: 15%">Action</th> <!-- Adjusted width for Action -->
+    </tr>
+  </thead>
+  <tbody v-for="brand in filteredBrands" v-bind:key="brand.id">
+
                         <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray;">
-                          <th scope="row">{{brands.brandId }}</th>
-                          <td>{{brands.brandName}}</td>
+                          <th scope="row">{{brand.brandId }}</th>
+                          <td>{{brand.brandName}}</td>
 
                           <td>
                             <svg
@@ -285,6 +275,7 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
                       
                       </tbody>
                     </table>
+      
                   </div>
                 </div>
               </div>
@@ -298,12 +289,18 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);">
 </template>
 <script>
 import swal from "sweetalert2";
+import 'jquery';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-select';
+import 'datatables.net-bs4/js/dataTables.bootstrap4.min.js';
+import $ from 'jquery';
 import AppMixins from "../../Mixins/shared"
 export default {
   name: "brandPage",
   mixins: [AppMixins],
   data() {
     return {
+      search:'',
       showModal: false,
       userbody: {},
       allbrands:[],
@@ -315,6 +312,14 @@ export default {
       },
     };
   },
+  computed: {
+  filteredBrands() {
+    return this.allbrands.filter((brand) =>
+      brand.brandName.toLowerCase().includes(this.search.toLowerCase())
+    );
+  },
+},
+
   methods: {
     async GetAllBrands(){
 
@@ -365,11 +370,27 @@ async editBrand(brandId) {
       this.GetAllBrands();
     },
   },
-  created(){
-    this.GetAllBrands();
-    this.GetLoggedInUser();
-  }
+ 
+  mounted() {
+  this.GetLoggedInUser().then(() => {
+    // Fetch brand data first
+    this.GetAllBrands().then(() => {
+      // Initialize DataTable after data load
+      $(document).ready(() => {
+        $('#purchaseList').DataTable({
+          paging: false,
+          searching: false,
+          responsive: true,
+          // Other DataTable options here as needed
+        });
+      });
+    });
+  });
+},
+
+
 };
+
 </script>
 <style>
 .modal-mask {
@@ -384,4 +405,18 @@ async editBrand(brandId) {
   display: table-cell;
   vertical-align: middle;
 }
+/* Style for the search input container */
+.search-container {
+  width: 180px;
+  margin-left: 1100px;
+    /* Adjust the right position as needed */
+}
+
+/* Style for the search input field */
+#table-search {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 </style>

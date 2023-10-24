@@ -1,6 +1,8 @@
 <template style="background-color:white">
     <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+       
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/>
 <div v-if="showtickets">
     <section>
             <header class="top">
@@ -70,9 +72,8 @@
         <nav aria-label="breadcrumb " class="bg-light  p-3 mb-4" style="border-radius: 12px;">
           <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item " style="font-family:inter;font-size:16px"><a href="/stockdashboard" style="color:gray">Home</a></li>
-            <li class="breadcrumb-item " style="font-family:inter;font-size:16px"><a href="/stockissued" style="color:gray">CheckIssuedRequisition</a></li>
-           
-            <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px;color:#FF8C22">Manage Requisition Forms</li>
+            
+            <li class="breadcrumb-item active" aria-current="page" style="font-family:inter;font-size:16px;color:#FF8C22">Items To Be Issued List</li>
         
           </ol>
         </nav>
@@ -94,7 +95,7 @@ font-style: normal;
 font-weight: 700;
 margin-top:10px;
 line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; top: 1.25rem; padding-top: 0.88rem; padding-bottom: 0.88rem; padding-left: 1.19rem; padding-right: 1.19rem; gap: 59.19rem;font-family:inter;white-space: nowrap;width: fit-content;">
-                         REQUISITION FORM LIST
+                         ITEMS TO BE ISSUED  LIST
                         </h2>
                       </div>
                 
@@ -105,48 +106,28 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
 
     
               <div class="row mx-5">
-                  <div class="col-sm-6 d-flex mt-2">
-                    <div
-    class="search"
-    style="margin-left: 450px; margin-top: 5px; display: flex"
-  >
-  <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-</svg></span>
-    <input
-      type="search"
-      id="gsearch"
-      name="gsearch"
-      placeholder="   Search"
-      style="width: 280px;text-align: center;height:40px;"
-      v-model="searchword"
-     
-    />
-    <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
-  
-  </div>
-               </div>
+                 
                 </div>
 
               
                 <div class="table-wrapper"  >
                   <div class="table-title">
                     <div class="">
-                      <div class="col-sm table-responsive">
+                      <div class="col-sm table-responsive table-bordered">
                         <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:40px">
-                      <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
+                      <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 14px !important;border-bottom: 1px solid  darken(#f8f8f8, 10%);
         padding: 12px 34px">
                         <tr >
                             <th style="width: 50px">ID</th>
-                          <th style="width: 120px">Item Name</th>
-                          <th style="width: 120px">Quantity</th>
-                          <th style="width: 150px">Device Being Repaired</th>
-                          <th style="width: 120px">Client Name</th>
-                          <th style="width: 120px">Purpose</th>
-                          <th style="width: 120px">Department Name</th>
-                          <th style="width: 120px">Requisitioner</th>
-                          <th style="width: 120px">Status</th>
-                          <th style="width: 120px">Action</th>
+                          <th style="width: 120px;font-size: 13px;">Item Name</th>
+                          <th style="width: 80px;  font-size: 13px;">Quantity Ordered</th>
+                          <th style="width: 80px;font-size: 13px;">Quantity Dispatched</th>
+                          <th style="width: 90px;font-size: 13px;">Outstanding Balance</th>
+                          <th style="width: 120px;font-size: 13px;">Client Name</th>
+                          <th style="width: 120px;font-size: 13px;">Purpose</th>
+                          <th style="width: 120px;font-size: 13px;">Department Name</th>
+                          <th style="width: 120px;font-size: 13px;">Requisitioner</th>
+                          <th style="width: 120px;font-size: 13px;">Status</th>
 
                          
                         </tr>
@@ -165,10 +146,14 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                             editinvoiceitem(
                               invoice.id,
                             )">{{invoice.quantity}}</td>
-                          <td @click.prevent="
+                              <td @click.prevent="
                             editinvoiceitem(
                               invoice.id,
-                            )">{{invoice.deviceBeingRepaired}}</td>
+                            )">{{invoice.quantityDispatched}}</td>
+                                <td @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                            )">{{invoice.outStandingBalance}}</td>
                           <td @click.prevent="
                             editinvoiceitem(
                               invoice.id,
@@ -185,30 +170,11 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                             editinvoiceitem(
                               invoice.id,
                             )">{{invoice.requisitioner}}</td>
-                          <td :style="getStatusStyle(invoice)" style="font-size:13px" @click.prevent="
+                          <td :style="getStatusStyle(invoice)" style="font-size:12px" @click.prevent="
                             editinvoiceitem(
                               invoice.id,
-                            )">{{invoice.approvedStatus}}</td>
-                          <td>  <div class="dropdown" style="width: 100%">
-              <a class="" >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="16"
-                  fill="gray"
-                  class="bi bi-three-dots"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-                  />
-                </svg>
-              </a>
-              
-              <div class="dropdown-content" style=" width: 50%;color:red;">
-                <a @click.prevent="issuingitems(invoice.id)">Issue</a>
-                
-              </div></div></td>
+                            )">{{invoice.approvedStatus}}|{{ invoice.dispatchStatus }}</td>
+                    
                           
                          
                         </tr>
@@ -300,6 +266,12 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
 import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared"
 import moment from 'moment';
+import 'jquery';
+import 'datatables.net';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-select';
+import 'datatables.net-bs4';
+import $ from 'jquery';
 export default {
   name: "IssueStock",
   mixins: [AppMixins],
@@ -402,6 +374,16 @@ getStatusStyle(invoice){
     };
 
   }else if(invoice.approvedStatus==="Rejected"){
+    return{
+      color:"red"
+    };
+  }
+  else if(invoice.approvedStatus==="Issued"){
+    return{
+      color:"blue"
+    };
+  }
+  else if(invoice.dispatchStatus==="Incomplete"){
     return{
       color:"red"
     };
@@ -565,6 +547,30 @@ async getallusers() {
     this.GetAllCustomers();
     this.GetAllBrands();
   },
+  mounted() {
+  // Initialize DataTable after the component is mounted and the table is in the DOM
+  this.GetAllInvoice().then(() => {
+    this.$nextTick(() => {
+      const dataTable = $('#purchaseList'); // Get a reference to the table element
+      
+      // Initialize DataTable with your desired options
+      dataTable.DataTable({
+        paging: true,
+        searching: true,
+        responsive: true,
+        // Other DataTable options here as needed
+      });
+      
+      // Add an event listener for the search event
+      dataTable.on("search.dt", () => {
+        const searchValue = dataTable.DataTable().search(); // Get the search query
+        console.log("Search Query:", searchValue);
+        
+        // You can further process or log the search query here
+      });
+    });
+  });
+}
  
 };
 </script>

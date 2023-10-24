@@ -4,7 +4,7 @@
         <nav>
             <ul>
                 <li>
-                    <a href="/home" >Home</a>
+                    <a href="/stockdashboard" >Home</a>
                 </li>
                 <li class="dropDown-menu">
                     <a href="" >Access Management</a>

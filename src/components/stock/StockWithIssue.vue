@@ -210,11 +210,17 @@
                   <a href="/stockdashboard" style="color: gray">Home</a>
                 </li>
                 <li
+                  class="breadcrumb-item"
+                  style="font-family: inter; font-size: 16px"
+                >
+                  <a href="/issueitems" style="color: gray">Issue Pending Stock</a>
+                </li>
+                <li
                   class="breadcrumb-item active"
                   aria-current="page"
                   style="font-family: inter; font-size: 16px; color: #ff8c22"
                 >
-                  Manage Requisition Forms
+                  Manage Issued Stock 
                 </li>
               </ol>
             </nav>
@@ -276,55 +282,18 @@
                 "
               >
                 <div class="row mx-5">
-                  <div class="col-sm-6 d-flex mt-2">
-                    <div
-                      class="search"
-                      style="margin-left: 450px; margin-top: 5px; display: flex"
-                    >
-                      <span class="form-control-feedback"
-                        ><svg
-                          style="
-                            position: absolute;
-                            margin-top: 12px;
-                            margin-left: 20px;
-                          "
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-search"
-                          viewBox="0 0 16 16"
-                        >
-                          <path
-                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
-                          /></svg
-                      ></span>
-                      <input
-                        type="search"
-                        id="gsearch"
-                        name="gsearch"
-                        placeholder="   Search"
-                        style="width: 280px; text-align: center; height: 40px"
-                        v-model="searchword"
-                      />
-                      <img
-                        src="../../assets/images/filter.svg"
-                        style="
-                          width: 24px;
-                          height: 24px;
-                          position: absolute;
-                          margin-left: 250px;
-                          margin-top: 6px;
-                        "
-                      />
-                    </div>
-                  </div>
+                 
                 </div>
   
                 <div class="table-wrapper">
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
+                        <div class="search-container" style="margin-top: 30px; display: flex; align-items: center;">
+    <p style="margin-right: 10px;margin-top: 10px;">Search:</p>
+    <input type="text" v-model="search" id="table-search" placeholder="Search...">
+
+  </div>
                         <table
                           id="purchaseList"
                           class="table card-list-table table-hover table-bordered"
@@ -341,21 +310,18 @@
                             "
                           >
                             <tr>
-                              <th style="width: 50px">ID</th>
-                              <th style="width: 120px">Item Name</th>
-                              <th style="width: 120px">Quantity</th>
-                              <th style="width: 150px">Device Being Repaired</th>
+                              <th style="width: 180px">Order No.</th>
+                              <th style="width: 180px">Item Name</th>
+                              <th style="width: 80px">Quantity Ordered</th>
+                              <th style="width: 100px">Quantity Dispatched</th>
                               <th style="width: 120px">Client Name</th>
                               <th style="width: 120px">Purpose</th>
                               <th style="width: 120px">Department Name</th>
                               <th style="width: 120px">Requisitioner</th>
-                              <th style="width: 120px">Status</th>
+                              <th style="width: 140px">Status</th>
                             </tr>
                           </thead>
-                          <tbody
-                            v-for="(invoice, index) in this.allinvoice"
-                            :key="invoice.id"
-                          >
+                          <tbody v-for="invoice in filteredBrands" v-bind:key="invoice.id">
                             <tr
                               style="
                                 font-family: inter;
@@ -364,29 +330,60 @@
                                 color: gray;
                               "
                             >
-                              <th scope="row">
+                              <td scope="row">
                                 <a
                                   href=""
-                                  style="text-decoration: none; color: gray"
-                                  >{{ index + 1 }}</a
+                                  style="text-decoration: none; color: rgb(78, 3, 3)"
+                                  @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                            )">{{ invoice.orderNumber }}</a
                                 >
-                              </th>
-                              <td>
+                              </td>
+                              <td  @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                            )">
                                 {{ invoice.brandName }} {{ invoice.itemName }}
                               </td>
-                              <td>{{ invoice.quantity }}</td>
-                              <td>{{ invoice.deviceBeingRepaired }}</td>
-                              <td>{{ invoice.clientName }}</td>
+                              <td  @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                            )">{{ invoice.quantity }}</td>
+                              <td  @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                            )">{{ invoice.quantityDispatched }}</td>
+                              <td  @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                            )">{{ invoice.clientName }}</td>
                               <td>{{ invoice.purpose }}</td>
-                              <td>{{ invoice.department }}</td>
-                              <td>{{ invoice.requisitioner }}</td>
+                              <td  @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                            )">{{ invoice.department }}</td>
+                              <td  @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                            )">{{ invoice.requisitioner }}</td>
                               <td
                                 :style="getStatusStyle(invoice)"
                                 style="font-size: 13px"
-                              >
-                                {{ invoice.approvedStatus }}
+                                @click.prevent="
+                            editinvoiceitem(
+                              invoice.id,
+                            )" >
+                                {{ invoice.approvedStatus }}|<span    :style="getDispatchStatus(invoice)" style="font-size: 12px;">{{ invoice.dispatchStatus }}</span>
                               </td>
-                         
+                              <td  @click.prevent="
+                            returnStock(
+                              invoice.id,
+                            )">
+                              <div class="">
+    <a href="" style="margin-right: 20px;margin-top: 20px; font-family: inter;"  >Return</a>
+  </div>
+</td>
                             </tr>
                           </tbody>
                         </table>
@@ -400,6 +397,7 @@
         </div>
       </div>
     </div>
+    
    
   </template>
   <script>
@@ -424,6 +422,7 @@
         allusers: {},
         allcustomers: {},
         allbrands: {},
+        search:'',
         formdata: {
           stockNeed: "",
           itemName: "",
@@ -437,6 +436,13 @@
         },
       };
     },
+    computed: {
+  filteredBrands() {
+    return this.allinvoice.filter((invoice) =>
+      invoice.orderNumber.toLowerCase().includes(this.search.toLowerCase())
+    );
+  },
+},
     methods: {
       async GetAllBrands() {
         const response = await this.gettingAllBrands();
@@ -446,6 +452,20 @@
   
         console.log("allbrands: ", this.allbrands);
         return response;
+      },
+      async editinvoiceitem(id) {
+        console.log("Invoice Number is:", id);
+        this.$router.push({
+          path: `/stockissuebyid/${id}`,
+          replace: true,
+        });
+      } ,
+      async returnStock(id){
+        this.$router.push({
+          path: `/returnStock/${id}`,
+          replace: true,
+        });
+
       },
       async adjustStock(id) {
         console.log("Item ID  is:", id);
@@ -482,6 +502,19 @@
             color: "blue",
           };
         } else if (invoice.approvedStatus === "Rejected") {
+          return {
+            color: "red",
+          };
+        } else {
+          return "";
+        }
+      },
+      getDispatchStatus(invoice) {
+        if (invoice.dispatchStatus === "Complete") {
+          return {
+            color: "green",
+          };
+        } else if (invoice.dispatchStatus === "Incomplete") {
           return {
             color: "red",
           };

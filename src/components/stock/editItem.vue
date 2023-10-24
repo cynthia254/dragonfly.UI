@@ -175,13 +175,18 @@
          <i class="fa fa-user"></i>
        </div>
      </div>
-      <div class="tright d-flex " >
-    
-       
-         <button class="movebtn movebtnsu"  style="width: 20%;font-family: inter;font-size: 13px;text-decoration:none;margin-left: 200px;" @click.prevent="changepurchasestatus()" >
-           Submit</button
-       >
-     </div>
+     <div class="d-flex justify-content-between">
+  <router-link to="/addItem" style="text-decoration: none;width:20%">
+    <button class="movebtn movebtnsu" style="width: 100%; font-family: inter; font-size: 13px; text-decoration: none;">
+      Back
+    </button>
+  </router-link>
+  <button class="movebtn movebtnsu" style="width: 20%;background:green;font-family: inter; font-size: 13px; text-decoration: none;">
+    Submit
+  </button>
+</div>
+
+
     
    </form>
  

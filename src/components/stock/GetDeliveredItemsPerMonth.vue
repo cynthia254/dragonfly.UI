@@ -3,6 +3,8 @@
     href="https://fonts.googleapis.com/css?family=Inter:500,700"
     rel="stylesheet"
   />
+  
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css"
@@ -128,25 +130,7 @@
               class="breadcrumb-item"
               style="font-family: inter; font-size: 16px"
             >
-              <a href="/stockdashboard" style="color: gray">Home</a>
-            </li>
-            <li
-              class="breadcrumb-item"
-              aria-current="page"
-              style="font-family: inter; font-size: 16px; color: gray"
-            >
-              <a href="/pocomplete" style="color: gray"
-                >Manage Purchase Orders</a
-              >
-            </li>
-
-            <li
-              class="breadcrumb-item"
-              style="font-family: inter; font-size: 16px"
-            >
-              <a @click.prevent="pushingPO()" href="" style="color: gray"
-                >Manage Purchase Ordered Items</a
-              >
+              <a href="/stockdashboard" style="color: blue">Back</a>
             </li>
 
             <li
@@ -154,7 +138,7 @@
               aria-current="page"
               style="font-family: inter; font-size: 16px; color: #ff8c22"
             >
-              Manage Batch Delivered Items
+              List of Delivered Items in Month {{ this.month }}/{{ this.year }}
             </li>
           </ol>
         </nav>
@@ -198,125 +182,15 @@
                 width: fit-content;
               "
             >
-              PRODUCT DETAILS LIST
+            LIST OF ALL ITEMS DELIVERED IN MONTH  {{this.month}}/{{this.year}}
             </h2>
           </div>
         </div>
 
-        <form
-          class="row g-3"
-          @submit.prevent="CreateItem"
-          ref="myForm"
-          style="margin-top: 10px"
-        >
-          <div class="row">
-            <div>
-              <div class="">
-                <div
-                  class="d-flex flex-column flex-lg-row justify-content-lg-center panel"
-                  style="margin-top: 33px"
-                >
-                  <!-- Delivery Number Input -->
-                  <div
-                    style="width: 25%; margin-left: 10px; font-family: inter"
-                  >
-                    <label for="serialNumber" class="form-label"
-                      >Delivery Note Number:</label
-                    >
-                    <input
-                      ref="serialNumberInput"
-                      v-model="formdata.deliveryNumber"
-                      @keydown.enter="moveToIMEI1"
-                      type="text"
-                      class="form-control"
-                      required
-                      placeholder="Delivery Note Number"
-                      style="border-style: none"
-                    />
-                  </div>
-                  <!-- Delivery Date Input -->
-                  <div
-                    v-if="formdata.deliveryNumber"
-                    style="width: 25%; margin-left: 10px; font-family: inter"
-                  >
-                    <label for="imei1" class="form-label">Delivery Date:</label>
-                    <input
-                      ref="imei1Input"
-                      v-model="formdata.deliveryDate"
-                      @keydown.enter="moveToIMEI2"
-                      type="date"
-                      class="form-control"
-                      required
-                      placeholder="Delivery Date"
-                      style="border-style: none"
-                    />
-                  </div>
-                  <!-- Batch Quantity Input -->
-                  <div
-                    v-if="formdata.deliveryDate"
-                    style="width: 25%; margin-left: 10px; font-family: inter"
-                  >
-                    <label for="imei2" class="form-label"
-                      >Batch Quantity:</label
-                    >
-                    <input
-                      ref="imei2Input"
-                      v-model="formdata.quantity"
-                      @keydown.enter="moveToMeansOfDelivery"
-                      type="text"
-                      class="form-control"
-                      required
-                      placeholder="Quantity"
-                      style="border-style: none"
-                    />
-                  </div>
-                  <!-- Means of Delivery Input -->
-                  <div
-                    v-if="formdata.quantity"
-                    style="width: 25%; margin-left: 10px; font-family: inter"
-                  >
-                    <label for="means" class="form-label"
-                      >Means of delivery:</label
-                    >
-                    <input
-                      ref="meansInput"
-                      v-model="formdata.means"
-                      @keydown.enter="moveToAirwayBill"
-                      type="text"
-                      class="form-control"
-                      required
-                      placeholder="Means of Delivery"
-                      style="border-style: none"
-                    />
-                  </div>
-                  <!-- Airway Bill Input -->
-                  <div
-                    v-if="formdata.means"
-                    style="width: 25%; margin-left: 10px; font-family: inter"
-                  >
-                    <label for="airway" class="form-label"
-                      >Airway Bill No:</label
-                    >
-                    <input
-                      ref="airwayBillInput"
-                      v-model="formdata.airwaybill"
-                      @keydown.enter="CreateItem"
-                      type="text"
-                      class="form-control"
-                      required
-                      placeholder="Airway Bill No"
-                      style="border-style: none"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
         <div
           class="form-control"
           style="
-            margin-top: 5px;
+            margin-top: 40px;
             border: 0;
             border-radius: 10px;
             box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);
@@ -340,18 +214,13 @@
                       "
                     >
                       <tr>
-                        <th scope="">Batch Number</th>
-                        <th scope="">Delivery Number</th>
+                        <th scope="" style="width:140px">Batch Number</th>
+                        <th scope="">Item Desc</th>
+                        <th scope="" >Delivery Number</th>
                         <th>Delivery Date</th>
-                        <th>Batch Quantity</th>
-                        <th>Damaged Quantity</th>
-                        <th>Means Of Delivery</th>
-                        <th>AirWay BillNumber</th>
-                        <th>Product Status</th>
+                        <th style="width:100px">Batch Quantity</th>
+                        <th style="width:100px" >Damaged Quantity</th>
                         <th>Date Added</th>
-                        <!-- Use colspan for the "Action" column -->
-                        <th>Action</th>
-                        <th style="font-size: 12px;">Complete</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -365,155 +234,115 @@
                           color: gray;
                         "
                       >
-                        <td>
-                          <span
-                            @click="ModalOpen(invoiceitem)"
-                            class="link-button d-flex"
-                            style="font-size: 13px"
-                            >{{ invoiceitem.batchNumber }}</span
-                          >
-
-                          <transition name="modal">
-                            <div
-                              id="purchaseModal"
-                              class="modal-mask fixed-top"
-                              v-if="isModalOpen"
-                            >
-                              <div
-                                class="modal-wrapper"
-                                style="
-                                  vertical-align: middle;
-                                  display: table-cell;
-                                  text-align: right;
-                                "
-                              >
-                                <div
-                                  class="modal-dialog"
-                                  style="margin-top: 10px; margin-right: 600px"
-                                >
-                                  <div
-                                    class="modal-content"
-                                    style="
-                                      margin-top: 100px;
-                                      padding: 20px;
-                                      background: #fff;
-                                      border-radius: 5px;
-                                      width: 30%;
-                                      position: relative;
-                                      transition: all 5s ease-in-out;
-                                    "
-                                  >
-                                    <div class="modal-header">
-                                      <button
-                                        @click="isModalOpen = false"
-                                        type="button"
-                                        class="btn-close"
-                                        data-bs-dismiss="modal"
-                                        style="margin-right: 30px"
-                                      ></button>
-                                    </div>
-                                    <div
-                                      class="modal-body"
-                                      style="width: 70%; margin-left: 10px"
-                                    >
-                                      <h2 style="display: flex">
-                                        {{ selectedInvoice.batchNumber }}
-                                      </h2>
-
-                                      <div class="content">
-                                        Thank you for popping me out
-                                        <span
-                                          @click="viewMore(invoiceitem)"
-                                          class="link-button d-flex"
-                                          style="
-                                            font-size: 13px;
-                                            margin-left: 30px;
-                                          "
-                                          >View More</span
-                                        >
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </transition>
+                      <td>
+        <!-- Conditionally render the link if categoryName is not "Product" -->
+        <span
+          v-if="invoiceitem.categoryName !== 'Accesory'"
+          @click="ModalOpen(invoiceitem)"
+          class="link-button d-flex"
+          style="font-size: 13px"
+        >
+          {{ invoiceitem.batchNumber }}
+        </span>
+        <!-- Render just the batchNumber as text if categoryName is "Product" -->
+        <span v-else>
+          {{ invoiceitem.batchNumber }}
+        </span>
+      </td>
+                        <td
+                          
+                        >
+                          {{ invoiceitem.brandName }} {{ invoiceitem.itemName }}
                         </td>
                         <td
                           style="text-transform: uppercase"
-                          @click.prevent="editinvoiceitem(invoiceitem)"
                         >
                           {{ invoiceitem.deliveryNumber }}
                         </td>
-                        <td @click.prevent="editinvoiceitem(invoiceitem)">
+                        <td >
                           {{ getFormattedDate(invoiceitem.deliveryDate) }}
                         </td>
-                        <td @click.prevent="editinvoiceitem(invoiceitem)">
+                        <td >
                           {{ invoiceitem.batchQuantity }}
                         </td>
-                        <td @click.prevent="adjustStock(invoiceitem)">
+                        <td style="width:70px" >
                           {{ invoiceitem.quantityDamaged }}
                         </td>
-                        <td @click.prevent="editinvoiceitem(invoiceitem)">
-                          {{ invoiceitem.meansOfDelivery }}
-                        </td>
-                        <td @click.prevent="editinvoiceitem(invoiceitem)">
-                          {{ invoiceitem.airWayBillNumber }}
-                        </td>
-                        <td
-                          :style="getStatusStyle(invoiceitem)"
-                          style="font-size: 14px"
-                        >
-                          {{ invoiceitem.productStatus }}
-                        </td>
 
-                        <td @click.prevent="editinvoiceitem(invoiceitem)">
+                        <td >
                           {{ formatDate(invoiceitem.dateCreated) }}
                         </td>
-                        <td>
-                          <div class="dropdown" style="width: 100%">
-                            <a class="">
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="22"
-                                height="16"
-                                fill="gray"
-                                class="bi bi-three-dots"
-                                viewBox="0 0 16 16"
-                              >
-                                <path
-                                  d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
-                                />
-                              </svg>
-                            </a>
-                            <div
-                              class="dropdown-content"
-                              style="width: 50%; color: red"
-                            >
-                              <a @click.prevent="adjustStock(invoiceitem)"
-                                >Stock Adjustment</a
-                              >
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <span
-                            @click="markComplete(invoiceitem)"
-                            style="
-                              cursor: pointer;
-                              color: green;
-                              text-decoration: underline;
-                            "
-                          >
-                            Complete
-                          </span>
-                        </td>
+                       
+                    
                     
                       </tr>
                     </tbody>
                   </table>
                 </div>
+                
               </div>
+              
+              <transition name="modal">
+                            <div
+  id="purchaseModal"
+  class="modal-mask fixed-top"
+  v-if="isModalOpen"
+  style="
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    margin-left: 0px;
+    margin-top: 0px;
+    background: rgba(175, 160, 160, 0.9); /* Adjust the alpha (fourth parameter) for transparency */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: auto;
+  "
+>
+ 
+
+                  <div
+                    class="modal-wrapper"
+                    style="vertical-align: middle; display: table-cell"
+                  >
+                  <div class="modal-dialog modal-dialog-centered" style="width: 100%; max-width: 1200px;margin-top: 30px;">
+
+                    <div class="modal-content" style="
+  border: none;
+  border-radius: 2px;
+      box-shadow: none;margin-top: 100px; width: 600px; /* Adjust the width as needed */
+  max-width: 100%;">
+
+                        <div class="modal-header" style="  border-bottom: 0;
+  padding-top: 15px;
+  padding-right: 26px;
+  padding-left: 26px;
+  padding-bottom: 0px;">
+                          <h2 style="display: flex;font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; ">{{ selectedInvoice.batchNumber }}</h2>
+                          <button
+                            @click="isModalOpen = false"
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            style="margin-right: 30px"
+                          ></button>
+                        </div>
+               <div class="modal-body" style="border-bottom: 0; padding-right: 26px; padding-left: 26px; font-size: 15px; max-height: 400px; overflow-y: auto;">
+            <div v-for="(serialNumber, index) in selectedSerialNumbers" :key="index" style="font-family: inter; font-size: 16px; font-weight: medium; color: gray;">
+              <p>
+                <span style="font-weight: bold;">{{ index + 1 }}.</span> <span style="color: blue; font-weight: bold;">Serial Number:</span> {{ serialNumber.serialNumber }}<br>
+                <span style="font-weight: bold; color: black;">Imei1:</span> {{ serialNumber.imeI1 }}<br>
+                <span style="font-weight: bold; color: black;">Imei2:</span> {{ serialNumber.imeI2 }}<br>
+                <span style="font-weight: bold; color: black;">Condition:</span> {{ serialNumber.itemStatus }}
+              </p>
+            </div>
+          </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </transition>
             </div>
           </div>
         </div>
@@ -526,19 +355,29 @@
 import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared";
 import moment from "moment";
+import 'jquery';
+import 'datatables.net';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-select';
+import 'datatables.net-bs4';
+import $ from 'jquery';
+import Papa from 'papaparse';
 
 export default {
-  name: "AddDeliveryNumber",
+  name: "GetDeliveredItemsPerMonth",
   mixins: [AppMixins],
   data() {
     return {
       selectedInvoice: null,
+          // Other data properties...
+    selectedBatchNumber: null,
+    selectedSerialNumbers: [],
 
       isModalOpen: false,
       invoiceItemBody: [],
       polinebody: {},
       dataLoaded: false,
-      dataTable:null,
+      dataTable: null,
       formdata: {
         deliveryNumber: "",
         deliveryDate: "",
@@ -547,12 +386,53 @@ export default {
         airwaybill: "",
         excessOption: null,
       },
-      batchbody: [],
+      batchbody: {},
       userChoice: null,
       poBody: [], // Initialize this with appropriate data
     };
   },
   methods: {
+    async exportCSV() {
+      try {
+        // Fetch the data you want to export, for example, this.batchbody
+        // Replace this with the actual data you want to export
+        const dataToExport = this.batchbody;
+
+        // Convert the data to CSV format using PapaParse
+        const csvData = Papa.unparse(dataToExport);
+
+        // Create a Blob containing the CSV data
+        const blob = new Blob([csvData], { type: 'text/csv' });
+
+        // Create a download link for the Blob
+        const url = window.URL.createObjectURL(blob);
+
+        // Create an anchor element to trigger the download
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'exported_data.csv');
+
+        // Simulate a click to trigger the download
+        link.click();
+
+        // Release the URL object
+        window.URL.revokeObjectURL(url);
+
+        // Optionally, you can show a success message to the user
+        swal.fire({
+          heightAuto: false,
+          html: '<h5 class="text-success" style="font-family: inter; margin-top: 22px">CSV Exported Successfully</h5>',
+        });
+      } catch (error) {
+        console.error('Error exporting CSV:', error);
+
+        // Show an error message to the user
+        swal.fire({
+          heightAuto: false,
+          html: '<h5 class="text-danger" style="font-family: inter; margin-top: 22px">Error exporting CSV</h5>',
+        });
+      }
+    },
     async markComplete(invoiceitem) {
       const response = await this.markingbatchascomplete(
         invoiceitem.batchNumber
@@ -718,6 +598,14 @@ export default {
       // });
       //  }
     },
+    async gettingserailnumberbybatch() {
+// Assuming batchID is defined and contains the correct value
+   var response = await this.getserialbybatch(this.selectedInvoice.batchNumber);
+   console.log("batch number ids:::::::::::: id:",this.selectedInvoice.batchNumber);
+   this.invoiceItemBody = response.body;
+   console.log("response on invoice body: : ", this.invoiceItemBody);
+   //this.reference_number=this.invoiceItemBody.reference_Number;
+},
     async gettingitemsbypo() {
       var poNumber = this.batchbody.poNumber;
       console.log("PONUMBER IS;;;;;;;;;;;;;;;;;;;;;;", poNumber);
@@ -766,26 +654,13 @@ export default {
       }
     },
 
-    async gettingpoitembyid() {
-      // Assuming batchID is defined and contains the correct value
-      var response = await this.gettingpolinebyid(this.id);
-      this.polinebody = response.body;
-      console.log(
-        "response onproduct lines by idy:<<<<<<<<<<<<<<< : ",
-        this.polinebody
-      );
-      console.log("po number:", this.polinebody.poNumber);
-      console.log("PO Quantity::::::::::::::", this.polinebody.quantity);
 
-      //this.reference_number=this.invoiceItemBody.reference_Number;
-    },
 
     async gettingproductdetailsbyid() {
       // Assuming batchID is defined and contains the correct value
-      var response = await this.gettingbatchbyid(this.id);
-      this.batchbody = response.body;
+      var response = await this.GetAllItemsDeliveredParticularMonth(this.year,this.month);
+      this.batchbody = response;
       console.log("response on batch  body:<<<<<<<<<<<<<<< : ", this.batchbody);
-      console.log("batch number:", this.batchbody.batchNumber);
 
       //this.reference_number=this.invoiceItemBody.reference_Number;
     },
@@ -800,7 +675,7 @@ export default {
         replace: true,
       });
     },
-    
+
     async pushingPO() {
       console.log("PO Number is:", this.polinebody.poNumber);
       this.$router.push({
@@ -808,35 +683,70 @@ export default {
         replace: true,
       });
     },
-    ModalOpen(invoiceitem) {
-      console.log("ModalOpen called with", invoiceitem);
-      this.selectedInvoice = invoiceitem;
-      this.isModalOpen = true;
-    },
+    async ModalOpen(invoiceitem) {
+  console.log("ModalOpen called with", invoiceitem);
+  this.selectedBatchNumber = invoiceitem.batchNumber;
+  this.selectedInvoice = invoiceitem;
+
+  // Use an API call or a method to retrieve serial numbers for the selected batch
+  // Replace the following line with your actual data retrieval logic
+  var response = await this.getserialbybatch(invoiceitem.batchNumber);
+  this.selectedSerialNumbers = response.body;
+      console.log("response on PO body: : ", this.selectedSerialNumbers);
+
+
+  this.isModalOpen = true;
+},
+
     // Ensure data is loaded before initializing DataTable
-   
 
     // Other methods here
   },
   created() {
     this.batchbody.batchNumber = this.$route.params.batchNumber;
     console.log("poNumber :", this.batchbody.batchNumber);
-    this.id = this.$route.params.id;
-    console.log("poNumber :", this.id);
+    this.year = this.$route.params.year;
+    console.log("data ius ::::::::::::::::::: :",this.year);
+    this.month = this.$route.params.month;
+    console.log("month is ::::::::::::::::::: :",this.month);
     this.itemID = this.$route.params.itemID;
     console.log("batchid :", this.itemID);
     this.gettingproductdetailsbyid();
     this.gettingitembyinvoice();
-    this.gettingpoitembyid();
-    
+    this.gettingserailnumberbybatch();
+
     // Load data
-  
   },
+  mounted() {
+  // Initialize DataTable after the component is mounted and the table is in the DOM
+  this.gettingproductdetailsbyid().then(() => {
+    this.$nextTick(() => {
+      const dataTable = $('#purchaseList'); // Get a reference to the table element
+      
+      // Initialize DataTable with your desired options
+      dataTable.DataTable({
+        paging: true,
+        searching: true,
+        responsive: true,
+        // Other DataTable options here as needed
+      });
+      
+      // Add an event listener for the search event
+      dataTable.on("search.dt", () => {
+        const searchValue = dataTable.DataTable().search(); // Get the search query
+        console.log("Search Query:", searchValue);
+        
+        // You can further process or log the search query here
+      });
+    });
+  });
+}
 
   // Your created hook and other lifecycle hooks here
 };
 </script>
 
 <style scoped>
+
 /* Your scoped styles here */
 </style>

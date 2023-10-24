@@ -83,10 +83,22 @@ export default {
       var response=await axios.post(`User/MakeApprover?useremail=${useremail}`)
       return response.data;
     },
+    async MakeIssuer(useremail){
+      console.log("passed mail: ", useremail)
+      this.setAuthHeader();
+      var response=await axios.post(`User/CanMakeIssuer?useremail=${useremail}`)
+      return response.data;
+    },
     async RemoveApprover(useremail){
       console.log("passed mail: ", useremail)
       this.setAuthHeader();
       var response=await axios.post(`User/RemoveApprover?userMail=${useremail}`)
+      return response.data;
+    },
+    async RemoveIssuer(useremail){
+      console.log("passed mail: ", useremail)
+      this.setAuthHeader();
+      var response=await axios.post(`User/RemoveIssuer?userMail=${useremail}`)
       return response.data;
     },
     async activateUser(useremail){
@@ -302,6 +314,12 @@ export default {
       console.log("response",response);
       return response.data;
     },
+    async getFualtySerial(batchNumber){
+      this.setAuthHeader();
+      var response=await axios.post(`Stock/GetSerialNumberByBatch?BatchNumber=${batchNumber}`)
+      console.log("response",response);
+      return response.data;
+    },
     async gettingCustomerbyid(customerid){
       this.setAuthHeader();
       var response=await axios.post(`Stock/GetCustomerByID?customerId=${customerid}`)
@@ -377,9 +395,52 @@ export default {
       return resp.data;
 
     },
+    async GetFormIssuedByid(issueID){
+      this.setAuthHeader();
+      var resp = await axios.post(`Stock/GetIssueByID?Issueid=${issueID}`);
+      return resp.data;
+
+    },
+    async GetIssuedItemByID(ID){
+      this.setAuthHeader();
+      var resp = await axios.post(`Stock/GetSerialById?ID=${ID}`);
+      return resp.data;
+
+    },
+    async GetSerialIssued(ID){
+      this.setAuthHeader();
+      var resp = await axios.post(`Stock/GetSelectedSerialIssue?ID=${ID}`);
+      return resp.data;
+
+    },
+    async GetSerialIssuedbyNo(issuedNo){
+      this.setAuthHeader();
+      var resp = await axios.post(`Stock/GetSelectedSerialByNo?issuedNo=${issuedNo}`);
+      return resp.data;
+
+    },
+    async GetOrderIssuedByID(ID){
+      this.setAuthHeader();
+      var resp = await axios.post(`Stock/GetReturnedStockByIssuedId?Id=${ID}`);
+      return resp.data
+
+    },
+    async GetSerialByItem(ID){
+      console.log("invoice is :::::::::::::::::::::::::::::::::::::::::",ID);
+      this.setAuthHeader();
+      var resp = await axios.post(`Stock/GetSerialByItemID?ItemId=${ID}`);
+      return resp.data
+
+    },
     async addingCustomer(body){
       this.setAuthHeader();
       var resp=await axios.post("Stock/AddCustomer",body);
+      return resp.data;
+
+    },
+    async SelectSerialNumberToIssue(body){
+      this.setAuthHeader();
+      var resp=await axios.post("Stock/SelectSerialNumberToissue",body);
       return resp.data;
 
     },
@@ -420,9 +481,21 @@ export default {
       return resp.data;
 
     },
+    async addReturnedItem(body){
+      this.setAuthHeader();
+      var resp=await axios.post("Stock/AddReturnedItem",body);
+      return resp.data;
+
+    },
     async addingInvoiceLines(body){
       this.setAuthHeader();
       var resp=await axios.post("Stock/AddBatchDetails",body);
+      return resp.data;
+
+    },
+    async approvingreturns(body){
+      this.setAuthHeader();
+      var resp=await axios.post("Stock/ApprovalReturn",body);
       return resp.data;
 
     },
@@ -504,6 +577,12 @@ export default {
 
       return response.data;
     },
+    async gettingitemstobereturned() {
+      this.setAuthHeader();
+      var response = await axios.get("Stock/GetAllItemsToBeReturned");
+
+      return response.data;
+    },
     async gettingAllItems() {
       this.setAuthHeader();
       var response = await axios.get("Stock/GetAllItems");
@@ -519,6 +598,11 @@ export default {
     async GettingDepartmenbyid(id){
       this.setAuthHeader();
       var response= await axios.post(`User/Getdepartmentbyid?departmentid=${id}`);
+      return response.data;
+    },
+    async gettingIssuedItemByID(id){
+      this.setAuthHeader();
+      var response= await axios.post(`Stock/GetSerialByOrderNo?issueid=${id}`);
       return response.data;
     },
     async assigningRoles(rolesID,usermail){
@@ -700,9 +784,16 @@ export default {
     var resp= await axios.post(`Roles/GetAllroleClaims?roleid=${roleided}`);
     return  resp.data;
    },
-   async gettingItemByClient(clientName){
+   async gettingItemByClient(orderNumber){
+    console.log("order number id vffr",orderNumber);
 
-    var resp= await axios.post(`Stock/GetItemByClient?ClientName=${clientName}`);
+    var resp= await axios.post(`Stock/GetItemByClient?OrderNumber=${orderNumber}`);
+
+    return  resp.data;
+   },
+   async gettingIssuedItemByClient(clientName){
+
+    var resp= await axios.post(`Stock/GetItemIssuedByClientName?ClientName=${clientName}`);
     return  resp.data;
    },
    async SendingUserMail(usermail){
@@ -886,6 +977,12 @@ export default {
             console.log("response of the po Number",response);
             return response.data;
           },
+          async gettingSerialUnderItemId(poNumber){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/GettingSerialUnderItem?PONumber=${poNumber}`)
+            console.log("response of the po Number",response);
+            return response.data;
+          },
           async gettingdetailsbypo(poNumber){
             this.setAuthHeader();
             var response=await axios.post(`Stock/GetPONumberbyNumber?POnumber=${poNumber}`)
@@ -958,6 +1055,24 @@ export default {
             console.log("response on requisition form is:",response);
             return response.data;
           },
+          async getFormByClientName(clientName){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/GetRequisitionbyClientName?clientName=${clientName}`)
+            console.log("response on requisition form is:",response);
+            return response.data;
+          },
+          async getClientByName(clientName){
+            this.setAuthHeader();
+            var response=await axios.post(`Stock/GetCustomerByName?clientName=${clientName}`)
+            console.log("response on client name is:",response);
+            return response.data;
+          },
+          async getNameToUse(){
+            this.setAuthHeader();
+            var response=await axios.post("Stock/GetIssuedItem")
+            console.log("response on requisition form is:",response);
+            return response.data;
+          },
           async getFormbyemail(){
 
             this.setAuthHeader();
@@ -968,6 +1083,60 @@ export default {
           async GettingAllStockItems() {
             this.setAuthHeader();
             var response = await axios.get("Stock/GetAllItemsStock");
+      
+            return response.data;
+          },
+          async GetAllMonthlyRecords(year) {
+            console.log("this year selected is :>>>>>>>>>>>>>>>>>>>>>>>",year);
+            this.setAuthHeader();
+
+            var response = await axios.post(`Stock/GetAllMonthlyRecord?Year=${year}`);
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>",response);
+      
+            return response.data;
+          },
+          async GetAllItemsDeliveredParticularMonth(year,month) {
+            console.log("this year selected is :>>>>>>>>>>>>>>>>>>>>>>>",year);
+            this.setAuthHeader();
+
+            var response = await axios.post(`Stock/GetDeliveredItemPerMonth?year=${year}&month=${month}`);
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>",response);
+      
+            return response.data;
+          },
+          async GetAllItemsDamagedParticularMonth(year,month) {
+            console.log("this year selected is :>>>>>>>>>>>>>>>>>>>>>>>",year);
+            this.setAuthHeader();
+
+            var response = await axios.post(`Stock/GetDamagedItemsPerMonth?year=${year}&month=${month}`);
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>",response);
+      
+            return response.data;
+          },
+          async GetSerialByItemName(brandName,itemName) {
+            this.setAuthHeader();
+
+            var response = await axios.post(`Stock/GetSerialByItemName?brandName=${brandName}&itemName=${itemName}`);
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>",response);
+      
+            return response.data;
+          },
+          async GetAllItemsIssuedPerMonth(year,month) {
+            console.log("this year selected is :>>>>>>>>>>>>>>>>>>>>>>>",year);
+            this.setAuthHeader();
+
+            var response = await axios.post(`Stock/GetIssuedItemPerMonth?year=${year}&month=${month}`);
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>",response);
+      
+            return response.data;
+          },
+          async GetSerialByBrandNameAndItemName(brandName,itemName) {
+            console.log("brandname ois ",brandName);
+            console.log("itemName udsjjhf",itemName);
+            this.setAuthHeader();
+
+            var response = await axios.post(`Stock/GetSerialByBrandAndItem?brandName=${brandName}&itemName=${itemName}`);
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>",response);
       
             return response.data;
           },

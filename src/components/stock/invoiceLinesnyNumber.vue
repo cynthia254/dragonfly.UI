@@ -3,7 +3,10 @@
     href="https://fonts.googleapis.com/css?family=Inter:500,700"
     rel="stylesheet"
   />
+  
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
   <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
 
   <section>
     <header class="top">
@@ -41,7 +44,7 @@
           
            <a href="" style="font-size: 15px;font-family:inter;font-weight:medium">Inventory</a>
            <ul>
-            <li><a href="/poComplete" style="font-size: 16px;font-family:inter;font-weight:medium">Update Batch</a></li>
+            <li><a href="/poComplete" style="font-size: 16px;font-family:inter;font-weight:medium">Receive Batch</a></li>
 
              <li>
                <a href="/brand" style="font-size: 16px;font-family:inter;font-weight:medium">Manage ProductBrand</a>
@@ -518,7 +521,7 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
             <div class="table-wrapper" v-if="showallstock">
               <div class="table-title">
                 <div class="">
-                  <div class="col-sm table-responsive ">
+                  <div class="col-sm table-responsive dataTable">
                     <table
                       id="purchaseList"
                       class="table table-hover table-bordered"
@@ -543,10 +546,10 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
                           
                           <th >Total Delivered</th>
                           <th>Total Damaged</th>
-                            <th style="width:120px" >Outstanding Quantity</th>
+                            <th style="color:red" >Outstanding Quantity</th>
                           <th>Warranty<br><span style="font-size:11px;font-weight: bolder;color: gray;">(In Months)</span></th>
-                          <th style="width:120px">Warranty Start Date</th>
-                          <th  style="width:115px">Warranty End Date</th>
+                          <th style="">Warranty Start Date</th>
+                          <th  style="">Warranty End Date</th>
                           <th >Updated By</th>
                           <th>Updated on</th>
                           <th >Delivery Status</th>
@@ -603,37 +606,37 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
             <div class="table-wrapper" v-if="showallstocksearch">
               <div class="table-title">
                 <div class="">
-                  <div class="col-sm table-responsive ">
+                  <div class="col-sm table-responsive dataTable custom-data-table-wrapper2 ">
                     <table
                       id="purchaseList"
-                      class="table table-hover table-bordered"
-                      style="overflow: hidden"
+                      class="table table-hover table-bordered custom-data-table"
+                      style="overflow: auto"
                     >
-                      <thead
+                      <thead class="text-nowrap"
                         style="
-                          background-color: #f3e6da;
-                          font-family: inter;
-                          font-weight: bold;
-                          font-size: 16px;
-                          text-overflow: ellipsis;
-                          overflow: hidden;
+                         background-color: #f3e6da;
+  font-family: inter;
+  font-weight: bold;
+  font-size: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
                          
                         "
                       >
-                        <tr>
-                          <th>Item ID</th>
+                        <tr style="font-size: 12px;">
+                          <th style="font-size: 8px;">Item ID</th>
                           <th>Item Name</th>
-                          <th style="width:130px">Category Name</th>
+                          <th >Category Name</th>
                           <th>Quantity Ordered</th>
                           
-                          <th style="width:120px">Total Delivered</th>
-                            <th style="width:120px">Outstanding Quantity</th>
+                          <th >Total Delivered</th>
+                            <th >Outstanding Quantity</th>
                           <th>Warranty<br><span style="font-size:11px;font-weight: bolder;color: gray;">(In Months)</span></th>
-                          <th style="width:130px">Warranty Start Date</th>
-                          <th style="width:120px">Warranty End Date</th>
+                          <th >Warranty Start Date</th>
+                          <th>Warranty End Date</th>
                           <th>Updated By</th>
                           <th>Updated on</th>
-                          <th style="width:150px">Delivery Status</th>
+                          <th style="width:170px">Delivery Status</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -693,6 +696,11 @@ line-height: normal;margin-top: 10px;; height: 1.81rem; border-width: 0.06rem; m
 import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared";
 import moment from "moment";
+
+import 'jquery';
+import 'datatables.net';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import $ from 'jquery';
 export default {
   name: "InvoiceLinesByNumber",
   mixins: [AppMixins],
@@ -999,6 +1007,23 @@ this.$router.push({
     this.GetAllCategory();
     this.GetLoggedInUser();
     this.GetAllBrands();
+    // Ot
+   // Load data
+this.gettingitembyinvoice().then((data) => {
+  // Assuming data is an array of objects
+  // Bind the data to the DataTable
+  const dataTable = $('#purchaseList').DataTable({
+    data: data, // Bind your data here
+    paging: true,
+    searching: true,
+    responsive: true,
+    // Other DataTable options here as needed
+  });
+
+  // If you want to re-draw the table after data is loaded (not always necessary)
+  dataTable.draw();
+});
+
   },
  
 };
@@ -1011,6 +1036,37 @@ this.$router.push({
   width: 100%;
   height: 100%;
 }
+.custom-data-table-wrapper1,
+.custom-data-table-wrapper2 {
+  width: 100%;
+  overflow: auto;
+}
+
+.custom-data-table-wrapper1 {
+  background: #fff;
+  height: 20px;
+}
+
+.custom-data-table-wrapper2::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+.custom-data-table-wrapper2 {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.custom-data-table-top-scrollbar {
+  width: 100%;
+  height: 20px;
+}
+
+.custom-data-table {
+  width: 100%;
+  background-color: #fcfcfc;
+}
+
+
 
 .modal-wrapper {
   display: table-cell;
@@ -1021,10 +1077,7 @@ this.$router.push({
   table-layout: fixed;
   word-wrap: break-word;
 }
-th
- {
-  overflow: hidden;
-}
+
 .moving-animation {
   overflow: hidden;
   height: 30px;

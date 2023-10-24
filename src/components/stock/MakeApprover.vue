@@ -81,6 +81,11 @@
   <div class="form-control">
     <div class="row" style="margin-top: 50px;">
       <div class="col-12">
+        <div class="search-container" style="margin-top: 30px; display: flex; align-items: center;">
+    <p style="margin-right: 10px;margin-top: 10px;">Search:</p>
+    <input type="text" v-model="search" id="table-search" placeholder="Search...">
+
+  </div>
         <table class="table table-bordered ">
           <thead>
             <tr>
@@ -92,7 +97,7 @@
           </thead>
           <tbody>
             <tr
-              v-for="user in allusers"
+              v-for="user in filteredBrands"
               :key="user.id"
               :class="{ 'checker-row': user.checker }"
             >
@@ -218,8 +223,16 @@ export default {
       searchword: "",
       showallusers: true,
       showallusersSearch: false,
+      search:'',
     };
   },
+  computed: {
+  filteredBrands() {
+    return this.allusers.filter((user) =>
+      user.firstName.toLowerCase().includes(this.search.toLowerCase())|| user.lastName.toLowerCase().includes(this.search.toLowerCase())|| user.email.toLowerCase().includes(this.search.toLowerCase())
+    );
+  },
+},
   methods: {
     async getallusers() {
       const response = await this.GettingAllUsers();

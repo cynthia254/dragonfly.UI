@@ -118,6 +118,20 @@ import ItemByClient from "../components/stock/GetItemByClient.vue"
 import viewPOPage from "../components/stock/viewpopage.vue"
 import viewBatchWithSerial from "../components/stock/viewBatchSerial.vue"
 import MakeApprover from "../components/stock/MakeApprover.vue"
+import IssuedStockbyID from "../components/stock/stockissueitem.vue"
+import DownloadDnote from "../components/stock/DownloadDeliveryNote.vue"
+import SelectAdjustedByID from "../components/stock/SelectDispatchSerial.vue"
+import SerialNiumberIssued from "../components/stock/AllSerialNBumbersIssued.vue"
+import returnedItem from "../components/stock/ReturnedItem.vue"
+import ApproversReturnItem from "../components/stock/GetStockToBeReturned.vue"
+import AllStockRecord from "../components/stock/GetAllItemStock.vue"
+import GetDeliveredItemsPerMonth  from "../components/stock/GetDeliveredItemsPerMonth.vue"
+import GetIssuedItemsPerMonth from "../components/stock/GetIssuedItemsPerMonth.vue"
+import MakeIssuer from "../components/stock/MakeIssuer.vue"
+import POReport from "../components/stock/POReport.vue"
+import RecievedReport from "../components/stock/RecievedReport.vue"
+import GetDamagedItemsPerMonth from "../components/stock/GetAllDamagedMonth.vue"
+import viewCustomerByClientName from "../components/stock/viewCustomer.vue"
 const routes = [
   {
     path: "/home",
@@ -151,10 +165,40 @@ const routes = [
     component: stockDashboard,
   },
   {
+    path: "/poreport/:id",
+    name: "POReport",
+
+    component: POReport,
+  },
+  {
+    path: "/viewIssuedSerial/:id",
+    name: "SerialNiumberIssued",
+
+    component: SerialNiumberIssued,
+  },
+  {
+    path: "/viewCustomer/:id",
+    name: "viewCustomerByClientName",
+
+    component: viewCustomerByClientName,
+  },
+  {
+    path: "/returnStock/:id",
+    name: "returnedItem",
+
+    component: returnedItem,
+  },
+  {
     path: "/stockissued",
     name: "IssuedStock",
 
     component: IssuedStock,
+  },
+  {
+    path: "/allstockrecord",
+    name: "AllStockRecord",
+
+    component: AllStockRecord,
   },
   {
     path: "/apply",
@@ -169,6 +213,24 @@ const routes = [
     component: IssuingSerial,
   },
   {
+    path: "/IssuedItem/:id",
+    name: "SelectAdjustedByID",
+
+    component: SelectAdjustedByID,
+  },
+  {
+    path: "/stockissuebyid/:id",
+    name: "IssuedStockbyID",
+
+    component: IssuedStockbyID,
+  },
+  {
+    path: "/downloadDnote/:id",
+    name: "DownloadDnote",
+
+    component: DownloadDnote,
+  },
+  {
     path: "/viewCapturePO/:id",
     name: "viewPOCaptureStatus",
 
@@ -179,6 +241,12 @@ const routes = [
     name: "viewPOPage",
 
     component: viewPOPage,
+  },
+  {
+    path: "/receivedpo/:id",
+    name: "RecievedReport",
+
+    component: RecievedReport,
   },
   {
     path: "/viewBatchWithSerial/:id",
@@ -197,6 +265,12 @@ const routes = [
     name: "MakeApprover",
 
     component: MakeApprover,
+  },
+  {
+    path: "/makeIssuer",
+    name: "MakeIssuer",
+
+    component: MakeIssuer,
   },
   {
     path: "/generate",
@@ -257,6 +331,26 @@ const routes = [
     name: "registerPage",
 
     component: registerPage,
+  },
+  {
+    path: "/damageditemsin/:year/:month",
+    name: "GetDamagedItemsPerMonth",
+
+    component: GetDamagedItemsPerMonth,
+  },
+ 
+
+  {
+    path: "/delivereditemsin/:year/:month",
+    name: "GetDeliveredItemsPerMonth",
+
+    component: GetDeliveredItemsPerMonth,
+  },
+  {
+    path: "/issueditemsin/:year/:month",
+    name: "GetIssuedItemsPerMonth",
+
+    component: GetIssuedItemsPerMonth,
   },
   {
     path: "/podetails",
@@ -773,6 +867,11 @@ const routes = [
     path: "/batchreview",
     name: "ApproversBatchReview",
     component: ApproversBatchReview,
+  },
+  {
+    path: "/returnsreview",
+    name: "ApproversReturnItem",
+    component: ApproversReturnItem,
   },
   {
     path: "/brand",

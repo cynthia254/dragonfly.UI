@@ -1,7 +1,7 @@
 <template>
     <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
-
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <section>
             <header class="top">
       <div class="frame-24" style="width: 40px;margin-left: 25px;">
@@ -197,8 +197,8 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                     </div>
                     </div>
                     
-                    <div class="row">
-                                      <div class="col-md-6">
+                   
+                                      <div class="">
                                         <div class="form-group">
                                 <label style="font-family: inter;font-size: 16px;">Quantity:</label>
                                 <input 
@@ -210,7 +210,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                                 />
                                               </div>
                                         </div>
-                                        <div class="col-md-6" >
+                                        <div class="" >
                             <div  class="form-group" v-if="datearea" >
                                 <label style="font-family: inter;font-size: 16px;white-space: nowrap;">Device Being Repaired:</label>
                                 <input 
@@ -223,7 +223,7 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                                    
                                               </div>
                     </div>
-                    </div>
+                   
                     <div class="row">
                                       <div class="col-md-6">
                                         <div class="form-group">
@@ -314,27 +314,7 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
 
     
               <div class="row mx-5">
-                  <div class="col-sm-6 d-flex mt-2">
-                    <div
-    class="search"
-    style="margin-left: 450px; margin-top: 5px; display: flex"
-  >
-  <span class="form-control-feedback"><svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-</svg></span>
-    <input
-      type="search"
-      id="gsearch"
-      name="gsearch"
-      placeholder="   Search"
-      style="width: 280px;text-align: center;height:40px;"
-      v-model="searchword"
-     
-    />
-    <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
-  
-  </div>
-               </div>
+
                 </div>
 
               
@@ -342,14 +322,19 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                   <div class="table-title">
                     <div class="">
                       <div class="col-sm table-responsive">
+                        <div class="search-container" style="margin-top: 30px; display: flex; align-items: center;">
+    <p style="margin-right: 10px;margin-top: 10px;">Search:</p>
+    <input type="text" v-model="search" id="table-search" placeholder="Search...">
+
+  </div>
                         <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:40px">
                       <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
         padding: 12px 34px">
                         <tr >
-                            <th style="width: 50px">ID</th>
+                            <th style="width: 180px;">Order No.</th>
                           <th style="width: 120px">Item Name</th>
-                          <th style="width: 120px">Quantity</th>
-                          <th style="width: 150px">Device Being Repaired</th>
+                          <th style="width: 80px">Quantity</th>
+                          <th style="width: 150px">Stock Need</th>
                           <th style="width: 120px">Client Name</th>
                           <th style="width: 120px">Purpose</th>
                           <th style="width: 120px">Department Name</th>
@@ -359,17 +344,23 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
                          
                         </tr>
                       </thead>
-                      <tbody  v-for="(invoice, index) in this.emailFormBody" :key="invoice.id">
-                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; ">
-                          <th scope="row"   ><a href="" style="text-decoration: none;color: gray;">{{index+1 }}</a></th>
+                      <tbody v-for="invoice in filteredBrands" v-bind:key="invoice.id">
+                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; " @click.prevent="
+                            editinvoiceitem(
+                             invoice
+                            )">
+                          <td scope="row" style="" class="text-uppercase">
+    <a href="" style="text-decoration: none; color: rgb(202, 36, 7);font-weight: bold;">{{invoice.orderNumber }}</a>
+                          </td>
+
                           <td>{{invoice.brandName}} {{ invoice.itemName }}</td>
                           <td>{{invoice.quantity}}</td>
-                          <td class="text-uppercase">{{invoice.deviceBeingRepaired}}</td>
+                          <td>{{invoice.stockNeed}}</td>
                           <td>{{invoice.clientName}}</td>
                           <td>{{invoice.purpose}}</td>
                           <td>{{invoice.department}}</td>
                           <td>{{invoice.requisitioner}}</td>
-                          <td :style="getStatusStyle(invoice)" style="font-size:13px">{{invoice.approvedStatus}}     <br v-if="invoice.approvedStatus === 'Rejected'">
+                          <td :style="getStatusStyle(invoice)" style="font-size:13px">{{invoice.approvedStatus}} |<span    :style="getDispatchStatus(invoice)" style="font-size: 12px;">{{ invoice.dispatchStatus }}</span>     <br v-if="invoice.approvedStatus === 'Rejected'">
     <span v-if="invoice.approvedStatus === 'Rejected'" style="color:black;font-size:12px">{{ invoice.rejectReason }}</span>
  
   </td>
@@ -395,6 +386,12 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
 import swal from "sweetalert2";
 import AppMixins from "../../Mixins/shared"
 import moment from 'moment';
+import 'jquery';
+import 'datatables.net';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-select';
+import 'datatables.net-bs4';
+import $ from 'jquery';
 export default {
   name: "ApplyRequisitionForm",
   mixins: [AppMixins],
@@ -414,6 +411,7 @@ export default {
       allcustomers:{},
       allbrands:{},
       emailFormBody:{},
+      search:'',
       datearea: false,
       formdata: {
         stockNeed:"",
@@ -433,6 +431,14 @@ export default {
       },
     };
   },
+  computed: {
+  filteredBrands() {
+    return this.emailFormBody.filter((invoice) =>
+    invoice.orderNumber.toLowerCase().includes(this.search.toLowerCase())|| invoice.itemName.toLowerCase().includes(this.search.toLowerCase())|| invoice.stockNeed.toLowerCase().includes(this.search.toLowerCase())|| invoice.dispatchStatus.toLowerCase().includes(this.search.toLowerCase())|| invoice.approvedStatus.toLowerCase().includes(this.search.toLowerCase())
+    );
+  },
+},
+
   methods: {
     async GetAllBrands(){
 
@@ -461,10 +467,38 @@ getStatusStyle(invoice){
     return{
       color:"red"
     };
+
+  }
+  else if(invoice.approvedStatus==="Pending"){
+    return{
+      color:"orange"
+    };
   }else{
     return "";
   }
 },
+getDispatchStatus(invoice) {
+        if (invoice.dispatchStatus === "Complete") {
+          return {
+            color: "green",
+          };
+        } else if (invoice.dispatchStatus === "Incomplete") {
+          return {
+            color: "red",
+          };
+        } else {
+          return "";
+        }
+      },
+        async editinvoiceitem(invoice) {
+  if (invoice.approvedStatus === "Issued") {
+    console.log("Navigating to edit page for:", invoice);
+     this.$router.push({
+          path: `/stockissuebyid/${invoice.id}`,
+      replace: true,
+    });
+  } 
+      } ,
     async GetAllInvoice(){
 
 const response= await this.GettingRequisiotin();
@@ -622,7 +656,7 @@ async getallusers() {
   },
   watch: {
   'formdata.stockNeed': function(newOption) {
-    if (newOption === 'Customer Order') {
+    if (newOption === 'Customer Order' || newOption==='Internal Request') {
       this.datearea = false;
     } else {
       this.datearea = true;
@@ -643,7 +677,31 @@ created() {
   this.GetAllBrands();
   this.gettingemailbyid();
 },
-
+mounted() {
+  // Initialize DataTable after the component is mounted and the table is in the DOM
+  this.gettingemailbyid().then(() => {
+    this.$nextTick(() => {
+      const dataTable = $('#purchaseList'); // Get a reference to the table element
+      
+      // Initialize DataTable with your desired options
+      dataTable.DataTable({
+        paging: true,  // Enable paging
+        pageLength: 10,
+        searching: false,
+        responsive: true,
+        // Other DataTable options here as needed
+      });
+      
+      // Add an event listener for the search event
+      dataTable.on("search.dt", () => {
+        const searchValue = dataTable.DataTable().search(); // Get the search query
+        console.log("Search Query:", searchValue);
+        
+        // You can further process or log the search query here
+      });
+    });
+  });
+}
  
 };
 </script>

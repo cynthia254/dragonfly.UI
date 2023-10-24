@@ -3,6 +3,8 @@
       href="https://fonts.googleapis.com/css?family=Inter:500,700"
       rel="stylesheet"
     />
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
   
     <section>
@@ -134,28 +136,7 @@
       <div>
         <div>
       <div class="row mx-5 d-flex align-items-center">
-        <!-- Search input -->
-        <div class="col-sm-6 d-flex">
-          <div class="search">
-            <!-- Search input code... -->
-            <div class="search" style="margin-left: 450px; margin-top: 5px; display: flex">
-            <span class="form-control-feedback">
-              <svg style="position:absolute;margin-top:12px;margin-left: 20px;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-              </svg>
-            </span>
-            <input
-              type="search"
-              id="gsearch"
-              name="gsearch"
-              placeholder="   Search"
-              style="width: 280px;text-align: center;height:40px;"
-              v-model="searchword"
-            />
-            <img src="../../assets/images/filter.svg" style="width: 24px;height:24px;position: absolute;margin-left: 250px;margin-top:6px"/>
-          </div>
-          </div>
-        </div>
+      
           <!-- Complete button and animation text -->
       <div class="col-sm-6 d-flex align-items-center justify-content-end">
   <!-- Show the Complete button when allItemsAdded is true and captureStatus is not Complete -->
@@ -179,10 +160,10 @@
     </div>
   </div>
             
-              <div class="table-wrapper" >
+              <div class="table-wrappers" >
                 <div class="table-title">
                   <div class="">
-                    <div class="col-sm table-responsive ">
+                    <div class="col-sm table-responsive dataTable">
                       <table
                         id="purchaseList"
                         class="table table-hover table-bordered"
@@ -199,24 +180,26 @@
                            
                           "
                         >
-                        <tr>
-                          <th>Item ID</th>
-                          <th>Item Name</th>
-                          <th>Category Name</th>
-                          <th>Quantity Ordered</th>
-                          
-                          <th >Total Delivered</th>
-                          <th>Total Damaged</th>
-                            <th style="width:108px" >Outstanding</th>
-                          <th>Warranty<br><span style="font-size:11px;font-weight: bolder;color: gray;">(In Months)</span></th>
-                          <th style="width:120px">Warranty Start Date</th>
-                          <th  style="width:115px">Warranty End Date</th>
-                          <th >Updated By</th>
-                          <th>Updated on</th>
-                          <th >Delivery Status</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                        <tr  style="background-color: #f3e6da; font-family: inter; font-weight: bold; font-size: 16px; text-overflow: ellipsis; overflow: hidden;">
+  <th class="py-3.5 pl-4 pr-3 sm:pr-8 font-semibold uppercase text-left" style="width: 5%;">ID</th>
+  <th class="py-3.5 pl-4 pr-3 sm:pr-8 font-semibold uppercase text-left" style="width: ;">Item Name</th>
+  <th class="py-3.5 pl-4 pr-3 sm:pr-8 font-semibold uppercase text-left" style="width: ;">Category Name</th>
+  <th style="font-size: 14px;">Quantity Ordered</th>
+  <th style="font-size: 14px;">Total Delivered</th>
+  <th style="font-size: 14px;">Total Damaged</th>
+  <th style="font-size: 14px;">Outstanding</th>
+  <th style="font-size: 14px;">
+    Warranty<br>
+    <span style="font-size: 11px; font-weight: bold; color: gray;">(In Months)</span>
+  </th>
+  <th style="font-size: 14px;">Warranty Start Date</th>
+  <th style="font-size: 14px;">Warranty End Date</th>
+  <th style="font-size: 14px;">Updated By</th>
+  <th style="font-size: 14px;">Updated on</th>
+  <th style="font-size: 14px;">Delivery Status</th>
+</tr>
+</thead>
+                        <tbody >
                           <tr
                     
                             v-for="(invoicelines, index) in this.invoiceItemBody"
@@ -279,6 +262,12 @@
   import swal from "sweetalert2";
   import AppMixins from "../../Mixins/shared";
   import moment from "moment";
+  import 'jquery';
+import 'datatables.net';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-select';
+import 'datatables.net-bs4';
+import $ from 'jquery';
   export default {
     name: "POLinesWithCaptureComplete",
     mixins: [AppMixins],
@@ -323,6 +312,7 @@
       showCompleteButton() {
     this.showMovingText = false;
   },
+
 
       async GetAllInvoice() {
         const response = await this.gettingAllPOS();
@@ -519,12 +509,7 @@
           path: `/adddelivery/${invoicelines.id}`,
           replace: true,
         });
-    //else {
-     //return swal.fire({
-      // heightAuto: false,
-      // html: `<p class="text-danger" style="font-size:23px;font-family:inter;margin-top:22px">Oops! Nothing else to be added on accesory</p>`,
-    // });
- //  }
+   
  },
     },
    
@@ -561,6 +546,18 @@
       this.GetAllCategory();
       this.GetLoggedInUser();
       this.GetAllBrands();
+        // Load data
+  this.gettingitembyinvoice().then(() => {
+    // Initialize DataTable after data load
+    this.$nextTick(() => {
+      $("#purchaseList").DataTable({
+        paging: true,
+        searching: true,
+        responsive: true,
+        // Other DataTable options here as needed
+      });
+    });
+  });
     },
    
   };
@@ -646,7 +643,52 @@
     100% {
       transform: translateX(-100%);
     }
-  }
+  }.table-wrappers {
+  overflow-x: auto;
+}
+
+.table-wrappers::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-wrappers::-webkit-scrollbar-thumb {
+  background: var(--darkblue);
+  border-radius: 40px;
+}
+
+.table-wrappers::-webkit-scrollbar-track {
+  background: var(--white);
+  border-radius: 40px;
+}
+
+.table-wrappers table {
+  margin: 50px 0 20px;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.table-wrappers table th,
+.table-wrappers table td {
+  padding: 10px;
+  min-width: 75px;
+}
+
+.table-wrappers table th {
+  color: var(--white);
+  background: var(--darkblue);
+}
+
+.table-wrappers table tbody tr:nth-of-type(even) > * {
+  background: var(--lightblue);
+}
+
+.table-wrappers table td:first-child {
+  display: grid;
+  grid-template-columns: 25px 1fr;
+  grid-gap: 10px;
+  text-align: left;
+}
+
   
   </style>
   

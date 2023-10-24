@@ -1,8 +1,8 @@
 <template>
     <link href='https://fonts.googleapis.com/css?family=Inter:500,700' rel='stylesheet'>
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
-
-    <section>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+<section>
             <header class="top">
       <div class="frame-24" style="width: 40px;margin-left: 25px;">
       <img
@@ -49,7 +49,7 @@
              
              <li><a href="/device" style="font-size: 16px;font-family:inter;font-weight:medium">Manage Devices</a></li>
 
-             <li><a href="/poComplete" style="font-size: 16px;font-family:inter;font-weight:medium">Update Batch</a></li>
+             <li><a href="/poComplete" style="font-size: 16px;font-family:inter;font-weight:medium">Receive Batch</a></li>
            
             </ul>
          </li>
@@ -246,194 +246,57 @@ line-height: normal; height: 1.81rem; border-width: 0.06rem; margin-left: 34px; 
                   </div>
                 </div>
               </transition>
-              <div class="form-control"  style="margin-top: 30px;margin-left: 10px;
+              <div class="form-control"  style="margin-top: 30px;margin-left: 10px;overflow: hidden;
 
 background: #FFF;
 box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 10px;" >
 
     
-              <div class="row mx-5">
-                  <div class="col-sm-6 d-flex mt-2">
-                    <div
-    class="search"
-    style="margin-left: 450px; margin-top: 5px; display: flex"
-  >
- 
-    <input
-      type="search"
-      id="gsearch"
-      name="gsearch"
-      placeholder=" Search PO Here"
-      style="width: 280px;text-align: center;height:40px;"
-      v-model="searchword"
-     
-    />
-   
+      <!-- <div class="row mx-5">
+  <div class="col-sm-6 d-flex mt-2">
+    <div class="search" style="margin-left: 450px; margin-top: 5px; display: flex">
+      <input
+        type="search"
+        id="gsearch"
+        name="gsearch"
+        placeholder=" Search PO Here"
+        style="width: 280px;text-align: center;height:40px;"
+        v-model="searchword"
+      />
+    </div>
   </div>
-               </div>
-                </div>
+</div> -->
+
 
               
-                <div class="table-wrapper" v-if="showallstock"  >
+                <div class="table-wrapper" v-if="showallstock" style="overflow: hidden;"  >
                   <div class="table-title">
                     <div class="">
-                      <div class="col-sm table-responsive">
-                        <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:40px">
-                      <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
+                      <div class="col-sm  " style="overflow:hidden">
+                        <table id="purchaseTable" class="display">
+
+                     <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
         padding: 12px 34px">
                         <tr >
-                            <th style="width: 100px">PO ID</th>
+                            <th style="width: 10px">ID</th>
                           <th style="width: 80px">PO Number</th>
                           <th style="width: 90px">PO Date</th>
                           <th style="width: 100px">Supplier Name</th>
                           <th style="width: 120px">Date Updated</th>
-                          <th style="width: 80px">Capture Status</th>
-                          <th style="width: 80px">Delivery Status</th>
+                          <th style="width: 60px">Capture Status</th>
+                          <th style="width: 60px">Delivery Status</th>
                          
                         </tr>
                       </thead>
-                      <tbody  v-for="(invoice, index) in this.allinvoice" :key="invoice.id">
-                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; "  >
-                          <th scope="row"   ><a href="" style="text-decoration: none;color: gray;">{{index+1 }}</a></th>
-                          <td>
-                          <span @click="ModalOpen(invoice)" class="link-button d-flex" style="font-size:13px">{{ invoice.poNumber }}</span>
-     
-     <transition name="modal">
-       <div id="purchaseModal" class="modal-mask fixed-top" v-if="isModalOpen">
-         <div class="modal-wrapper" style="vertical-align: middle; display: table-cell; text-align: right;">
-           <div class="modal-dialog" style=" margin-top: 10px; margin-right: 600px;">
-             <div class="modal-content" style="margin-top: 100px; padding: 20px; background: #fff; border-radius: 5px; width: 30%; position: relative; transition: all 5s ease-in-out;">
-             
-               
-                       <div class="modal-header">
-                      
-                         <button
-                           @click="isModalOpen = false"
-                           type="button"
-                           class="btn-close"
-                           data-bs-dismiss="modal"
-                           style="margin-right: 30px"
-                         ></button>
-                       </div>
-                       <div
-                         class="modal-body"
-                         style="
-                           width: 70%;
-                           margin-left: 10px;
-                         "
-                       >
-                       <h2 style="display: flex;">{{ selectedInvoice.poNumber }}</h2>
-          
-           <div class="content">
-             Thank you for popping me out    <span @click="viewMore(invoice)" class="link-button d-flex" style="font-size:13px;margin-left:30px">View More</span>
-          
-           </div>
-                       </div>
-                     </div>
-                   </div>
-                 
-               </div>
-               </div>
-             </transition>
-                       
-                                   </td>
-                          <td @click.prevent="pushPO(invoice.poNumber)">{{ getFormattedDate(invoice.poDate) }}</td>
-                         
-                          <td @click.prevent="pushPO(invoice.poNumber)">{{invoice.vendor}}</td>
-                          <td @click.prevent="pushPO(invoice.poNumber)">{{ formatDate(invoice.dateCreated) }}</td>
-                          <td :style="getStatusStyle(invoice)" style="font-size:14px" @click.prevent="pushPO(invoice.poNumber)">{{ invoice.captureStatus }}</td>
-                          <td :style="getDeliveryStatus(invoice)" style="font-size:14px" @click.prevent="pushPO(invoice.poNumber)">{{ invoice.deliveryStatus }}</td>
-                          
-                         
-                        </tr>
-                      
-                      </tbody>
+                
+       
                     </table>
                   </div>
                 </div>
               </div>
               </div>
-              <div class="table-wrapper" v-if="showallstocksearch"   >
-                  <div class="table-title">
-                    <div class="">
-                      <div class="col-sm table-responsive">
-                        <table id="purchaseList" class="table card-list-table  table-hover table-bordered" style="margin-top: 30px;margin-left:40px">
-                      <thead style="font-family: inter;font-weight: bold;background: #F3E6DA;font-size: 16px;border-bottom: 1px solid  darken(#f8f8f8, 10%);
-        padding: 12px 34px">
-                        <tr >
-                            <th style="width: 100px">PO ID</th>
-                          <th style="width: 80px">PO Number</th>
-                          <th style="width: 90px">PO Date</th>
-                          <th style="width: 100px">Supplier Name</th>
-                          <th style="width: 120px">Date Updated</th>
-                          <th style="width: 80px">Capture Status</th>
-                          <th style="width: 80px">Delivery Status</th>
-                         
-                        </tr>
-                      </thead>
-                      <tbody  v-for="(invoice, index) in this.allinvoice" :key="invoice.id">
-                        <tr style="font-family: inter;font-size: 16px;font-weight: medium;color: gray; ">
-                          <th scope="row"   ><a href="" style="text-decoration: none;color: gray;">{{index+1 }}</a></th>
-                          <td>
-                          <span @click="ModalOpen(invoice)" class="link-button d-flex" style="font-size:13px">{{ invoice.poNumber }}</span>
-     
-     <transition name="modal">
-       <div id="purchaseModal" class="modal-mask fixed-top" v-if="isModalOpen">
-         <div class="modal-wrapper" style="vertical-align: middle; display: table-cell; text-align: right;">
-           <div class="modal-dialog" style=" margin-top: 10px; margin-right: 600px;">
-             <div class="modal-content" style="margin-top: 100px; padding: 20px; background: #fff; border-radius: 5px; width: 30%; position: relative; transition: all 5s ease-in-out;">
-             
-               
-                       <div class="modal-header">
-                      
-                         <button
-                           @click="isModalOpen = false"
-                           type="button"
-                           class="btn-close"
-                           data-bs-dismiss="modal"
-                           style="margin-right: 30px"
-                         ></button>
-                       </div>
-                       <div
-                         class="modal-body"
-                         style="
-                           width: 70%;
-                           margin-left: 10px;
-                         "
-                       >
-                       <h2 style="display: flex;">{{ selectedInvoice.poNumber }}</h2>
-          
-           <div class="content">
-             Thank you for popping me out    <span @click="viewMore(invoice)" class="link-button d-flex" style="font-size:13px;margin-left:30px">View More</span>
-          
            </div>
-                       </div>
-                     </div>
-                   </div>
-                 
-               </div>
-               </div>
-             </transition>
-                       
-                                   </td>
-                          <td @click.prevent="pushPO(invoice.poNumber)">{{ getFormattedDate(invoice.poDate) }}</td>
-                         
-                          <td @click.prevent="pushPO(invoice.poNumber)">{{invoice.vendor}}</td>
-                          <td @click.prevent="pushPO(invoice.poNumber)">{{ formatDate(invoice.dateCreated) }}</td>
-                          <td :style="getStatusStyle(invoice)" style="font-size:14px" @click.prevent="pushPO(invoice.poNumber)">{{ invoice.captureStatus }}</td>
-                          <td :style="getDeliveryStatus(invoice)" style="font-size:14px" @click.prevent="pushPO(invoice.poNumber)">{{ invoice.deliveryStatus }}</td>
-                          
-                         
-                        </tr>
-                      
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              </div>
-            </div>
-            </div>
+           </div>
           
             
             </div>
@@ -444,8 +307,14 @@ box-shadow: 0px 8px 27px 0px rgba(136, 133, 133, 0.25);border:0;border-radius: 1
 </template>
 <script>
 import swal from "sweetalert2";
-import AppMixins from "../../Mixins/shared"
+import AppMixins from "../../Mixins/shared";
 import moment from 'moment';
+import 'jquery';
+import 'datatables.net';
+import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
+import 'datatables.net-select';
+import 'datatables.net-bs4';
+import $ from 'jquery';
 export default {
   name: 'PurchaseOrdered',
   mixins: [AppMixins],
@@ -461,6 +330,7 @@ export default {
       showallstocksearch:false,
       isModalOpen:false,
       selectedInvoice: null,
+      dataTable: null,
       formdata: {
         poDate:"",
         poNumber:"",
@@ -469,7 +339,11 @@ export default {
 
     
       },
+  
     };
+  },
+  mounted() {
+    this.GetAllInvoice();
   },
   methods: {
     ModalOpen(invoice) {
@@ -477,31 +351,37 @@ export default {
   this.selectedInvoice = invoice;
   this.isModalOpen = true;
 },
+
     formatDate(dateString) {
             const date = new Date(dateString);
 
             return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
         },
-    async GetAllInvoice(){
+        async GetAllInvoice() {
+  const response = await this.gettingAllPurchaseOrderss();
+  this.allinvoice = response.body;
+  console.log("invoice response: ", response);
+  console.log('Before search:', this.allinvoice);
+  console.log('After search:', this.allinvoice);
 
-const response= await this.gettingAllPurchaseOrderss();
-this.allinvoice=response.body;
+      // Initialize DataTable after fetching data
+      if (!this.dataTable) {
+        this.initializeDataTable();
+      }
 
-console.log("invoice response: ", response);
-
-
-
-console.log("allinvoice: ", this.allinvoice);
-return response;
-
+  return response;
 },
+
+
+// ...
 async searchPO() {
-      this.showallstock = false;
-      this.showallstocksearch = true;
-      var resp = await this.SearchingPO(this.searchword);
-      this.allinvoice = resp.body;
-      console.log("search  return body: ", resp.body);
-    },
+  const searchTerm = this.searchword;
+
+  if (this.dataTable) {
+    this.dataTable.search(searchTerm).draw(); // Use DataTables API to set the search term
+  }
+},
+
   
 async pushPO(poNumber) {
       console.log("PO Number is:", poNumber);
@@ -579,6 +459,139 @@ console.log("allsuppliers: ", this.allsuppliers);
 return response;
 
 },
+   // ... your existing methods ...
+
+   initializeDataTable() {
+      if (!this.dataTable) {
+        this.dataTable = $("#purchaseTable").DataTable({
+          data: this.allinvoice, // Your data source
+          columns: [
+          {
+  title: 'ID',
+  // Increase the width to a more reasonable value
+  render: function (data, type, row, meta) {
+    return meta.row + 1; // Display the index (add 1 to make it 1-based)
+  }
+},
+
+        {
+  data: 'poNumber',
+  render: function (data) {
+    // Create a link to navigate to the details page with poNumber in uppercase
+    const poNumberUpper = data.toUpperCase();
+    return `<a href="/poreport/${poNumberUpper}">${poNumberUpper}</a>`;
+  }
+},
+
+        {
+  data: 'poDate',
+  render: function (data, type, row) {
+    if (type === 'display') {
+      // Format the date for display
+      const formattedDate = moment(data).format('YYYY-MM-DD');
+      // Create a link with the formatted date that navigates to PoItemLines with the poNumber
+      return `<a href="/PoItemLines/${row.poNumber}" style="text-decoration: none; color: inherit;">${formattedDate}</a>`;
+    }
+    // For all other render types (filter, sort, type, etc.), just return the raw data
+    return data;
+  }
+},
+
+
+
+
+
+{
+  data: 'vendor',
+  render: function (data, type, row) {
+    if (type === 'display') {
+      // Create a link that navigates to PoItemLines with the poNumber
+      return `<a href="/PoItemLines/${row.poNumber}" style="text-decoration: none; color: inherit;">${data}</a>`;
+    }
+    // For all other render types (filter, sort, type, etc.), just return the raw data
+    return data;
+  }
+},
+
+        {
+  data: 'dateCreated',
+  render: function (data, type, row) {
+    if (type === 'display') {
+      // Format the date for display
+      const formattedDate =    moment(data).format('YYYY/MM/DD    HH:mm:ss'); // Format the date as desired
+      // Create a link with the formatted date that navigates to PoItemLines with the poNumber
+      return `<a href="/PoItemLines/${row.poNumber}" style="text-decoration: none; color: inherit;">${formattedDate}</a>`;
+    }
+    // For all other render types (filter, sort, type, etc.), just return the raw data
+    return data;
+  }
+},{
+  data: 'captureStatus',
+  render: function (data, type, row) {
+    if (type === 'display') {
+      // Create a link that navigates to PoItemLines with the poNumber
+      let link = `<a href="/PoItemLines/${row.poNumber}" style="text-decoration: none; color: inherit;">${data}</a>`;
+
+      // Apply different colors based on the value
+      if (data === 'Complete') {
+        return '<span style="color: green;">' + link + '</span>';
+      } else if (data === 'Incomplete') {
+        return '<span style="color: red;">' + link + '</span>';
+      } else if (data === 'Pending') {
+        return '<span style="color: orange;">' + link + '</span>';
+      } else {
+        return link;
+      }
+    }
+    // For all other render types, return the raw data as text
+    return data;
+  }
+},
+
+{
+  data: 'deliveryStatus',
+  render: function (data, type, row) {
+    if (type === 'display') {
+      // Create a link that navigates to PoItemLines with the poNumber
+      let link = `<a href="/PoItemLines/${row.poNumber}" style="text-decoration: none; color: inherit;">${data}</a>`;
+
+      // Apply different colors based on the value
+      if (data === 'Complete') {
+        return '<span style="color: green;">' + link + '</span>';
+      } else if (data === 'Incomplete') {
+        return '<span style="color: red;">' + link + '</span>';
+      } else if (data === 'Pending') {
+        return '<span style="color: orange;">' + link + '</span>';
+      } else {
+        return link;
+      }
+    }
+    // For all other render types, return the raw data as text
+    return data;
+  }
+}
+
+      ],
+      paging: true,
+      pageLength: 10,
+      searching: true,
+      responsive:true,
+      columnDefs: [
+        {
+          targets: "_all", // Enable searching for all columns
+          searchable: true, // Set searchable to true for all columns
+        },
+      ],
+      // Customize other DataTable options as needed
+    });
+  } else {
+    // If DataTable is already initialized, simply redraw it with the updated data
+    this.dataTable.clear().rows.add(this.allinvoice).draw();
+  }
+    },
+
+
+  // ...
 async viewMore(invoice) {
     console.log("Navigating to edit page for:", invoice);
     console.log(" ____________________________________________*****************is______________***********:", invoice);
@@ -624,14 +637,25 @@ getDeliveryStatus(invoice){
 
   },
   
-  created(){
-    this.invoiceNumber = this.$route.params.invoiceNumber;
-        console.log("ItemId :", this.invoiceNumber);
-    this.GetAllInvoice();
-    this.GetAllSuppliers();
-    this.GetLoggedInUser();
+  async created() {
+  this.invoiceNumber = this.$route.params.invoiceNumber;
+  console.log("ItemId :", this.invoiceNumber);
+  this.GetLoggedInUser()
+      .then(() => this.GetAllSuppliers())
+      .then(() => this.GetAllInvoice())
+      .then(() => {
+        this.initializeDataTable();
+      });
+
+
+
   },
+
+
+
  
+
+
   watch: {
     searchword(passedvalue) {
       if (passedvalue != "") {
@@ -651,6 +675,87 @@ getDeliveryStatus(invoice){
   width: 100%;
   height: 100%;
 }
+ /* Style for DataTables pagination buttons */
+ .dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    color: #333;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* Style for active page button */
+  .dataTable_wrapper .dataTable_paginate .paginate_button.current {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+  }
+/* Style for the DataTable */
+.dataTables_wrapper .dataTable {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+/* Style for table headers */
+.dataTables_wrapper .dataTable thead th {
+  border: 1px solid #ccc;
+  background-color: #f3e6da;
+  font-family: inter;
+  font-size: 14px;
+}
+
+/* Style for table rows */
+.dataTables_wrapper .dataTable tbody tr {
+  border: 1px solid #ccc;
+}
+
+/* Style for table cells */
+.dataTables_wrapper .dataTable tbody td {
+  border: 1px solid #ccc;
+  font-family: inter;
+  font-size: 16px;
+  font-weight: medium;
+  color: gray;
+}
+
+/* Style for the search input when it's focused */
+.dataTables_wrapper .dataTables_filter input:focus {
+  outline: none; /* Remove the default focus outline */
+  border-color: #007bff; /* Change border color when focused */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow when focused */
+}
+
+
+
+/* Style for DataTables search input container */
+.dataTable_wrapper .dataTable_filter {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Align the input to the left */
+    margin-bottom: 10px;
+}
+
+/* Move the search input to the far left */
+.dataTables_wrapper .dataTables_filter input {
+    order: -1;
+    margin-right: auto; /* Adjust margin to move the input to the left */
+    margin-left: 0; /* Remove any left margin */
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* Style for the search input when it's focused */
+.dataTables_wrapper .dataTables_filter input:focus {
+    outline: none; /* Remove the default focus outline */
+    border-color: #007bff; /* Change border color when focused */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add a box shadow when focused */
+}
+
 
 .modal-wrapper {
   display: table-cell;
@@ -681,6 +786,24 @@ getDeliveryStatus(invoice){
 .pop-enter-active, .pop-leave-active {
   transition: opacity 0.5s;
 }
+/* Style the DataTable search input */
+.dataTables_filter {
+  text-align: right; /* Align the search input to the right */
+  margin-right: 10px; /* Add some right margin for spacing */
+}
+
+/* Make the search input responsive */
+.dataTables_filter input[type="search"] {
+  width: 100%;
+  max-width: 300px; /* Adjust the max-width as needed */
+  height: 40px;
+  padding: 6px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
 
 .fade-enter, .fade-leave-to,
 .pop-enter, .pop-leave-to {

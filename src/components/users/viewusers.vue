@@ -174,7 +174,7 @@
                   >Approve New User</a
                 >
                 <a href="#" @click.prevent="MakeUserApprover(user.email)"
-                  >Make Approver</a
+                  >Make  Approver</a
                 >
               </div>
             </div>

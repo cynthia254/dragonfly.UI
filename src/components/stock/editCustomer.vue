@@ -139,13 +139,26 @@
     
      
  
-     <div class="tright d-flex mx-5" >
-       
-       <a href="/sales"
-         ><button class="movebtn movebtnsu"  style="margin-bottom: 30px;margin-left: 70px;width: 60%;font-family: inter;font-size: 13px;" @click.prevent="changepurchasestatus()" >
-           Submit</button
-       ></a>
-     </div>
+     <div class="tright d-flex justify-content-between" >
+    
+    <div class="row">
+<div class="col-12 col-sm-6 col-md-6 ">
+  
+    <button class="movebtn movebtnsu"  style="margin-top:10px; margin-left: 10px;width:40%;font-family: inter;font-size: 13px;" @click.prevent="pushPO()" >
+       Back</button
+   >
+  
+</div>
+<div class="col-12 col-sm-6 col-md-6">
+ 
+    <button class="movebtn movebtnsu"  style="margin-top: 10px; margin-left: 150px;width: 40%;font-family: inter;font-size: 13px;" @click.prevent="changepurchasestatus()" >
+       Submit</button
+   >
+  
+</div>
+</div>
+
+</div>
    </form>
  
   
@@ -180,6 +193,12 @@
        formattedDate = `${formattedDate.toDateString()} at ${formattedDate.toLocaleTimeString()}`;
        return formattedDate;
      },
+     async pushPO() {
+      this.$router.push({
+        path: `/customer`,
+        replace: true,
+      });
+    },
      async changepurchasestatus(){
        var body = {
          customerid: this.customerId,

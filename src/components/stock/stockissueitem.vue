@@ -3,13 +3,11 @@
       href="https://fonts.googleapis.com/css?family=Inter:500,700"
       rel="stylesheet"
     />
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css"
     />
-    <div v-if="showtickets">
+    <div >
       <section>
         <header class="top">
           <div class="frame-24" style="width: 40px; margin-left: 25px">
@@ -192,10 +190,11 @@
           </nav>
         </header>
       </section>
+      </div>
       <div
         class=""
         style="width: 95%; margin-left: 25px; margin-top: 60px"
-        v-if="this.showtickets"
+      
       >
         <div class="row">
           <div class="col">
@@ -205,18 +204,19 @@
               style="border-radius: 12px"
             >
               <ol class="breadcrumb mb-0">
+              
                 <li
                   class="breadcrumb-item"
                   style="font-family: inter; font-size: 16px"
                 >
-                  <a href="/stockdashboard" style="color: gray">Home</a>
+                  <a href="/apply" style="color: blue">Back</a>
                 </li>
                 <li
                   class="breadcrumb-item active"
                   aria-current="page"
                   style="font-family: inter; font-size: 16px; color: #ff8c22"
                 >
-                  Manage POS With Capture Complete
+                  Manage Stock Dispatched
                 </li>
               </ol>
             </nav>
@@ -261,7 +261,7 @@
                     width: fit-content;
                   "
                 >
-                 PURCHASE ORDER LIST
+                  REQUISITION FORM LIST
                 </h2>
               </div>
   
@@ -277,178 +277,87 @@
                   border-radius: 10px;
                 "
               >
-                <div class="row mx-5">
-                  <div class="col-sm-6 d-flex mt-2">
-                    </div>
-                    </div>
-
+              <div class="flex-container ">
+                <div class="container left-container" style="box-shadow: none; background-color: white; margin-top: 20px; width: 20% !important; border: 1px solid black; height: auto; padding: 10px; text-align: center;">
+  <h2 style="font-size: 14px; margin-bottom: 5px;">Quantity Dispatched:</h2>
+  <p style="font-size: 16px; margin: 0;">{{ this.issuebody.quantityDispatched }} <span style="color: gray; font-size: 12px;">Quantity</span></p>
   
-                <div class="table-wrapper">
-                  <div class="table-title">
-                    <div class="">
-                      <div class="col-sm table-responsive table-bordered ">
-                        <table
-                          id="purchaseList"
-                          class="table card-list-table table-hover table-bordered "
-                          style="margin-top: 30px; margin-left: 40px"
-                       
-                        >
-                          <thead
-                            style="
-                              font-family: inter;
-                              font-weight: bold;
-                              background: #f3e6da;
-                              font-size: 16px;
-                              border-bottom: 1px solid darken(#f8f8f8, 10%);
-                              padding: 12px 34px;
-                            "
-                          >
-                            <tr>
-                                <th style="width: 50px">ID</th>
-                              <th style="width: 50px">PO Number</th>
-                              <th style="width: 120px">Supplier</th>
-                              <th style="width: 120px">Date Updated</th>
-                              <th style="width: 150px">Capture Status</th>
-                              <th style="width: 120px">Delivery Status</th>
-                            </tr>
-                          </thead>
-                          <tbody
-                            v-for="(invoice, index) in this.allinvoice"
-                            :key="invoice.id"
-                          >
-                            <tr
-                      
-                              style="
-                                font-family: inter;
-                                font-size: 16px;
-                                font-weight: medium;
-                                color: gray;
-                              "
-                            >
-                              <th scope="row">
-                                <a
-                                  href=""
-                                  style="text-decoration: none; color: gray"
-                                  >{{ index + 1 }}</a
-                                >
-                              </th>
-                              <td>
-                                <span
-                            @click="viewMore(invoice)"
-                            class="link-button d-flex"
-                            style="font-size: 13px"
-                            >{{ invoice.poNumber }}</span
-                          >
-                              </td>
-                              <td       @click.prevent="pushPO(invoice.poNumber)">{{ invoice.vendor }}</td>
-                              <td  @click.prevent="pushPO(invoice.poNumber)">{{ formatDate(invoice.dateCreated) }}</td>
-                              <td
-                                :style="getStatusStyle(invoice)"
-                                style="font-size: 13px;color: green;" 
-                                @click.prevent="pushPO(invoice.poNumber)"
-                              >
-                                {{ invoice.captureStatus }}
-                              </td>
-                              <td    :style="getStatusStyle(invoice)"       @click.prevent="pushPO(invoice.poNumber)">
-                            
-                                {{ invoice.deliveryStatus }}
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+  <span :style="{ color: this.issuebody.dispatchStatus === 'Complete' ? 'green' : 'red', fontSize: '15px' }">{{ this.issuebody.dispatchStatus }}</span>
+</div>
+
+
+                <div class="container right-container" style="box-shadow: none; background: linear-gradient(to right, rgb(171, 224, 73), white); margin-top: 20px; margin-left: 50px; width: 70% !important;height: 100px;">
+  <div class="row" style="margin-left: 70px;">
+    <div class="col-sm-6 custom-box">
+  <h2 class="text-sm font-small text-gray-900 uppercase" style="color:rgb(158, 8, 8)" >Quantity Ordered:</h2>
+  <p class="text-xs" style="font-size: 16px;">{{ this.issuebody.quantity }}  <span class="gray-text">Quantity</span></p>
+</div>
+<div class="col-sm-6 custom-box">
+  <h2 class="text-sm font-medium text-gray-900 uppercase" style="color:rgb(90, 7, 7)">Outstanding Balance:</h2>
+  <p class="text-xs" style="black">{{ this.issuebody.outStandingBalance }} <span class="gray-text">Quantity</span></p>
+</div>
+  </div>
+</div>
+
+</div>
+  <!-- ... (your existing template code) ... -->
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="">
+        <div class="col-sm table-responsive">
+          <table
+            id="purchaseList"
+            class="table card-list-table table-hover table-bordered"
+          >
+          <!-- ... (your table header) ... -->
+          <thead>
+          <tr>
+            <th rowspan="2">Number</th>
+            <th rowspan="2">Item Name</th>
+             <th rowspan="2">Reason</th>
+             <th >Category Name</th>
+             <th >Quantity Dispatched</th>
+             <th >Date Dispatched</th>
+          </tr>
+          </thead>
+
+
+
+            <tbody>
+              <tr
+                v-for="(invoice, index) in this.data_formBody"
+                :key="invoice.id"
+         
+              >
+                <th scope="row"        @click="issuedItems(invoice)">{{ index + 1 }}</th>
+                <td        @click="issuedItems(invoice)">{{ invoice.brandName }} {{ invoice.itemName }}</td>
+                <td        @click="issuedItems(invoice)">{{ invoice.categoryName }}</td>
+                <td       @click="issuedItems(invoice)">{{ invoice.quantityDispatched }}</td>
+                <td        @click="issuedItems(invoice)">{{ formatDate(invoice.dateIssued) }}</td>
+                <td        @click="issuedItems(invoice)">{{ invoice.reason }}</td>
+                
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-    <div class="mx-4" v-if="acessdenied">
-      <body>
-        <div class="box">
-          <div class="head">
-            <div class="eyer"></div>
-            <div class="eyel"></div>
-            <div class="smile"></div>
-          </div>
-          <div class="handr1"></div>
-          <div class="handr2"></div>
-          <div class="handl1"></div>
-          <div class="handl2"></div>
-          <div class="body1"></div>
-          <div class="body"></div>
-          <div class="legr"></div>
-          <div class="legl"></div>
-          <div class="feetr"></div>
-          <div class="feetl"></div>
-          <h2
-            style="
-              position: absolute;
-              top: 20%;
-              right: -50%;
-              color: red;
-              font-size: 50px;
-            "
-          >
-            403 Forbidden Error
-          </h2>
-          <p
-            style="
-              position: absolute;
-              top: 40%;
-              right: -50%;
-              color: red;
-              font-size: 20px;
-            "
-          >
-            You don't have permission to access / on this server.
-          </p>
-          <h1
-            style="
-              position: absolute;
-              top: 20%;
-              left: 33%;
-              color: black;
-              font-size: 50px;
-              transform: rotate(-38deg);
-              animation: blink 0.8s infinite ease;
-            "
-          >
-            ?
-          </h1>
-          <p
-            style="
-              margin-top: 60px;
-              margin-right: 200px;
-              position: absolute;
-              top: 40%;
-              right: -50%;
-              color: red;
-              font-size: 20px;
-            "
-          >
-            <a class="btn btn-danger" href="/stockdashboard">Go Back</a>
-          </p>
-        </div>
-      </body>
-    </div>
-  </template>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  
+ 
+</template>
+
   <script>
   import swal from "sweetalert2";
   import AppMixins from "../../Mixins/shared";
   import moment from "moment";
-  import 'jquery';
-import 'datatables.net';
-import 'datatables.net-bs4/css/dataTables.bootstrap4.min.css';
-import 'datatables.net-select';
-import 'datatables.net-bs4';
-import $ from 'jquery';
-
   export default {
-    name: "CaptureStatusComplete",
+    name: "IssuedStockbyID",
     mixins: [AppMixins],
     data() {
       return {
@@ -464,10 +373,9 @@ import $ from 'jquery';
         alldepartment: {},
         allusers: {},
         allcustomers: {},
-        selectedInvoice: null,
         allbrands: {},
-        showtickets: false,
-        acessdenied: false,
+        data_formBody:{},
+        issuebody:{},
         formdata: {
           stockNeed: "",
           itemName: "",
@@ -481,8 +389,14 @@ import $ from 'jquery';
         },
       };
     },
-  
     methods: {
+      async editinvoiceitem(invoice) {
+        this.$router.push({
+          path: `/downloadDnote/${invoice.id}`,
+          replace: true,
+        });
+   
+ },
       async GetAllBrands() {
         const response = await this.gettingAllBrands();
         this.allbrands = response.body;
@@ -495,21 +409,19 @@ import $ from 'jquery';
       async adjustStock(id) {
         console.log("Item ID  is:", id);
         this.$router.push({
-          path: `/approvepo/${id}`,
+          path: `/approvereject/${id}`,
           replace: true,
         });
       },
-      async viewMore(invoice) {
-        this.selectedInvoice = invoice;
-    console.log("Navigating to edit page for:", invoice);
-    console.log(" ____________________________________________*****************is______________***********:", invoice);
-        this.$router.push({
-          path: `/receivedpo/${this.selectedInvoice.poNumber}`,
-          replace: true,
-        });
-    
-  },
-  
+      async issuedItems(invoice) {
+  if (this.requisitionbody.categoryName !== "Accesory") {
+    this.$router.push({
+      path: `/viewIssuedSerial/${invoice.id}`,
+      replace: true,
+    });
+  } 
+},
+
       async issuingitems(id) {
         const response = await this.issuingItems(id);
         console.log("form body is: ", response);
@@ -527,23 +439,16 @@ import $ from 'jquery';
           });
         }
       },
-      async pushPO(poNumber) {
-      console.log("PO Number is:", poNumber);
-      this.$router.push({
-        path: `/POLinesComplete/${poNumber}`,
-        replace: true,
-      });
-    },
       getStatusStyle(invoice) {
-        if (invoice.deliveryStatus === "Complete") {
+        if (invoice.approvedStatus === "Issued") {
           return {
-            color: "green",
+            color: "blue",
           };
-        } else if (invoice.deliveryStatus === "Pending") {
+        } else if (invoice.approvedStatus === "Waiting For Approval") {
           return {
-            color: "orange",
+            color: "blue",
           };
-        } else if (invoice.deliveryStatus === "Incomplete") {
+        } else if (invoice.approvedStatus === "Rejected") {
           return {
             color: "red",
           };
@@ -552,7 +457,7 @@ import $ from 'jquery';
         }
       },
       async GetAllInvoice() {
-        const response = await this.CaptureStatusComplete();
+        const response = await this.StatusWithIssued();
         this.allinvoice = response.body;
   
         console.log("invoice response: ", response);
@@ -580,7 +485,13 @@ import $ from 'jquery';
         console.log("allcustomers: ", this.allcustomers);
         return response;
       },
-  
+      async pushPO(poNumber) {
+        console.log("PO Number is:", poNumber);
+        this.$router.push({
+          path: `/uploadedpoitems/${poNumber}`,
+          replace: true,
+        });
+      },
   
       async GetLoggedInUser() {
         var response = await this.Gettingloggedinuser();
@@ -607,47 +518,151 @@ import $ from 'jquery';
           replace: true,
         });
       },
-     
+      async gettingformbyid() {
+        const response = await this.gettingselectedserial(this.id);
+        this.data_formBody = response.body;
+  
+        console.log(
+          "_________________________form body is    ____+_______________________: ",
+          response.body
+        );
+  
+        console.log("form body with id >>>>>>>>>>>>>>>>: ", this.data_formBody);
+        return response;
+      },
+      async gettingrequisitonbyid() {
+      const response = await this.getFormbyId(this.id);
+      this.requisitionbody = response.body;
+
+      console.log(
+        "_________________________requisitiion body  is    ____+_______________________: ",
+        response.body
+      );
+
+      console.log(
+        "quantiy with id >>>>>>>>>>>>>>>>: ",
+        this.requisitionbody.quantity
+      );
+      return response;
+    },
+    async GetAllSerialNumbers() {
+      const response = await this.StatusNotIssued();
+      this.allinvoiceitems = response.body;
+      console.log("allinvoiceitems: ", this.allinvoiceitems);
+      return response;
+    },
+      async grttingissuebyid() {
+        const response = await this.GetFormIssuedByid(this.id);
+        this.issuebody = response.body;
+  
+        console.log(
+          "issuebody is ::::::::::::::::::::::::::::::::::::::",
+          response.body
+        );
+  
+        console.log("form body with id iss>>>>>>>>>>>>>>>>>>>>>>>>>>> ", this.issuebody);
+        return response;
+      },
+ 
+      async AddingInvoice() {
+        var body = {
+          itemName: this.formdata.itemName,
+          brandName: this.formdata.brandName,
+          description: this.formdata.Description,
+          stockNeed: this.formdata.stockNeed,
+          quantity: this.formdata.quantity,
+          deviceBeingRepaired: this.formdata.deviceRepaired,
+          clientName: this.formdata.clientName,
+          department: this.formdata.departmentName,
+          purpose: this.formdata.purpose,
+        };
+  
+        console.log("Invoice new: ", body);
+        var response = await this.applyingForm(body);
+        if (response.isTrue == true) {
+          swal.fire({
+            heightAuto: false,
+            html: `<h5 class="text-success" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+          });
+          this.$refs.myForm.reset();
+        } else {
+          swal.fire({
+            heightAuto: false,
+            html: `<h5 class="text-danger" style="font-family:inter;margin-top:22px">${response.message}</h5>`,
+          });
+          this.$refs.myForm.reset();
+        }
+        this.GetAllInvoice();
+      },
+      async GetAllSuppliers() {
+        const response = await this.gettingAllSuppliers();
+        this.allsuppliers = response.body;
+        console.log("allsuppliers: ", this.allsuppliers);
+        return response;
+      },
+      async GetAllStockItemss() {
+        const response = await this.GettingAllStockItems();
+        this.allstockitems = response.body;
+        console.log("allstockitems: ", this.allstockitems);
+        return response;
+      },
+      async getAllDepartment() {
+        const response = await this.GettingAllDepartment();
+        this.alldepartment = response.body;
+  
+        console.log("alldepartment: ", this.alldepartment);
+        return response;
+      },
+      async getallusers() {
+        const response = await this.GettingAllUsers();
+        this.allusers = response.body;
+        console.log("allusers: ", this.allusers);
+        return response;
+      },
+      
+      
     },
   
     created() {
-      this.invoiceNumber = this.$route.params.invoiceNumber;
-      console.log("ItemId :", this.invoiceNumber);
+      this.id = this.$route.params.id;
+      console.log("ItemId :", this.id);
+      this.GetAllInvoice();
+      this.GetAllSuppliers();
       this.GetLoggedInUser();
+      this.GetAllStockItemss();
+      this.getAllDepartment();
+      this.getallusers();
       this.GetAllCustomers();
       this.GetAllBrands();
-      this.GetAllInvoice();
-  
+      this.gettingformbyid();
+      this.grttingissuebyid();
+      this.gettingrequisitonbyid();
     },
-    mounted() {
-  this.GetAllInvoice().then(() => {
-    this.$nextTick(() => {
-      const dataTable = $('#purchaseList'); // Get a reference to the table element
-
-      // Initialize DataTable with your desired options
-      dataTable.DataTable({
-        paging: true,
-        searching: true,
-        responsive: true,
-        // Other DataTable options here as needed
-      });
-
-      // Add an event listener for the search event
-      dataTable.on("search.dt", () => {
-        const searchValue = dataTable.DataTable().search(); // Get the search query
-        console.log("Search Query:", searchValue);
-
-        // You can further process or log the search query here
-      });
-    });
-  });
-}
-
-
-
   };
   </script>
   <style>
+   /* Style for the main header row */
+   thead tr:nth-child(1) {
+    background: #f3e6da;
+    font-weight: bold;
+  }
+
+  /* Style for the subheader row */
+  thead tr:nth-child(2) {
+    background-color: red;
+    font-weight: bold;
+  }
+
+  /* Style for specific header cells */
+  thead th {
+    padding: 10px;
+    text-align: center;
+  }
+
+  /* Style for the "Item Details" cell */
+  thead th[colspan="3"] {
+    background: #f3e6da;
+  }
   .modal-mask {
     background-color: rgba(0, 0, 0, 0.5);
     display: table;
@@ -660,6 +675,25 @@ import $ from 'jquery';
     display: table-cell;
     vertical-align: middle;
   }
+  /* Add CSS styles for the parent flex container */
+.flex-container {
+  display: flex; /* Adjust as needed to control the space between the containers */
+}
+
+/* Add CSS styles for the left container */
+.left-container { /* Adjust as needed to control the width of the left container */
+  box-shadow: none;
+  background-color: rgb(123, 192, 19);
+  margin-top: 20px;
+ 
+}
+
+/* Add CSS styles for the right container */
+.right-container { /* Adjust as needed to control the width of the right container */
+  box-shadow: none;
+  background-color: rgb(235, 250, 212);
+  margin-top: 20px;
+}
   .box {
     position: absolute;
     width: 500px;
@@ -847,6 +881,13 @@ import $ from 'jquery';
     100% {
       opacity: 1;
     }
+  }
+   /* Custom CSS styles */
+  
+
+  /* Style for the gray text span */
+  .gray-text {
+    color: red; /* Set the text color to gray */
   }
   </style>
   
